@@ -1,0 +1,22 @@
+name: Validate ETNIKA project
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate project JSON and essential files
+        run: |
+          python3 - <<'PYTEST'
+          import json, pathlib
+          p=pathlib.Path('data/project.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d.get('blocks') and len(d['blocks']) >= 12
+          assert pathlib.Path('index.html').is_file()
+          assert pathlib.Path('site/index.html').is_file()
+          print('Blocks:',len(d['blocks']),'Tasks:',d.get('allTasks'))
+          PYTEST
