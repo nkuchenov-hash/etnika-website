@@ -28,8 +28,14 @@ jobs:
             assert all(isinstance(plan.get(k),str) and len(plan[k].strip())>=20 for k in ('essence','action','outcome')), f"Task needs concrete essence/action/outcome: {task['id']}"
             assert plan['action']==task['text'] and plan['outcome']==task['acceptance'], f"Task plan differs from visible fields: {task['id']}"
             assert 'Проверено в HTML-превью и на опубликованной Tilda' not in plan['outcome'], f"Generic acceptance: {task['id']}"
-          assert sum(t['plan']['mode']=='archive' for t in every)==2, 'Unexpected archived-task count'
+          assert sum(t['plan']['mode']=='archive' for t in every)==0, 'Old audit tasks must not appear in active backlog'
 
+          assert len(every)==catalog['allTasks'], 'Wrong active task count'
+          assert all(t.get('chat',{}).get('quote') and t['chat'].get('author') and t['chat'].get('page') for t in every), 'Active block task without a primary Telegram message'
+          assert all(t.get('source','').startswith('Telegram PDF,') for t in every), 'HTML audits must not create active tasks'
+          assert all(t.get('evidence',{}).get('quote')==t.get('chat',{}).get('quote') for t in every), 'Primary quote mismatch'
+          assert len({t['id'] for t in every})==len(every), 'Duplicate chat task ID'
+          assert catalog.get('meta',{}).get('taskSourcePolicy','').startswith('ACTIVE BLOCK TASKS ONLY FROM DIRECT CHAT'), 'Task source policy regressed'
           assert all(t.get('evidence',{}).get('status') for t in every), 'Missing source audit'
           assert all(t['evidence'].get('quote') for t in every if t['evidence']['status']=='Прямая реплика'), 'Missing direct quote'
           assert all(set(b.get('relatedTaskIds',[]))<=task_ids for b in catalog['blocks']), 'Bad cross-reference'
