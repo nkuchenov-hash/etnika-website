@@ -4,19 +4,30 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate project JSON and essential files
+      - name: Validate catalog, shared statuses, and dashboard JavaScript
         run: |
           python3 - <<'PYTEST'
-          import json, pathlib
-          p=pathlib.Path('data/project.json')
-          d=json.loads(p.read_text(encoding='utf-8'))
-          assert d.get('blocks') and len(d['blocks']) >= 12
-          assert pathlib.Path('index.html').is_file()
-          assert pathlib.Path('site/index.html').is_file()
-          print('Blocks:',len(d['blocks']),'Tasks:',d.get('allTasks'))
+          import json, pathlib, subprocess
+          catalog=json.loads(pathlib.Path('data/project.json').read_text(encoding='utf-8'))
+          state=json.loads(pathlib.Path('data/state.json').read_text(encoding='utf-8'))
+          assert len(catalog.get('blocks', [])) >= 12, 'Expected site blocks'
+          task_ids={task['id'] for block in catalog['blocks'] for task in block['tasks']}
+          assert set(state['tasks']).issubset(task_ids), 'Unknown task status IDs'
+          accepted={'Не начато','В работе','На проверке','Заблокировано','Готово','Неактуально'}
+          assert set(state['tasks'].values()).issubset(accepted), 'Unknown status value'
+          assert pathlib.Path('site/index.html').is_file(), 'Site source missing'
+          html=pathlib.Path('index.html').read_text(encoding='utf-8')
+          js=html.rsplit('<script>',1)[1].split('</script>',1)[0]
+          assert 'data/state.json?' in js, 'Dashboard must read GitHub statuses'
+          assert 'localStorage' not in js, 'Browser-only statuses are forbidden'
+          tmp=pathlib.Path('/tmp/etnika-dashboard.js')
+          tmp.write_text(js,encoding='utf-8')
+          subprocess.run(['node','--check',str(tmp)],check=True)
+          print('Blocks:',len(catalog['blocks']),'Tasks:',len(task_ids),'Shared status records:',len(state['tasks']))
           PYTEST
