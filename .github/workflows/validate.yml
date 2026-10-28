@@ -38,5 +38,30 @@ jobs:
           tmp=pathlib.Path('/tmp/etnika-dashboard.js')
           tmp.write_text(js,encoding='utf-8')
           subprocess.run(['node','--check',str(tmp)],check=True)
+          from html.parser import HTMLParser
+          import re
+          site=pathlib.Path('site/index.html').read_text(encoding='utf-8')
+          class SiteParser(HTMLParser):
+            def __init__(self):
+              super().__init__()
+              self.ids=[];self.anchors=[];self.sections=0;self.img_without_alt=0
+            def handle_starttag(self,tag,attrs):
+              a=dict(attrs)
+              if a.get('id'): self.ids.append(a['id'])
+              if tag=='a' and (a.get('href') or '').startswith('#') and a.get('href')!='#':
+                self.anchors.append(a['href'][1:])
+              if tag=='section':self.sections+=1
+              if tag=='img' and 'alt' not in a:self.img_without_alt+=1
+          p=SiteParser();p.feed(site)
+          assert len(p.ids)==len(set(p.ids)), 'Duplicate site IDs'
+          assert not (set(p.anchors)-set(p.ids)), 'Broken internal anchors: '+str(sorted(set(p.anchors)-set(p.ids)))
+          assert p.sections>=12, 'Expected 12 site sections'
+          assert p.img_without_alt==0, 'Image missing alt'
+          inline=re.findall(r'<script\b[^>]*>(.*?)</script>',site,re.I|re.S)
+          for i,code in enumerate(inline):
+            if not code.strip(): continue
+            tmp.write_text(code,encoding='utf-8')
+            subprocess.run(['node','--check',str(tmp)],check=True)
+          print('Static site audit:',p.sections,'sections,',len(inline),'inline JS blocks,',len(p.anchors),'internal links')
           print('Blocks:',len(catalog['blocks']),'Tasks:',len(task_ids),'Shared status records:',len(state['tasks']))
           PYTEST
