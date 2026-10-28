@@ -19,6 +19,15 @@ jobs:
           assert len(catalog.get('blocks', [])) >= 12, 'Expected site blocks'
           task_ids={task['id'] for block in catalog['blocks'] for task in block['tasks']}
           assert set(state['tasks']).issubset(task_ids), 'Unknown task status IDs'
+          every=[t for b in catalog['blocks'] for t in b['tasks']]
+          assert len(every)==len(task_ids), 'A task must have one owning block'
+          assert all(t.get('evidence',{}).get('status') for t in every), 'Missing source audit'
+          assert all(t['evidence'].get('quote') for t in every if t['evidence']['status']=='Прямая реплика'), 'Missing direct quote'
+          assert all(set(b.get('relatedTaskIds',[]))<=task_ids for b in catalog['blocks']), 'Bad cross-reference'
+          import re
+          m=re.search(r'<script id="project-data" type="application/json">(.*?)</script>',pathlib.Path('index.html').read_text(encoding='utf-8'),re.S)
+          assert m and json.loads(m.group(1))==catalog, 'Embedded catalog out of sync'
+          
           accepted={'Не начато','В работе','На проверке','Заблокировано','Готово','Неактуально'}
           assert set(state['tasks'].values()).issubset(accepted), 'Unknown status value'
           assert pathlib.Path('site/index.html').is_file(), 'Site source missing'
