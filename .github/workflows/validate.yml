@@ -31,8 +31,8 @@ jobs:
           assert sum(t['plan']['mode']=='archive' for t in every)==0, 'Old audit tasks must not appear in active backlog'
 
           assert len(every)==catalog['allTasks'], 'Wrong active task count'
-          assert all(t.get('chat',{}).get('quote') and t['chat'].get('author') and t['chat'].get('page') for t in every), 'Active block task without a primary Telegram message'
-          assert all(t.get('source','').startswith('Telegram PDF,') for t in every), 'HTML audits must not create active tasks'
+          assert all(t.get('chat',{}).get('quote') and t['chat'].get('author') and (t['chat'].get('page') or t['chat'].get('sourceKind')=='user-ChatGPT-direct') for t in every), 'Active task without a primary chat message'
+          assert all(t.get('source','').startswith(('Telegram PDF,','ChatGPT,')) for t in every), 'Tasks must come from Telegram or the owner ChatGPT comments, not HTML audit'
           assert all(t.get('evidence',{}).get('quote')==t.get('chat',{}).get('quote') for t in every), 'Primary quote mismatch'
           assert len({t['id'] for t in every})==len(every), 'Duplicate chat task ID'
           assert catalog.get('meta',{}).get('taskSourcePolicy','').startswith('ACTIVE BLOCK TASKS ONLY FROM DIRECT CHAT'), 'Task source policy regressed'
