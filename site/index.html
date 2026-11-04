@@ -3,606 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ETNIKA unified QA preview</title>
+<meta name="robots" content="noindex,nofollow,noarchive"><link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet"><title>ETNIKA — полный редизайн · предпросмотр 4 ноября</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-<!-- ETNIKA · HERO · ultrawide fixed -->
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
-
-#etnika-hero{
-  --red:#A9151D;
-  --pink:#efc4ca;
-  --edge:max(80px,calc((100vw - 1760px)/2));
-  --serif:'Forum',Georgia,serif;
-  --sans:'Geologica',Arial,sans-serif;
-
-  position:relative;
-  width:100%;
-  min-height:100svh;
-  overflow:hidden;
-  isolation:isolate;
-  background:#0a0a0a;
-  color:#fff;
-  font-family:var(--sans);
-  font-weight:100;
-}
-
-#etnika-hero,
-#etnika-hero *{box-sizing:border-box}
-
-#etnika-hero a{
-  color:inherit;
-  text-decoration:none;
-}
-
-/* background */
-#etnika-hero .hero-video{
-  position:absolute;
-  inset:0;
-  z-index:-5;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center center;
-  filter:none;
-}
-
-#etnika-hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-4;
-  pointer-events:none;
-  background:
-    linear-gradient(90deg,
-      rgba(0,0,0,.64) 0%,
-      rgba(0,0,0,.34) 43%,
-      rgba(0,0,0,.22) 62%,
-      rgba(0,0,0,.72) 100%),
-    linear-gradient(180deg,
-      rgba(0,0,0,.28) 0%,
-      rgba(0,0,0,.12) 25%,
-      rgba(0,0,0,.12) 72%,
-      rgba(0,0,0,.58) 100%),
-    rgba(18,18,18,.16);
-}
-
-#etnika-hero .hero-shell{
-  position:relative;
-  width:auto;
-  min-height:100svh;
-  margin:0 var(--edge);
-}
-
-/* faint ETNIKA behind main title */
-#etnika-hero .hero-ghost{
-  position:absolute;
-  z-index:-2;
-  left:-52px;
-  top:30.8%;
-  font-family:var(--serif);
-  font-size:clamp(150px,21vw,370px);
-  line-height:.72;
-  letter-spacing:-.055em;
-  white-space:nowrap;
-  color:rgba(255,255,255,.072);
-  pointer-events:none;
-  user-select:none;
-}
-
-/* LEFT */
-#etnika-hero .hero-left{
-  position:absolute;
-  left:0;
-  top:24.8%;
-  width:min(1120px,67vw);
-}
-
-#etnika-hero .hero-kicker{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  margin:0 0 32px;
-  font-family:var(--sans);
-  font-size:20px;
-  font-weight:100;
-  line-height:1.2;
-  letter-spacing:.01em;
-  text-transform:uppercase;
-}
-
-#etnika-hero .hero-kicker::before{
-  content:"";
-  width:49px;
-  height:1px;
-  flex:0 0 49px;
-  background:#e9d0d3;
-}
-
-#etnika-hero .hero-title{
-  margin:0;
-  font-family:var(--serif);
-  font-size:clamp(142px,14.2vw,235px);
-  font-weight:400;
-  line-height:.75;
-  letter-spacing:-.04em;
-  text-transform:uppercase;
-  white-space:nowrap;
-}
-
-#etnika-hero .hero-tagline{
-  margin:28px 0 0 152px;
-  font-family:var(--serif);
-  font-size:clamp(56px,4.9vw,88px);
-  font-weight:400;
-  line-height:.95;
-  letter-spacing:-.018em;
-  color:var(--pink);
-  white-space:nowrap;
-}
-
-/* RIGHT CONTENT — centered within shell so it does not stick to ultrawide edge */
-#etnika-hero .hero-right{
-  position:absolute;
-  top:35.8%;
-  right:36px;
-  width:430px;
-}
-
-#etnika-hero .hero-right h2{
-  width:100%;
-  margin:0 0 24px;
-  font-family:var(--serif);
-  font-size:clamp(42px,3.2vw,52px);
-  font-weight:400;
-  line-height:.94;
-  letter-spacing:-.018em;
-}
-
-#etnika-hero .hero-right p{
-  width:100%;
-  margin:0;
-  font-family:var(--sans);
-  font-size:18px;
-  font-weight:100;
-  line-height:1.72;
-  color:rgba(255,255,255,.63);
-}
-
-/* buttons intentionally narrower than text block */
-#etnika-hero .hero-actions{
-  width:300px;
-  max-width:100%;
-  margin-top:28px;
-  display:grid;
-  gap:10px;
-}
-
-#etnika-hero .hero-btn{
-  width:100%;
-  height:54px;
-  padding:0 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  border:1px solid rgba(255,255,255,.46);
-  background:rgba(0,0,0,.08);
-  font-family:var(--sans);
-  font-size:14px;
-  font-weight:200;
-  line-height:1;
-  letter-spacing:.02em;
-  text-transform:uppercase;
-}
-
-#etnika-hero .hero-btn{
-  transition:
-    background-color .22s ease,
-    border-color .22s ease,
-    color .22s ease,
-    transform .22s ease;
-}
-
-#etnika-hero .hero-btn:hover{
-  background:#fff;
-  border-color:#fff;
-  color:#111;
-  transform:translateY(-1px);
-}
-
-#etnika-hero .hero-btn--primary{
-  background:var(--red);
-  border-color:var(--red);
-}
-
-#etnika-hero .hero-btn--primary:hover{
-  background:#8f1118;
-  border-color:#8f1118;
-  color:#fff;
-}
-
-#etnika-hero .hero-btn .arrow{
-  transition:transform .22s ease;
-}
-
-#etnika-hero .hero-btn:hover .arrow{
-  transform:translate(2px,-2px);
-}
-
-#etnika-hero .hero-btn:nth-child(2):hover .arrow{
-  transform:translateY(3px);
-}
-
-#etnika-hero .hero-btn .arrow{
-  flex:0 0 auto;
-  margin-left:auto;
-  font-size:18px;
-  font-weight:200;
-}
-
-/* GOOD PLACE */
-#etnika-hero .hero-badge{
-  position:absolute;
-  top:9.6%;
-  right:0;
-  width:76px;
-  text-align:center;
-  font-family:var(--sans);
-  font-size:10px;
-  font-weight:200;
-  line-height:1.35;
-  letter-spacing:.10em;
-  text-transform:uppercase;
-}
-
-#etnika-hero .hero-badge svg{
-  display:block;
-  width:34px;
-  height:43px;
-  margin:0 auto 7px;
-  overflow:visible;
-}
-
-/* BOTTOM */
-#etnika-hero .hero-bottom{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:4.3%;
-  padding-top:22px;
-  border-top:1px solid rgba(255,255,255,.25);
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:end;
-  font-family:var(--sans);
-  font-size:11px;
-  font-weight:100;
-  line-height:1.4;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.68);
-}
-
-#etnika-hero .hero-bottom-right{
-  text-align:right;
-}
-
-
-@media(min-width:1920px){
-  #etnika-hero{
-    /* На ultrawide контент снова расширяется:
-       180px от окна до shell, максимум 2600px */
-    --edge:max(180px,calc((100vw - 2600px)/2));
-  }
-
-  #etnika-hero .hero-left{
-    top:24.5%;
-    width:min(1500px,64%);
-  }
-
-  #etnika-hero .hero-title{
-    font-size:clamp(220px,9vw,310px);
-  }
-
-  #etnika-hero .hero-tagline{
-    margin-top:34px;
-    margin-left:clamp(150px,7vw,240px);
-    font-size:clamp(82px,3.8vw,126px);
-  }
-
-  #etnika-hero .hero-kicker{
-    font-size:clamp(20px,1vw,28px);
-  }
-
-  #etnika-hero .hero-right{
-    top:35%;
-    right:clamp(40px,2.5vw,80px);
-    width:clamp(440px,19vw,570px);
-  }
-
-  #etnika-hero .hero-right h2{
-    font-size:clamp(52px,2.25vw,72px);
-  }
-
-  #etnika-hero .hero-right p{
-    font-size:clamp(18px,.82vw,24px);
-  }
-
-  #etnika-hero .hero-actions{
-    width:clamp(320px,14vw,410px);
-    margin-top:30px;
-  }
-
-  #etnika-hero .hero-btn{
-    height:60px;
-    font-size:clamp(14px,.68vw,18px);
-  }
-
-  #etnika-hero .hero-badge{
-    top:8.5%;
-    right:0;
-    width:96px;
-    font-size:12px;
-  }
-
-  #etnika-hero .hero-badge svg{
-    width:40px;
-    height:52px;
-  }
-
-  #etnika-hero .hero-bottom{
-    font-size:clamp(11px,.55vw,15px);
-  }
-
-  #etnika-hero .hero-ghost{
-    left:-70px;
-    top:30%;
-    font-size:clamp(320px,14.5vw,500px);
-  }
-}
-
-/* laptop */
-@media(max-width:1440px){
-  #etnika-hero{
-    --edge:max(40px,calc((100vw - 1320px)/2));
-  }
-
-  #etnika-hero .hero-left{
-    top:27.6%;
-    width:min(860px,60vw);
-  }
-
-  #etnika-hero .hero-title{
-    font-size:180px;
-  }
-
-  #etnika-hero .hero-tagline{
-    margin-left:116px;
-    font-size:68px;
-  }
-
-  #etnika-hero .hero-right{
-    top:36.8%;
-    right:28px;
-    width:390px;
-  }
-
-  #etnika-hero .hero-right h2{
-    font-size:40px;
-  }
-
-  #etnika-hero .hero-right p{
-    font-size:16px;
-  }
-}
-
-/* tablet / smaller desktop */
-@media(max-width:1100px){
-  #etnika-hero{
-    --edge:30px;
-    min-height:900px;
-  }
-
-  #etnika-hero .hero-left{
-    top:22%;
-    width:100%;
-  }
-
-  #etnika-hero .hero-title{
-    font-size:clamp(92px,15vw,150px);
-  }
-
-  #etnika-hero .hero-tagline{
-    margin-left:0;
-    margin-top:18px;
-    white-space:normal;
-    font-size:clamp(44px,6vw,62px);
-  }
-
-  #etnika-hero .hero-right{
-    top:auto;
-    right:0;
-    bottom:142px;
-    width:min(390px,42vw);
-  }
-
-  #etnika-hero .hero-right h2{
-    font-size:36px;
-  }
-
-  #etnika-hero .hero-right p{
-    font-size:15px;
-  }
-
-  #etnika-hero .hero-actions{
-    width:260px;
-  }
-}
-
-/* mobile */
-@media(max-width:700px){
-  #etnika-hero{
-    --edge:20px;
-    min-height:820px;
-  }
-
-  #etnika-hero .hero-video{
-    object-position:57% center;
-  }
-
-  #etnika-hero .hero-ghost{
-    left:-10px;
-    top:24%;
-    font-size:44vw;
-  }
-
-  #etnika-hero .hero-left{
-    top:18%;
-    width:100%;
-  }
-
-  #etnika-hero .hero-kicker{
-    gap:12px;
-    margin-bottom:22px;
-    font-size:13px;
-  }
-
-  #etnika-hero .hero-kicker::before{
-    width:34px;
-    flex-basis:34px;
-  }
-
-  #etnika-hero .hero-title{
-    font-size:22vw;
-  }
-
-  #etnika-hero .hero-tagline{
-    margin:16px 0 0 0;
-    font-size:12vw;
-    white-space:normal;
-  }
-
-  #etnika-hero .hero-right{
-    right:0;
-    width:100%;
-    bottom:122px;
-  }
-
-  #etnika-hero .hero-right h2{
-    font-size:35px;
-  }
-
-  #etnika-hero .hero-right p{
-    font-size:14px;
-    line-height:1.65;
-  }
-
-  #etnika-hero .hero-actions{
-    width:min(274px,100%);
-    margin-top:20px;
-    gap:9px;
-  }
-
-  #etnika-hero .hero-btn{
-    height:50px;
-    padding:0 17px;
-    font-size:13px;
-  }
-
-  #etnika-hero .hero-badge{
-    top:20px;
-    right:0;
-    width:65px;
-    font-size:8px;
-  }
-
-  #etnika-hero .hero-badge svg{
-    width:28px;
-    height:36px;
-  }
-
-  #etnika-hero .hero-bottom{
-    bottom:22px;
-    padding-top:14px;
-    font-size:8px;
-  }
-}
-</style>
-
-<section id="etnika-hero" aria-label="ЭТНИКА — студия автопортрета в Москве">
-  <video class="hero-video" autoplay muted loop playsinline preload="metadata">
-    <source src="https://static.tildacdn.com/vide6262-3963-4431-b066-353834343161/outputcompress-video.mp4" type="video/mp4">
-  </video>
-
-  <div class="hero-shell">
-    <div class="hero-ghost" aria-hidden="true">ЭТНИКА</div>
-
-    <div class="hero-badge" aria-label="Хорошее место 2026">
-      <svg viewBox="0 0 34 44" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M17 42C17 42 31 27.4 31 15.9C31 8.78 24.73 3 17 3C9.27 3 3 8.78 3 15.9C3 27.4 17 42 17 42Z"
-          fill="none"
-          stroke="#A9151D"
-          stroke-width="2"
-          stroke-linejoin="round"
-        />
-        <circle
-          cx="17"
-          cy="15.9"
-          r="5.2"
-          fill="none"
-          stroke="#A9151D"
-          stroke-width="2"
-        />
-      </svg>
-      Хорошее<br>место<br>2026
-    </div>
-
-    <div class="hero-left">
-      <div class="hero-kicker">Москва · студия автопортрета</div>
-      <h1 class="hero-title">ЭТНИКА</h1>
-      <div class="hero-tagline">...наедине с собой</div>
-    </div>
-
-    <div class="hero-right">
-      <h2>Профессиональные<br>снимки<br>без фотографа</h2>
-
-      <p>
-        Вы сами управляете съёмкой. Перед вами —<br>
-        только зеркало, камера и пространство,<br>
-        в котором не нужно играть роль
-      </p>
-
-      <div class="hero-actions">
-        <a class="hero-btn hero-btn--primary" href="https://n1268189.yclients.com/" target="_blank" rel="noopener">
-          <span>Выбрать время</span>
-          <span class="arrow">↗</span>
-        </a>
-
-        <a class="hero-btn" href="#etnika-process-interactive">
-          <span>Как это работает</span>
-          <span class="arrow">↓</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="hero-bottom">
-      <div>
-        Ленинская Слобода, 26А<br>
-        Автозаводская · Москва
-      </div>
-
-      <div class="hero-bottom-right">
-        10:00—22:00<br>
-        7 дней в неделю
-      </div>
-    </div>
-  </div>
+<section id="etnika-hero" class="etnika-carousel" aria-label="ЭТНИКА — студия автопортрета" data-autoplay="7000">
+<div class="ec-slidebox" aria-hidden="true">
+  <div class="ec-slide ec-slide--bw is-current" data-tone="dark" data-name="Чёрно-белый портрет"><img class="ec-photo" src="assets/hero-carousel/etnika-ai-bw-hero.png" alt="" decoding="async" fetchpriority="high"></div>
+  <div class="ec-slide ec-slide--scarf" data-tone="dark" data-name="Красная ткань на чёрном"><img class="ec-photo" src="assets/hero-carousel/etnika-ai-scarf-hero.png" alt="" decoding="async"></div>
+  <div class="ec-slide ec-slide--red" data-tone="dark" data-name="Красный фон — оригинальная съёмка ETNIKA"><picture><source media="(max-width:760px)" srcset="assets/etnika-hero-red-mobile.jpg"><img class="ec-photo" src="assets/etnika-hero-red-wide.jpg" alt="" decoding="async"></picture></div>
+  <div class="ec-slide ec-slide--light" data-tone="light" data-name="Светлый фон — оригинальная съёмка ETNIKA"><img class="ec-photo" src="assets/hero-carousel/light-drive-9953.jpg" alt="" decoding="async"></div>
+</div>
+<div class="ec-shell">
+  <header class="ec-top"><div class="ec-city">Москва · студия автопортрета</div><div class="ec-award" aria-label="Хорошее место 2026"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 45" aria-hidden="true"><path d="M18 43S33 28 33 16.5A15 15 0 1 0 3 16.5C3 28 18 43 18 43Z" fill="none" stroke="#d21b27" stroke-width="2.3"/><circle cx="18" cy="16" r="5.5" fill="none" stroke="#d21b27" stroke-width="2"/></svg><span>Хорошее<br>место 2026</span></div></header>
+  <div class="ec-content"><div class="ec-lockup"><h1 class="ec-brand">ЭТНИКА</h1><img class="ec-love" src="assets/hero-carousel/love-heart-reference.png" alt="это по любви" width="174" height="190"></div><h2 class="ec-heading">Профессиональные снимки<br>без фотографа</h2><a class="ec-book" href="https://n1268189.yclients.com/" target="_blank" rel="noopener noreferrer"><span>Выбрать время</span><span class="ec-arrow" aria-hidden="true">→</span></a></div>
+  <div class="ec-bottom"><div>Ленинская Слобода, 26А<br>Автозаводская · Москва</div><div class="ec-controls" role="group" aria-label="Выбор фотографии"><button class="ec-dot" type="button" aria-label="Показать: чёрно-белый портрет" aria-current="true" data-slide="0"></button><button class="ec-dot" type="button" aria-label="Показать: девушка с красной тканью" aria-current="false" data-slide="1"></button><button class="ec-dot" type="button" aria-label="Показать: оригинальный красный фон" aria-current="false" data-slide="2"></button><button class="ec-dot" type="button" aria-label="Показать: оригинальный светлый фон" aria-current="false" data-slide="3"></button></div><div>10:00–22:00<br>7 дней в неделю</div></div>
+</div>
+<p class="ec-screenreader" role="status" aria-live="polite" id="etnika-slide-status">Фотография 1 из 4: чёрно-белый портрет.</p>
 </section>
 
 <script>
@@ -5925,7 +5345,7 @@ body.etnika-gallery-lock{
 
         <div class="pc-photo">
           <img
-            src="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg"
+            src="assets/etnika-portrait-dark.jpg"
             alt="Фотосессия в ЭТНИКА"
           >
           <div class="pc-photo-caption">
@@ -5966,7 +5386,7 @@ body.etnika-gallery-lock{
       duration:'30 минут',
       people:'до 2 человек · больше — по согласованию',
       prices:{weekday:'2 900',weekend:'3 900'},
-      image:'https://static.tildacdn.com/tild6434-3663-4531-b961-633566393134/bw2.jpg',
+      image:'assets/etnika-bw-portrait.jpg',
       photoText:'Для короткой индивидуальной съёмки, новых портретов или быстрого обновления контента.',
       features:[
         'Базовый белый фон',
@@ -5983,7 +5403,7 @@ body.etnika-gallery-lock{
       duration:'60 минут',
       people:'до 4 человек · больше — по согласованию',
       prices:{weekday:'4 500',weekend:'5 900'},
-      image:'https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg',
+      image:'assets/etnika-portrait-dark.jpg',
       photoText:'Оптимально, если хочется спокойно поснимать несколько образов без спешки.',
       features:[
         'Базовый белый фон',
@@ -6001,7 +5421,7 @@ body.etnika-gallery-lock{
       duration:'100 минут',
       people:'до 6 человек · больше — по согласованию',
       prices:{weekday:'7 500',weekend:'9 000'},
-      image:'https://static.tildacdn.com/tild3739-6635-4138-b038-356661306337/310503651.jpg',
+      image:'assets/etnika-portrait-beige.jpg',
       photoText:'Для нескольких образов, большой компании и съёмки, где хочется времени на эксперименты.',
       features:[
         'Базовый белый фон',
@@ -11934,5 +11354,623 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
 }
 </style>
 
+<style id="etnika-preview-styles">#etnika-hero.etnika-new-hero::before{content:none!important;display:none!important}
+#etnika-hero.etnika-new-hero .e-background video.hero-video{z-index:0!important;object-fit:cover!important;object-position:center 44%!important;filter:none!important}
+
+/* ETNIKA NOV 2026 REVIEW: visual response to Telegram comments, no edits to original site */
+
+@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@300;400;500;600&display=swap');
+html{scroll-behavior:smooth}
+#etnika-hero.etnika-new-hero{--hero-edge:max(80px,calc((100vw - 1760px)/2));position:relative;min-height:100svh;height:auto;max-height:none;isolation:isolate;background:#171313;color:#fff;overflow:hidden;font-family:'Geologica',Arial,sans-serif;font-weight:300;}
+#etnika-hero.etnika-new-hero, #etnika-hero.etnika-new-hero *{box-sizing:border-box}
+#etnika-hero.etnika-new-hero .e-background, #etnika-hero.etnika-new-hero .e-background img,#etnika-hero.etnika-new-hero .e-background video{position:absolute;inset:0;height:100%;width:100%;display:block}
+#etnika-hero.etnika-new-hero .e-background{z-index:-3;overflow:hidden}
+#etnika-hero.etnika-new-hero .e-background img,#etnika-hero.etnika-new-hero .e-background video{object-fit:cover;object-position:center 44%}
+#etnika-hero.etnika-new-hero[data-media="photo"] .e-background video{display:none}
+#etnika-hero.etnika-new-hero[data-media="video"] .e-background img{display:none}
+#etnika-hero.etnika-new-hero .e-tone{position:absolute;inset:0;z-index:-2;background:rgba(0,0,0,.24);pointer-events:none}
+#etnika-hero.etnika-new-hero .e-hero-layout{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;gap:24px;padding:clamp(28px,4vh,58px) var(--hero-edge) clamp(26px,4vh,46px);max-width:2600px;margin:0 auto;position:relative}
+#etnika-hero.etnika-new-hero .e-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+#etnika-hero.etnika-new-hero .e-city{font:400 16px/1.5 'Geologica',Arial,sans-serif;text-transform:uppercase;letter-spacing:.04em;display:flex;gap:15px;align-items:center;text-shadow:0 2px 16px #0009}
+#etnika-hero.etnika-new-hero .e-city:before{content:"";width:42px;flex:none;border-top:1px solid #fff}
+#etnika-hero.etnika-new-hero .e-award{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;font:400 16px/1.3 'Geologica',Arial,sans-serif;letter-spacing:.03em;text-transform:uppercase;text-shadow:0 2px 10px #0008}
+#etnika-hero.etnika-new-hero .e-award svg{width:34px;height:43px}
+#etnika-hero.etnika-new-hero .e-central{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(310px,420px);align-items:center;gap:clamp(35px,4vw,100px)}
+#etnika-hero.etnika-new-hero .e-brand{min-width:0;align-self:center}
+#etnika-hero.etnika-new-hero .e-name{font:400 clamp(106px,11.6vw,224px)/.8 'Forum',Georgia,serif;letter-spacing:-.055em;margin:0;white-space:nowrap;text-shadow:0 3px 22px #0006}
+#etnika-hero.etnika-new-hero .e-slogan{font:400 clamp(44px,4.45vw,82px)/.97 'Forum',Georgia,serif;letter-spacing:-.028em;margin:23px 0 0 clamp(24px,4vw,100px);white-space:nowrap;text-shadow:0 3px 20px #0008}
+#etnika-hero.etnika-new-hero .e-copy{max-width:420px;justify-self:end;align-self:center;text-shadow:0 2px 18px #000a}
+#etnika-hero.etnika-new-hero .e-copy h2{font:400 clamp(41px,3.1vw,60px)/.97 'Forum',Georgia,serif;letter-spacing:-.015em;margin:0 0 21px}
+#etnika-hero.etnika-new-hero .e-copy p{font:300 clamp(16px,1vw,18px)/1.67 'Geologica',Arial,sans-serif;margin:0;max-width:440px;color:#fff}
+#etnika-hero.etnika-new-hero .e-buttons{display:grid;gap:10px;margin-top:27px;max-width:320px}
+#etnika-hero.etnika-new-hero .e-buttons a{border:1px solid #fffd;background:rgba(0,0,0,.04);color:#fff;min-height:54px;padding:10px 17px;display:flex;align-items:center;justify-content:space-between;font:400 16px/1.3 'Geologica',Arial,sans-serif;text-transform:uppercase;letter-spacing:.02em;text-decoration:none;text-shadow:none;transition:background .2s ease,color .2s ease}
+#etnika-hero.etnika-new-hero .e-buttons a:first-child{background:#a9151d;border-color:#a9151d}
+#etnika-hero.etnika-new-hero .e-buttons a:hover{background:#fff;color:#151515;border-color:#fff}
+#etnika-hero.etnika-new-hero .e-buttons b{font:400 27px/1 'Forum',Georgia,serif}
+#etnika-hero.etnika-new-hero .e-bottom{border-top:1px solid #fffa;padding-top:17px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:end;text-transform:uppercase;letter-spacing:.025em;font:300 16px/1.45 'Geologica',Arial,sans-serif;text-shadow:0 1px 12px #000}
+#etnika-hero.etnika-new-hero .e-bottom>div:last-child{text-align:right}
+@media(min-width:1920px){#etnika-hero.etnika-new-hero{--hero-edge:max(180px,calc((100vw - 2600px)/2))}}
+@media(max-width:1440px) and (min-width:901px){#etnika-hero.etnika-new-hero{--hero-edge:clamp(40px,5.4vw,80px)}#etnika-hero.etnika-new-hero .e-name{font-size:clamp(104px,11.3vw,176px)}#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(42px,4.25vw,64px)}#etnika-hero.etnika-new-hero .e-central{grid-template-columns:minmax(0,1fr) minmax(300px,370px);gap:24px}}
+@media(max-width:900px){#etnika-hero.etnika-new-hero{--hero-edge:clamp(22px,5vw,42px)}#etnika-hero.etnika-new-hero .e-central{grid-template-columns:1fr;gap:clamp(20px,3vh,35px);align-content:center}#etnika-hero.etnika-new-hero .e-copy{justify-self:start;max-width:570px}#etnika-hero.etnika-new-hero .e-name{font-size:clamp(84px,15vw,150px)}#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(42px,6.5vw,65px);margin:18px 0 0 0}}
+@media(max-width:600px){#etnika-hero.etnika-new-hero{--hero-edge:20px;min-height:100svh}#etnika-hero.etnika-new-hero .e-hero-layout{padding:20px 20px 22px;gap:10px;min-height:100svh}#etnika-hero.etnika-new-hero .e-city{font-size:16px;gap:9px;max-width:220px}#etnika-hero.etnika-new-hero .e-city:before{width:22px}#etnika-hero.etnika-new-hero .e-award{font-size:13px;width:74px}#etnika-hero.etnika-new-hero .e-award svg{width:26px;height:34px}#etnika-hero.etnika-new-hero .e-central{gap:clamp(19px,3vh,30px)}#etnika-hero.etnika-new-hero .e-name{font-size:clamp(72px,19.5vw,105px)}#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(37px,10.2vw,53px);margin-top:12px}#etnika-hero.etnika-new-hero .e-copy h2{font-size:clamp(35px,8.9vw,47px);margin-bottom:12px}#etnika-hero.etnika-new-hero .e-copy p{font-size:16px;line-height:1.5}#etnika-hero.etnika-new-hero .e-buttons{margin-top:18px;gap:8px;max-width:100%}#etnika-hero.etnika-new-hero .e-buttons a{min-height:49px;font-size:16px}#etnika-hero.etnika-new-hero .e-bottom{font-size:14px;gap:10px;padding-top:12px}#etnika-hero.etnika-new-hero .e-background img{object-position:52% center}}
+@media(prefers-reduced-motion:reduce){#etnika-hero.etnika-new-hero .e-buttons a{transition:none}}
+
+html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
+#etnika-block-02-final{--paper:#fbfbfb;--red:#a9151d;height:auto;max-height:none;min-height:740px;overflow:visible}
+#etnika-block-02-final .etnika-b02__grid{min-height:740px}
+#etnika-block-02-final .etnika-b02__description{font-size:clamp(16px,1vw,19px);font-weight:300}
+#etnika-block-02-final .etnika-b02__slide{object-fit:cover;object-position:center 35%}
+#etnika-stories{--red:#a9151d;height:auto;max-height:none;overflow:visible;padding-bottom:clamp(36px,5vw,88px)}
+#etnika-stories .stories-shell{height:auto;max-height:none}
+#etnika-stories .stories-title{margin-bottom:28px}
+#etnika-stories .etnika-portfolio-eyebrow{color:#a9151d;font:500 16px/1.4 'Geologica',Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;margin:22px 0}
+#etnika-stories .etnika-portfolio-mosaic{display:grid;grid-template-columns:1fr 1.05fr 1fr;gap:12px;min-height:390px;margin:10px 0 32px}
+#etnika-stories .etnika-portfolio-mosaic figure{position:relative;min-height:390px;overflow:hidden;margin:0;background:#ddd}
+#etnika-stories .etnika-portfolio-mosaic img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 38%;position:absolute;inset:0}
+#etnika-stories .etnika-portfolio-mosaic figcaption{position:absolute;bottom:0;left:0;right:0;color:white;padding:15px 20px;font:400 16px/1.4 'Geologica',Arial,sans-serif;background:rgba(0,0,0,.35)}
+#etnika-stories .story-card img{object-fit:cover;object-position:center 38%}
+#etnika-space-photo{--red:#b81b24}
+#etnika-space-photo .spf-shell{min-height:700px}
+#etnika-studio-features{--red:#a9151d}
+#etnika-process-interactive{--red:#a9151d}
+#etnika-process-interactive .epi-grid img,#etnika-process-interactive .epi-gallery img{filter:grayscale(1)}
+#etnika-process-interactive .epi-grid{background:#f8f8f8}
+
+/* ETNIKA 2026-11-04 — isolated, content-sized tariff layout.
+   Source: Anna and Egor PDF pp 11, 14–15; user screenshot 04 Nov.
+   Preserve prices, features and booking scripts from v19. */
+#etnika-prices-clear{
+  --red:#a9151d;
+  --paper:#fbfaf9;
+  height:auto!important; min-height:0!important; max-height:none!important;
+  overflow:visible!important;
+  background:var(--paper)!important;
+  font-family:'Geologica',Arial,sans-serif!important;
+}
+#etnika-prices-clear .pc-shell{
+  box-sizing:border-box;
+  display:flex!important;flex-direction:column!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  gap:clamp(26px,3.3vw,44px)!important;
+  margin:0 var(--edge)!important;
+  padding:clamp(44px,5vw,78px) 0 clamp(50px,6vw,92px)!important;
+}
+#etnika-prices-clear .pc-top{
+  opacity:.68;
+  font-weight:300;
+}
+#etnika-prices-clear .pc-head{
+  display:flex!important;flex-wrap:wrap!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:24px 35px!important;
+  width:100%;
+}
+#etnika-prices-clear .pc-title{
+  font:400 clamp(52px,5.1vw,80px)/.98 'Forum',Georgia,serif!important;
+  letter-spacing:-.035em!important;
+  margin:0!important;
+  max-width:100%;
+}
+#etnika-prices-clear .pc-mode-wrap{
+  display:block!important;
+  border:0!important;
+  flex:none;
+  padding-bottom:4px;
+}
+#etnika-prices-clear .pc-mode{
+  display:flex!important;gap:0!important;
+  border:1px solid #a9151d!important;
+}
+#etnika-prices-clear .pc-mode-btn{
+  display:block!important;
+  padding:14px 21px!important;
+  min-height:47px!important;
+  min-width:132px!important;
+  background:#fff!important;
+  border:0!important;
+  border-right:1px solid #a9151d!important;
+  font:400 16px/1.2 'Geologica',Arial,sans-serif!important;
+  letter-spacing:.02em!important;
+  color:#7d7070!important;
+  text-transform:uppercase;
+}
+#etnika-prices-clear .pc-mode-btn:last-child{border-right:0!important}
+#etnika-prices-clear .pc-mode-btn::after{display:none!important}
+#etnika-prices-clear .pc-mode-btn.is-active{
+  background:#a9151d!important;color:#fff!important;
+}
+#etnika-prices-clear .pc-main{
+  display:flex!important;flex-direction:column!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  width:100%;
+  overflow:visible!important;
+  gap:24px!important;
+  border:0!important;
+}
+#etnika-prices-clear .pc-tabs{
+  box-sizing:border-box;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  grid-template-rows:auto!important;
+  width:100%!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  gap:13px!important;
+  border:0!important;
+}
+#etnika-prices-clear .pc-tab{
+  position:relative!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  box-sizing:border-box!important;
+  height:auto!important;min-height:197px!important;max-height:none!important;
+  padding:23px 26px!important;
+  border:1px solid #dcd8d7!important;
+  background:#fff!important;
+  color:#20191a!important;
+  text-align:left;
+  gap:0!important;
+}
+#etnika-prices-clear .pc-tab:hover{background:#f8f3f3!important}
+#etnika-prices-clear .pc-tab.is-active,
+#etnika-prices-clear .pc-tab.is-active:hover{
+  background:#a9151d!important;
+  border-color:#a9151d!important;
+  color:#fff!important;
+}
+#etnika-prices-clear .pc-tab-left{display:block!important;min-width:0!important;width:100%;padding-right:40px}
+#etnika-prices-clear .pc-tab-num{
+  display:block;margin:0 0 13px!important;
+  opacity:.56;font:300 12px/1.2 'Geologica',Arial,sans-serif!important;
+  letter-spacing:.08em!important;
+}
+#etnika-prices-clear .pc-tab-name{
+  display:block;
+  font:400 clamp(29px,2.55vw,39px)/1.02 'Forum',Georgia,serif!important;
+  letter-spacing:-.01em!important;
+  color:inherit!important;
+}
+#etnika-prices-clear .pc-tab-meta{
+  display:block;
+  margin:9px 0 0!important;
+  font:300 16px/1.45 'Geologica',Arial,sans-serif!important;
+  color:inherit!important;opacity:.67;
+}
+#etnika-prices-clear .pc-tab-price{
+  display:block!important;
+  margin:17px 0 0!important;
+  font:400 clamp(29px,2.7vw,40px)/1.05 'Forum',Georgia,serif!important;
+  color:#a9151d!important;
+}
+#etnika-prices-clear .pc-tab.is-active .pc-tab-price{color:#fff!important}
+#etnika-prices-clear .pc-tab-action{
+  position:absolute!important;top:22px!important;right:22px!important;
+  display:grid!important;place-items:center!important;
+  width:36px!important;height:36px!important;
+  border:1px solid currentColor!important;
+  opacity:.56!important;
+  background:transparent!important;
+  transform:none!important;
+}
+#etnika-prices-clear .pc-tab.is-active .pc-tab-action{opacity:.86!important}
+#etnika-prices-clear .pc-detail{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.25fr) minmax(290px,.75fr)!important;
+  grid-template-rows:auto!important;
+  align-items:stretch!important;
+  min-width:0!important;width:100%!important;max-width:none!important;
+  min-height:0!important;height:auto!important;max-height:none!important;
+  overflow:visible!important;
+  border:1px solid #ded9d8;
+  background:#fff;
+}
+#etnika-prices-clear .pc-copy{
+  box-sizing:border-box!important;
+  display:flex!important;flex-direction:column!important;
+  grid-template-rows:none!important;
+  min-width:0!important;min-height:0!important;
+  height:auto!important;max-height:none!important;
+  padding:clamp(25px,3.1vw,48px)!important;
+  gap:0!important;
+  overflow:visible!important;
+}
+#etnika-prices-clear .pc-kicker{
+  margin:0 0 13px!important;
+  font:400 12px/1.4 'Geologica',Arial,sans-serif!important;
+  letter-spacing:.11em!important;
+  text-transform:uppercase;color:#a9151d!important;
+}
+#etnika-prices-clear .pc-name{
+  display:flex!important;flex-wrap:wrap!important;
+  align-items:baseline!important;
+  gap:0 .3em!important;
+  width:100%;
+  margin:0 0 12px!important;
+  font:400 clamp(45px,4vw,66px)/1.04 'Forum',Georgia,serif!important;
+  letter-spacing:-.025em!important;
+  color:#161313!important;
+}
+#etnika-prices-clear .pc-name-value,
+#etnika-prices-clear .pc-name-time{display:inline!important;line-height:1.04!important}
+#etnika-prices-clear .pc-name-time{
+  font-size:.78em!important;
+  color:#a9151d!important;
+}
+#etnika-prices-clear .pc-people{
+  font:300 16px/1.5 'Geologica',Arial,sans-serif!important;
+  color:#756f6d!important;
+  width:100%;max-width:none!important;
+  margin:0 0 25px!important;
+}
+#etnika-prices-clear .pc-features{
+  counter-reset:pcfeature;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-template-rows:none!important;
+  grid-auto-rows:auto!important;
+  align-content:start!important;
+  width:100%;
+  min-height:0!important;height:auto!important;
+  flex:0 0 auto!important;
+  column-gap:24px!important;row-gap:0!important;
+  margin:0 0 27px!important;
+  padding:0!important;
+  list-style:none!important;
+  border:0!important;
+}
+#etnika-prices-clear .pc-features li{
+  counter-increment:pcfeature;
+  box-sizing:border-box;
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  gap:8px!important;
+  min-height:0!important;height:auto!important;
+  margin:0!important;padding:12px 0!important;
+  border-top:1px solid #ebe7e6!important;
+  font:300 16px/1.48 'Geologica',Arial,sans-serif!important;
+  color:#33302f!important;
+  align-items:start!important;
+}
+#etnika-prices-clear .pc-features li::before{
+  content:counter(pcfeature,decimal-leading-zero)!important;
+  position:static!important;
+  display:block!important;
+  width:auto!important;height:auto!important;
+  color:#a9151d!important;
+  background:none!important;
+  font:400 12px/1.6 'Geologica',Arial,sans-serif!important;
+}
+#etnika-prices-clear .pc-buy{
+  box-sizing:border-box;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+  gap:22px!important;
+  margin-top:auto!important;
+  padding:24px 0 0!important;
+  border-top:1px solid #dfdbd9!important;
+}
+#etnika-prices-clear .pc-price{
+  font:400 clamp(55px,4.7vw,79px)/1 'Forum',Georgia,serif!important;
+  letter-spacing:-.03em!important;color:#161313!important;
+}
+#etnika-prices-clear .pc-price small{
+  font:400 25px/1 'Forum',Georgia,serif!important;
+  margin-left:7px!important;
+}
+#etnika-prices-clear .pc-book{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  min-width:210px!important;min-height:54px!important;height:auto!important;
+  background:#a9151d!important;
+  border:1px solid #a9151d!important;
+  color:#fff!important;
+  padding:15px 18px!important;
+  font:400 15px/1.2 'Geologica',Arial,sans-serif!important;
+  letter-spacing:.025em!important;
+  text-transform:uppercase;
+}
+#etnika-prices-clear .pc-book:hover{background:#861019!important}
+#etnika-prices-clear .pc-photo{
+  position:relative!important;
+  display:block!important;
+  min-height:550px!important;height:auto!important;
+  overflow:hidden!important;
+  background:#151515;
+}
+#etnika-prices-clear .pc-photo img{
+  position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;
+  object-fit:cover!important;object-position:center 36%!important;
+  filter:none!important;
+}
+#etnika-prices-clear .pc-photo-caption{left:21px;right:21px;bottom:21px}
+#etnika-prices-clear .pc-photo-caption strong{font-size:clamp(25px,2vw,33px)}
+#etnika-prices-clear .pc-photo-caption span{
+  font:300 15px/1.5 'Geologica',Arial,sans-serif!important;
+  color:rgba(255,255,255,.84)!important;
+}
+@media(max-width:1100px){
+  #etnika-prices-clear .pc-shell{margin:0 35px!important}
+  #etnika-prices-clear .pc-head{align-items:flex-start!important}
+  #etnika-prices-clear .pc-detail{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  #etnika-prices-clear .pc-photo{min-height:380px!important}
+}
+@media(max-width:700px){
+  #etnika-prices-clear .pc-shell{
+    margin:0 20px!important;
+    padding:42px 0 54px!important;
+    gap:24px!important;
+  }
+  #etnika-prices-clear .pc-title{font-size:clamp(43px,11.5vw,65px)!important}
+  #etnika-prices-clear .pc-mode{width:100%}
+  #etnika-prices-clear .pc-mode-btn{
+    font-size:15px!important;
+    min-width:0!important;
+    padding:13px 15px!important;
+    flex:1;
+  }
+  #etnika-prices-clear .pc-main{gap:17px!important}
+  #etnika-prices-clear .pc-tabs{grid-template-columns:1fr!important;gap:9px!important}
+  #etnika-prices-clear .pc-tab{
+    min-height:145px!important;
+    padding:17px 20px!important;
+  }
+  #etnika-prices-clear .pc-tab-num{margin-bottom:7px!important}
+  #etnika-prices-clear .pc-tab-price{margin-top:10px!important}
+  #etnika-prices-clear .pc-detail{grid-template-columns:minmax(0,1fr)!important}
+  #etnika-prices-clear .pc-copy{padding:24px 21px!important}
+  #etnika-prices-clear .pc-name{font-size:clamp(42px,11vw,54px)!important;gap:0 .2em!important}
+  #etnika-prices-clear .pc-features{grid-template-columns:1fr!important;margin-bottom:23px!important}
+  #etnika-prices-clear .pc-features li{font-size:16px!important;padding:10px 0!important}
+  #etnika-prices-clear .pc-buy{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+  #etnika-prices-clear .pc-book{width:100%!important}
+  #etnika-prices-clear .pc-photo{min-height:360px!important}
+}
+
+#etnika-extra{--red:#a9151d}
+#etnika-gift{--red:#a9151d}
+#etnika-contacts-source{--red:#a9151d}
+#etnika-faq{--red:#a9151d}
+#etnika-faq-tariffs{--red:#a9151d}
+#etnika-review-flow>section{scroll-margin-top:12px}
+@media(max-width:1000px){#etnika-stories .etnika-portfolio-mosaic{min-height:280px}#etnika-stories .etnika-portfolio-mosaic figure{min-height:280px}#etnika-prices-clear .pc-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}#etnika-prices-clear .pc-detail{display:block}}
+@media(max-width:700px){#etnika-stories .etnika-portfolio-mosaic{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-height:0}#etnika-stories .etnika-portfolio-mosaic figure{min-height:230px}#etnika-stories .etnika-portfolio-mosaic figure:first-child{grid-column:1/-1;min-height:330px}#etnika-block-02-final .etnika-b02__grid{min-height:0}#etnika-prices-clear .pc-tabs{grid-template-columns:1fr}#etnika-prices-clear .pc-detail{display:block}#etnika-prices-clear .pc-main{gap:18px}}
+
+
+/* 2026-11-04: real Drive asset + restrained typographic hierarchy */
+#etnika-hero.etnika-new-hero{background:#93181c;font-family:'Geologica',Arial,sans-serif!important}
+#etnika-hero.etnika-new-hero .e-background img{object-position:center center;object-fit:cover}
+#etnika-hero.etnika-new-hero[data-media="photo"] .e-tone{background:rgba(0,0,0,.08)}
+#etnika-hero.etnika-new-hero[data-media="video"] .e-tone{background:rgba(0,0,0,.23)}
+#etnika-hero.etnika-new-hero .e-central{display:flex;flex-direction:column;grid-template-columns:none;align-items:flex-start;justify-content:center;gap:clamp(16px,2.5vh,27px);max-width:min(100%,700px)}
+#etnika-hero.etnika-new-hero .e-brand{align-self:flex-start;max-width:100%}
+#etnika-hero.etnika-new-hero .e-name{font:400 clamp(96px,11.1vw,195px)/.77 'Forum',Georgia,serif;letter-spacing:-.045em;color:#fff;text-shadow:none}
+#etnika-hero.etnika-new-hero .e-slogan{font:400 clamp(43px,4.45vw,76px)/.96 'Forum',Georgia,serif;margin:17px 0 0 clamp(10px,2.8vw,50px);color:rgba(255,255,255,.94);text-shadow:none}
+#etnika-hero.etnika-new-hero .e-copy{width:100%;max-width:600px;justify-self:start;align-self:flex-start;text-shadow:none}
+#etnika-hero.etnika-new-hero .e-copy h2{font:400 clamp(35px,2.75vw,47px)/1.08 'Forum',Georgia,serif;letter-spacing:-.01em;margin:0 0 14px;color:rgba(255,255,255,.98);max-width:560px}
+#etnika-hero.etnika-new-hero .e-copy p{font:300 clamp(16px,1.04vw,18px)/1.62 'Geologica',Arial,sans-serif;color:rgba(255,255,255,.74);max-width:510px;text-shadow:none}
+#etnika-hero.etnika-new-hero .e-buttons{grid-template-columns:repeat(2,minmax(0,1fr));max-width:610px;width:100%;gap:12px;margin-top:23px}
+#etnika-hero.etnika-new-hero .e-buttons a{min-width:0;min-height:54px;font-weight:400;font-family:'Geologica',Arial,sans-serif!important;text-shadow:none}
+#etnika-hero.etnika-new-hero .e-top .e-city{color:rgba(255,255,255,.75);text-shadow:none}
+#etnika-hero.etnika-new-hero .e-award{color:rgba(255,255,255,.81);text-shadow:none}
+#etnika-hero.etnika-new-hero .e-bottom{color:rgba(255,255,255,.66);font:300 16px/1.5 'Geologica',Arial,sans-serif;text-shadow:none;border-top-color:rgba(255,255,255,.32);letter-spacing:.02em}
+#etnika-hero.etnika-new-hero::before{display:none!important;content:none!important}
+@media(max-width:1200px) and (min-width:701px){
+#etnika-hero.etnika-new-hero .e-central{max-width:min(55%,590px)}
+#etnika-hero.etnika-new-hero .e-name{font-size:clamp(80px,10.8vw,132px)}
+#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(34px,4.1vw,50px)}
+#etnika-hero.etnika-new-hero .e-copy h2{font-size:clamp(31px,3.5vw,40px)}
+#etnika-hero.etnika-new-hero .e-buttons{grid-template-columns:1fr;max-width:360px}
+}
+@media(max-width:700px){
+#etnika-hero.etnika-new-hero .e-hero-layout{min-height:100svh;padding:20px 20px 23px;grid-template-rows:auto 1fr auto;gap:12px}
+#etnika-hero.etnika-new-hero .e-central{max-width:100%;width:100%;justify-content:start;gap:13px;align-self:start;margin-top:clamp(18px,5svh,44px)}
+#etnika-hero.etnika-new-hero .e-name{font-size:clamp(69px,18.5vw,91px);line-height:.84}
+#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(33px,8.3vw,44px);margin:7px 0 0 0}
+#etnika-hero.etnika-new-hero .e-copy h2{font-size:clamp(29px,7.8vw,39px);line-height:1.06;margin-bottom:9px}
+#etnika-hero.etnika-new-hero .e-copy p{font-size:16px;line-height:1.43;max-width:360px;color:rgba(255,255,255,.77)}
+#etnika-hero.etnika-new-hero .e-buttons{grid-template-columns:1fr;max-width:355px;gap:8px;margin-top:13px}
+#etnika-hero.etnika-new-hero .e-buttons a{min-height:48px;font-size:16px}
+#etnika-hero.etnika-new-hero .e-bottom{font-size:14px;line-height:1.42;color:rgba(255,255,255,.69)}
+#etnika-hero.etnika-new-hero .e-top .e-city{font-size:14px}
+#etnika-hero.etnika-new-hero .e-award{font-size:12px}
+#etnika-hero.etnika-new-hero .e-background img{object-position:center center}
+}
+@media(max-width:700px) and (max-height:760px){
+#etnika-hero.etnika-new-hero .e-hero-layout{min-height:850px}
+}
+
+/* Sitewide: display hierarchy – secondary metadata and supporting copy never equal primary labels */
+#etnika-stories .stories-top,#etnika-space-photo .spf-top,#etnika-studio-features .b05-top,#etnika-prices-clear .pc-top,#etnika-faq .faq-top,#etnika-faq-tariffs .faq-top{opacity:.7;font-weight:300!important}
+#etnika-space-photo .spf-intro{font-family:'Geologica',Arial,sans-serif!important;font-weight:300!important;color:rgba(255,255,255,.73)!important}
+#etnika-prices-clear .pc-features li{font-family:'Geologica',Arial,sans-serif!important;font-weight:300!important}
+</style>
+<script id="etnika-preview-bootstrap">
+(function(){
+ function init(){
+ // HERO is managed by the slideshow component; retain remaining full-site initialization.
+ const slideUrls=['assets/etnika-portrait-beige.jpg','assets/etnika-portrait-dark.jpg','assets/etnika-bw-portrait.jpg','assets/etnika-portrait-etnika.jpg','assets/etnika-bw-guest.jpg'];
+ document.querySelectorAll('#etnika-block-02-final .etnika-b02__slide').forEach((img,i)=>{if(slideUrls[i]){img.src=slideUrls[i];img.loading=i?'lazy':'eager';img.style.objectPosition='center 38%'}});
+ const stories=document.getElementById('etnika-stories');
+ if(stories&&!stories.querySelector('.etnika-portfolio-mosaic')){
+ const h=stories.querySelector('.stories-title');
+ if(h){
+ const label=document.createElement('p');label.className='etnika-portfolio-eyebrow';label.textContent='Наши возможности · Портфолио гостей';h.before(label);
+ const gallery=document.createElement('div');gallery.className='etnika-portfolio-mosaic';
+ const arr=[['assets/etnika-portrait-dark.jpg','Автопортрет'],['assets/etnika-bw-portrait.jpg','Чёрно-белый портрет'],['assets/etnika-portrait-beige.jpg','Съёмка в полный рост']];
+ for(const [src,caption] of arr){let figure=document.createElement('figure'),img=document.createElement('img'),figcaption=document.createElement('figcaption');img.src=src;img.alt=caption+' — кадр ETNIKA';img.loading='lazy';figcaption.textContent=caption;figure.append(img,figcaption);gallery.append(figure);} h.after(gallery);
+ }
+ const card=stories.querySelector('[data-format="individual"] img');if(card)card.src='assets/etnika-portrait-dark.jpg';
+ const business=stories.querySelector('[data-format="business"] img');if(business)business.src='assets/etnika-portrait-etnika.jpg';
+ }
+ const ids=['etnika-hero','etnika-stories','etnika-space-photo','etnika-studio-features','etnika-block-02-final','etnika-process-interactive','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-contacts-source'];
+ const flow=document.createElement('main');flow.id='etnika-review-flow';flow.setAttribute('aria-label','Предварительная композиция всей главной');
+ for(const id of ids){const item=document.getElementById(id);if(item)flow.appendChild(item);}
+ document.body.appendChild(flow);
+ const links=document.querySelectorAll('#etnika-hero a[href="#etnika-process-interactive"]');links.forEach(x=>x.href='#etnika-process-interactive');
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script><style id="etnika-carousel-css">
+/* Clean background V2: no image text, no raster upscaling of B&W screenshot. Keep photo uncropped. */
+#etnika-hero.etnika-carousel .ec-slide:first-child{background:#070708}
+#etnika-hero.etnika-carousel .ec-slide:nth-child(2){background:#0a0a0a}
+
+#etnika-hero.etnika-carousel{--white:#fff;--red:#bd1824;--dark:#101010;--shell-padding:clamp(24px,4.9vw,92px);width:100%;height:auto;min-height:100svh;max-height:none;position:relative;isolation:isolate;overflow:hidden;background:#080808;color:#fff;font-family:'Geologica',Arial,sans-serif;box-sizing:border-box}
+#etnika-hero.etnika-carousel *,#etnika-hero.etnika-carousel *::before,#etnika-hero.etnika-carousel *::after{box-sizing:border-box}
+#etnika-hero.etnika-carousel a{color:inherit;text-decoration:none}
+#etnika-hero.etnika-carousel .ec-slidebox,#etnika-hero.etnika-carousel .ec-slide,#etnika-hero.etnika-carousel picture,#etnika-hero.etnika-carousel .ec-photo{position:absolute;inset:0;width:100%;height:100%}
+#etnika-hero.etnika-carousel .ec-slidebox{z-index:-2;pointer-events:none}
+#etnika-hero.etnika-carousel .ec-slide{opacity:0;visibility:hidden;transition:opacity 1.1s ease,visibility 1.1s;will-change:opacity;overflow:hidden;background:#080808}
+#etnika-hero.etnika-carousel .ec-slide[data-tone="light"]{background:#eae8e5}
+#etnika-hero.etnika-carousel .ec-slide.is-current{opacity:1;visibility:visible;z-index:1}
+#etnika-hero.etnika-carousel .ec-photo{display:block;object-fit:contain;object-position:center center;border:0;}
+#etnika-hero.etnika-carousel .ec-shell{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-height:100svh;width:100%;max-width:2600px;margin:0 auto;padding:clamp(22px,4.1vh,58px) var(--shell-padding) clamp(22px,3.4vh,40px);gap:20px}
+#etnika-hero.etnika-carousel .ec-top{display:flex;justify-content:space-between;align-items:start;gap:30px;min-height:75px}
+#etnika-hero.etnika-carousel .ec-city{font:400 16px/1.45 'Geologica',Arial,sans-serif;letter-spacing:.055em;text-transform:uppercase;display:flex;align-items:center;gap:16px;white-space:normal;max-width:70%;color:rgba(255,255,255,.82)}
+#etnika-hero.etnika-carousel .ec-city::before{content:"";height:1px;background:currentColor;width:42px;flex:none;opacity:.75}
+#etnika-hero.etnika-carousel .ec-award{display:flex;align-items:center;flex-direction:column;gap:5px;text-align:center;font:400 16px/1.25 'Geologica',Arial,sans-serif;text-transform:uppercase;letter-spacing:.025em;color:rgba(255,255,255,.84);flex:none}
+#etnika-hero.etnika-carousel .ec-award svg{width:28px;height:38px;display:block}
+#etnika-hero.etnika-carousel .ec-content{align-self:center;width:min(59%,820px);min-width:0;padding:20px 0 42px}
+#etnika-hero.etnika-carousel .ec-lockup{display:flex;align-items:center;gap:0;max-width:100%;margin-bottom:clamp(38px,5.9vh,85px)}
+#etnika-hero.etnika-carousel .ec-brand{font:400 clamp(100px,10vw,195px)/.78 'Forum',Georgia,serif;letter-spacing:-.055em;text-transform:uppercase;white-space:nowrap;margin:0;color:#fff}
+#etnika-hero.etnika-carousel .ec-love{width:clamp(102px,9vw,173px);height:clamp(125px,11vw,190px);flex:none;position:relative;margin-left:clamp(-4px,.2vw,6px);margin-top:clamp(-12px,-1vw,-4px)}
+#etnika-hero.etnika-carousel .ec-love svg{width:100%;height:100%;overflow:visible;display:block}
+#etnika-hero.etnika-carousel .ec-love path{stroke:#e11c2e;fill:none;stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round}
+#etnika-hero.etnika-carousel .ec-love span{position:absolute;left:28%;top:48%;font:500 clamp(25px,2.1vw,41px)/.9 'Caveat',cursive;color:#ea2535;white-space:nowrap;transform:rotate(-46deg);transform-origin:top left;text-shadow:none}
+#etnika-hero.etnika-carousel .ec-heading{font:400 clamp(38px,3.3vw,63px)/1.13 'Forum',Georgia,serif;letter-spacing:-.014em;max-width:800px;margin:0;color:#fff;text-wrap:balance}
+#etnika-hero.etnika-carousel .ec-book{margin-top:clamp(29px,4.7vh,63px);display:inline-flex;min-width:310px;max-width:100%;height:60px;align-items:center;justify-content:space-between;gap:50px;padding:0 23px;border:1px solid rgba(255,255,255,.8);font:400 16px/1 'Geologica',Arial,sans-serif;letter-spacing:.045em;text-transform:uppercase;background:rgba(0,0,0,.10);transition:background .2s,color .2s,border-color .2s;color:#fff}
+#etnika-hero.etnika-carousel .ec-book:hover{background:#fff;border-color:#fff;color:#101010}
+#etnika-hero.etnika-carousel .ec-book:focus-visible,#etnika-hero.etnika-carousel .ec-dot:focus-visible{outline:2px solid #df1e30;outline-offset:4px}
+#etnika-hero.etnika-carousel .ec-book .ec-arrow{font:400 34px/1 'Forum',Georgia,serif}
+#etnika-hero.etnika-carousel .ec-bottom{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.30);font:300 16px/1.48 'Geologica',Arial,sans-serif;letter-spacing:.02em;text-transform:uppercase;color:rgba(255,255,255,.66)}
+#etnika-hero.etnika-carousel .ec-bottom>div:last-child{text-align:right}
+#etnika-hero.etnika-carousel .ec-controls{display:flex;align-items:center;justify-content:center;gap:13px;min-height:25px}
+#etnika-hero.etnika-carousel .ec-dot{border:0;padding:9px 2px;background:transparent;color:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:.55}
+#etnika-hero.etnika-carousel .ec-dot::before{content:"";width:26px;height:2px;background:currentColor;transition:width .3s,background .3s}
+#etnika-hero.etnika-carousel .ec-dot[aria-current="true"]{opacity:1}
+#etnika-hero.etnika-carousel .ec-dot[aria-current="true"]::before{width:47px;background:#de2332}
+#etnika-hero.etnika-carousel .ec-screenreader{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+#etnika-hero.etnika-carousel.is-light{color:#0f0d0d;background:#f2efec}
+#etnika-hero.etnika-carousel.is-light .ec-brand,#etnika-hero.etnika-carousel.is-light .ec-heading{color:#141112}
+#etnika-hero.etnika-carousel.is-light .ec-city,#etnika-hero.etnika-carousel.is-light .ec-award{color:rgba(20,17,18,.80)}
+#etnika-hero.etnika-carousel.is-light .ec-bottom{color:rgba(20,17,18,.62);border-color:rgba(20,17,18,.27)}
+#etnika-hero.etnika-carousel.is-light .ec-book{color:#171314;border-color:rgba(20,17,18,.8);background:rgba(255,255,255,.1)}
+#etnika-hero.etnika-carousel.is-light .ec-book:hover{background:#171314;color:#fff}
+@media(min-width:1920px){#etnika-hero.etnika-carousel{--shell-padding:max(180px,calc((100vw - 2600px)/2))}}
+@media(max-width:1250px) and (min-width:761px){#etnika-hero.etnika-carousel .ec-content{width:min(60%,690px)}#etnika-hero.etnika-carousel .ec-brand{font-size:clamp(94px,10vw,155px)}#etnika-hero.etnika-carousel .ec-love{width:115px;height:135px}#etnika-hero.etnika-carousel .ec-love span{font-size:29px}}
+@media(max-width:760px){
+#etnika-hero.etnika-carousel{--shell-padding:20px}
+#etnika-hero.etnika-carousel .ec-shell{min-height:100svh;padding:22px 20px 20px;gap:8px;grid-template-rows:auto minmax(0,1fr) auto}
+#etnika-hero.etnika-carousel .ec-top{min-height:55px;gap:8px}
+#etnika-hero.etnika-carousel .ec-city{font-size:13px;gap:10px;max-width:67%;letter-spacing:0}
+#etnika-hero.etnika-carousel .ec-city::before{width:20px}
+#etnika-hero.etnika-carousel .ec-award{font-size:12px;line-height:1.25;gap:3px}
+#etnika-hero.etnika-carousel .ec-award svg{width:24px;height:32px}
+#etnika-hero.etnika-carousel .ec-content{width:100%;align-self:start;padding:clamp(28px,6vh,60px) 0 20px}
+#etnika-hero.etnika-carousel .ec-lockup{margin-bottom:clamp(22px,3vh,35px)}
+#etnika-hero.etnika-carousel .ec-brand{font-size:clamp(68px,17vw,105px)}
+#etnika-hero.etnika-carousel .ec-love{width:clamp(73px,21vw,100px);height:clamp(88px,25vw,121px);margin-left:-4px;margin-top:0}
+#etnika-hero.etnika-carousel .ec-love span{font-size:clamp(22px,5vw,27px);top:48%;left:24%}
+#etnika-hero.etnika-carousel .ec-heading{font-size:clamp(31px,8.2vw,42px);max-width:370px;line-height:1.11}
+#etnika-hero.etnika-carousel .ec-book{min-width:255px;height:49px;margin-top:23px;font-size:14px;padding:0 16px;background:rgba(0,0,0,.12)}
+#etnika-hero.etnika-carousel .ec-book .ec-arrow{font-size:27px}
+#etnika-hero.etnika-carousel .ec-bottom{font-size:12px;grid-template-columns:1fr auto 1fr;gap:9px;align-items:end;line-height:1.38;padding-top:12px}
+#etnika-hero.etnika-carousel .ec-controls{gap:3px}
+#etnika-hero.etnika-carousel .ec-dot::before{width:11px}
+#etnika-hero.etnika-carousel .ec-dot[aria-current="true"]::before{width:23px}
+#etnika-hero.etnika-carousel .ec-photo{object-position:center center}
+}
+@media(max-width:480px) and (max-height:760px){#etnika-hero.etnika-carousel .ec-shell{min-height:780px}}
+@media(prefers-reduced-motion:reduce){#etnika-hero.etnika-carousel .ec-slide,#etnika-hero.etnika-carousel .ec-book{transition:none!important}}
+</style>
+<script id="etnika-carousel-js">
+(function(){
+  const hero=document.getElementById('etnika-hero');
+  if(!hero||hero.dataset.carouselReady==='yes')return;
+  hero.dataset.carouselReady='yes';
+  const slides=Array.from(hero.querySelectorAll('.ec-slide'));
+  const dots=Array.from(hero.querySelectorAll('.ec-dot'));
+  const status=hero.querySelector('#etnika-slide-status');
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let current=0,timer=null,startX=null;
+  const interval=Math.max(4500,Number(hero.dataset.autoplay)||7000);
+  function select(index,announced){
+    current=((index%slides.length)+slides.length)%slides.length;
+    slides.forEach((slide,i)=>slide.classList.toggle('is-current',i===current));
+    dots.forEach((dot,i)=>dot.setAttribute('aria-current',i===current?'true':'false'));
+    hero.classList.toggle('is-light',slides[current].dataset.tone==='light');
+    if(announced&&status)status.textContent='Фотография '+(current+1)+' из '+slides.length+': '+slides[current].dataset.name+'.';
+  }
+  function stop(){if(timer){window.clearInterval(timer);timer=null;}}
+  function start(){stop();if(reduced||document.hidden)return;timer=window.setInterval(()=>select(current+1,false),interval)}
+  dots.forEach((dot,i)=>dot.addEventListener('click',()=>{select(i,true);start()}));
+  hero.addEventListener('pointerenter',stop);
+  hero.addEventListener('pointerleave',start);
+  hero.addEventListener('focusin',stop);
+  hero.addEventListener('focusout',event=>{if(!hero.contains(event.relatedTarget))start()});
+  hero.addEventListener('touchstart',event=>{startX=event.changedTouches[0].screenX;},{passive:true});
+  hero.addEventListener('touchend',event=>{if(startX===null)return;const dx=event.changedTouches[0].screenX-startX;startX=null;if(Math.abs(dx)>55){select(current+(dx<0?1:-1),true);start()}},{passive:true});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else start()});
+  select(0,false);start();
+})();
+</script>
+
+<style id="etnika-photo-provenance-hero">
+/* Hero v3. Sources: AI B&W & scarf expressly requested; red original 310503458.jpg, light original IMG_9953.jpeg from the owner's Drive. */
+#etnika-hero.etnika-carousel {position:relative;isolation:isolate;overflow:hidden;min-height:100svh;background:#080808;--shell-padding:clamp(24px,5.2vw,92px);}
+#etnika-hero.etnika-carousel::before,#etnika-hero.etnika-carousel::after{display:none!important;}
+#etnika-hero.etnika-carousel .ec-slidebox{position:absolute;inset:0;z-index:0!important;overflow:hidden;pointer-events:none;}
+#etnika-hero.etnika-carousel .ec-slide{position:absolute;inset:0;width:100%;height:100%;background:#080808;}
+#etnika-hero.etnika-carousel .ec-slide .ec-photo{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center center;border:0;}
+#etnika-hero.etnika-carousel .ec-slide--bw .ec-photo,#etnika-hero.etnika-carousel .ec-slide--scarf .ec-photo{object-position:center;}
+#etnika-hero.etnika-carousel .ec-slide--red{background:#970f1c;}
+#etnika-hero.etnika-carousel .ec-slide--red .ec-photo{object-position:center center;}
+#etnika-hero.etnika-carousel .ec-slide--light{background:#e9e6e4;}
+#etnika-hero.etnika-carousel .ec-slide--light .ec-photo{left:auto;right:8%;top:0;width:auto;max-width:none;height:100%;object-fit:contain;object-position:right center;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 17%,#000 100%);mask-image:linear-gradient(90deg,transparent 0%,#000 17%,#000 100%);}
+#etnika-hero.etnika-carousel .ec-shell{position:relative;z-index:2;min-height:max(700px,100svh);width:100%;max-width:2600px;margin:0 auto;padding:clamp(24px,4.3vh,58px) var(--shell-padding) clamp(24px,4vh,46px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:16px;}
+#etnika-hero.etnika-carousel .ec-top{min-height:72px;}
+#etnika-hero.etnika-carousel .ec-content{width:min(60%,830px);max-width:830px;min-width:0;align-self:center;padding:0 0 24px;transform:translateY(-24px);}
+#etnika-hero.etnika-carousel .ec-lockup{display:flex;align-items:center;justify-content:flex-start;gap:0;margin:0 0 clamp(18px,3vh,36px);max-width:100%;width:max-content;}
+#etnika-hero.etnika-carousel .ec-brand{margin:0;font:400 clamp(85px,9.9vw,176px)/.82 'Forum',Georgia,serif;letter-spacing:-.054em;text-transform:uppercase;white-space:nowrap;}
+#etnika-hero.etnika-carousel .ec-love{display:block;flex:0 0 auto;width:clamp(100px,10.4vw,178px);height:auto;max-height:200px;object-fit:contain;position:relative;margin:-6px 0 0 -3px;}
+#etnika-hero.etnika-carousel .ec-heading{margin:0;font:400 clamp(34px,3.1vw,58px)/1.06 'Forum',Georgia,serif;letter-spacing:-.014em;text-wrap:balance;}
+#etnika-hero.etnika-carousel .ec-book{margin-top:clamp(28px,6.4vh,70px);height:64px;min-width:330px;border:1.5px solid currentColor;background:rgba(0,0,0,.07);font:400 17px/1 'Geologica',Arial,sans-serif;}
+#etnika-hero.etnika-carousel .ec-bottom{border-top:1px solid rgba(255,255,255,.60);padding-top:17px;color:rgba(255,255,255,.83);font:300 15px/1.45 'Geologica',Arial,sans-serif;letter-spacing:.02em;}
+#etnika-hero.etnika-carousel.is-light .ec-bottom{color:rgba(15,12,12,.76);border-color:rgba(15,12,12,.56);}
+#etnika-hero.etnika-carousel.is-light .ec-book{color:#171314;border-color:#171314;background:transparent;}
+#etnika-hero.etnika-carousel .ec-dot{opacity:.55;}
+#etnika-hero.etnika-carousel .ec-dot[aria-current="true"]{opacity:1;}
+#etnika-hero.etnika-carousel .ec-slide{opacity:0;visibility:hidden;transition:opacity .9s ease,visibility .9s;z-index:0;}
+#etnika-hero.etnika-carousel .ec-slide.is-current{opacity:1;visibility:visible;z-index:1;}
+@media(max-width:1100px) and (min-width:761px){
+#etnika-hero.etnika-carousel .ec-brand{font-size:clamp(77px,10vw,115px);}
+#etnika-hero.etnika-carousel .ec-love{width:clamp(82px,10vw,120px);}
+#etnika-hero.etnika-carousel .ec-content{width:64%;transform:translateY(-10px);}
+}
+@media(max-width:760px){
+#etnika-hero.etnika-carousel{--shell-padding:20px;}
+#etnika-hero.etnika-carousel .ec-shell{min-height:100svh;grid-template-rows:auto minmax(0,1fr) auto;padding:24px 20px 24px;gap:12px;}
+#etnika-hero.etnika-carousel .ec-top{min-height:50px;}
+#etnika-hero.etnika-carousel .ec-content{width:100%;max-width:100%;align-self:start;transform:none;padding:clamp(38px,9vh,82px) 0 0;}
+#etnika-hero.etnika-carousel .ec-brand{font-size:clamp(66px,17vw,105px);line-height:.8;letter-spacing:-.058em;}
+#etnika-hero.etnika-carousel .ec-love{width:clamp(65px,18vw,106px);margin:0 0 0 -3px;}
+#etnika-hero.etnika-carousel .ec-lockup{margin-bottom:clamp(24px,4vh,42px);}
+#etnika-hero.etnika-carousel .ec-heading{font-size:clamp(33px,7.7vw,42px);line-height:1.07;max-width:100%;}
+#etnika-hero.etnika-carousel .ec-book{height:52px;min-width:230px;width:260px;max-width:100%;font-size:14px;margin-top:28px;}
+#etnika-hero.etnika-carousel .ec-bottom{font-size:11px;line-height:1.5;gap:8px;padding-top:12px;}
+#etnika-hero.etnika-carousel .ec-slide--bw .ec-photo,#etnika-hero.etnika-carousel .ec-slide--scarf .ec-photo{object-fit:cover;object-position:62% center;}
+#etnika-hero.etnika-carousel .ec-slide--red .ec-photo{object-position:57% center;}
+#etnika-hero.etnika-carousel .ec-slide--light .ec-photo{left:auto;right:-32%;top:28%;height:68%;width:auto;object-fit:contain;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 25%,#000 100%);mask-image:linear-gradient(90deg,transparent 0%,#000 25%,#000 100%);}
+#etnika-hero.etnika-carousel .ec-slide--bw::after,#etnika-hero.etnika-carousel .ec-slide--scarf::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.30) 45%,transparent 83%);pointer-events:none;}
+}
+@media(prefers-reduced-motion:reduce){#etnika-hero.etnika-carousel .ec-slide{transition:none!important;}}
+</style>
 </body>
 </html>
