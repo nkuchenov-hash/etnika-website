@@ -19,7 +19,7 @@
 </div>
 <div class="ec-shell">
   <header class="ec-top"><div class="ec-city">Москва · студия автопортрета</div><div class="ec-award" aria-label="Хорошее место 2026"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 45" aria-hidden="true"><path d="M18 43S33 28 33 16.5A15 15 0 1 0 3 16.5C3 28 18 43 18 43Z" fill="none" stroke="#d21b27" stroke-width="2.3"/><circle cx="18" cy="16" r="5.5" fill="none" stroke="#d21b27" stroke-width="2"/></svg><span>Хорошее<br>место 2026</span></div></header>
-  <div class="ec-content"><div class="ec-lockup"><h1 class="ec-brand">ЭТНИКА</h1><img class="ec-love" src="assets/hero-carousel/love-heart-reference.png" alt="это по любви" width="174" height="190"></div><h2 class="ec-heading">Профессиональные снимки<br>без фотографа</h2><a class="ec-book" href="https://n1268189.yclients.com/" target="_blank" rel="noopener noreferrer"><span>Выбрать время</span><span class="ec-arrow" aria-hidden="true">→</span></a></div>
+  <div class="ec-content"><div class="ec-lockup"><h1 class="ec-brand">ЭТНИКА</h1><img class="ec-love" src="assets/hero-carousel/love-heart-reference.png" alt="это по любви" width="174" height="190"></div><h2 class="ec-heading">Профессиональные снимки<br>без фотографа</h2><div class="ec-actions"><a class="ec-book ec-book--primary" href="https://n1268189.yclients.com/" target="_blank" rel="noopener noreferrer"><span>Выбрать время</span><span class="ec-arrow" aria-hidden="true">→</span></a><a class="ec-book ec-book--secondary" href="#etnika-process-interactive"><span>Как это работает</span><span class="ec-arrow" aria-hidden="true">↓</span></a></div></div>
   <div class="ec-bottom"><div>Ленинская Слобода, 26А<br>Автозаводская · Москва</div><div class="ec-controls" role="group" aria-label="Выбор фотографии"><button class="ec-dot" type="button" aria-label="Показать: чёрно-белый портрет" aria-current="true" data-slide="0"></button><button class="ec-dot" type="button" aria-label="Показать: девушка с красной тканью" aria-current="false" data-slide="1"></button><button class="ec-dot" type="button" aria-label="Показать: оригинальный красный фон" aria-current="false" data-slide="2"></button><button class="ec-dot" type="button" aria-label="Показать: оригинальный светлый фон" aria-current="false" data-slide="3"></button></div><div>10:00–22:00<br>7 дней в неделю</div></div>
 </div>
 <p class="ec-screenreader" role="status" aria-live="polite" id="etnika-slide-status">Фотография 1 из 4: чёрно-белый портрет.</p>
@@ -11971,6 +11971,18 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 #etnika-hero.etnika-carousel .ec-slide--bw::after,#etnika-hero.etnika-carousel .ec-slide--scarf::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.30) 45%,transparent 83%);pointer-events:none;}
 }
 @media(prefers-reduced-motion:reduce){#etnika-hero.etnika-carousel .ec-slide{transition:none!important;}}
+
+/* Two existing user-requested CTA actions: booking + how it works. */
+#etnika-hero.etnika-carousel .ec-actions{display:flex;align-items:stretch;gap:12px;flex-wrap:wrap;margin-top:clamp(28px,6.4vh,70px);}
+#etnika-hero.etnika-carousel .ec-actions .ec-book{margin:0;display:flex;align-items:center;justify-content:space-between;min-width:0;width:auto;flex:0 0 auto;height:62px;gap:24px;padding:0 20px;text-transform:uppercase;font-size:16px;white-space:nowrap;}
+#etnika-hero.etnika-carousel .ec-actions .ec-book--primary{background:#a9151d;border-color:#a9151d;color:#fff;}
+#etnika-hero.etnika-carousel .ec-actions .ec-book--secondary{background:rgba(0,0,0,.07);border:1px solid rgba(255,255,255,.83);color:#fff;}
+#etnika-hero.etnika-carousel .ec-actions .ec-book:hover{background:#fff;border-color:#fff;color:#101010;}
+#etnika-hero.etnika-carousel.is-light .ec-actions .ec-book--primary{background:#a9151d;border-color:#a9151d;color:#fff;}
+#etnika-hero.etnika-carousel.is-light .ec-actions .ec-book--secondary{background:rgba(255,255,255,.10);border:1px solid #171314;color:#171314;}
+#etnika-hero.etnika-carousel.is-light .ec-actions .ec-book:hover{background:#171314;color:#fff;}
+@media(max-width:760px){#etnika-hero.etnika-carousel .ec-actions{gap:10px;margin-top:26px;}#etnika-hero.etnika-carousel .ec-actions .ec-book{height:50px;flex:1 1 100%;width:100%;font-size:14px;gap:14px;padding:0 16px;}}
+@media(min-width:761px) and (max-width:1120px){#etnika-hero.etnika-carousel .ec-actions{gap:8px;}#etnika-hero.etnika-carousel .ec-actions .ec-book{font-size:13px;padding:0 13px;gap:12px;}}
 </style>
 </body>
 </html>
