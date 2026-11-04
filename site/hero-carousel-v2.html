@@ -236,8 +236,9 @@
 /* Source-driven correction: preserve the photograph from the owner's HERO reference.
    Keep its normal proportions on ultra-wide screens: NO object-fit: cover on desktop.
    Explicit live UI contrast for red/background slide. */
-#etnika-hero.etnika-carousel{--shell-padding:clamp(24px,5.2vw,100px);background:#050505;}
-#etnika-hero.etnika-carousel .ec-shell{width:100%!important;max-width:none!important;margin:0 auto!important;padding-left:var(--shell-padding)!important;padding-right:var(--shell-padding)!important;}
+/* Shared ETNIKA design system: use exactly the same horizontal guide as other sections. */
+#etnika-hero.etnika-carousel{--shell-padding:var(--et-u-edge, max(80px,calc((100vw - 1760px)/2)));background:#050505;}
+#etnika-hero.etnika-carousel .ec-shell{width:100%!important;max-width:none!important;margin:0 auto!important;padding-left:var(--et-u-edge, var(--shell-padding))!important;padding-right:var(--et-u-edge, var(--shell-padding))!important;}
 #etnika-hero.etnika-carousel .ec-content{width:min(56vw,850px)!important;max-width:850px!important;}
 #etnika-hero.etnika-carousel .ec-slide--scarf{background:#050505!important;}
 #etnika-hero.etnika-carousel .ec-slide--scarf::after{display:none!important;content:none!important;background:none!important;}
@@ -263,7 +264,7 @@
 #etnika-hero.etnika-carousel .ec-love{width:clamp(85px,10vw,115px)!important;}
 }
 @media(max-width:760px){
-#etnika-hero.etnika-carousel{--shell-padding:20px;}
+#etnika-hero.etnika-carousel{--shell-padding:var(--et-u-edge,20px);}
 #etnika-hero.etnika-carousel .ec-content{width:100%!important;max-width:100%!important;}
 #etnika-hero.etnika-carousel .ec-actions{gap:10px!important;}
 #etnika-hero.etnika-carousel .ec-actions .ec-book{width:min(360px,100%)!important;height:54px!important;}
