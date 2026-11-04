@@ -46,6 +46,21 @@ jobs:
           accepted={'Не начато','В работе','На проверке','Заблокировано','Готово','Неактуально'}
           assert set(state['tasks'].values()).issubset(accepted), 'Unknown status value'
           assert pathlib.Path('site/index.html').is_file(), 'Site source missing'
+          from html.parser import HTMLParser
+          for preview in ('site/review-2026-11.html','site/hero-photo.html','site/hero-video.html'):
+            assert pathlib.Path(preview).is_file(), 'Staging preview missing: '+preview
+            phtml=pathlib.Path(preview).read_text(encoding='utf-8')
+            assert 'name="robots" content="noindex,nofollow,noarchive"' in phtml, 'Staging must not be indexed'
+            assert phtml.count('id="etnika-hero"')==1, 'Staging must have one HERO'
+            assert 'Geologica' in phtml and 'Forum' in phtml, 'Staging fonts missing'
+            assert 'etnika-new-hero::before' in phtml, 'Old HERO overlay not disabled'
+            assert phtml.count('<h1')==1, 'Preview H1 mismatch'
+          review_html=pathlib.Path('site/review-2026-11.html').read_text(encoding='utf-8')
+          ids=('etnika-hero','etnika-stories','etnika-space-photo','etnika-studio-features','etnika-block-02-final','etnika-process-interactive','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-contacts-source')
+          assert all('id="'+v+'"' in review_html for v in ids), 'Staging content lost'
+          assert 'assets/etnika-portrait-dark.jpg' in review_html, 'Staging photos missing'
+          for asset in ('etnika-portrait-beige.jpg','etnika-portrait-dark.jpg','etnika-portrait-etnika.jpg','etnika-bw-portrait.jpg','etnika-bw-guest.jpg','etnika-studio.jpg'):
+            assert pathlib.Path('site/assets/'+asset).is_file(), 'Photo asset missing: '+asset
           html=pathlib.Path('index.html').read_text(encoding='utf-8')
           js=html.rsplit('<script>',1)[1].split('</script>',1)[0]
           assert 'data/state.json?' in js, 'Dashboard must read GitHub statuses'
