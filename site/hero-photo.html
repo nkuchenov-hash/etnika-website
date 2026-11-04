@@ -36,8 +36,51 @@ html{scroll-behavior:smooth}
 @media(prefers-reduced-motion:reduce){#etnika-hero.etnika-new-hero .e-buttons a{transition:none}}
 #etnika-hero.etnika-new-hero::before{content:none!important;display:none!important}
 #etnika-hero.etnika-new-hero .e-background video.hero-video{z-index:0!important;object-fit:cover!important;object-position:center 44%!important;filter:none!important}
+
+/* 2026-11-04: real Drive asset + restrained typographic hierarchy */
+#etnika-hero.etnika-new-hero{background:#93181c;font-family:'Geologica',Arial,sans-serif!important}
+#etnika-hero.etnika-new-hero .e-background img{object-position:center center;object-fit:cover}
+#etnika-hero.etnika-new-hero[data-media="photo"] .e-tone{background:rgba(0,0,0,.08)}
+#etnika-hero.etnika-new-hero[data-media="video"] .e-tone{background:rgba(0,0,0,.23)}
+#etnika-hero.etnika-new-hero .e-central{display:flex;flex-direction:column;grid-template-columns:none;align-items:flex-start;justify-content:center;gap:clamp(16px,2.5vh,27px);max-width:min(100%,700px)}
+#etnika-hero.etnika-new-hero .e-brand{align-self:flex-start;max-width:100%}
+#etnika-hero.etnika-new-hero .e-name{font:400 clamp(96px,11.1vw,195px)/.77 'Forum',Georgia,serif;letter-spacing:-.045em;color:#fff;text-shadow:none}
+#etnika-hero.etnika-new-hero .e-slogan{font:400 clamp(43px,4.45vw,76px)/.96 'Forum',Georgia,serif;margin:17px 0 0 clamp(10px,2.8vw,50px);color:rgba(255,255,255,.94);text-shadow:none}
+#etnika-hero.etnika-new-hero .e-copy{width:100%;max-width:600px;justify-self:start;align-self:flex-start;text-shadow:none}
+#etnika-hero.etnika-new-hero .e-copy h2{font:400 clamp(35px,2.75vw,47px)/1.08 'Forum',Georgia,serif;letter-spacing:-.01em;margin:0 0 14px;color:rgba(255,255,255,.98);max-width:560px}
+#etnika-hero.etnika-new-hero .e-copy p{font:300 clamp(16px,1.04vw,18px)/1.62 'Geologica',Arial,sans-serif;color:rgba(255,255,255,.74);max-width:510px;text-shadow:none}
+#etnika-hero.etnika-new-hero .e-buttons{grid-template-columns:repeat(2,minmax(0,1fr));max-width:610px;width:100%;gap:12px;margin-top:23px}
+#etnika-hero.etnika-new-hero .e-buttons a{min-width:0;min-height:54px;font-weight:400;font-family:'Geologica',Arial,sans-serif!important;text-shadow:none}
+#etnika-hero.etnika-new-hero .e-top .e-city{color:rgba(255,255,255,.75);text-shadow:none}
+#etnika-hero.etnika-new-hero .e-award{color:rgba(255,255,255,.81);text-shadow:none}
+#etnika-hero.etnika-new-hero .e-bottom{color:rgba(255,255,255,.66);font:300 16px/1.5 'Geologica',Arial,sans-serif;text-shadow:none;border-top-color:rgba(255,255,255,.32);letter-spacing:.02em}
+#etnika-hero.etnika-new-hero::before{display:none!important;content:none!important}
+@media(max-width:1200px) and (min-width:701px){
+#etnika-hero.etnika-new-hero .e-central{max-width:min(55%,590px)}
+#etnika-hero.etnika-new-hero .e-name{font-size:clamp(80px,10.8vw,132px)}
+#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(34px,4.1vw,50px)}
+#etnika-hero.etnika-new-hero .e-copy h2{font-size:clamp(31px,3.5vw,40px)}
+#etnika-hero.etnika-new-hero .e-buttons{grid-template-columns:1fr;max-width:360px}
+}
+@media(max-width:700px){
+#etnika-hero.etnika-new-hero .e-hero-layout{min-height:100svh;padding:20px 20px 23px;grid-template-rows:auto 1fr auto;gap:12px}
+#etnika-hero.etnika-new-hero .e-central{max-width:100%;width:100%;justify-content:start;gap:13px;align-self:start;margin-top:clamp(18px,5svh,44px)}
+#etnika-hero.etnika-new-hero .e-name{font-size:clamp(69px,18.5vw,91px);line-height:.84}
+#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(33px,8.3vw,44px);margin:7px 0 0 0}
+#etnika-hero.etnika-new-hero .e-copy h2{font-size:clamp(29px,7.8vw,39px);line-height:1.06;margin-bottom:9px}
+#etnika-hero.etnika-new-hero .e-copy p{font-size:16px;line-height:1.43;max-width:360px;color:rgba(255,255,255,.77)}
+#etnika-hero.etnika-new-hero .e-buttons{grid-template-columns:1fr;max-width:355px;gap:8px;margin-top:13px}
+#etnika-hero.etnika-new-hero .e-buttons a{min-height:48px;font-size:16px}
+#etnika-hero.etnika-new-hero .e-bottom{font-size:14px;line-height:1.42;color:rgba(255,255,255,.69)}
+#etnika-hero.etnika-new-hero .e-top .e-city{font-size:14px}
+#etnika-hero.etnika-new-hero .e-award{font-size:12px}
+#etnika-hero.etnika-new-hero .e-background img{object-position:center center}
+}
+@media(max-width:700px) and (max-height:760px){
+#etnika-hero.etnika-new-hero .e-hero-layout{min-height:850px}
+}
 </style></head><body><section id="etnika-hero" class="etnika-new-hero" data-media="photo" aria-label="ЭТНИКА — студия автопортрета">
-<div class="e-background"><img class="e-background-photo" src="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg" alt="Фотосессия в студии ЭТНИКА на красном фоне" fetchpriority="high"><video class="hero-video" muted loop playsinline preload="none" aria-hidden="true"></video></div>
+<div class="e-background"><picture class="e-photo-picture"><source media="(max-width: 700px)" srcset="assets/etnika-hero-red-mobile.jpg"><img class="e-background-photo" src="assets/etnika-hero-red-wide.jpg" srcset="assets/etnika-hero-red-wide.jpg 2560w" sizes="100vw" alt="Гостья ЭТНИКА на красном фоне; фото из отобранной папки для сайта" fetchpriority="high"></picture><video class="hero-video" muted loop playsinline preload="none" aria-hidden="true"></video></div>
 <div class="e-tone" aria-hidden="true"></div>
 <div class="e-hero-layout">
 <div class="e-top"><div class="e-city">Москва · студия автопортрета</div><div class="e-award"><svg viewBox="0 0 34 44" aria-hidden="true"><path d="M17 42C17 42 31 27.4 31 15.9C31 8.78 24.73 3 17 3C9.27 3 3 8.78 3 15.9C3 27.4 17 42 17 42Z" fill="none" stroke="#c51d28" stroke-width="2.5"/><circle cx="17" cy="15.9" r="5.3" stroke="#c51d28" stroke-width="2" fill="none"/></svg><span>Хорошее<br>место 2026</span></div></div>
