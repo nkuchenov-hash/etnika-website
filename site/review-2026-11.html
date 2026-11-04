@@ -5866,7 +5866,7 @@ body.etnika-gallery-lock{
 
         <div class="pc-photo">
           <img
-            src="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg"
+            src="assets/etnika-portrait-dark.jpg"
             alt="Фотосессия в ЭТНИКА"
           >
           <div class="pc-photo-caption">
@@ -5907,7 +5907,7 @@ body.etnika-gallery-lock{
       duration:'30 минут',
       people:'до 2 человек · больше — по согласованию',
       prices:{weekday:'2 900',weekend:'3 900'},
-      image:'https://static.tildacdn.com/tild6434-3663-4531-b961-633566393134/bw2.jpg',
+      image:'assets/etnika-bw-portrait.jpg',
       photoText:'Для короткой индивидуальной съёмки, новых портретов или быстрого обновления контента.',
       features:[
         'Базовый белый фон',
@@ -5924,7 +5924,7 @@ body.etnika-gallery-lock{
       duration:'60 минут',
       people:'до 4 человек · больше — по согласованию',
       prices:{weekday:'4 500',weekend:'5 900'},
-      image:'https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg',
+      image:'assets/etnika-portrait-dark.jpg',
       photoText:'Оптимально, если хочется спокойно поснимать несколько образов без спешки.',
       features:[
         'Базовый белый фон',
@@ -5942,7 +5942,7 @@ body.etnika-gallery-lock{
       duration:'100 минут',
       people:'до 6 человек · больше — по согласованию',
       prices:{weekday:'7 500',weekend:'9 000'},
-      image:'https://static.tildacdn.com/tild3739-6635-4138-b038-356661306337/310503651.jpg',
+      image:'assets/etnika-portrait-beige.jpg',
       photoText:'Для нескольких образов, большой компании и съёмки, где хочется времени на эксперименты.',
       features:[
         'Базовый белый фон',
@@ -11936,17 +11936,324 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 #etnika-process-interactive{--red:#a9151d}
 #etnika-process-interactive .epi-grid img,#etnika-process-interactive .epi-gallery img{filter:grayscale(1)}
 #etnika-process-interactive .epi-grid{background:#f8f8f8}
-#etnika-prices-clear{--red:#a9151d;height:auto;max-height:none;min-height:720px;overflow:visible}
-#etnika-prices-clear .pc-shell{height:auto;min-height:720px}
-#etnika-prices-clear .pc-main{display:flex;flex-direction:column;gap:24px}
-#etnika-prices-clear .pc-tabs{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-#etnika-prices-clear .pc-tab{min-width:0;border:1px solid #d0caca;padding:15px}
-#etnika-prices-clear .pc-tab.is-active{border-color:#a9151d}
-#etnika-prices-clear .pc-detail{min-width:0;width:100%;max-width:none}
-#etnika-prices-clear .pc-mode-wrap{border:1px solid #a9151d}
-#etnika-prices-clear .pc-mode-btn{font-size:16px!important;min-height:46px}
-#etnika-prices-clear .pc-mode-btn.is-active{background:#a9151d;color:#fff}
-#etnika-prices-clear .pc-tab-name,#etnika-prices-clear .pc-tab-price{font-size:max(20px,1.2em)}
+
+/* ETNIKA 2026-11-04 — isolated, content-sized tariff layout.
+   Source: Anna and Egor PDF pp 11, 14–15; user screenshot 04 Nov.
+   Preserve prices, features and booking scripts from v19. */
+#etnika-prices-clear{
+  --red:#a9151d;
+  --paper:#fbfaf9;
+  height:auto!important; min-height:0!important; max-height:none!important;
+  overflow:visible!important;
+  background:var(--paper)!important;
+  font-family:'Geologica',Arial,sans-serif!important;
+}
+#etnika-prices-clear .pc-shell{
+  box-sizing:border-box;
+  display:flex!important;flex-direction:column!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  gap:clamp(26px,3.3vw,44px)!important;
+  margin:0 var(--edge)!important;
+  padding:clamp(44px,5vw,78px) 0 clamp(50px,6vw,92px)!important;
+}
+#etnika-prices-clear .pc-top{
+  opacity:.68;
+  font-weight:300;
+}
+#etnika-prices-clear .pc-head{
+  display:flex!important;flex-wrap:wrap!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:24px 35px!important;
+  width:100%;
+}
+#etnika-prices-clear .pc-title{
+  font:400 clamp(52px,5.1vw,80px)/.98 'Forum',Georgia,serif!important;
+  letter-spacing:-.035em!important;
+  margin:0!important;
+  max-width:100%;
+}
+#etnika-prices-clear .pc-mode-wrap{
+  display:block!important;
+  border:0!important;
+  flex:none;
+  padding-bottom:4px;
+}
+#etnika-prices-clear .pc-mode{
+  display:flex!important;gap:0!important;
+  border:1px solid #a9151d!important;
+}
+#etnika-prices-clear .pc-mode-btn{
+  display:block!important;
+  padding:14px 21px!important;
+  min-height:47px!important;
+  min-width:132px!important;
+  background:#fff!important;
+  border:0!important;
+  border-right:1px solid #a9151d!important;
+  font:400 16px/1.2 'Geologica',Arial,sans-serif!important;
+  letter-spacing:.02em!important;
+  color:#7d7070!important;
+  text-transform:uppercase;
+}
+#etnika-prices-clear .pc-mode-btn:last-child{border-right:0!important}
+#etnika-prices-clear .pc-mode-btn::after{display:none!important}
+#etnika-prices-clear .pc-mode-btn.is-active{
+  background:#a9151d!important;color:#fff!important;
+}
+#etnika-prices-clear .pc-main{
+  display:flex!important;flex-direction:column!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  width:100%;
+  overflow:visible!important;
+  gap:24px!important;
+  border:0!important;
+}
+#etnika-prices-clear .pc-tabs{
+  box-sizing:border-box;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  grid-template-rows:auto!important;
+  width:100%!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  gap:13px!important;
+  border:0!important;
+}
+#etnika-prices-clear .pc-tab{
+  position:relative!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  box-sizing:border-box!important;
+  height:auto!important;min-height:197px!important;max-height:none!important;
+  padding:23px 26px!important;
+  border:1px solid #dcd8d7!important;
+  background:#fff!important;
+  color:#20191a!important;
+  text-align:left;
+  gap:0!important;
+}
+#etnika-prices-clear .pc-tab:hover{background:#f8f3f3!important}
+#etnika-prices-clear .pc-tab.is-active,
+#etnika-prices-clear .pc-tab.is-active:hover{
+  background:#a9151d!important;
+  border-color:#a9151d!important;
+  color:#fff!important;
+}
+#etnika-prices-clear .pc-tab-left{display:block!important;min-width:0!important;width:100%;padding-right:40px}
+#etnika-prices-clear .pc-tab-num{
+  display:block;margin:0 0 13px!important;
+  opacity:.56;font:300 12px/1.2 'Geologica',Arial,sans-serif!important;
+  letter-spacing:.08em!important;
+}
+#etnika-prices-clear .pc-tab-name{
+  display:block;
+  font:400 clamp(29px,2.55vw,39px)/1.02 'Forum',Georgia,serif!important;
+  letter-spacing:-.01em!important;
+  color:inherit!important;
+}
+#etnika-prices-clear .pc-tab-meta{
+  display:block;
+  margin:9px 0 0!important;
+  font:300 16px/1.45 'Geologica',Arial,sans-serif!important;
+  color:inherit!important;opacity:.67;
+}
+#etnika-prices-clear .pc-tab-price{
+  display:block!important;
+  margin:17px 0 0!important;
+  font:400 clamp(29px,2.7vw,40px)/1.05 'Forum',Georgia,serif!important;
+  color:#a9151d!important;
+}
+#etnika-prices-clear .pc-tab.is-active .pc-tab-price{color:#fff!important}
+#etnika-prices-clear .pc-tab-action{
+  position:absolute!important;top:22px!important;right:22px!important;
+  display:grid!important;place-items:center!important;
+  width:36px!important;height:36px!important;
+  border:1px solid currentColor!important;
+  opacity:.56!important;
+  background:transparent!important;
+  transform:none!important;
+}
+#etnika-prices-clear .pc-tab.is-active .pc-tab-action{opacity:.86!important}
+#etnika-prices-clear .pc-detail{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.25fr) minmax(290px,.75fr)!important;
+  grid-template-rows:auto!important;
+  align-items:stretch!important;
+  min-width:0!important;width:100%!important;max-width:none!important;
+  min-height:0!important;height:auto!important;max-height:none!important;
+  overflow:visible!important;
+  border:1px solid #ded9d8;
+  background:#fff;
+}
+#etnika-prices-clear .pc-copy{
+  box-sizing:border-box!important;
+  display:flex!important;flex-direction:column!important;
+  grid-template-rows:none!important;
+  min-width:0!important;min-height:0!important;
+  height:auto!important;max-height:none!important;
+  padding:clamp(25px,3.1vw,48px)!important;
+  gap:0!important;
+  overflow:visible!important;
+}
+#etnika-prices-clear .pc-kicker{
+  margin:0 0 13px!important;
+  font:400 12px/1.4 'Geologica',Arial,sans-serif!important;
+  letter-spacing:.11em!important;
+  text-transform:uppercase;color:#a9151d!important;
+}
+#etnika-prices-clear .pc-name{
+  display:flex!important;flex-wrap:wrap!important;
+  align-items:baseline!important;
+  gap:0 .3em!important;
+  width:100%;
+  margin:0 0 12px!important;
+  font:400 clamp(45px,4vw,66px)/1.04 'Forum',Georgia,serif!important;
+  letter-spacing:-.025em!important;
+  color:#161313!important;
+}
+#etnika-prices-clear .pc-name-value,
+#etnika-prices-clear .pc-name-time{display:inline!important;line-height:1.04!important}
+#etnika-prices-clear .pc-name-time{
+  font-size:.78em!important;
+  color:#a9151d!important;
+}
+#etnika-prices-clear .pc-people{
+  font:300 16px/1.5 'Geologica',Arial,sans-serif!important;
+  color:#756f6d!important;
+  width:100%;max-width:none!important;
+  margin:0 0 25px!important;
+}
+#etnika-prices-clear .pc-features{
+  counter-reset:pcfeature;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-template-rows:none!important;
+  grid-auto-rows:auto!important;
+  align-content:start!important;
+  width:100%;
+  min-height:0!important;height:auto!important;
+  flex:0 0 auto!important;
+  column-gap:24px!important;row-gap:0!important;
+  margin:0 0 27px!important;
+  padding:0!important;
+  list-style:none!important;
+  border:0!important;
+}
+#etnika-prices-clear .pc-features li{
+  counter-increment:pcfeature;
+  box-sizing:border-box;
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  gap:8px!important;
+  min-height:0!important;height:auto!important;
+  margin:0!important;padding:12px 0!important;
+  border-top:1px solid #ebe7e6!important;
+  font:300 16px/1.48 'Geologica',Arial,sans-serif!important;
+  color:#33302f!important;
+  align-items:start!important;
+}
+#etnika-prices-clear .pc-features li::before{
+  content:counter(pcfeature,decimal-leading-zero)!important;
+  position:static!important;
+  display:block!important;
+  width:auto!important;height:auto!important;
+  color:#a9151d!important;
+  background:none!important;
+  font:400 12px/1.6 'Geologica',Arial,sans-serif!important;
+}
+#etnika-prices-clear .pc-buy{
+  box-sizing:border-box;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+  gap:22px!important;
+  margin-top:auto!important;
+  padding:24px 0 0!important;
+  border-top:1px solid #dfdbd9!important;
+}
+#etnika-prices-clear .pc-price{
+  font:400 clamp(55px,4.7vw,79px)/1 'Forum',Georgia,serif!important;
+  letter-spacing:-.03em!important;color:#161313!important;
+}
+#etnika-prices-clear .pc-price small{
+  font:400 25px/1 'Forum',Georgia,serif!important;
+  margin-left:7px!important;
+}
+#etnika-prices-clear .pc-book{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  min-width:210px!important;min-height:54px!important;height:auto!important;
+  background:#a9151d!important;
+  border:1px solid #a9151d!important;
+  color:#fff!important;
+  padding:15px 18px!important;
+  font:400 15px/1.2 'Geologica',Arial,sans-serif!important;
+  letter-spacing:.025em!important;
+  text-transform:uppercase;
+}
+#etnika-prices-clear .pc-book:hover{background:#861019!important}
+#etnika-prices-clear .pc-photo{
+  position:relative!important;
+  display:block!important;
+  min-height:550px!important;height:auto!important;
+  overflow:hidden!important;
+  background:#151515;
+}
+#etnika-prices-clear .pc-photo img{
+  position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;
+  object-fit:cover!important;object-position:center 36%!important;
+  filter:none!important;
+}
+#etnika-prices-clear .pc-photo-caption{left:21px;right:21px;bottom:21px}
+#etnika-prices-clear .pc-photo-caption strong{font-size:clamp(25px,2vw,33px)}
+#etnika-prices-clear .pc-photo-caption span{
+  font:300 15px/1.5 'Geologica',Arial,sans-serif!important;
+  color:rgba(255,255,255,.84)!important;
+}
+@media(max-width:1100px){
+  #etnika-prices-clear .pc-shell{margin:0 35px!important}
+  #etnika-prices-clear .pc-head{align-items:flex-start!important}
+  #etnika-prices-clear .pc-detail{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  #etnika-prices-clear .pc-photo{min-height:380px!important}
+}
+@media(max-width:700px){
+  #etnika-prices-clear .pc-shell{
+    margin:0 20px!important;
+    padding:42px 0 54px!important;
+    gap:24px!important;
+  }
+  #etnika-prices-clear .pc-title{font-size:clamp(43px,11.5vw,65px)!important}
+  #etnika-prices-clear .pc-mode{width:100%}
+  #etnika-prices-clear .pc-mode-btn{
+    font-size:15px!important;
+    min-width:0!important;
+    padding:13px 15px!important;
+    flex:1;
+  }
+  #etnika-prices-clear .pc-main{gap:17px!important}
+  #etnika-prices-clear .pc-tabs{grid-template-columns:1fr!important;gap:9px!important}
+  #etnika-prices-clear .pc-tab{
+    min-height:145px!important;
+    padding:17px 20px!important;
+  }
+  #etnika-prices-clear .pc-tab-num{margin-bottom:7px!important}
+  #etnika-prices-clear .pc-tab-price{margin-top:10px!important}
+  #etnika-prices-clear .pc-detail{grid-template-columns:minmax(0,1fr)!important}
+  #etnika-prices-clear .pc-copy{padding:24px 21px!important}
+  #etnika-prices-clear .pc-name{font-size:clamp(42px,11vw,54px)!important;gap:0 .2em!important}
+  #etnika-prices-clear .pc-features{grid-template-columns:1fr!important;margin-bottom:23px!important}
+  #etnika-prices-clear .pc-features li{font-size:16px!important;padding:10px 0!important}
+  #etnika-prices-clear .pc-buy{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+  #etnika-prices-clear .pc-book{width:100%!important}
+  #etnika-prices-clear .pc-photo{min-height:360px!important}
+}
+
 #etnika-extra{--red:#a9151d}
 #etnika-gift{--red:#a9151d}
 #etnika-contacts-source{--red:#a9151d}
