@@ -1,91 +1,47 @@
-<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="color-scheme" content="dark">
-<title>ETNIKA · HERO · Вариант A — видео — предпросмотр</title>
-<meta name="description" content="Предварительный вариант первого экрана ETNIKA для внутреннего согласования.">
-<style>:root{--edge:80px}
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet"><title>ETNIKA — HERO Видео — превью</title><style>*{box-sizing:border-box}html,body{padding:0;margin:0}body{background:#141414}a:focus-visible{outline:2px solid white;outline-offset:4px}
 @import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@300;400;500;600&display=swap');
-:root { --ink:#080909; --white:#f9f7f5; --red:#a9151d; --sans:'Geologica',Arial,sans-serif; --serif:'Forum',Georgia,serif; }
-* { box-sizing:border-box }
-html { scroll-behavior:smooth; }
-body { margin:0; background:var(--ink); color:var(--white); font-family:var(--sans); }
-a { color:inherit; text-decoration:none; }
-a:focus-visible { outline:2px solid #fff; outline-offset:5px; }
-.hero { position:relative; isolation:isolate; min-height:100svh; display:grid; grid-template-rows:auto 1fr auto; overflow:hidden; background:#090909; }
-.hero-media, .hero-shade { position:absolute; inset:0; z-index:-3; pointer-events:none; }
-.hero-media { display:block; width:100%; height:100%; }
-.hero-shade { z-index:-2; }
-.hero-shell { width:100%; max-width:2600px; margin:0 auto; padding:clamp(28px,3.6vh,56px) var(--edge) clamp(26px,3.5vh,50px); }
-.hero-top { display:flex; justify-content:space-between; align-items:flex-start; gap:25px; }
-.kicker { display:flex; align-items:center; gap:15px; font-size:clamp(16px,1.03vw,18px); text-transform:uppercase; letter-spacing:.035em; font-weight:300; line-height:1.3; padding-top:10px; }
-.kicker:before { content:''; width:42px; height:1px; display:block; background:currentColor; opacity:.75; flex:none; }
-.badge { display:flex; flex-direction:column; align-items:center; text-align:center; width:104px; flex:none; font-weight:400; letter-spacing:.08em; font-size:16px; line-height:1.2; text-transform:uppercase; }
-.badge svg { width:37px; height:48px; margin-bottom:8px; }
-.hero-main { display:grid; grid-template-columns:minmax(0,1.18fr) minmax(320px,.82fr); align-items:center; gap:clamp(34px,4.5vw,100px); position:relative; min-height:0; }
-.brand-block { position:relative; min-width:0; }
-.brand-title { margin:0; font:400 clamp(124px,13vw,270px)/.76 var(--serif); letter-spacing:-.055em; white-space:nowrap; }
-.brand-tag { margin:clamp(20px,2vw,44px) 0 0 clamp(32px,4.3vw,108px); font:400 clamp(54px,5.4vw,112px)/.92 var(--serif); letter-spacing:-.035em; color:#f6f0ec; }
-.brand-ghost { position:absolute; left:-.07em; top:-.02em; font:400 clamp(180px,19vw,390px)/.75 var(--serif); white-space:nowrap; color:#fff; opacity:.055; z-index:-1; pointer-events:none; }
-.hero-ghost-off .brand-ghost { display:none; }
-.hero-copy { justify-self:end; width:min(100%,480px); padding-top:24px; }
-.hero-copy h2 { margin:0 0 clamp(22px,2.4vh,36px); font:400 clamp(42px,3.15vw,65px)/.99 var(--serif); letter-spacing:-.01em; text-transform:none; }
-.hero-copy p { margin:0; max-width:470px; font-size:clamp(16px,1.12vw,19px); font-weight:300; line-height:1.68; color:rgba(255,255,255,.82); }
-.actions { margin-top:clamp(24px,3.3vh,42px); display:grid; grid-template-columns:1fr; gap:11px; width:min(100%,340px); }
-.action { min-height:56px; display:flex; justify-content:space-between; gap:25px; align-items:center; border:1px solid rgba(255,255,255,.62); padding:0 20px; background:rgba(0,0,0,.12); font-size:16px; text-transform:uppercase; letter-spacing:.025em; font-weight:400; transition:background .2s,border-color .2s,color .2s; }
-.action .arrow { font-size:24px; font-family:var(--serif); line-height:1; }
-.action.primary { background:var(--red); border-color:var(--red); }
-.action:hover { background:var(--white); border-color:var(--white); color:var(--ink); }
-.hero-bottom { border-top:1px solid rgba(255,255,255,.35); display:grid; grid-template-columns:1fr 1fr; gap:18px; padding-top:19px; font-size:16px; line-height:1.48; font-weight:300; letter-spacing:.03em; text-transform:uppercase; color:rgba(255,255,255,.86); }
-.hero-bottom>div:last-child { text-align:right; }
-@media (min-width:1920px) { :root{--edge:max(180px,calc((100vw - 2600px)/2));} }
-@media (min-width:1441px) and (max-width:1919px){:root{--edge:max(80px,calc((100vw - 1760px)/2));}}
-@media (min-width:701px) and (max-width:1440px){:root{--edge:clamp(40px,5vw,80px);} .brand-title{font-size:clamp(112px,13vw,180px);} .brand-tag{font-size:clamp(46px,5vw,72px);} .hero-main{grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:30px;}}
-@media (max-width:980px) { .hero-main { grid-template-columns:1fr; gap:38px; align-content:center; } .hero-copy { justify-self:start; padding:0; width:min(100%,550px); } .brand-title { font-size:clamp(98px,17vw,154px); } .brand-tag { font-size:clamp(45px,7vw,70px); margin-left:30px; } .hero-copy h2 { font-size:clamp(38px,6vw,56px); } .hero { min-height:max(100svh,850px); } }
-@media (max-width:700px) {
- :root { --edge:20px; }
- .hero { min-height:100svh; }
- .hero-shell { padding-top:25px; padding-bottom:25px; }
- .hero-top { gap:12px; }
- .kicker { gap:10px; max-width:240px; font-size:16px; line-height:1.4; padding-top:0; }
- .kicker:before { width:22px; }
- .badge { width:94px; font-size:16px; letter-spacing:0; line-height:1.15; }
- .badge svg { width:27px; height:36px; margin-bottom:5px; }
- .hero-main { align-content:center; gap:clamp(26px,4vh,40px); padding-top:20px; padding-bottom:20px; }
- .brand-title { font-size:clamp(76px,20vw,106px); }
- .brand-tag { margin:12px 0 0; font-size:clamp(37px,10vw,52px); white-space:normal; }
- .brand-ghost { font-size:36vw; }
- .hero-copy h2 { font-size:clamp(35px,9.2vw,48px); margin-bottom:13px; }
- .hero-copy p { font-size:16px; line-height:1.48; }
- .actions { margin-top:18px; gap:8px; max-width:350px; }
- .action { min-height:50px; font-size:16px; padding:0 15px; }
- .hero-bottom { padding-top:13px; font-size:16px; letter-spacing:0; gap:10px; }
-}
-@media (max-height:720px) and (min-width:701px) { .hero { min-height:720px; } .hero-main{gap:20px;} .brand-title{font-size:clamp(110px,11vw,205px);} .brand-tag{font-size:clamp(45px,4.3vw,88px);} }
-@media (prefers-reduced-motion:reduce){*,*:before,*:after{transition:none !important; animation:none !important;}}
-
- .hero-video .hero-media { object-fit:cover; object-position:center; filter:grayscale(100%) brightness(.87); }
- .hero-video .hero-shade {background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.31) 45%,rgba(0,0,0,.67) 100%),linear-gradient(0deg,rgba(0,0,0,.68),transparent 32%);}
- .hero-video .brand-block{transform:translateY(-5%);}
- @media(max-width:700px){.hero-video .hero-shade{background:linear-gradient(180deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.4) 33%,rgba(0,0,0,.86) 69%,rgba(0,0,0,.9) 100%);}.hero-video .hero-media{object-position:56% center;}}
- </style>
-</head>
-<body>
-<section class="hero hero-video" id="etnika-hero" aria-label="ЭТНИКА — студия автопортрета">
-<video class="hero-media" id="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg"><source src="https://static.tildacdn.com/vide6262-3963-4431-b066-353834343161/outputcompress-video.mp4" type="video/mp4"></video>
-<div class="hero-shade" aria-hidden="true"></div>
-<div class="hero-shell hero-top"><div class="kicker">Москва · студия автопортрета</div><div class="badge" aria-label="Хорошее место 2026"><svg viewBox="0 0 34 44" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M17 42C17 42 31 27.4 31 15.9C31 8.78 24.73 3 17 3C9.27 3 3 8.78 3 15.9C3 27.4 17 42 17 42Z" fill="none" stroke="#b31b23" stroke-width="2" stroke-linejoin="round"/><circle cx="17" cy="15.9" r="5.2" fill="none" stroke="#b31b23" stroke-width="2"/></svg><span>Хорошее<br>место 2026</span></div></div>
-<main class="hero-shell hero-main">
-<div class="brand-block"><div class="brand-ghost" aria-hidden="true">ЭТНИКА</div><h1 class="brand-title">ЭТНИКА</h1><div class="brand-tag">...наедине с собой</div></div>
-<div class="hero-copy"><h2>Профессиональные снимки<br>без фотографа</h2><p>Вы сами управляете съёмкой: перед вами только зеркало, камера и пространство, в котором не нужно играть роль.</p><div class="actions"><a class="action primary" href="https://n1268189.yclients.com/" target="_blank" rel="noopener noreferrer"><span>Выбрать время</span><span class="arrow" aria-hidden="true">↗</span></a><a class="action" href="https://etnika-studio.ru/" target="_blank" rel="noopener noreferrer"><span>Как это работает</span><span class="arrow" aria-hidden="true">↗</span></a></div></div>
-</main>
-<div class="hero-shell"><footer class="hero-bottom" aria-label="Адрес и время работы"><div>Ленинская Слобода, 26А<br>Автозаводская · Москва</div><div>10:00–22:00<br>7 дней в неделю</div></footer></div>
-</section>
-<script>
-(()=>{const hero=document.getElementById('etnika-hero'); const q=new URLSearchParams(location.search); const value=q.get('ghost'); if(value==='0')hero.classList.add('hero-ghost-off'); if(value==='1')hero.classList.add('hero-ghost-on');
-const video=document.getElementById('hero-video');if(!video)return;const reduced=window.matchMedia('(prefers-reduced-motion:reduce)').matches; if(reduced){video.pause();video.removeAttribute('autoplay');return;} const obs=new IntersectionObserver(entries=>{if(!entries[0].isIntersecting || document.hidden){video.pause();}else{video.play().catch(()=>{});}}, {threshold:0.08});obs.observe(hero);document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();else video.play().catch(()=>{});});
-})();
-</script>
-</body></html>
+html{scroll-behavior:smooth}
+#etnika-hero.etnika-new-hero{--hero-edge:max(80px,calc((100vw - 1760px)/2));position:relative;min-height:100svh;height:auto;max-height:none;isolation:isolate;background:#171313;color:#fff;overflow:hidden;font-family:'Geologica',Arial,sans-serif;font-weight:300;}
+#etnika-hero.etnika-new-hero, #etnika-hero.etnika-new-hero *{box-sizing:border-box}
+#etnika-hero.etnika-new-hero .e-background, #etnika-hero.etnika-new-hero .e-background img,#etnika-hero.etnika-new-hero .e-background video{position:absolute;inset:0;height:100%;width:100%;display:block}
+#etnika-hero.etnika-new-hero .e-background{z-index:-3;overflow:hidden}
+#etnika-hero.etnika-new-hero .e-background img,#etnika-hero.etnika-new-hero .e-background video{object-fit:cover;object-position:center 44%}
+#etnika-hero.etnika-new-hero[data-media="photo"] .e-background video{display:none}
+#etnika-hero.etnika-new-hero[data-media="video"] .e-background img{display:none}
+#etnika-hero.etnika-new-hero .e-tone{position:absolute;inset:0;z-index:-2;background:rgba(0,0,0,.24);pointer-events:none}
+#etnika-hero.etnika-new-hero .e-hero-layout{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;gap:24px;padding:clamp(28px,4vh,58px) var(--hero-edge) clamp(26px,4vh,46px);max-width:2600px;margin:0 auto;position:relative}
+#etnika-hero.etnika-new-hero .e-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+#etnika-hero.etnika-new-hero .e-city{font:400 16px/1.5 'Geologica',Arial,sans-serif;text-transform:uppercase;letter-spacing:.04em;display:flex;gap:15px;align-items:center;text-shadow:0 2px 16px #0009}
+#etnika-hero.etnika-new-hero .e-city:before{content:"";width:42px;flex:none;border-top:1px solid #fff}
+#etnika-hero.etnika-new-hero .e-award{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;font:400 16px/1.3 'Geologica',Arial,sans-serif;letter-spacing:.03em;text-transform:uppercase;text-shadow:0 2px 10px #0008}
+#etnika-hero.etnika-new-hero .e-award svg{width:34px;height:43px}
+#etnika-hero.etnika-new-hero .e-central{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(310px,420px);align-items:center;gap:clamp(35px,4vw,100px)}
+#etnika-hero.etnika-new-hero .e-brand{min-width:0;align-self:center}
+#etnika-hero.etnika-new-hero .e-name{font:400 clamp(106px,11.6vw,224px)/.8 'Forum',Georgia,serif;letter-spacing:-.055em;margin:0;white-space:nowrap;text-shadow:0 3px 22px #0006}
+#etnika-hero.etnika-new-hero .e-slogan{font:400 clamp(44px,4.45vw,82px)/.97 'Forum',Georgia,serif;letter-spacing:-.028em;margin:23px 0 0 clamp(24px,4vw,100px);white-space:nowrap;text-shadow:0 3px 20px #0008}
+#etnika-hero.etnika-new-hero .e-copy{max-width:420px;justify-self:end;align-self:center;text-shadow:0 2px 18px #000a}
+#etnika-hero.etnika-new-hero .e-copy h2{font:400 clamp(41px,3.1vw,60px)/.97 'Forum',Georgia,serif;letter-spacing:-.015em;margin:0 0 21px}
+#etnika-hero.etnika-new-hero .e-copy p{font:300 clamp(16px,1vw,18px)/1.67 'Geologica',Arial,sans-serif;margin:0;max-width:440px;color:#fff}
+#etnika-hero.etnika-new-hero .e-buttons{display:grid;gap:10px;margin-top:27px;max-width:320px}
+#etnika-hero.etnika-new-hero .e-buttons a{border:1px solid #fffd;background:rgba(0,0,0,.04);color:#fff;min-height:54px;padding:10px 17px;display:flex;align-items:center;justify-content:space-between;font:400 16px/1.3 'Geologica',Arial,sans-serif;text-transform:uppercase;letter-spacing:.02em;text-decoration:none;text-shadow:none;transition:background .2s ease,color .2s ease}
+#etnika-hero.etnika-new-hero .e-buttons a:first-child{background:#a9151d;border-color:#a9151d}
+#etnika-hero.etnika-new-hero .e-buttons a:hover{background:#fff;color:#151515;border-color:#fff}
+#etnika-hero.etnika-new-hero .e-buttons b{font:400 27px/1 'Forum',Georgia,serif}
+#etnika-hero.etnika-new-hero .e-bottom{border-top:1px solid #fffa;padding-top:17px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:end;text-transform:uppercase;letter-spacing:.025em;font:300 16px/1.45 'Geologica',Arial,sans-serif;text-shadow:0 1px 12px #000}
+#etnika-hero.etnika-new-hero .e-bottom>div:last-child{text-align:right}
+@media(min-width:1920px){#etnika-hero.etnika-new-hero{--hero-edge:max(180px,calc((100vw - 2600px)/2))}}
+@media(max-width:1440px) and (min-width:901px){#etnika-hero.etnika-new-hero{--hero-edge:clamp(40px,5.4vw,80px)}#etnika-hero.etnika-new-hero .e-name{font-size:clamp(104px,11.3vw,176px)}#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(42px,4.25vw,64px)}#etnika-hero.etnika-new-hero .e-central{grid-template-columns:minmax(0,1fr) minmax(300px,370px);gap:24px}}
+@media(max-width:900px){#etnika-hero.etnika-new-hero{--hero-edge:clamp(22px,5vw,42px)}#etnika-hero.etnika-new-hero .e-central{grid-template-columns:1fr;gap:clamp(20px,3vh,35px);align-content:center}#etnika-hero.etnika-new-hero .e-copy{justify-self:start;max-width:570px}#etnika-hero.etnika-new-hero .e-name{font-size:clamp(84px,15vw,150px)}#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(42px,6.5vw,65px);margin:18px 0 0 0}}
+@media(max-width:600px){#etnika-hero.etnika-new-hero{--hero-edge:20px;min-height:100svh}#etnika-hero.etnika-new-hero .e-hero-layout{padding:20px 20px 22px;gap:10px;min-height:100svh}#etnika-hero.etnika-new-hero .e-city{font-size:16px;gap:9px;max-width:220px}#etnika-hero.etnika-new-hero .e-city:before{width:22px}#etnika-hero.etnika-new-hero .e-award{font-size:13px;width:74px}#etnika-hero.etnika-new-hero .e-award svg{width:26px;height:34px}#etnika-hero.etnika-new-hero .e-central{gap:clamp(19px,3vh,30px)}#etnika-hero.etnika-new-hero .e-name{font-size:clamp(72px,19.5vw,105px)}#etnika-hero.etnika-new-hero .e-slogan{font-size:clamp(37px,10.2vw,53px);margin-top:12px}#etnika-hero.etnika-new-hero .e-copy h2{font-size:clamp(35px,8.9vw,47px);margin-bottom:12px}#etnika-hero.etnika-new-hero .e-copy p{font-size:16px;line-height:1.5}#etnika-hero.etnika-new-hero .e-buttons{margin-top:18px;gap:8px;max-width:100%}#etnika-hero.etnika-new-hero .e-buttons a{min-height:49px;font-size:16px}#etnika-hero.etnika-new-hero .e-bottom{font-size:14px;gap:10px;padding-top:12px}#etnika-hero.etnika-new-hero .e-background img{object-position:52% center}}
+@media(prefers-reduced-motion:reduce){#etnika-hero.etnika-new-hero .e-buttons a{transition:none}}
+</style></head><body><section id="etnika-hero" class="etnika-new-hero" data-media="photo" aria-label="ЭТНИКА — студия автопортрета">
+<div class="e-background"><img class="e-background-photo" src="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg" alt="Фотосессия в студии ЭТНИКА на красном фоне" fetchpriority="high"><video class="hero-video" muted loop playsinline preload="none" aria-hidden="true"></video></div>
+<div class="e-tone" aria-hidden="true"></div>
+<div class="e-hero-layout">
+<div class="e-top"><div class="e-city">Москва · студия автопортрета</div><div class="e-award"><svg viewBox="0 0 34 44" aria-hidden="true"><path d="M17 42C17 42 31 27.4 31 15.9C31 8.78 24.73 3 17 3C9.27 3 3 8.78 3 15.9C3 27.4 17 42 17 42Z" fill="none" stroke="#c51d28" stroke-width="2.5"/><circle cx="17" cy="15.9" r="5.3" stroke="#c51d28" stroke-width="2" fill="none"/></svg><span>Хорошее<br>место 2026</span></div></div>
+<div class="e-central"><div class="e-brand"><h1 class="e-name">ЭТНИКА</h1><p class="e-slogan">...наедине с собой</p></div>
+<div class="e-copy"><h2>Профессиональные снимки<br>без фотографа</h2>
+<p>Вы сами управляете съёмкой. Перед вами — только зеркало, камера и пространство, в котором не нужно играть роль.</p>
+<div class="e-buttons"><a href="https://n1268189.yclients.com/" target="_blank" rel="noopener"><span>Выбрать время</span><b aria-hidden="true">↗</b></a><a href="review-2026-11.html#etnika-process-interactive"><span>Как это работает</span><b aria-hidden="true">↓</b></a></div></div></div>
+<div class="e-bottom"><div>Ленинская Слобода, 26А<br>Автозаводская · Москва</div><div>10:00–22:00<br>7 дней в неделю</div></div>
+</div></section><script>(function(){const h=document.getElementById('etnika-hero');h.dataset.media="video";let v=h.querySelector('video');if(h.dataset.media==='video'){v.src="https://static.tildacdn.com/vide6262-3963-4431-b066-353834343161/outputcompress-video.mp4";v.autoplay=true;v.play().catch(()=>{});}else{v.removeAttribute('autoplay');}if(matchMedia('(prefers-reduced-motion:reduce)').matches){v.pause();}})();</script></body></html>
