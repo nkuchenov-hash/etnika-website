@@ -537,14 +537,14 @@
 
 <section id="etnika-hero" class="etnika-carousel" aria-label="ЭТНИКА — студия автопортрета" data-autoplay="7000">
   <div class="ec-slidebox" aria-hidden="true">
-    <div class="ec-slide is-current" data-tone="dark" data-name="Красная ткань">
-      <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/scarf-mobile-v2.webp"><img class="ec-photo" src="assets/hero-carousel/scarf-desktop-v2.webp" alt="" decoding="async" fetchpriority="high"></picture>
+    <div class="ec-slide is-current" data-tone="dark" data-name="Красный фон из архива ETNIKA">
+      <picture><source media="(max-width:760px)" srcset="assets/etnika-hero-red-mobile.jpg"><img class="ec-photo" src="assets/etnika-hero-red-wide.jpg" alt="" decoding="async" fetchpriority="high"></picture>
     </div>
     <div class="ec-slide" data-tone="dark" data-name="Чёрно-белый портрет">
       <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/bw-mobile-v2.webp"><img class="ec-photo" src="assets/hero-carousel/bw-desktop-v2.webp" alt="" decoding="async"></picture>
     </div>
-    <div class="ec-slide" data-tone="light" data-name="Светлый фон">
-      <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/light-mobile-v2.webp"><img class="ec-photo" src="assets/hero-carousel/light-desktop-v2.webp" alt="" decoding="async"></picture>
+    <div class="ec-slide" data-tone="light" data-name="Светлый фон из архива ETNIKA">
+      <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/light-drive-9953.jpg"><img class="ec-photo" src="assets/hero-carousel/light-drive-9953.jpg" alt="" decoding="async"></picture>
     </div>
   </div>
   <div class="ec-shell">
@@ -558,10 +558,7 @@
     <div class="ec-content">
       <div class="ec-lockup">
         <h1 class="ec-brand">ЭТНИКА</h1>
-        <div class="ec-love" aria-label="Это по любви">
-          <svg viewBox="0 0 160 178" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M70 141 C47 120 12 81 16 50 C19 17 46 14 64 29 C73 36 77 49 80 60 C88 45 103 20 125 22 C155 24 157 53 139 78 C124 100 92 131 64 159"/></svg>
-          <span>это по любви</span>
-        </div>
+        <img class="ec-love" src="assets/hero-carousel/love-heart.svg" alt="это по любви" width="176" height="190">
       </div>
       <h2 class="ec-heading">Профессиональные снимки<br>без фотографа</h2>
       <a class="ec-book" href="https://n1268189.yclients.com/" target="_blank" rel="noopener noreferrer"><span>Выбрать время</span><span class="ec-arrow" aria-hidden="true">→</span></a>
@@ -12475,5 +12472,18 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   select(0,false);start();
 })();
 </script>
+
+<style id="etnika-photo-provenance-hero">
+/* ETNIKA HERO photos: red (310503458.jpg) and light (IMG_9953.jpeg) are real photos from owner's Drive. No generated red/light pictures. */
+#etnika-hero.etnika-carousel .ec-photo{width:100%;height:100%;object-fit:cover;object-position:center center;}
+#etnika-hero.etnika-carousel .ec-slide:first-child{background:#920f1e;}
+#etnika-hero.etnika-carousel .ec-slide[data-tone="light"]{background:linear-gradient(90deg,#f1ece9 0%,#e7e3e5 60%,#d9d4d8 100%);}
+#etnika-hero.etnika-carousel .ec-slide[data-tone="light"] .ec-photo{height:100%;width:auto;max-width:none;left:auto;right:2.8vw;top:0;object-fit:contain;object-position:right center;-webkit-mask-image:linear-gradient(90deg,transparent 0%,black 17%,black 94%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0%,black 17%,black 94%,transparent 100%);}
+#etnika-hero.etnika-carousel .ec-love{display:block;object-fit:contain;}
+@media(max-width:760px){
+ #etnika-hero.etnika-carousel .ec-slide[data-tone="light"] .ec-photo{height:80%;width:auto;right:-22%;top:19%;object-fit:contain;-webkit-mask-image:linear-gradient(90deg,transparent 0%,black 16%,black 100%);mask-image:linear-gradient(90deg,transparent 0%,black 16%,black 100%);}
+ #etnika-hero.etnika-carousel .ec-slide:first-child .ec-photo{object-position:58% center;}
+}
+</style>
 </body>
 </html>
