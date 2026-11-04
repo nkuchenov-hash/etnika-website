@@ -538,13 +538,13 @@
 <section id="etnika-hero" class="etnika-carousel" aria-label="ЭТНИКА — студия автопортрета" data-autoplay="7000">
   <div class="ec-slidebox" aria-hidden="true">
     <div class="ec-slide is-current" data-tone="dark" data-name="Красная ткань">
-      <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/scarf-mobile.webp"><img class="ec-photo" src="assets/hero-carousel/scarf-desktop.webp" alt="" decoding="async" fetchpriority="high"></picture>
+      <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/scarf-mobile-v2.webp"><img class="ec-photo" src="assets/hero-carousel/scarf-desktop-v2.webp" alt="" decoding="async" fetchpriority="high"></picture>
     </div>
     <div class="ec-slide" data-tone="dark" data-name="Чёрно-белый портрет">
-      <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/bw-mobile.webp"><img class="ec-photo" src="assets/hero-carousel/bw-desktop.webp" alt="" decoding="async"></picture>
+      <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/bw-mobile-v2.webp"><img class="ec-photo" src="assets/hero-carousel/bw-desktop-v2.webp" alt="" decoding="async"></picture>
     </div>
     <div class="ec-slide" data-tone="light" data-name="Светлый фон">
-      <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/light-mobile.webp"><img class="ec-photo" src="assets/hero-carousel/light-desktop.webp" alt="" decoding="async"></picture>
+      <picture><source media="(max-width:760px)" srcset="assets/hero-carousel/light-mobile-v2.webp"><img class="ec-photo" src="assets/hero-carousel/light-desktop-v2.webp" alt="" decoding="async"></picture>
     </div>
   </div>
   <div class="ec-shell">
@@ -12372,15 +12372,19 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script><style id="etnika-carousel-css">
+/* Clean background V2: no image text, no raster upscaling of B&W screenshot. Keep photo uncropped. */
+#etnika-hero.etnika-carousel .ec-slide:first-child{background:#070708}
+#etnika-hero.etnika-carousel .ec-slide:nth-child(2){background:#0a0a0a}
+
 #etnika-hero.etnika-carousel{--white:#fff;--red:#bd1824;--dark:#101010;--shell-padding:clamp(24px,4.9vw,92px);width:100%;height:auto;min-height:100svh;max-height:none;position:relative;isolation:isolate;overflow:hidden;background:#080808;color:#fff;font-family:'Geologica',Arial,sans-serif;box-sizing:border-box}
 #etnika-hero.etnika-carousel *,#etnika-hero.etnika-carousel *::before,#etnika-hero.etnika-carousel *::after{box-sizing:border-box}
 #etnika-hero.etnika-carousel a{color:inherit;text-decoration:none}
 #etnika-hero.etnika-carousel .ec-slidebox,#etnika-hero.etnika-carousel .ec-slide,#etnika-hero.etnika-carousel picture,#etnika-hero.etnika-carousel .ec-photo{position:absolute;inset:0;width:100%;height:100%}
 #etnika-hero.etnika-carousel .ec-slidebox{z-index:-2;pointer-events:none}
 #etnika-hero.etnika-carousel .ec-slide{opacity:0;visibility:hidden;transition:opacity 1.1s ease,visibility 1.1s;will-change:opacity;overflow:hidden;background:#080808}
-#etnika-hero.etnika-carousel .ec-slide[data-tone="light"]{background:#f2efec}
+#etnika-hero.etnika-carousel .ec-slide[data-tone="light"]{background:#eae8e5}
 #etnika-hero.etnika-carousel .ec-slide.is-current{opacity:1;visibility:visible;z-index:1}
-#etnika-hero.etnika-carousel .ec-photo{display:block;object-fit:cover;object-position:center center;border:0;}
+#etnika-hero.etnika-carousel .ec-photo{display:block;object-fit:contain;object-position:center center;border:0;}
 #etnika-hero.etnika-carousel .ec-shell{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-height:100svh;width:100%;max-width:2600px;margin:0 auto;padding:clamp(22px,4.1vh,58px) var(--shell-padding) clamp(22px,3.4vh,40px);gap:20px}
 #etnika-hero.etnika-carousel .ec-top{display:flex;justify-content:space-between;align-items:start;gap:30px;min-height:75px}
 #etnika-hero.etnika-carousel .ec-city{font:400 16px/1.45 'Geologica',Arial,sans-serif;letter-spacing:.055em;text-transform:uppercase;display:flex;align-items:center;gap:16px;white-space:normal;max-width:70%;color:rgba(255,255,255,.82)}
