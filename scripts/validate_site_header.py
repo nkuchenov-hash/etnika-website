@@ -62,7 +62,7 @@ def render():
                     assert page.locator(".esh__booking").is_visible()
                     assert page.locator(".esh__nav").evaluate("(el)=>el.scrollWidth<=el.clientWidth+2"),(path,width,"desktop nav overflows")
                 page.evaluate("window.scrollTo({top:document.getElementById('etnika-hero').offsetHeight + 100,behavior:'instant'})")
-                page.wait_for_timeout(150)
+                page.wait_for_timeout(400)
                 assert header.get_attribute("data-hero")=="false",(path,width,"header did not acquire logo")
                 assert page.locator(".esh__logo").evaluate("(el)=>getComputedStyle(el).opacity")=="1"
                 assert page.locator("#etnika-brand-flight").evaluate("(el)=>getComputedStyle(el).display")=="none"
