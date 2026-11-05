@@ -11171,6 +11171,9 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
 :root{
   --etnika-section-y:64px;
   --etnika-section-title:clamp(62px,6.25vw,118px);
+  --etnika-font-display:'Forum',Georgia,serif;
+  --etnika-font-ui:'Geologica',Arial,sans-serif;
+  --etnika-text-size:16px;
 }
 
 /* =========================================================
@@ -12223,8 +12226,7 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 </script>
 
 <style id="etnika-space-owner-corrections-20261105">
-/* 05.11.2026: one complete viewport, balanced outside breathing room,
-   no explanatory paragraph; images use all the remaining height. */
+/* 05.11.2026 · shared heading/text typography, balanced page spacing, maximum image field. */
 #etnika-space-photo{
   --red:#b21a28!important;
   --edge:var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)))!important;
@@ -12236,19 +12238,19 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   display:grid!important;grid-template-rows:auto auto minmax(0,1fr) auto!important;
   margin-left:var(--et-u-edge,var(--edge))!important;
   margin-right:var(--et-u-edge,var(--edge))!important;
-  padding:clamp(22px,3.4svh,38px) 0!important;
+  padding:var(--etnika-section-y) 0!important;
   gap:clamp(10px,1.3svh,16px)!important;
 }
-#etnika-space-photo .spf-top{margin:0!important;}
+#etnika-space-photo .spf-top{margin:0!important;font-family:var(--etnika-font-ui)!important;font-size:var(--etnika-text-size)!important;font-weight:300!important;letter-spacing:.055em!important;}
 #etnika-space-photo .spf-head{
   display:block!important;min-width:0!important;position:relative!important;margin:0!important;
 }
 #etnika-space-photo .spf-title{
   display:block!important;width:100%!important;max-width:none!important;min-width:0!important;
   white-space:nowrap!important;text-wrap:nowrap!important;
-  font-family:'Forum',Georgia,serif!important;
+  font-family:var(--etnika-font-display)!important;
   font-size:var(--etnika-section-title)!important;font-weight:400!important;
-  letter-spacing:-.045em!important;line-height:.92!important;
+  letter-spacing:-.04em!important;line-height:.8!important;
   transform-origin:left center!important;margin:0!important;text-transform:uppercase!important;
 }
 #etnika-space-photo .spf-title .red{color:#b31727!important;}
@@ -12283,12 +12285,12 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   left:18px!important;bottom:16px!important;
 }
 #etnika-space-photo .spf-label-title{
-  font-family:'Forum',Georgia,serif!important;
+  font-family:var(--etnika-font-display)!important;
   font-size:clamp(26px,1.6vw,36px)!important;line-height:1!important;
 }
 #etnika-space-photo .spf-label-sub{
-  max-width:48ch!important;font-family:'Geologica',Arial,sans-serif!important;
-  font-size:16px!important;line-height:1.42!important;font-weight:300!important;
+  max-width:48ch!important;font-family:var(--etnika-font-ui)!important;
+  font-size:var(--etnika-text-size)!important;line-height:1.42!important;font-weight:300!important;
   color:rgba(255,255,255,.93)!important;
 }
 #etnika-space-photo .spf-main:hover::after,#etnika-space-photo .spf-small:hover::after,
@@ -12303,18 +12305,12 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 #etnika-space-photo .spf-main:focus-visible,#etnika-space-photo .spf-small:focus-visible{
   outline:2px solid #b31727!important;outline-offset:-2px!important;
 }
-#etnika-space-photo .spf-counter{font-size:12px!important;text-shadow:0 1px 8px #000!important;}
+#etnika-space-photo .spf-counter{font-family:var(--etnika-font-ui)!important;font-size:var(--etnika-text-size)!important;text-shadow:0 1px 8px #000!important;}
 #etnika-space-photo .spf-nav{
   display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;
   margin:0!important;gap:0!important;min-height:0!important;
 }
-#etnika-space-photo .spf-tab{
-  font-size:16px!important;font-weight:300!important;min-height:48px!important;letter-spacing:0!important;
-}
-@media (max-height:750px) and (min-width:1101px){
-  #etnika-space-photo .spf-shell{padding:clamp(14px,2.8svh,22px) 0!important;gap:clamp(7px,1.2svh,12px)!important;}
-  #etnika-space-photo .spf-title{font-size:min(var(--etnika-section-title),11svh)!important;}
-  #etnika-space-photo .spf-tab{min-height:42px!important;padding-top:8px!important;padding-bottom:8px!important;}
+#etnika-space-photo .spf-tab{font-family:var(--etnika-font-ui)!important;font-size:var(--etnika-text-size)!important;font-weight:300!important;min-height:48px!important;letter-spacing:0!important;
 }
 @media(max-width:1100px){
   #etnika-space-photo{
@@ -12323,12 +12319,12 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   #etnika-space-photo .spf-shell{
     height:100%!important;min-height:0!important;display:grid!important;
     grid-template-rows:auto auto minmax(0,1fr) auto!important;
-    padding:clamp(18px,3svh,30px) 0!important;gap:clamp(8px,1.3svh,14px)!important;
+    padding:var(--etnika-section-y) 0!important;gap:clamp(8px,1.3svh,14px)!important;
   }
-  #etnika-space-photo .spf-top{margin:0!important;}
+  #etnika-space-photo .spf-top{margin:0!important;font-family:var(--etnika-font-ui)!important;font-size:var(--etnika-text-size)!important;font-weight:300!important;letter-spacing:.055em!important;}
   #etnika-space-photo .spf-head{display:block!important;min-height:0!important;margin:0!important;}
   #etnika-space-photo .spf-title{
-    font-size:clamp(44px,7vw,72px)!important;line-height:.9!important;
+    font-size:var(--etnika-section-title)!important;line-height:.8!important;
     white-space:normal!important;text-wrap:balance!important;transform:none!important;
   }
   #etnika-space-photo .spf-gallery{
@@ -12360,9 +12356,9 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   #etnika-space-photo .spf-shell{
     margin-left:var(--et-u-edge,20px)!important;
     margin-right:var(--et-u-edge,20px)!important;
-    padding:clamp(16px,2.6svh,24px) 0!important;
+    padding:var(--etnika-section-y) 0!important;
   }
-  #etnika-space-photo .spf-title{font-size:clamp(38px,10vw,58px)!important;}
+  #etnika-space-photo .spf-title{font-size:var(--etnika-section-title)!important;}
   #etnika-space-photo .spf-main{height:100%!important;min-height:0!important;}
   #etnika-space-photo .spf-side{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
@@ -12382,20 +12378,5 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   #etnika-space-photo .spf-main::after,#etnika-space-photo .spf-small::after{transition:none!important;}
 }
 </style>
-<script id="etnika-space-title-fit-20261104">
-(function(){
- const block=document.getElementById('etnika-space-photo');
- const title=block&&block.querySelector('.spf-title');
- if(!title)return;
- function fit(){
-  title.style.transform='';
-  if(window.innerWidth<=1100)return;
-  const width=title.clientWidth,natural=title.scrollWidth;
-  if(width>0 && natural>width)title.style.transform='scaleX('+(width/natural).toFixed(4)+')';
- }
- fit();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
- window.addEventListener('resize',fit,{passive:true});
-})();
-</script>
 </body>
 </html>
