@@ -95,3 +95,22 @@ jobs:
           print('Static site audit:',p.sections,'sections,',len(inline),'inline JS blocks,',len(p.anchors),'internal links')
           print('Blocks:',len(catalog['blocks']),'Tasks:',len(task_ids),'Shared status records:',len(state['tasks']))
           PYTEST
+
+      - name: Check working/preview gallery parity and shared design-system tokens
+        run: python3 scripts/validate_space_block.py
+
+      - name: Prepare Chromium for layout regression
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          python3 -m playwright install chromium
+
+      - name: Check viewport geometry and photo visibility in Chromium
+        run: python3 scripts/validate_space_block.py --render
+
+      - name: Save layout screenshots for visual review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-studio-space-layout
+          path: reports/etnika-space-*.png
+          if-no-files-found: ignore
