@@ -107,6 +107,9 @@ jobs:
       - name: Check viewport geometry and photo visibility in Chromium
         run: python3 scripts/validate_space_block.py --render
 
+      - name: Check site navigation and shared editorial type
+        run: python3 scripts/validate_site_header.py --render
+
       - name: Save layout screenshots for visual review
         if: always()
         uses: actions/upload-artifact@v4
