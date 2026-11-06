@@ -11497,6 +11497,10 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
   font-size:var(--etnika-text-size,16px) !important;
   line-height:1.45 !important;
 }
+#etnika-contacts-source .location-copy p b{
+  color:#fff !important;
+  font-weight:500 !important;
+}
 #etnika-contacts-source .location-copy p + p{
   margin-top:clamp(7px,1svh,10px) !important;
 }
@@ -11507,7 +11511,14 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
   margin:0 0 clamp(16px,2.2svh,24px) !important;
 }
 #etnika-contacts-source .contact-grid div{
-  padding:clamp(8px,1.1svh,12px) 0 !important;
+  padding:clamp(12px,1.6svh,18px) clamp(18px,1.5vw,24px) !important;
+}
+#etnika-contacts-source .contact-grid div:nth-child(odd){
+  padding-left:0 !important;
+}
+#etnika-contacts-source .contact-grid div:nth-child(even){
+  padding-left:clamp(20px,1.65vw,28px) !important;
+  padding-right:0 !important;
 }
 #etnika-contacts-source .location-copy > div:last-child{
   margin:0 !important;
@@ -11554,6 +11565,10 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
   #etnika-contacts-source .location-copy{
     height:auto !important;
     padding:56px 30px !important;
+  }
+  #etnika-contacts-source .contact-grid div:nth-child(even){
+    padding-left:0 !important;
+    padding-right:0 !important;
   }
 }
 
