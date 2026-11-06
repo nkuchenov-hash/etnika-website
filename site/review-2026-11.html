@@ -8325,12 +8325,13 @@ body.etnika-gallery-lock{
 /* Only block-specific layout belongs here. Editorial lines/labels are defined
    centrally in site/assets/etnika-editorial-overline.css. */
 #etnika-reviews{
+  --etnika-reviews-edge:var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)));
   box-sizing:border-box;
   min-height:100svh;
   display:flex;
   align-items:stretch;
   padding:var(--et-u-top,clamp(48px,6vh,88px))
-          var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)))
+          var(--etnika-reviews-edge)
           var(--et-u-bottom,clamp(48px,6vh,88px));
   background:#f5f3f2;
   color:#0a0a0a;
@@ -8360,7 +8361,11 @@ body.etnika-gallery-lock{
 #etnika-reviews .urw-title,
 #etnika-reviews .urw-kicker{display:none!important}
 #etnika-reviews .urw-head{align-items:center}
+@media(max-width:1100px){
+  #etnika-reviews{--etnika-reviews-edge:var(--et-u-edge,30px)}
+}
 @media(max-width:700px){
+  #etnika-reviews{--etnika-reviews-edge:var(--et-u-edge,20px)}
   #etnika-reviews .etnika-reviews-heading{
     font-size:clamp(42px,11.8vw,68px);
     line-height:.88;
