@@ -31,6 +31,9 @@ def static():
         assert 'href="https://n1268189.yclients.com/"' in s
         assert '--etnika-overline-size:clamp(9px,.62vw,11px)' in s
         assert '--etnika-overline-size:8px' in s
+        assert '--etnika-menu-item-gap:clamp(26px,2.2vw,38px)' in s, (path,"roomy desktop menu token missing")
+        assert '--etnika-menu-item-gap:clamp(18px,1.65vw,24px)' in s, (path,"responsive compact-desktop menu token missing")
+        assert 'gap:var(--etnika-menu-item-gap);' in s, (path,"desktop nav does not use shared gap token")
         assert s.count('font-size:var(--etnika-overline-size);')==6
         assert 'assets/etnika-editorial-overline.css?v=20261106' in s, (path,"shared editorial stylesheet missing")
         for section_id, top_class in EDITORIAL_SECTIONS:
@@ -65,7 +68,7 @@ def render():
     with sync_playwright() as pw:
         browser=pw.chromium.launch(headless=True)
         for path in FILES:
-            for width,height in [(1920,1080),(1662,896),(1366,768),(390,844),(375,667)]:
+            for width,height in [(1920,1080),(1662,896),(1536,800),(1440,900),(1366,768),(1340,800),(1280,800),(1241,800),(1161,800),(390,844),(375,667)]:
                 page=browser.new_page(viewport={"width":width,"height":height})
                 page.goto(path.as_uri(),wait_until="domcontentloaded")
                 header=page.locator("#etnika-site-header")
@@ -117,6 +120,26 @@ def render():
                     assert page.locator(".esh__nav").is_visible()
                     assert page.locator(".esh__booking").is_visible()
                     assert page.locator(".esh__nav").evaluate("(el)=>el.scrollWidth<=el.clientWidth+2"),(path,width,"desktop nav overflows")
+                    nav_metrics=page.evaluate("""() => {
+                       const head=document.querySelector('#etnika-site-header');
+                       const nav=head.querySelector('.esh__nav');
+                       const items=[...nav.querySelectorAll('a')];
+                       const visible=[...head.querySelector('.esh__inner').children]
+                         .filter(el=>getComputedStyle(el).display!=='none');
+                       const bounds=el=>el.getBoundingClientRect();
+                       return {
+                         gap:parseFloat(getComputedStyle(nav).columnGap),
+                         linkGaps:items.slice(1).map((el,i)=>bounds(el).left-bounds(items[i]).right),
+                         siblingGaps:visible.slice(1).map((el,i)=>bounds(el).left-bounds(visible[i]).right),
+                         rightEdge:bounds(visible[visible.length-1]).right,
+                         viewport:innerWidth
+                       };
+                    }""")
+                    expected_gap=29 if width>1340 else 18
+                    assert nav_metrics['gap']>=expected_gap-0.5,(path,width,"nav items too tightly spaced",nav_metrics)
+                    assert all(g>=expected_gap-1 for g in nav_metrics['linkGaps']),(path,width,"nav link separation too small",nav_metrics)
+                    assert all(g>=-1 for g in nav_metrics['siblingGaps']),(path,width,"header group overlap",nav_metrics)
+                    assert nav_metrics['rightEdge']<=width-15,(path,width,"header overflows viewport",nav_metrics)
                 page.evaluate("window.scrollTo({top:document.getElementById('etnika-hero').offsetHeight + 100,behavior:'instant'})")
                 page.wait_for_timeout(400)
                 assert header.get_attribute("data-hero")=="false",(path,width,"header did not acquire logo")
