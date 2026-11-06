@@ -19,28 +19,21 @@
       <a href="#etnika-hero" class="esh__logo" aria-label="ЭТНИКА — на первый экран">ЭТНИКА</a>
     </div>
     <nav class="esh__nav" aria-label="Основная навигация">
-      <a href="#etnika-block-02-final">О студии</a>
-      <a href="#etnika-stories">Фотографии</a>
       <a href="#etnika-prices-clear">Цены</a>
       <a href="#etnika-gift">Сертификат</a>
-      <a href="https://etnika-studio.ru/otkryt-studiyu-avtoportreta" target="_blank" rel="noopener noreferrer">Открыть студию</a>
+      <a href="https://etnika-studio.ru/otkryt-studiyu-avtoportreta" target="_blank" rel="noopener noreferrer">Открыть свою студию</a>
       <a href="#etnika-contacts-source">Контакты</a>
     </nav>
+    <a class="esh__phone" href="tel:+79259494497" aria-label="Позвонить в студию ЭТНИКА">+7 925 94 94 497</a>
     <a class="esh__booking" href="https://n1268189.yclients.com/" target="_blank" rel="noopener noreferrer">Записаться <span aria-hidden="true">↗</span></a>
     <button class="esh__toggle" type="button" aria-label="Открыть меню" aria-controls="etnika-mobile-nav" aria-expanded="false"><span></span><span></span></button>
   </div>
   <nav class="esh__mobile" id="etnika-mobile-nav" aria-label="Навигация по сайту" inert>
-    <a href="#etnika-block-02-final">О студии</a>
-    <a href="#etnika-process-interactive">Как проходит съёмка</a>
-    <a href="#etnika-stories">Фотографии</a>
-    <a href="#etnika-space-photo">Пространство</a>
     <a href="#etnika-prices-clear">Цены</a>
     <a href="#etnika-gift">Сертификат</a>
+    <a href="https://etnika-studio.ru/otkryt-studiyu-avtoportreta" target="_blank" rel="noopener noreferrer">Открыть свою студию ↗</a>
     <a href="#etnika-contacts-source">Контакты</a>
-    <div class="esh__mobile-more">
-      <a href="https://etnika-studio.ru/blog" target="_blank" rel="noopener noreferrer">Блог ↗</a>
-      <a href="https://etnika-studio.ru/otkryt-studiyu-avtoportreta" target="_blank" rel="noopener noreferrer">Открыть студию ↗</a>
-    </div>
+    <a class="esh__mobile-phone" href="tel:+79259494497">+7 925 94 94 497</a>
     <a class="esh__mobile-book" href="https://n1268189.yclients.com/" target="_blank" rel="noopener noreferrer">Записаться ↗</a>
   </nav>
 </header>
@@ -12427,11 +12420,16 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   position:fixed;top:0;left:0;right:0;z-index:10020;
   height:var(--etnika-nav-height);color:#fff;
   font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif);
-  background:linear-gradient(180deg,rgba(5,5,5,.62),rgba(5,5,5,.10));
-  transition:background .3s ease,box-shadow .3s ease;
+  background:rgba(9,9,9,.57);
+  -webkit-backdrop-filter:blur(16px) saturate(115%);
+  backdrop-filter:blur(16px) saturate(115%);
+  transition:background .3s ease;
 }
-#etnika-site-header[data-hero="false"],#etnika-site-header.is-open{
-  background:#090909;box-shadow:0 1px 0 rgba(255,255,255,.11);
+#etnika-site-header[data-hero="false"]{
+  background:rgba(9,9,9,.76);
+}
+#etnika-site-header.is-open{
+  background:rgba(9,9,9,.90);
 }
 #etnika-site-header .esh__inner{
   height:var(--etnika-nav-height);
@@ -12469,6 +12467,12 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 #etnika-site-header .esh__nav a:hover,
 #etnika-site-header .esh__nav a:focus-visible,
 #etnika-site-header .esh__nav a[aria-current="location"]{color:#f2b8c6;}
+#etnika-site-header .esh__phone{
+  flex:0 0 auto;color:rgba(255,255,255,.92);text-decoration:none;white-space:nowrap;
+  font:300 clamp(14px,.85vw,16px)/1.2 var(--etnika-font-ui,'Geologica',Arial,sans-serif);
+  transition:color .2s ease;
+}
+#etnika-site-header .esh__phone:hover,#etnika-site-header .esh__phone:focus-visible{color:#f2b8c6;}
 #etnika-site-header .esh__booking{
   flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:25px;
   min-height:44px;padding:10px 15px;text-decoration:none;white-space:nowrap;
@@ -12498,7 +12502,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media(max-width:1160px){
   :root{--etnika-nav-height:64px;}
   #etnika-site-header .esh__inner{margin:0 var(--et-u-edge,30px);}
-  #etnika-site-header .esh__nav{display:none;}
+  #etnika-site-header .esh__nav,#etnika-site-header .esh__phone{display:none;}
   #etnika-site-header .esh__identity{flex:1 1 auto;min-width:0;}
   #etnika-site-header .esh__booking{margin-left:auto;min-height:42px;}
   #etnika-site-header .esh__toggle{
@@ -12517,7 +12521,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     position:absolute;top:100%;left:0;right:0;
     max-height:calc(100svh - var(--etnika-nav-height));overflow-y:auto;
     padding:10px var(--et-u-edge,30px) 24px;
-    background:#090909;border-top:1px solid rgba(255,255,255,.12);
+    background:rgba(9,9,9,.94);border-top:1px solid rgba(255,255,255,.12);
+    -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
     visibility:hidden;opacity:0;pointer-events:none;
     transform:translateY(-8px);transition:opacity .2s ease,transform .2s ease,visibility .2s;
   }
@@ -12529,8 +12534,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     border-bottom:1px solid rgba(255,255,255,.15);
     font:300 17px/1.35 var(--etnika-font-ui,'Geologica',Arial,sans-serif);
   }
-  #etnika-site-header .esh__mobile-more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px;}
-  #etnika-site-header .esh__mobile-more a{font-size:16px;}
+  #etnika-site-header .esh__mobile-phone{
+    margin-top:8px;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;
+  }
   #etnika-site-header .esh__mobile a.esh__mobile-book{
     background:#a9151d;padding:15px;text-align:center;margin-top:18px;border:0;
   }
