@@ -11895,6 +11895,10 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
  const flow=document.createElement('main');flow.id='etnika-review-flow';flow.setAttribute('aria-label','Предварительная композиция всей главной');
  for(const id of ids){const item=document.getElementById(id);if(item)flow.appendChild(item);}
  document.body.appendChild(flow);
+ if(location.hash==='#etnika-process-interactive'){
+   requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
+   window.addEventListener('load',()=>window.scrollTo({top:0,behavior:'instant'}),{once:true});
+ }
  const links=document.querySelectorAll('#etnika-hero a[href="#etnika-process-interactive"]');links.forEach(x=>x.href='#etnika-process-interactive');
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
