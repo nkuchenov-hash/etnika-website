@@ -1,0 +1,28 @@
+name: Review tariff slide-out
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "site/index.html"
+      - "site/review-2026-11.html"
+      - "scripts/validate_tariffs_slide.py"
+      - ".github/workflows/tariff-review.yml"
+  workflow_dispatch:
+jobs:
+  tariff-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium Playwright
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+      - name: Verify editorial rows, prices and sliding inclusions
+        run: python3 scripts/validate_tariffs_slide.py
+      - name: Archive desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-tariffs-slide-out
+          path: reports/etnika-tariffs-*.png
+          if-no-files-found: ignore
