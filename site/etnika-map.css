@@ -1,5 +1,5 @@
-/* ETNIKA — map tied to geographic coordinates, not a fixed caption.
-   The original Yandex widget is retained only as a failure fallback. */
+/* ETNIKA contacts: monochrome live map, real metro logo and studio pin.
+   Only the Yandex scheme canvas is desaturated; DOM marks stay red/white. */
 #etnika-contacts-source .location-map{
   position:relative!important;
   isolation:isolate;
@@ -7,20 +7,18 @@
 #etnika-contacts-source .etnika-map-live{
   position:absolute;
   inset:0;
+  z-index:2;
   width:100%;
   height:100%;
-  z-index:2;
   background:#171717;
 }
-#etnika-contacts-source .location-map[data-map-state="loading"] .etnika-map-live{
-  opacity:0;
+/* WebGL/canvas color desaturation supplements the JS scheme styling. */
+#etnika-contacts-source .etnika-map-live canvas{
+  filter:grayscale(1)!important;
 }
-#etnika-contacts-source .location-map[data-map-state="ready"] .etnika-map-live{
-  opacity:1;
-}
-#etnika-contacts-source .location-map[data-map-state="fallback"] .etnika-map-live{
-  display:none;
-}
+#etnika-contacts-source .location-map[data-map-state="loading"] .etnika-map-live{opacity:0;}
+#etnika-contacts-source .location-map[data-map-state="ready"] .etnika-map-live{opacity:1;}
+#etnika-contacts-source .location-map[data-map-state="fallback"] .etnika-map-live{display:none;}
 #etnika-contacts-source .location-map iframe.etnika-map-widget-fallback{
   position:absolute!important;
   inset:0!important;
@@ -38,38 +36,104 @@
   display:inline-flex;
   align-items:center;
   gap:7px;
-  transform:translate(-18px,-50%);
   width:max-content;
   max-width:260px;
-  user-select:none;
+  transform:translate(-18px,-50%);
   pointer-events:none;
+  user-select:none;
   color:#fff;
+  background:transparent;
+  border:0;
+  box-shadow:none;
 }
-#etnika-contacts-source .etnika-map-station__icon{
-  width:37px;
-  height:37px;
-  display:grid;
-  place-items:center;
-  flex:0 0 37px;
-  color:#e01b2c;
-  background:#151515;
-  border:1px solid rgba(255,255,255,.55);
-  font:700 26px/1 'Geologica',Arial,sans-serif;
-  text-shadow:0 1px 2px #000;
+#etnika-contacts-source .etnika-map-station__logo{
+  display:block;
+  width:36px;
+  height:31px;
+  flex:0 0 36px;
+  object-fit:contain;
+  filter:none!important;
 }
 #etnika-contacts-source .etnika-map-station__label{
-  color:#fff;
-  white-space:nowrap;
-  font:500 clamp(16px,1.05vw,19px)/1.2 'Geologica',Arial,sans-serif;
+  font:500 clamp(16px,1vw,19px)/1.2 'Geologica',Arial,sans-serif;
   letter-spacing:0;
-  text-shadow:0 2px 3px #000,0 0 10px #000,1px 1px 2px #000;
+  white-space:nowrap;
+  color:#fff;
+  text-shadow:0 2px 4px #000,0 0 12px #000,1px 1px 2px #000;
+}
+#etnika-contacts-source .etnika-map-studio{
+  transform:translate(-18px,-100%);
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  min-width:0;
+  white-space:nowrap;
+}
+#etnika-contacts-source .etnika-map-studio__button{
+  display:inline-flex;
+  align-items:center;
+  padding:0;
+  gap:7px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#fff;
+  cursor:pointer;
+  line-height:1.2;
+}
+#etnika-contacts-source .etnika-map-studio__button:focus-visible{
+  outline:2px solid #fff;
+  outline-offset:3px;
+}
+#etnika-contacts-source .etnika-map-studio__pin{
+  width:32px;
+  height:42px;
+  flex:0 0 32px;
+}
+#etnika-contacts-source .etnika-map-studio__pin svg{
+  display:block;
+  width:32px;
+  height:42px;
+}
+#etnika-contacts-source .etnika-map-studio__name{
+  color:#fff;
+  font:600 clamp(16px,1vw,19px)/1.2 'Geologica',Arial,sans-serif;
+  letter-spacing:.06em;
+  text-shadow:0 2px 4px #000,0 0 12px #000;
+}
+#etnika-contacts-source .etnika-map-studio__popup{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:9px;
+  width:min(285px,65vw);
+  margin-bottom:12px;
+  padding:15px 16px;
+  background:#191919;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.3);
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+  white-space:normal;
+  font:400 14px/1.35 'Geologica',Arial,sans-serif;
+}
+#etnika-contacts-source .etnika-map-studio__popup[hidden]{display:none!important;}
+#etnika-contacts-source .etnika-map-studio__popup strong{
+  font-size:15px;
+  font-weight:500;
+}
+#etnika-contacts-source .etnika-map-studio__popup a{
+  display:inline-block;
+  color:#fff;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  font:500 14px/1.35 'Geologica',Arial,sans-serif;
 }
 @media(max-width:700px){
-  #etnika-contacts-source .etnika-map-station__icon{
-    width:33px;
-    height:33px;
-    flex-basis:33px;
-    font-size:23px;
+  #etnika-contacts-source .etnika-map-station__logo{
+    width:31px;height:27px;flex-basis:31px;
   }
-  #etnika-contacts-source .etnika-map-station__label{font-size:16px}
+  #etnika-contacts-source .etnika-map-station__label,
+  #etnika-contacts-source .etnika-map-studio__name{font-size:16px;}
+  #etnika-contacts-source .etnika-map-studio__popup{width:min(270px,80vw);}
 }
