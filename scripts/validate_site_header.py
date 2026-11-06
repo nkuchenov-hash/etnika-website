@@ -5,6 +5,17 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 FILES=[ROOT/"site/index.html",ROOT/"site/review-2026-11.html"]
+OVERLINE_CSS=ROOT/"site/assets/etnika-editorial-overline.css"
+EDITORIAL_SECTIONS=(
+    ("etnika-stories","stories-top"),
+    ("etnika-space-photo","spf-top"),
+    ("etnika-studio-features","b05-top"),
+    ("etnika-prices-clear","pc-top"),
+    ("etnika-faq","faq-top"),
+    ("etnika-faq-tariffs","faq-top"),
+    ("etnika-reviews","etnika-reviews-overline"),
+)
+
 
 def static():
     for path in FILES:
@@ -21,8 +32,21 @@ def static():
         assert '--etnika-overline-size:clamp(9px,.62vw,11px)' in s
         assert '--etnika-overline-size:8px' in s
         assert s.count('font-size:var(--etnika-overline-size);')==6
+        assert 'assets/etnika-editorial-overline.css?v=20261106' in s, (path,"shared editorial stylesheet missing")
+        for section_id, top_class in EDITORIAL_SECTIONS:
+            import re
+            section=re.search(r'<section id="'+section_id+r'"[\\s\\S]*?</section>',s)
+            assert section and ('class="'+top_class+' etnika-editorial-top"') in section.group(0), (path, section_id,"overline did not use shared component")
+        reviews=s.split('<style id="etnika-reviews-section-style">',1)[1].split('</style>',1)[0]
+        assert 'font-size:16px' not in reviews, (path,"reviews must not override the editorial text scale")
+        assert 'grid-template-columns' not in reviews, (path,"reviews must not redefine the shared overline grid")
+
         assert 'font-size:var(--etnika-overline-size)!important' in s
         assert 'font-size:var(--etnika-text-size)!important;font-weight:300!important;letter-spacing:.055em' not in s, "oversized studio kicker returned"
+    css=OVERLINE_CSS.read_text(encoding="utf-8")
+    assert 'font-size:var(--etnika-overline-size)!important' in css, "canonical editorial type token missing"
+    assert 'grid-template-columns:auto minmax(80px,1fr) auto 1px auto minmax(80px,1fr)!important' in css, "canonical overline grid missing"
+    assert '#etnika-reviews' in css and '#etnika-stories' in css, "reviews and sections must share editorial CSS"
     # Separate preview work may intentionally touch other blocks; require only shared navigation parity.
     import re
     docs=[p.read_text(encoding="utf-8") for p in FILES]
@@ -58,6 +82,28 @@ def render():
                     heading:getComputedStyle(document.querySelector('#etnika-space-photo .spf-title')).fontFamily
                 })""")
                 assert abs(before["space"]-before["other"])<0.25,(path,width,"mismatched editorial overlines",before)
+                # All editorial sections, including the independently loaded review widget,
+                # must use the same overline text metrics and responsive grid.
+                tops=page.evaluate("""() => {
+                    const ids=['etnika-stories','etnika-space-photo','etnika-studio-features',
+                      'etnika-prices-clear','etnika-faq','etnika-faq-tariffs','etnika-reviews'];
+                    return ids.map(id=>{
+                      const el=document.querySelector('#'+id+' .etnika-editorial-top');
+                      if(!el)return null;
+                      const st=getComputedStyle(el);
+                      return {id,fontSize:st.fontSize,fontFamily:st.fontFamily,
+                              fontWeight:st.fontWeight,gap:st.columnGap,
+                              grid:st.gridTemplateColumns,
+                              lastVisible:getComputedStyle(el.children[4]).display!=='none'};
+                    });
+                }""")
+                assert all(t is not None for t in tops),(path,width,"missing shared editorial component",tops)
+                expected=tops[0]
+                for t in tops[1:]:
+                    for k in ("fontSize","fontFamily","fontWeight","gap"):
+                        assert t[k]==expected[k],(path,width,t["id"],k,t[k],expected[k])
+                    assert t["lastVisible"]==expected["lastVisible"],(path,width,"editorial breakpoint mismatch",t)
+
                 assert "Forum" in before["heading"]
                 if width<=1160:
                     toggle=page.locator(".esh__toggle")
