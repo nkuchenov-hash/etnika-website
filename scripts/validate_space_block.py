@@ -29,14 +29,15 @@ def static_checks():
         assert HEADLINE in part, f"{path}: heading is missing"
         assert part.count('class="spf-img ') == 3, f"{path}: expected 3 original photos"
         assert part.count('class="spf-tab') == 5, f"{path}: expected 5 selectable categories"
-        assert "height:100svh!important" in css, f"{path}: viewport constraint missing"
+        assert "height:calc(100svh - var(--etnika-nav-height,72px))!important" in css, f"{path}: fixed header not subtracted from viewport"
         assert "grid-template-rows:auto auto minmax(0,1fr) auto!important" in css, f"{path}: photos do not get remaining height"
-        assert "padding:var(--etnika-section-y) 0!important" in css, f"{path}: not using common vertical spacing"
+        assert "padding:var(--etnika-photo-section-y) 0!important" in css, f"{path}: not using shared photo-section spacing"
         assert "font-size:var(--etnika-section-title)!important" in css, f"{path}: rogue title size"
         assert "font-family:var(--etnika-font-display)!important" in css, f"{path}: display font not using token"
         assert "font-family:var(--etnika-font-ui)!important" in css, f"{path}: UI font not using token"
         assert "--etnika-text-size:16px" in shared_code, f"{path}: min UI text size token missing"
         assert "--etnika-section-title:clamp(62px,6.25vw,118px)" in shared_code
+        assert "--etnika-photo-section-y:clamp(20px,3.1svh,34px)" in html, f"{path}: photo-section spacing token missing"
         assert "etnika-space-title-fit-20261104" not in html, f"{path}: distorted scaleX title script returned"
         assert "11svh" not in css, f"{path}: local font shrinking returned"
         sections.append(part)
@@ -61,9 +62,11 @@ def render_checks():
                 page = browser.new_page(viewport={"width":w,"height":h}, device_scale_factor=1)
                 page.goto(path.as_uri(), wait_until="domcontentloaded", timeout=45000)
                 section = page.locator("#etnika-space-photo")
-                section.scroll_into_view_if_needed(timeout=15000)
+                page.evaluate("document.getElementById('etnika-space-photo').scrollIntoView({block:'start',behavior:'instant'})")
+                page.evaluate("() => document.fonts.ready")
                 result = page.evaluate("""() => {
                     const block = document.getElementById('etnika-space-photo');
+                    const header = document.getElementById('etnika-site-header');
                     const rect = el => el.getBoundingClientRect();
                     const shell = block.querySelector('.spf-shell');
                     const heading = block.querySelector('.spf-title');
@@ -79,6 +82,9 @@ def render_checks():
                     sample.remove();
                     return {
                        windowH: window.innerHeight,
+                       headerHeight: rect(header).height,
+                       shellPaddingTop: parseFloat(getComputedStyle(shell).paddingTop),
+                       shellPaddingBottom: parseFloat(getComputedStyle(shell).paddingBottom),
                        section: rect(block).toJSON(),
                        shell: rect(shell).toJSON(),
                        heading: rect(heading).toJSON(),
@@ -97,19 +103,23 @@ def render_checks():
                 }""")
                 box=result["section"]; photos=result["photos"]
                 err=lambda msg: f"{path.name} {w}x{h}: {msg}; metrics {result}"
-                assert abs(box["height"]-h)<=2, err("not one viewport")
+                assert abs(box["height"]-(h-result["headerHeight"]))<=2, err("block does not occupy viewport below fixed header")
+                assert abs(box["top"]-result["headerHeight"])<=3, err("block starts behind the fixed header")
+                assert abs(box["bottom"]-h)<=3, err("section extends outside the viewport")
+                assert abs(result["shellPaddingTop"]-result["shellPaddingBottom"])<=1, err("vertical padding is not symmetrical")
+                assert 19<=result["shellPaddingTop"]<=35, err("too much empty space around photographs")
                 assert result["intro"] is None, err("removed text still present")
                 assert result["top"]["y"]-box["y"]>=12, err("top margin missing")
                 assert box["bottom"]-result["nav"]["bottom"]>=12, err("bottom margin missing")
                 assert result["heading"]["bottom"]<=photos["y"]+3, err("title overlaps photos")
                 assert photos["bottom"]<=result["nav"]["y"]+3, err("photos overlap category nav")
-                assert photos["height"]>=0.48*h, err("gallery too small")
+                assert photos["height"]>=0.54*(h-result["headerHeight"]), err("gallery too small")
                 assert all(r["height"]>35 for r in [result["main"], *result["mini"]]), err("a photo collapsed")
                 assert abs(result["titleSize"]-result["expectedSize"])<=1, err("heading deviates from shared token")
                 assert "Forum" in result["titleFamily"], err("wrong heading font family")
                 assert "Geologica" in result["fontUi"], err("wrong tab font family")
                 assert all(i["ok"] for i in result["images"]), err("missing studio photo asset")
-                page.locator("#etnika-space-photo").screenshot(path=str(output / f"etnika-space-{path.stem}-{w}x{h}.png"))
+                page.screenshot(path=str(output / f"etnika-space-{path.stem}-{w}x{h}.png"))
                 print(f"PASS: {path.name} {w}x{h}; gallery {photos['height']:.0f}px; heading {result['titleSize']:.1f}px")
                 page.close()
         browser.close()
