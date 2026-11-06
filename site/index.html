@@ -12348,21 +12348,22 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 </script>
 
 <style id="etnika-space-owner-corrections-20261105">
-/* 05.11.2026 · shared heading/text typography, balanced page spacing, maximum image field. */
+/* 06.11.2026 · Fixed one-screen layout: all content between matching black margins,
+   below fixed header. Gallery takes the remaining height, never the reverse. */
 #etnika-space-photo{
   --red:#b21a28!important;
   --edge:var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)))!important;
-  height:auto!important;min-height:calc(100svh - var(--etnika-nav-height,60px))!important;max-height:none!important;
+  height:calc(100svh - var(--etnika-nav-height,60px))!important;min-height:0!important;max-height:calc(100svh - var(--etnika-nav-height,60px))!important;
   box-sizing:border-box!important;
   /* Reset the legacy v15 frame's 72px top/bottom padding; otherwise it steals gallery height. */
   padding:0!important;margin:0!important;
-  overflow:visible!important;background:#090909!important;
+  overflow:hidden!important;background:#090909!important;
   /* Global html scroll-padding positions the section just below the fixed header. */
   scroll-margin-top:0!important;
 }
 #etnika-space-photo .spf-shell{
-  height:auto!important;min-height:calc(100svh - var(--etnika-nav-height,60px))!important;max-height:none!important;
-  display:grid!important;grid-template-rows:auto auto minmax(clamp(250px,32svh,350px),1fr) auto!important;
+  height:100%!important;min-height:0!important;max-height:100%!important;
+  display:grid!important;grid-template-rows:auto auto minmax(0,1fr) auto!important;
   margin-left:var(--et-u-edge,var(--edge))!important;
   margin-right:var(--et-u-edge,var(--edge))!important;
   padding:var(--etnika-photo-section-y) 0!important;
@@ -12453,11 +12454,11 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 }
 @media(max-width:1100px){
   #etnika-space-photo{
-    height:auto!important;min-height:calc(100svh - var(--etnika-nav-height,60px))!important;max-height:none!important;overflow:hidden!important;
+    height:calc(100svh - var(--etnika-nav-height,60px))!important;min-height:0!important;max-height:calc(100svh - var(--etnika-nav-height,60px))!important;overflow:hidden!important;
   }
   #etnika-space-photo .spf-shell{
-    height:auto!important;min-height:calc(100svh - var(--etnika-nav-height,60px))!important;display:grid!important;
-    grid-template-rows:auto auto minmax(clamp(250px,32svh,350px),1fr) auto!important;
+    height:100%!important;min-height:0!important;max-height:100%!important;display:grid!important;
+    grid-template-rows:auto auto minmax(0,1fr) auto!important;
     padding:var(--etnika-photo-section-y) 0!important;gap:clamp(14px,1.7svh,20px)!important;
   }
   #etnika-space-photo .spf-top{margin:0!important;font-family:var(--etnika-font-ui)!important;font-size:var(--etnika-overline-size)!important;font-weight:var(--etnika-overline-weight)!important;letter-spacing:.13em!important;line-height:1.2!important;}
