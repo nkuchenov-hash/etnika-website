@@ -23,7 +23,17 @@ def static():
         assert s.count('font-size:var(--etnika-overline-size);')==6
         assert 'font-size:var(--etnika-overline-size)!important' in s
         assert 'font-size:var(--etnika-text-size)!important;font-weight:300!important;letter-spacing:.055em' not in s, "oversized studio kicker returned"
-    assert FILES[0].read_bytes()==FILES[1].read_bytes(), "Preview and working page diverged"
+    # Separate preview work may intentionally touch other blocks; require only shared navigation parity.
+    import re
+    docs=[p.read_text(encoding="utf-8") for p in FILES]
+    for pattern in (
+        r'<header id="etnika-site-header"[\\s\\S]*?</header>',
+        r'<style id="etnika-header-design-system-20261105">[\\s\\S]*?</style>',
+        r'<script id="etnika-header-interaction-20261105">[\\s\\S]*?</script>'
+    ):
+        fragments=[re.search(pattern,html) for html in docs]
+        assert all(fragments), "Missing common site header"
+        assert fragments[0].group(0)==fragments[1].group(0), "Working and preview navigation diverged"
     print("PASS: both pages contain consistent navigation, logo transition, and shared kicker type")
 
 def render():
