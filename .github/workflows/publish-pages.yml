@@ -27,14 +27,18 @@ jobs:
       - name: Prepare static site
         run: |
           set -eu
-          mkdir -p _site
+          mkdir -p _site/site
           cp index.html _site/index.html
-          cp -R site data docs _site/
+          cp site/index.html _site/site/index.html
+          cp site/etnika-map.css site/etnika-map.js _site/site/
+          cp -R site/assets _site/site/
+          cp -R data docs _site/
           touch _site/.nojekyll
           test -s _site/index.html
           test -s _site/site/index.html
           test -s _site/data/project.json
-          echo 'Prepared ETNIKA project and site previews'
+          test "$(find _site/site -maxdepth 1 -name '*.html' | wc -l)" -eq 1
+          echo 'Prepared exactly one ETNIKA site: site/index.html'
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
