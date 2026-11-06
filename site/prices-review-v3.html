@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>ETNIKA / Тарифы — дизайн-предпросмотр v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>:root{--etnika-font-ui:'Geologica',Arial,sans-serif;--etnika-font-display:'Forum',Georgia,serif;--etnika-overline-size:clamp(9px,.62vw,11px);--etnika-section-title:clamp(62px,6.25vw,118px);--etnika-nav-height:60px;--et-u-edge:max(80px,calc((100vw - 1760px)/2))}*{box-sizing:border-box}html,body{margin:0;padding:0;background:#fff;color:#181717}body{font-family:'Geologica',Arial,sans-serif}.prototype-header{position:sticky;top:0;z-index:50;height:60px;background:#111;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(80px,calc((100vw - 1760px)/2));font:300 16px 'Geologica',Arial,sans-serif}.prototype-header b{font:400 34px 'Forum',serif}.prototype-header span{opacity:.84}@media(max-width:900px){:root{--etnika-section-title:clamp(62px,9vw,92px);--et-u-edge:30px}.prototype-header{padding:0 30px}}@media(max-width:700px){:root{--etnika-section-title:clamp(48px,14vw,72px);--et-u-edge:20px}.prototype-header{padding:0 20px}}</style>
+<link rel="stylesheet" href="prices-v3.css?v=20261106c"></head><body>
+<div class="prototype-header"><b>ЭТНИКА</b><span>Дизайн-предпросмотр блока тарифов</span></div>
+<!-- ETNIKA · B-08 / tariff redesign v3: typographic list + readable slide-out -->
+<section id="etnika-prices-clear" class="ev3" aria-label="Цены и тарифы ЭТНИКА" data-plan-theme="standard">
+  <div class="ev3-shell">
+    <div class="ev3-overline">
+      <span>ЭТНИКА</span>
+      <span class="ev3-overline-rule" aria-hidden="true"></span>
+      <span class="ev3-overline-em">Время для себя</span>
+      <span>Цены и тарифы</span>
+    </div>
+    <div class="ev3-head">
+      <h2 class="ev3-title">Выберите <span>свой формат</span></h2>
+      <div class="ev3-modes" role="group" aria-label="Выбор дня">
+        <button type="button" data-mode="weekday" aria-pressed="true">Будни</button>
+        <button type="button" data-mode="weekend" aria-pressed="false">Выходные</button>
+      </div>
+    </div>
+    <div class="ev3-stage">
+      <div class="ev3-left">
+        <div class="ev3-plans" role="group" aria-label="Выберите тариф">
+          <button type="button" class="ev3-plan" data-plan="express" aria-pressed="false">
+            <span class="ev3-plan-number">01</span><span class="ev3-plan-name">Экспресс</span>
+            <span class="ev3-plan-meta"><span class="ev3-plan-time">30 минут</span> · до 2 человек</span>
+            <span class="ev3-plan-price">2 900 ₽</span>
+          </button>
+          <button type="button" class="ev3-plan" data-plan="standard" aria-pressed="true">
+            <span class="ev3-plan-number">02</span><span class="ev3-plan-name">Стандарт</span>
+            <span class="ev3-plan-meta"><span class="ev3-plan-time">60 минут</span> · до 4 человек</span>
+            <span class="ev3-plan-price">4 500 ₽</span>
+          </button>
+          <button type="button" class="ev3-plan" data-plan="premium" aria-pressed="false">
+            <span class="ev3-plan-number">03</span><span class="ev3-plan-name">Премиум</span>
+            <span class="ev3-plan-meta"><span class="ev3-plan-time">100 минут</span> · до 6 человек</span>
+            <span class="ev3-plan-price">7 500 ₽</span>
+          </button>
+        </div>
+        <div class="ev3-actions">
+          <button type="button" class="ev3-details-open" aria-controls="ev3-tariff-details" aria-expanded="false">
+            Что входит в тариф <span class="ev3-open-arrow" aria-hidden="true">↗</span>
+          </button>
+          <a class="ev3-book" href="https://n1268189.yclients.com/" target="_blank" rel="noopener">
+            Выбрать время <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="ev3-visual">
+        <img class="ev3-photo" src="assets/etnika-portrait-dark.jpg" alt="Фотосессия в ЭТНИКА">
+        <div class="ev3-photo-label">
+          <span>Ваш формат съёмки</span>
+          <strong>Стандарт · 60 минут</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ev3-sheet" id="ev3-tariff-details" role="dialog" aria-modal="true" aria-label="Что входит в выбранный тариф" aria-hidden="true" data-open="false" inert>
+    <button type="button" class="ev3-scrim" aria-label="Закрыть сведения о тарифе"></button>
+    <aside class="ev3-sheet-panel" tabindex="-1">
+      <div class="ev3-sheet-top">
+        <span class="ev3-sheet-kicker">Состав тарифа</span>
+        <button type="button" class="ev3-close" aria-label="Закрыть">×</button>
+      </div>
+      <div class="ev3-sheet-scroll">
+        <h3 class="ev3-sheet-title">Стандарт</h3>
+        <p class="ev3-sheet-sub">60 минут · до 4 человек · больше — по согласованию</p>
+        <ol class="ev3-feature-list">
+          <li>Базовый белый фон</li>
+          <li>Неограниченное число ч/б или цветных фотографий с цветокоррекцией</li>
+          <li>Портретная съёмка или фотографии в полный рост</li>
+          <li>Готовые фотографии в течение 24 часов</li>
+          <li>Чай, кофе, вода и сладости</li>
+          <li>Гримёрная зона и отпариватель для одежды</li>
+          <li>Музыкальная колонка и Wi-Fi</li>
+          <li>Реквизит бесплатно</li>
+        </ol>
+      </div>
+      <div class="ev3-sheet-footer">
+        <div class="ev3-sheet-price">4 500 ₽</div>
+        <a class="ev3-sheet-book" href="https://n1268189.yclients.com/" target="_blank" rel="noopener">
+          Выбрать время <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+<script src="prices-v3.js?v=20261106c" defer></script>
+
+</body></html>
