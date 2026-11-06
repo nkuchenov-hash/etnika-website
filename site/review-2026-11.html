@@ -12181,7 +12181,7 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   --edge:var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)))!important;
   height:calc(100svh - var(--etnika-nav-height,72px))!important;min-height:0!important;max-height:calc(100svh - var(--etnika-nav-height,72px))!important;
   overflow:hidden!important;background:#090909!important;
-  scroll-margin-top:var(--etnika-nav-height,72px)!important;
+  scroll-margin-top:0!important;/* root scroll-padding-top already offsets the fixed header */
 }
 #etnika-space-photo .spf-shell{
   height:100%!important;min-height:0!important;max-height:100%!important;
