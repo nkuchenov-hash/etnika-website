@@ -3,6 +3,13 @@ name: Publish ETNIKA project and site
 on:
   push:
     branches: [main]
+    # Rebuild Pages only when deployed content or this workflow changes.
+    paths:
+      - 'site/**'
+      - 'data/**'
+      - 'docs/**'
+      - 'index.html'
+      - '.github/workflows/publish-pages.yml'
   workflow_dispatch:
 
 permissions:
