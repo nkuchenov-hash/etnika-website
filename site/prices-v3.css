@@ -307,9 +307,9 @@
 }
 @media(max-height:810px) and (min-width:901px){
   #etnika-prices-clear.ev3 .ev3-shell{
-    gap:clamp(16px,2.6svh,23px);
-    padding:clamp(30px,4svh,43px) 0!important;
-    grid-template-rows:auto auto minmax(455px,1fr);
+    gap:clamp(25px,3.4svh,29px);
+    padding:clamp(24px,3.1svh,37px) 0!important;
+    grid-template-rows:auto auto minmax(445px,1fr);
   }
   #etnika-prices-clear.ev3 .ev3-plan{padding:15px 0!important}
   #etnika-prices-clear.ev3 .ev3-plan-name{font-size:clamp(38px,3vw,54px)!important}
