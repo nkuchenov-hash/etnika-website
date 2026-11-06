@@ -120,7 +120,7 @@ def render():
                     assert toggle.is_visible()
                     toggle.click()
                     assert toggle.get_attribute("aria-expanded")=="true"
-                    assert page.locator("#etnika-mobile-nav").is_visible()
+                    page.locator("#etnika-mobile-nav").wait_for(state="visible",timeout=3000)
                     page.keyboard.press("Escape")
                     assert toggle.get_attribute("aria-expanded")=="false"
                 else:
