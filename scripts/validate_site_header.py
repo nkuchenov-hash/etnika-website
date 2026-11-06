@@ -4,7 +4,7 @@ from pathlib import Path
 import sys
 
 ROOT=Path(__file__).resolve().parents[1]
-FILES=[ROOT/"site/index.html",ROOT/"site/review-2026-11.html"]
+FILES=[ROOT/"site/index.html"]
 OVERLINE_CSS=ROOT/"site/assets/etnika-editorial-overline.css"
 EDITORIAL_SECTIONS=(
     ("etnika-stories","stories-top"),
@@ -50,7 +50,7 @@ def static():
     assert 'font-size:var(--etnika-overline-size)!important' in css, "canonical editorial type token missing"
     assert 'grid-template-columns:auto minmax(80px,1fr) auto 1px auto minmax(80px,1fr)!important' in css, "canonical overline grid missing"
     assert '#etnika-reviews' in css and '#etnika-stories' in css, "reviews and sections must share editorial CSS"
-    # Separate preview work may intentionally touch other blocks; require only shared navigation parity.
+    # Only one canonical site file exists; verify its header components.
     import re
     docs=[p.read_text(encoding="utf-8") for p in FILES]
     for pattern in (
@@ -60,8 +60,8 @@ def static():
     ):
         fragments=[re.search(pattern,html) for html in docs]
         assert all(fragments), "Missing common site header"
-        assert fragments[0].group(0)==fragments[1].group(0), "Working and preview navigation diverged"
-    print("PASS: both pages contain consistent navigation, logo transition, and shared kicker type")
+
+    print("PASS: canonical page contains navigation, logo transition, and shared kicker type")
 
 def render():
     from playwright.sync_api import sync_playwright
@@ -76,9 +76,9 @@ def render():
                 assert header.count()==1
                 page.evaluate("window.scrollTo(0,0)")
                 page.wait_for_timeout(80)
-                assert header.get_attribute("data-hero")=="true",(path,width,"hero mode")
+                assert header.get_attribute("data-hero")=="false",(path,width,"process section must open before HERO")
                 assert page.locator(".esh__descriptor").is_visible()
-                assert page.locator(".esh__logo").evaluate("(el)=>getComputedStyle(el).opacity")=="0"
+                assert page.locator(".esh__logo").evaluate("(el)=>getComputedStyle(el).opacity")=="1"
                 before=page.evaluate("""() => ({
                     space:parseFloat(getComputedStyle(document.querySelector('#etnika-space-photo .spf-top')).fontSize),
                     other:parseFloat(getComputedStyle(document.querySelector('#etnika-stories .stories-top')).fontSize),
@@ -140,7 +140,7 @@ def render():
                     assert all(g>=expected_gap-1 for g in nav_metrics['linkGaps']),(path,width,"nav link separation too small",nav_metrics)
                     assert all(g>=-1 for g in nav_metrics['siblingGaps']),(path,width,"header group overlap",nav_metrics)
                     assert nav_metrics['rightEdge']<=width-15,(path,width,"header overflows viewport",nav_metrics)
-                page.evaluate("window.scrollTo({top:document.getElementById('etnika-hero').offsetHeight + 100,behavior:'instant'})")
+                page.evaluate("window.scrollTo({top:document.getElementById('etnika-hero').getBoundingClientRect().top+window.scrollY+document.getElementById('etnika-hero').offsetHeight+100,behavior:'instant'})")
                 page.wait_for_timeout(400)
                 assert header.get_attribute("data-hero")=="false",(path,width,"header did not acquire logo")
                 assert page.locator(".esh__logo").evaluate("(el)=>getComputedStyle(el).opacity")=="1"
