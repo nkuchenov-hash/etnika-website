@@ -1,0 +1,321 @@
+/* ETNIKA PRICES v3 — reviewed editorial composition, 2026-11-06
+   Replaces the cramped tariff list; names are never faded.
+   Shared design tokens: Forum / Geologica / #a9151d / 0px corner radius.
+   New proposal: generous two-column slide-over for included features. */
+#etnika-prices-clear.ev3{
+  --ev3-red:#a9151d;--ev3-ink:#181717;--ev3-copy:#464242;
+  --ev3-rule:#ddd8d5;--ev3-edge:var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)));
+  background:#fff!important;color:var(--ev3-ink)!important;
+  padding:0!important;height:auto!important;max-height:none!important;
+  min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+  overflow:visible!important;
+  font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif)!important;
+}
+#etnika-prices-clear.ev3,
+#etnika-prices-clear.ev3 *{box-sizing:border-box}
+#etnika-prices-clear.ev3 button,
+#etnika-prices-clear.ev3 a{font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif)}
+#etnika-prices-clear.ev3 .ev3-shell{
+  width:auto!important;margin:0 var(--ev3-edge)!important;
+  min-height:calc(100svh - var(--etnika-nav-height,60px));
+  padding:clamp(34px,4.5svh,60px) 0!important;
+  display:grid;grid-template-rows:auto auto minmax(460px,1fr);
+  gap:clamp(22px,3svh,40px);
+}
+#etnika-prices-clear.ev3 .ev3-overline{
+  display:flex;gap:clamp(14px,1.6vw,25px);align-items:center;
+  min-height:14px;color:#3e3a39;
+  font:200 var(--etnika-overline-size,11px)/1.3 'Geologica',Arial,sans-serif;
+  letter-spacing:.13em;text-transform:uppercase;
+}
+#etnika-prices-clear.ev3 .ev3-overline-rule{height:1px;background:#dfdbd9;flex:1}
+#etnika-prices-clear.ev3 .ev3-overline-em{color:var(--ev3-red)}
+#etnika-prices-clear.ev3 .ev3-head{
+  display:flex;align-items:end;justify-content:space-between;
+  gap:24px 46px;min-width:0;
+}
+#etnika-prices-clear.ev3 .ev3-title{
+  margin:0!important;
+  font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important;
+  font-size:var(--etnika-section-title,clamp(62px,6.25vw,118px))!important;
+  font-weight:400!important;line-height:.8!important;letter-spacing:-.04em!important;
+  text-transform:uppercase;
+}
+#etnika-prices-clear.ev3 .ev3-title span{display:block;color:var(--ev3-red)}
+#etnika-prices-clear.ev3 .ev3-modes{display:flex;gap:30px;flex:none;padding-bottom:7px}
+#etnika-prices-clear.ev3 .ev3-modes button{
+  padding:10px 0;min-height:43px;
+  color:var(--ev3-ink);background:transparent;
+  border:0;border-bottom:2px solid transparent;
+  cursor:pointer;font-size:16px;font-weight:400;line-height:1.3;
+}
+#etnika-prices-clear.ev3 .ev3-modes button[aria-pressed=true]{
+  color:var(--ev3-red);border-bottom-color:var(--ev3-red);
+}
+#etnika-prices-clear.ev3 .ev3-stage{
+  min-height:0;display:grid;
+  grid-template-columns:minmax(0,1.22fr) minmax(390px,.85fr);
+  gap:clamp(52px,5vw,96px);
+}
+#etnika-prices-clear.ev3 .ev3-left{
+  display:grid;grid-template-rows:minmax(0,1fr) auto;
+  min-height:0;gap:clamp(18px,2.5svh,30px);
+}
+#etnika-prices-clear.ev3 .ev3-plans{
+  display:grid;grid-template-rows:repeat(3,minmax(0,1fr));
+  min-height:0;
+}
+/* Only BETWEEN rows: no rule touching the section heading. */
+#etnika-prices-clear.ev3 .ev3-plan{
+  width:100%;min-width:0;min-height:0;
+  border:0!important;border-bottom:1px solid var(--ev3-rule)!important;
+  padding:clamp(18px,2.7svh,33px) 0!important;
+  background:transparent!important;color:var(--ev3-ink)!important;
+  display:grid;grid-template-columns:35px minmax(0,1fr) auto;
+  grid-template-rows:auto auto;gap:8px 16px;
+  text-align:left;align-content:center;align-items:baseline;
+  cursor:pointer;opacity:1!important;transform:none!important;
+  transition:none!important;
+}
+#etnika-prices-clear.ev3 .ev3-plan:first-child{border-top:0!important}
+#etnika-prices-clear.ev3 .ev3-plan:last-child{border-bottom:0!important}
+#etnika-prices-clear.ev3 .ev3-plan-number{
+  grid-column:1;grid-row:1;color:var(--ev3-red);align-self:center;
+  font:400 16px/1.2 'Geologica',Arial,sans-serif;
+}
+#etnika-prices-clear.ev3 .ev3-plan-name{
+  grid-column:2;grid-row:1;
+  font:400 clamp(44px,3.1vw,60px)/.94 'Forum',Georgia,serif!important;
+  color:var(--ev3-ink)!important;letter-spacing:-.025em;
+}
+#etnika-prices-clear.ev3 .ev3-plan[aria-pressed=true] .ev3-plan-name{
+  color:var(--ev3-red)!important;
+}
+#etnika-prices-clear.ev3 .ev3-plan-meta{
+  grid-column:2;grid-row:2;
+  color:var(--ev3-copy)!important;
+  font:300 clamp(16px,1.05vw,18px)/1.35 'Geologica',Arial,sans-serif!important;
+}
+#etnika-prices-clear.ev3 .ev3-plan-time{
+  font-weight:500;color:#211f1f;
+}
+#etnika-prices-clear.ev3 .ev3-plan-price{
+  grid-column:3;grid-row:1/span 2;
+  justify-self:end;align-self:center;white-space:nowrap;
+  color:var(--ev3-ink)!important;
+  font:400 clamp(39px,2.7vw,52px)/1 'Forum',Georgia,serif!important;
+  letter-spacing:-.02em;
+}
+#etnika-prices-clear.ev3 .ev3-plan:hover .ev3-plan-name{color:var(--ev3-red)!important}
+#etnika-prices-clear.ev3 .ev3-actions{
+  display:flex;align-items:center;justify-content:space-between;gap:25px;
+  min-height:65px;
+}
+#etnika-prices-clear.ev3 .ev3-details-open{
+  display:inline-flex;align-items:center;gap:16px;
+  flex:0 0 auto;padding:12px 0;
+  border:0;border-bottom:1px solid var(--ev3-ink);
+  background:transparent;color:var(--ev3-ink);
+  font:400 17px/1.3 'Geologica',Arial,sans-serif;
+  cursor:pointer;
+}
+#etnika-prices-clear.ev3 .ev3-details-open .ev3-open-arrow{
+  color:var(--ev3-red);font-size:21px;line-height:1;
+}
+#etnika-prices-clear.ev3 .ev3-details-open:hover{color:var(--ev3-red);border-color:var(--ev3-red)}
+#etnika-prices-clear.ev3 .ev3-book{
+  min-width:215px;min-height:62px;
+  display:flex;align-items:center;justify-content:space-between;gap:22px;
+  padding:17px 21px;background:var(--ev3-red);color:#fff;
+  font:400 16px/1.3 'Geologica',Arial,sans-serif;
+  text-decoration:none;white-space:nowrap;
+}
+#etnika-prices-clear.ev3 .ev3-book:hover{background:#8d111a}
+#etnika-prices-clear.ev3 .ev3-book span{font-size:22px;line-height:1}
+#etnika-prices-clear.ev3 .ev3-visual{
+  height:100%;min-height:0;overflow:hidden;position:relative;
+  background:#272322;isolation:isolate;
+}
+#etnika-prices-clear.ev3 .ev3-photo{
+  position:absolute;inset:0;display:block;
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 32%;
+  filter:none!important;transform:none!important;
+}
+#etnika-prices-clear.ev3 .ev3-visual::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 44%,rgba(0,0,0,.05) 66%,rgba(0,0,0,.67) 100%);
+}
+#etnika-prices-clear.ev3 .ev3-photo-label{
+  position:absolute;bottom:clamp(24px,2.6vw,42px);
+  left:clamp(24px,2.6vw,42px);right:24px;
+  color:#fff;z-index:2;
+}
+#etnika-prices-clear.ev3 .ev3-photo-label span{
+  display:block;font:300 16px/1.3 'Geologica',Arial,sans-serif;
+  letter-spacing:.04em;margin-bottom:12px;
+}
+#etnika-prices-clear.ev3 .ev3-photo-label strong{
+  display:block;font:400 clamp(40px,2.8vw,55px)/.95 'Forum',Georgia,serif;
+}
+/* Full-viewport side sheet: NEVER confined to the photo. */
+#etnika-prices-clear.ev3 .ev3-sheet{
+  display:block;position:fixed;inset:0;z-index:9500;
+  visibility:hidden;pointer-events:none;
+}
+#etnika-prices-clear.ev3 .ev3-sheet[data-open=true]{
+  visibility:visible;pointer-events:auto;
+}
+#etnika-prices-clear.ev3 .ev3-scrim{
+  position:absolute;inset:0;width:100%;height:100%;
+  border:0;background:rgba(12,10,10,.48);
+  opacity:0;transition:opacity .4s ease;cursor:pointer;
+}
+#etnika-prices-clear.ev3 .ev3-sheet[data-open=true] .ev3-scrim{opacity:1}
+#etnika-prices-clear.ev3 .ev3-sheet-panel{
+  position:absolute;right:0;top:0;
+  height:100%;height:100dvh;
+  width:min(950px,79vw);
+  background:#fff;color:var(--ev3-ink);
+  display:flex;flex-direction:column;
+  transform:translateX(102%);
+  transition:transform .48s cubic-bezier(.22,.83,.19,1);
+  box-shadow:-22px 0 60px rgba(0,0,0,.12);
+}
+#etnika-prices-clear.ev3 .ev3-sheet[data-open=true] .ev3-sheet-panel{transform:translateX(0)}
+#etnika-prices-clear.ev3 .ev3-sheet-top{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+  padding:clamp(25px,3.2vw,46px) clamp(25px,4vw,66px) 22px;
+}
+#etnika-prices-clear.ev3 .ev3-sheet-kicker{
+  color:var(--ev3-red);text-transform:uppercase;
+  letter-spacing:.12em;font:400 16px/1.3 'Geologica',Arial,sans-serif;
+}
+#etnika-prices-clear.ev3 .ev3-close{
+  border:1px solid #d7d2d0;background:#fff;cursor:pointer;
+  width:50px;height:50px;color:var(--ev3-ink);
+  font:300 32px/1 'Geologica',Arial,sans-serif;
+}
+#etnika-prices-clear.ev3 .ev3-close:hover{color:var(--ev3-red);border-color:var(--ev3-red)}
+#etnika-prices-clear.ev3 .ev3-sheet-scroll{
+  min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:14px clamp(25px,4vw,66px) 20px;flex:1 1 auto;
+}
+#etnika-prices-clear.ev3 .ev3-sheet-title{
+  font:400 clamp(64px,6vw,98px)/.92 'Forum',Georgia,serif;
+  letter-spacing:-.035em;margin:0 0 16px;
+}
+#etnika-prices-clear.ev3 .ev3-sheet-sub{
+  margin:0 0 clamp(30px,4svh,48px);
+  color:var(--ev3-copy);font:300 18px/1.5 'Geologica',Arial,sans-serif;
+}
+#etnika-prices-clear.ev3 .ev3-feature-list{
+  margin:0;padding:0;list-style:none;display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(28px,3vw,56px);
+  counter-reset:feature;
+}
+#etnika-prices-clear.ev3 .ev3-feature-list li{
+  counter-increment:feature;
+  display:grid;grid-template-columns:27px minmax(0,1fr);gap:10px;
+  align-items:start;min-height:82px;padding:16px 0;
+  border-top:1px solid var(--ev3-rule);
+  color:#252222;font:300 18px/1.44 'Geologica',Arial,sans-serif;
+}
+#etnika-prices-clear.ev3 .ev3-feature-list li::before{
+  content:counter(feature,decimal-leading-zero);color:var(--ev3-red);
+  font:400 14px/1.7 'Geologica',Arial,sans-serif;
+}
+#etnika-prices-clear.ev3 .ev3-sheet-footer{
+  flex:0 0 auto;border-top:1px solid var(--ev3-rule);
+  display:flex;align-items:center;justify-content:space-between;gap:28px;
+  padding:22px clamp(25px,4vw,66px) clamp(25px,3vw,40px);
+  background:#fff;
+}
+#etnika-prices-clear.ev3 .ev3-sheet-price{
+  font:400 clamp(47px,3.7vw,62px)/1 'Forum',Georgia,serif;
+  color:var(--ev3-red);white-space:nowrap;
+}
+#etnika-prices-clear.ev3 .ev3-sheet-book{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:22px;padding:15px 22px;min-height:60px;
+  background:var(--ev3-red);color:#fff;text-decoration:none;
+  font:400 16px/1.3 'Geologica',Arial,sans-serif;
+}
+#etnika-prices-clear.ev3 .ev3-sheet-book span{font-size:22px}
+#etnika-prices-clear.ev3 :is(button,a):focus-visible{
+  outline:2px solid var(--ev3-red);outline-offset:4px;
+}
+@media(min-width:1920px){
+  #etnika-prices-clear.ev3 .ev3-stage{grid-template-columns:minmax(0,1.25fr) minmax(0,.85fr)}
+}
+@media(max-width:1320px) and (min-width:901px){
+  #etnika-prices-clear.ev3 .ev3-stage{grid-template-columns:minmax(0,1.2fr) minmax(350px,.8fr);gap:36px}
+  #etnika-prices-clear.ev3 .ev3-plan{grid-template-columns:26px minmax(0,1fr) auto;gap:8px 8px}
+  #etnika-prices-clear.ev3 .ev3-plan-name{font-size:clamp(38px,3.4vw,48px)}
+  #etnika-prices-clear.ev3 .ev3-plan-price{font-size:clamp(35px,3vw,43px)}
+}
+@media(max-width:900px){
+  #etnika-prices-clear.ev3 .ev3-shell{
+    margin:0 var(--et-u-edge,30px)!important;
+    display:flex;flex-direction:column;gap:30px;min-height:0;
+    padding:var(--etnika-section-y,56px) 0!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-stage{display:flex;flex-direction:column;gap:35px}
+  #etnika-prices-clear.ev3 .ev3-plans{grid-template-rows:repeat(3,auto)}
+  #etnika-prices-clear.ev3 .ev3-plan{min-height:142px}
+  #etnika-prices-clear.ev3 .ev3-head{flex-wrap:wrap;gap:28px}
+  #etnika-prices-clear.ev3 .ev3-visual{height:clamp(480px,70svh,700px)}
+  #etnika-prices-clear.ev3 .ev3-sheet-panel{width:min(800px,94vw)}
+}
+@media(max-width:700px){
+  #etnika-prices-clear.ev3 .ev3-shell{margin:0 20px!important;gap:24px}
+  #etnika-prices-clear.ev3 .ev3-head{gap:22px}
+  #etnika-prices-clear.ev3 .ev3-title{font-size:var(--etnika-section-title,clamp(48px,14vw,72px))!important}
+  #etnika-prices-clear.ev3 .ev3-modes{gap:26px}
+  #etnika-prices-clear.ev3 .ev3-plan{
+    min-height:118px;grid-template-columns:24px minmax(0,1fr) auto;
+    column-gap:7px;padding:18px 0!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-plan-name{font-size:clamp(36px,9.6vw,46px)!important}
+  #etnika-prices-clear.ev3 .ev3-plan-price{font-size:clamp(31px,8.9vw,44px)!important}
+  #etnika-prices-clear.ev3 .ev3-plan-meta{font-size:16px!important}
+  #etnika-prices-clear.ev3 .ev3-actions{align-items:stretch;gap:20px;flex-wrap:wrap}
+  #etnika-prices-clear.ev3 .ev3-details-open{font-size:16px}
+  #etnika-prices-clear.ev3 .ev3-book{min-width:180px;flex:1}
+  #etnika-prices-clear.ev3 .ev3-visual{height:clamp(440px,110vw,570px)}
+  #etnika-prices-clear.ev3 .ev3-sheet-panel{width:100vw}
+  #etnika-prices-clear.ev3 .ev3-sheet-top{padding:22px 22px 10px}
+  #etnika-prices-clear.ev3 .ev3-sheet-scroll{padding:12px 22px 16px}
+  #etnika-prices-clear.ev3 .ev3-sheet-title{font-size:clamp(54px,14vw,72px)}
+  #etnika-prices-clear.ev3 .ev3-sheet-sub{font-size:16px;margin-bottom:27px}
+  #etnika-prices-clear.ev3 .ev3-feature-list{grid-template-columns:1fr;gap:0}
+  #etnika-prices-clear.ev3 .ev3-feature-list li{min-height:0;padding:14px 0;font-size:16px}
+  #etnika-prices-clear.ev3 .ev3-sheet-footer{
+    padding:16px 22px 24px;gap:14px;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-price{font-size:40px}
+  #etnika-prices-clear.ev3 .ev3-sheet-book{padding:13px 15px;min-height:51px}
+}
+@media(max-width:375px){
+  #etnika-prices-clear.ev3 .ev3-plan{grid-template-columns:18px minmax(0,1fr) auto}
+  #etnika-prices-clear.ev3 .ev3-plan-price{font-size:30px!important}
+  #etnika-prices-clear.ev3 .ev3-plan-name{font-size:35px!important}
+  #etnika-prices-clear.ev3 .ev3-plan-meta{letter-spacing:-.02em}
+  #etnika-prices-clear.ev3 .ev3-sheet-footer{flex-wrap:wrap}
+  #etnika-prices-clear.ev3 .ev3-sheet-book{flex:1}
+}
+@media(max-height:810px) and (min-width:901px){
+  #etnika-prices-clear.ev3 .ev3-shell{
+    gap:clamp(25px,3.4svh,29px);
+    padding:clamp(24px,3.1svh,37px) 0!important;
+    grid-template-rows:auto auto minmax(445px,1fr);
+  }
+  #etnika-prices-clear.ev3 .ev3-plan{padding:15px 0!important}
+  #etnika-prices-clear.ev3 .ev3-plan-name{font-size:clamp(38px,3vw,54px)!important}
+  #etnika-prices-clear.ev3 .ev3-plan-price{font-size:clamp(34px,2.55vw,46px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #etnika-prices-clear.ev3 .ev3-sheet-panel,
+  #etnika-prices-clear.ev3 .ev3-scrim{transition:none}
+}
