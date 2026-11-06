@@ -27,9 +27,9 @@ def static():
     import re
     docs=[p.read_text(encoding="utf-8") for p in FILES]
     for pattern in (
-        r'<header id="etnika-site-header"[\\s\\S]*?</header>',
-        r'<style id="etnika-header-design-system-20261105">[\\s\\S]*?</style>',
-        r'<script id="etnika-header-interaction-20261105">[\\s\\S]*?</script>'
+        r'<header id="etnika-site-header"(?s:.*?)</header>',
+        r'<style id="etnika-header-design-system-20261105">(?s:.*?)</style>',
+        r'<script id="etnika-header-interaction-20261105">(?s:.*?)</script>'
     ):
         fragments=[re.search(pattern,html) for html in docs]
         assert all(fragments), "Missing common site header"
