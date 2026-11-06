@@ -7,6 +7,7 @@
   const packages={
     express:{
       name:'Экспресс',mins:'30 минут',people:'до 2 человек · больше — по согласованию',
+      kicker:'Быстрый формат',description:'Для короткой индивидуальной съёмки, новых портретов или быстрого обновления контента.',
       prices:{weekday:'2 900',weekend:'3 900'},photo:'assets/etnika-bw-portrait.jpg',
       features:[
         'Базовый белый фон',
@@ -19,6 +20,7 @@
     },
     standard:{
       name:'Стандарт',mins:'60 минут',people:'до 4 человек · больше — по согласованию',
+      kicker:'Оптимальный выбор',description:'Оптимально, если хочется спокойно поснимать несколько образов без спешки.',
       prices:{weekday:'4 500',weekend:'5 900'},photo:'assets/etnika-portrait-dark.jpg',
       features:[
         'Базовый белый фон',
@@ -33,6 +35,7 @@
     },
     premium:{
       name:'Премиум',mins:'100 минут',people:'до 6 человек · больше — по согласованию',
+      kicker:'Максимум свободы',description:'Для нескольких образов, большой компании и съёмки, где хочется времени на эксперименты.',
       prices:{weekday:'7 500',weekend:'9 000'},photo:'assets/etnika-portrait-beige.jpg',
       features:[
         'Базовый белый фон',
@@ -52,10 +55,12 @@
   const modeButtons=[...root.querySelectorAll('.ev3-modes button')];
   const photo=root.querySelector('.ev3-photo');
   const photoLabel=root.querySelector('.ev3-photo-label strong');
+  const photoKicker=root.querySelector('.ev3-photo-label span');
   const sheet=root.querySelector('.ev3-sheet');
   const sheetPanel=root.querySelector('.ev3-sheet-panel');
   const sheetTitle=root.querySelector('.ev3-sheet-title');
   const sheetSub=root.querySelector('.ev3-sheet-sub');
+  const sheetDescription=root.querySelector('.ev3-sheet-description');
   const featureList=root.querySelector('.ev3-feature-list');
   const priceSheet=root.querySelector('.ev3-sheet-price');
   const buttonOpen=root.querySelector('.ev3-details-open');
@@ -79,8 +84,10 @@
     photo.src=data.photo;
     photo.alt=data.name+' — съёмка в студии ЭТНИКА';
     photoLabel.textContent=data.name+' · '+data.mins;
+    photoKicker.textContent=data.kicker;
     sheetTitle.textContent=data.name;
     sheetSub.textContent=data.mins+' · '+data.people;
+    sheetDescription.textContent=data.description;
     featureList.replaceChildren(...data.features.map(feature=>{
       const li=document.createElement('li');
       li.textContent=feature;
