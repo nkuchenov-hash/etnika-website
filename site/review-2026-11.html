@@ -12511,6 +12511,7 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   --etnika-nav-height:60px;
   --etnika-overline-size:clamp(9px,.62vw,11px);
   --etnika-overline-weight:200;
+  --etnika-menu-item-gap:clamp(26px,2.2vw,38px);
   --etnika-photo-section-y:clamp(26px,3.8svh,42px);
 }
 @media(max-width:700px){:root{--etnika-overline-size:8px;}}
@@ -12555,7 +12556,7 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 #etnika-site-header[data-hero="false"] .esh__descriptor{opacity:0;visibility:hidden;}
 #etnika-site-header[data-hero="false"] .esh__logo{opacity:1;visibility:visible;}
 #etnika-site-header .esh__nav{
-  display:flex;align-items:center;justify-content:center;gap:clamp(12px,1.2vw,23px);
+  display:flex;align-items:center;justify-content:center;gap:var(--etnika-menu-item-gap);
   flex:1 1 auto;min-width:0;
 }
 #etnika-site-header .esh__nav a{
@@ -12599,7 +12600,7 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 html{scroll-padding-top:var(--etnika-nav-height);}
 section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media(max-width:1340px){
-  #etnika-site-header .esh__nav{gap:12px;}
+  :root{--etnika-menu-item-gap:clamp(18px,1.65vw,24px);}
   #etnika-site-header .esh__nav a{font-size:16px;}
   #etnika-site-header .esh__identity{min-width:160px;}
 }
