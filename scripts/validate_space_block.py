@@ -29,9 +29,9 @@ def static_checks():
         assert HEADLINE in part, f"{path}: heading is missing"
         assert part.count('class="spf-img ') == 3, f"{path}: expected 3 original photos"
         assert part.count('class="spf-tab') == 5, f"{path}: expected 5 selectable categories"
-        assert "height:auto!important;min-height:calc(100svh - var(--etnika-nav-height,60px))!important" in css, f"{path}: studio must fill available height and grow if needed"
+        assert "height:calc(100svh - var(--etnika-nav-height,60px))!important;min-height:0!important" in css, f"{path}: studio must be exactly one viewport below header"
         assert "padding:0!important;margin:0!important;" in css, f"{path}: legacy v15 external frame padding still steals gallery height"
-        assert "grid-template-rows:auto auto minmax(clamp(250px,32svh,350px),1fr) auto!important" in css, f"{path}: photos must receive the remaining screen height without collapsing"
+        assert "grid-template-rows:auto auto minmax(0,1fr) auto!important" in css, f"{path}: gallery must take remaining height without pushing content beyond viewport"
         assert "padding:var(--etnika-photo-section-y) 0!important" in css, f"{path}: black margins must use a single symmetric padding rule"
         assert "font-size:var(--etnika-section-title)!important" in css, f"{path}: rogue title size"
         assert "font-family:var(--etnika-font-display)!important" in css, f"{path}: display font not using token"
@@ -109,10 +109,10 @@ def render_checks():
                 }""")
                 box=result["section"]; photos=result["photos"]
                 err=lambda msg: f"{path.name} {w}x{h}: {msg}; metrics {result}"
-                assert box["height"] >= h-result["headerHeight"]-2, err("studio section must fill viewport below header and grow when content needs room")
+                assert abs(box["height"]-(h-result["headerHeight"]))<=2, err("studio section must equal viewport height below header, no scrolling within block")
                 assert result["sectionPaddingTop"]<=.5 and result["sectionPaddingBottom"]<=.5, err("legacy outer frame padding still active")
                 assert abs(box["top"]-result["headerHeight"])<=3, err("studio section not aligned immediately under header")
-                assert box["bottom"] >= h-3, err("section fails to fill the viewport")
+                assert abs(box["bottom"]-h)<=3, err("gallery or tabs overflow the screen, or unused empty space exists after section")
                 assert abs(result["shellPaddingTop"]-result["shellPaddingBottom"])<=1, err("CSS black padding must be equal above and below")
                 assert abs((result["top"]["y"]-result["headerHeight"])-(box["bottom"]-result["nav"]["bottom"]))<=2, err("VISIBLE black margins above and below content are not equal")
                 assert 32<=result["shellPaddingBottom"]<=61, err("balanced black margins must be at least 32px")
@@ -120,6 +120,7 @@ def render_checks():
                 assert result["top"]["y"]-box["y"]>=32, err("black upper margin missing")
                 assert box["bottom"]-result["nav"]["bottom"]>=32, err("black bottom margin missing")
                 assert result["heading"]["bottom"]<=photos["y"]+3, err("title overlaps photos")
+                assert result["nav"]["bottom"]<=box["bottom"]-32, err("navigation intrudes on black bottom padding")
                 assert photos["bottom"]<=result["nav"]["y"]+3, err("photos overlap category nav")
                 assert photos["height"]>=(0.43*h if h<=600 else 0.50*h), err("gallery too small: photos must dominate the viewport")
                 assert 15.5<=result["navFontSize"]<=16.5, err("category text must be readable at 16px")
