@@ -123,15 +123,15 @@
   --line:rgba(20,20,20,.16);
   --red:#A9151D;
   --edge:max(80px,calc((100vw - 1760px)/2));
-  --section-top:clamp(38px,4.8vh,68px);
+  --section-top:clamp(24px,3.8svh,42px);
   --pad:clamp(28px,3vw,52px);
   --serif:'Forum',Georgia,serif;
   --sans:'Geologica',Arial,sans-serif;
 
   width:100%;
-  height:100svh;
-  min-height:640px;
-  max-height:100svh;
+  height:calc(100svh - var(--etnika-nav-height,60px));
+  min-height:0;
+  max-height:none;
   overflow:hidden;
   background:var(--paper);
   color:var(--ink);
@@ -402,6 +402,11 @@
   line-height:1.35;
   letter-spacing:.13em;
   text-transform:uppercase;
+}
+
+#etnika-block-02-final .etnika-b02__caption-divider{
+  display:inline-block;
+  margin-inline:clamp(12px,1.25vw,24px);
 }
 
 #etnika-block-02-final .etnika-b02__controls{
@@ -766,7 +771,7 @@
 
       <div class="etnika-b02__media-bottom">
         <div class="etnika-b02__caption">
-          Свобода самовыражения · пространство, созданное для вас
+          Свобода самовыражения <span class="etnika-b02__caption-divider" aria-hidden="true">·</span> пространство, созданное для вас
         </div>
 
         <div class="etnika-b02__controls">
@@ -11320,8 +11325,9 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
    No outside fake gaps.
    ========================================================= */
 #etnika-block-02-final .etnika-b02__copy{
-  padding-top:var(--etnika-section-y) !important;
-  padding-bottom:var(--etnika-section-y) !important;
+  /* Match the photo counter baseline across the split layout. */
+  padding-top:var(--section-top) !important;
+  padding-bottom:var(--pad) !important;
 }
 
 #etnika-stories .stories-shell,
@@ -11580,8 +11586,8 @@ html{scroll-behavior:smooth}
 @media(prefers-reduced-motion:reduce){#etnika-hero.etnika-new-hero .e-buttons a{transition:none}}
 
 html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
-#etnika-block-02-final{--paper:#fbfbfb;--red:#a9151d;height:auto;max-height:none;min-height:740px;overflow:visible}
-#etnika-block-02-final .etnika-b02__grid{min-height:740px}
+#etnika-block-02-final{--paper:#fbfbfb;--red:#a9151d}
+#etnika-block-02-final .etnika-b02__grid{min-height:0}
 #etnika-block-02-final .etnika-b02__description{font-size:clamp(16px,1vw,19px);font-weight:300}
 #etnika-block-02-final .etnika-b02__slide{object-fit:cover;object-position:center 35%}
 #etnika-stories{--red:#a9151d;height:auto;max-height:none;overflow:visible;padding-bottom:clamp(36px,5vw,88px)}
