@@ -905,7 +905,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
 #etnika-process-interactive{
-  --black:#090909;--ink:#0a0a0a;--paper:#f5f3f2;--blush:#f6a9b0;--coral:#ed8691;--wine:#981018;--action:#a9151d;--muted:#d8d8d8;
+  --black:#090909;--ink:#0a0a0a;--paper:#f5f3f2;--blush:#f5f3f2;--coral:#a9151d;--wine:#981018;--action:#a9151d;--muted:#d8d8d8;
   /* Same global content guides as HERO / blocks 02–04 */
   --edge:max(80px,calc((100vw - 1760px)/2));
   --section-top:clamp(38px,4.8vh,68px);
@@ -1091,7 +1091,7 @@
 (()=>{
   const root=document.getElementById('etnika-process-interactive');
   if(!root) return;
-  const ASSETS={"s1":"https://static.tildacdn.com/tild6264-3664-4062-b261-326438376434/fa239ddc-2f27-4d8a-a.png", "s2":"https://static.tildacdn.com/tild3864-3765-4565-b063-636338613134/24ef8b6a-1b82-4dde-8.png", "s3":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png", "s4":"https://static.tildacdn.com/tild6262-6239-4231-b361-643136363234/e7aff60e-c85b-4ddb-9.png", "s5":"https://static.tildacdn.com/tild3636-3761-4338-a635-323335633566/c85b790c-33af-48a9-9.png", "studio":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png"};
+  const ASSETS={"s1":"assets/process-20261106/step-1-red-large.webp","original_s1":"https://static.tildacdn.com/tild6264-3664-4062-b261-326438376434/fa239ddc-2f27-4d8a-a.png","s2":"assets/process-20261106/step-2-red-large.webp","original_s2":"https://static.tildacdn.com/tild3864-3765-4565-b063-636338613134/24ef8b6a-1b82-4dde-8.png","s3":"assets/process-20261106/step-3-red-large.webp","original_s3":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png","s4":"assets/process-20261106/step-4-red-large.webp","original_s4":"https://static.tildacdn.com/tild6262-6239-4231-b361-643136363234/e7aff60e-c85b-4ddb-9.png","s5":"assets/process-20261106/step-5-red-large.webp","original_s5":"https://static.tildacdn.com/tild3636-3761-4338-a635-323335633566/c85b790c-33af-48a9-9.png","studio":"assets/process-20261106/step-3-red-large.webp","original_studio":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png"};
   const STEPS=[{"id": 1, "title": "Бронируете удобное время", "desc": "Выбираете дату и время съёмки — онлайн за пару минут.", "detailTitle": "Бронируете удобное время", "accent": "Запись — на сайте или через администратора", "body": "Выберите удобный слот онлайн. Если удобнее, можно написать в Telegram / MAX или позвонить администратору.", "sections": [["Перед визитом", ["Можно подготовить несколько образов.", "Гайд по позированию для подготовки к съёмке — в подарок.", "Студия работает ежедневно с 10:00 до 22:00."]]], "gallery": ["s1", "s2", "studio"]}, {"id": 2, "title": "Готовитесь и приходите к нам", "desc": "Спокойно готовите образ и приходите к назначенному времени.", "detailTitle": "Готовитесь и приходите к нам", "accent": "В студии есть всё, чтобы спокойно подготовиться к съёмке", "body": "Перед съёмкой можно привести образ в порядок и переодеться. Для гостей предусмотрены зеркало, гримёрная зона и ширма.", "sections": [["В вашем распоряжении", ["Зеркало для подготовки к съёмке.", "Гримёрная зона и отпариватель для одежды.", "Ширма для смены образов.", "Лаунж-зона, вода, чай и кофе — в зависимости от тарифа."]]], "gallery": ["s2", "s1", "studio"]}, {"id": 3, "title": "Узнаёте, как устроена студия", "desc": "Администратор показывает пространство, свет, зеркало, камеру и монитор.", "detailTitle": "В нашей студии нет фотографа", "accent": "Вы управляете фотокамерой, встроенной в зеркало, с помощью пульта", "body": "Перед фотосессией администратор проконсультирует вас и покажет, как работает фотостудия.", "sections": [["Процесс съёмки устроен очень просто", ["Вы смотрите в специальное полноростовое зеркало, чтобы понять, какой получится кадр.", "Нажимая на кнопку пульта, вы делаете кадр.", "Сделанные фотографии можно посмотреть на специальном мониторе на стене."]], ["Также в вашем распоряжении", ["Зеркало для подготовки к съёмке.", "Удобная лаунж-зона.", "Ширма для смены образов.", "Набор реквизита для ваших образов."]]], "gallery": ["studio", "s3", "s4"]}, {"id": 4, "title": "Проводите свою фотосессию", "desc": "Вы сами управляете съёмкой и выбираете момент каждого кадра.", "detailTitle": "Проводите свою фотосессию", "accent": "В зале нет фотографа — только вы, зеркало, камера и пульт", "body": "Вы сами выбираете момент кадра и управляете съёмкой. Это помогает чувствовать себя свободнее и не стесняться камеры.", "sections": [["Во время съёмки", ["Смотрите на себя в большом зеркале и сразу понимаете композицию кадра.", "Делаете столько кадров, сколько хотите.", "Смотрите результат на мониторе и меняете позы, ракурсы и настроение.", "Можно получить и цветные, и чёрно-белые фотографии за один сет."]]], "gallery": ["s4", "s3", "s2"]}, {"id": 5, "title": "Получаете ваши фото онлайн", "desc": "Готовые фотографии приходят онлайн после съёмки.", "detailTitle": "Получаете ваши фото онлайн", "accent": "Готовые фотографии — онлайн в течение 24 часов", "body": "Цветокоррекция входит в съёмку. Готовые фотографии передаются онлайн.", "sections": [["Что вы получаете", ["Неограниченное количество фотографий.", "Цветокоррекция всех готовых кадров.", "JPEG-файлы с разрешением от 3000 px.", "Исходники можно получить дополнительно по запросу."]]], "gallery": ["s5", "s4", "s1"]}];
   const grid=root.querySelector('.epi-grid');
   const modal=root.querySelector('.epi-modal');
@@ -12778,5 +12778,85 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 </script>
 <link rel="stylesheet" href="assets/etnika-editorial-overline.css?v=20261106">
 <script src="etnika-map.js"></script>
+
+<!-- Process images and hover behavior: moved from review to canonical working site on 2026-11-06 -->
+<style id="etnika-process-editorial-20261106">
+/* ETNIKA · process photos · Anna TG11-07:
+   Five AI-generated large burgundy-backdrop images, derived from the approved five-pose visual brief.
+   Original Tilda image URLs remain in ASSETS for audit/rollback, not deleted.
+   Default grayscale; colour returns on hover/keyboard focus. */
+#etnika-process-interactive{--blush:#f5f3f2!important;--coral:#a9151d!important}
+#etnika-process-interactive .epi-num,#etnika-process-interactive .epi-head h2 span{color:#f5f3f2!important}
+#etnika-process-interactive .epi-kicker,#etnika-process-interactive .epi-sub-hint{color:rgba(255,255,255,.70)!important}
+#etnika-process-interactive .epi-card{
+ background:linear-gradient(110deg,#101010 0%,#2a2a2a 62%,#121212 100%)!important;
+ --subject-x:65%;--subject-y:50%;--focus-x:55%;--focus-y:42%;
+}
+#etnika-process-interactive .epi-card[data-step="1"]{--subject-x:59%;--subject-y:49%;--focus-x:53%;--focus-y:40%}
+#etnika-process-interactive .epi-card[data-step="2"]{--subject-x:63%;--subject-y:46%;--focus-x:57%;--focus-y:41%}
+#etnika-process-interactive .epi-card[data-step="3"]{--subject-x:71%;--subject-y:49%;--focus-x:67%;--focus-y:43%}
+#etnika-process-interactive .epi-card[data-step="4"]{--subject-x:54%;--subject-y:48%;--focus-x:45%;--focus-y:34%}
+#etnika-process-interactive .epi-card[data-step="5"]{--subject-x:62%;--subject-y:46%;--focus-x:61%;--focus-y:39%}
+#etnika-process-interactive .epi-card img,
+#etnika-process-interactive .epi-card:hover img,
+#etnika-process-interactive .epi-card:focus-within img{
+  object-fit:cover!important;object-position:var(--subject-x) var(--subject-y)!important;
+  filter:grayscale(1) contrast(1.06) brightness(.9)!important;transition:filter .35s ease!important;
+  transform:none!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+}
+#etnika-process-interactive .epi-card:after,
+#etnika-process-interactive .epi-card:hover:after,
+#etnika-process-interactive .epi-card:focus-within:after{
+ background:linear-gradient(90deg,rgba(0,0,0,.68) 0%,rgba(0,0,0,.22) 48%,rgba(0,0,0,.07) 100%),
+ linear-gradient(0deg,rgba(0,0,0,.77) 0%,transparent 38%,rgba(0,0,0,.12) 100%)!important}
+#etnika-process-interactive .epi-num{font-size:clamp(54px,4.4vw,78px)!important;line-height:.86!important}
+#etnika-process-interactive .epi-title{font-size:clamp(25px,1.9vw,35px)!important;line-height:1.04!important;max-width:420px!important}
+#etnika-process-interactive .epi-reveal,
+#etnika-process-interactive .epi-card:hover .epi-reveal,
+#etnika-process-interactive .epi-card:focus-within .epi-reveal{
+ opacity:1!important;transform:none!important;pointer-events:auto!important}
+#etnika-process-interactive .epi-desc{
+ color:#fff!important;font-size:16px!important;line-height:1.43!important;font-weight:300!important;opacity:1!important;
+ text-shadow:0 2px 16px rgba(0,0,0,.75)!important;margin-bottom:12px!important}
+#etnika-process-interactive .epi-more{
+ color:#fff!important;background:rgba(0,0,0,.70)!important;border:1px solid rgba(255,255,255,.65)!important;
+ font-size:16px!important;line-height:1.2!important;letter-spacing:0!important;padding:10px 15px!important}
+#etnika-process-interactive .epi-more:hover,#etnika-process-interactive .epi-more:focus-visible{
+ color:#fff!important;background:#a9151d!important;border-color:#a9151d!important}
+#etnika-process-interactive .epi-thumb.active{border-color:#a9151d!important}
+#etnika-process-interactive .epi-sub-hint{font-size:16px!important}
+@media(min-width:701px){
+ #etnika-process-interactive{height:100svh!important;min-height:760px!important;padding:clamp(26px,3.2vh,42px) 0!important;
+ overflow:hidden!important;grid-template-rows:auto minmax(0,1fr)!important}
+ #etnika-process-interactive .epi-head{padding:0 var(--edge) clamp(16px,2vh,24px)!important}
+ #etnika-process-interactive .epi-head h2{font-size:clamp(45px,4.8vw,78px)!important;line-height:.95!important}
+ #etnika-process-interactive .epi-sub{margin-top:10px!important;line-height:1.45!important}
+ #etnika-process-interactive .epi-sub-hint{display:none!important}
+ #etnika-process-interactive .epi-grid{height:100%!important;min-height:0!important;margin:0 var(--edge)!important;
+ grid-template-rows:repeat(2,minmax(0,1fr))!important}
+ #etnika-process-interactive .epi-card{min-height:0!important}
+ #etnika-process-interactive .epi-base{padding:clamp(18px,1.8vw,29px)!important}
+ #etnika-process-interactive .epi-reveal{padding:12px clamp(18px,1.8vw,29px) clamp(16px,1.6vw,24px)!important}
+}
+@media(max-width:700px){
+ #etnika-process-interactive{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;
+ padding:44px 0!important;display:block!important}
+ #etnika-process-interactive .epi-head{padding:0 20px 28px!important}
+ #etnika-process-interactive .epi-head h2{white-space:normal!important;font-size:clamp(44px,10vw,68px)!important}
+ #etnika-process-interactive .epi-grid{display:block!important;height:auto!important;margin:0 20px!important}
+ #etnika-process-interactive .epi-card{height:clamp(430px,113vw,580px)!important;min-height:0!important}
+ #etnika-process-interactive .epi-title{font-size:clamp(27px,7vw,36px)!important}
+}
+
+/* Desktop: restore full colour on hover. Keyboard focus behaves the same. */
+@media (hover:hover) and (pointer:fine){
+ #etnika-process-interactive .epi-card:hover img,
+ #etnika-process-interactive .epi-card:focus-within img{
+   filter:grayscale(0) contrast(1.03) brightness(.97)!important;
+ }
+}
+</style>
 </body>
 </html>
