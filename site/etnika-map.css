@@ -1,0 +1,75 @@
+/* ETNIKA — map tied to geographic coordinates, not a fixed caption.
+   The original Yandex widget is retained only as a failure fallback. */
+#etnika-contacts-source .location-map{
+  position:relative!important;
+  isolation:isolate;
+}
+#etnika-contacts-source .etnika-map-live{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:2;
+  background:#171717;
+}
+#etnika-contacts-source .location-map[data-map-state="loading"] .etnika-map-live{
+  opacity:0;
+}
+#etnika-contacts-source .location-map[data-map-state="ready"] .etnika-map-live{
+  opacity:1;
+}
+#etnika-contacts-source .location-map[data-map-state="fallback"] .etnika-map-live{
+  display:none;
+}
+#etnika-contacts-source .location-map iframe.etnika-map-widget-fallback{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  top:0!important;
+  filter:grayscale(1) invert(92%) contrast(90%);
+  z-index:1;
+  display:none;
+}
+#etnika-contacts-source .location-map[data-map-state="fallback"] iframe.etnika-map-widget-fallback{
+  display:block;
+}
+#etnika-contacts-source .etnika-map-station{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  transform:translate(-18px,-50%);
+  width:max-content;
+  max-width:260px;
+  user-select:none;
+  pointer-events:none;
+  color:#fff;
+}
+#etnika-contacts-source .etnika-map-station__icon{
+  width:37px;
+  height:37px;
+  display:grid;
+  place-items:center;
+  flex:0 0 37px;
+  color:#e01b2c;
+  background:#151515;
+  border:1px solid rgba(255,255,255,.55);
+  font:700 26px/1 'Geologica',Arial,sans-serif;
+  text-shadow:0 1px 2px #000;
+}
+#etnika-contacts-source .etnika-map-station__label{
+  color:#fff;
+  white-space:nowrap;
+  font:500 clamp(16px,1.05vw,19px)/1.2 'Geologica',Arial,sans-serif;
+  letter-spacing:0;
+  text-shadow:0 2px 3px #000,0 0 10px #000,1px 1px 2px #000;
+}
+@media(max-width:700px){
+  #etnika-contacts-source .etnika-map-station__icon{
+    width:33px;
+    height:33px;
+    flex-basis:33px;
+    font-size:23px;
+  }
+  #etnika-contacts-source .etnika-map-station__label{font-size:16px}
+}
