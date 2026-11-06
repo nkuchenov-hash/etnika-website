@@ -8388,6 +8388,54 @@ body.etnika-gallery-lock{
 </section>
 <script src="https://nkuchenov-hash.github.io/reviews-widget/embed.js" defer></script>
 
+<style id="etnika-contacts-nearest-metro-20261106">
+/* Owner's 06.11.2026 request: red M / bright white station name.
+   Overlay is a location caption, not a simulated moving map marker. */
+#etnika-contacts-source .location-map{
+  position:relative !important;
+}
+#etnika-contacts-source .etnika-nearest-metro{
+  position:absolute;
+  top:clamp(24px,3svh,40px);
+  left:clamp(24px,2.6vw,44px);
+  z-index:10;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  max-width:calc(100% - 48px);
+  padding:12px 17px;
+  background:rgba(9,9,9,.9);
+  color:#fff;
+  font-family:'Geologica',Arial,sans-serif;
+  border-radius:0;
+  pointer-events:none;
+}
+#etnika-contacts-source .etnika-nearest-metro__m{
+  color:#da202c;
+  font-size:24px;
+  line-height:1;
+  font-weight:600;
+  flex:0 0 auto;
+}
+#etnika-contacts-source .etnika-nearest-metro__name{
+  color:#fff;
+  font-size:clamp(16px,1.14vw,20px);
+  line-height:1.25;
+  font-weight:400;
+  text-shadow:0 1px 2px rgba(0,0,0,.4);
+  overflow-wrap:anywhere;
+}
+@media(max-width:700px){
+  #etnika-contacts-source .etnika-nearest-metro{
+    top:18px;
+    left:18px;
+    max-width:calc(100% - 36px);
+    padding:11px 14px;
+    gap:10px;
+  }
+}
+</style>
+
 <section id="etnika-contacts-source" aria-label="Контакты ЭТНИКА">
   <div class="location">
 
@@ -8398,6 +8446,12 @@ body.etnika-gallery-lock{
         src="https://yandex.ru/map-widget/v1/?text=%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%A1%D0%BB%D0%BE%D0%B1%D0%BE%D0%B4%D0%B0%2026%D0%90%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0&z=16"
         loading="lazy">
       </iframe>
+      <!-- Metro is displayed above the third-party Yandex iframe: its labels
+           cannot be independently recolored through the parent page CSS. -->
+      <div class="etnika-nearest-metro" aria-label="Ближайшее метро — Автозаводская">
+        <span class="etnika-nearest-metro__m" aria-hidden="true">М</span>
+        <span class="etnika-nearest-metro__name">Автозаводская</span>
+      </div>
     </div>
 
     <div class="location-copy">
