@@ -1,0 +1,28 @@
+name: Preview premium pricing v3
+on:
+  pull_request:
+    paths:
+      - "site/prices-review-v3.html"
+      - "site/prices-v3.css"
+      - "site/prices-v3.js"
+      - "scripts/validate_prices_v3.py"
+      - ".github/workflows/prices-v3.yml"
+  workflow_dispatch:
+jobs:
+  visual-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+      - name: Check seven viewport layouts and drawer behavior
+        run: python3 scripts/validate_prices_v3.py
+      - name: Save screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-prices-v3-screenshots
+          path: reports/etnika-prices-v3-*.png
+          if-no-files-found: ignore
