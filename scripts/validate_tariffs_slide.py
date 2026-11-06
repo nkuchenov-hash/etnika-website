@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Viewport and behavior regression for ETNIKA B-08 restored tariff design."""
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, Error
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'reports'; OUT.mkdir(exist_ok=True)
 with sync_playwright() as pw:
@@ -10,7 +10,13 @@ with sync_playwright() as pw:
   for w,h in ((1920,1080),(1662,896),(1366,768),(390,844),(375,667)):
    p=b.new_page(viewport={'width':w,'height':h})
    p.goto((ROOT/'site'/name).as_uri(),wait_until='domcontentloaded',timeout=45000)
-   p.evaluate('() => document.fonts.ready')
+   for retry in range(3):
+    try:
+     p.evaluate('() => document.fonts.ready')
+     break
+    except Error as exc:
+     if 'Execution context was destroyed' not in str(exc) or retry==2: raise
+     p.wait_for_load_state('domcontentloaded')
    p.locator('#etnika-prices-clear').scroll_into_view_if_needed()
    data=p.evaluate("""() => {
     const root=document.querySelector('#etnika-prices-clear'),q=s=>root.querySelector(s);
