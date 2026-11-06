@@ -58,7 +58,7 @@ with sync_playwright() as p:
   page.locator(".ev3-details-open").click()
   verify(page.locator(".ev3-sheet").get_attribute("data-open")=="true","drawer did not open")
   verify(page.locator(".ev3-feature-list li").count()==10,"premium features missing")
-  verify(page.locator(".ev3-sheet-panel").evaluate("(x)=>x.getBoundingClientRect().width")>=(w*.68 if w>=901 else w*.95),"drawer is too narrow")
+  verify(page.locator(".ev3-sheet-panel").evaluate("(x)=>x.getBoundingClientRect().width")>=(min(950,w*.79)-2 if w>=901 else w*.95),"drawer is too narrow")
   verify(page.locator(".ev3-feature-list li").evaluate("(x)=>parseFloat(getComputedStyle(x).fontSize)")>=16,"drawer text too small")
   page.wait_for_timeout(550)
   page.screenshot(path=str(OUT/f"etnika-prices-v3-open-{w}x{h}.png"))
