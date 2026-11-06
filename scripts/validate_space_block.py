@@ -61,7 +61,7 @@ def render_checks():
         for path in FILES:
             for w,h in sizes:
                 page = browser.new_page(viewport={"width":w,"height":h}, device_scale_factor=1)
-                page.goto(path.as_uri(), wait_until="domcontentloaded", timeout=45000)
+                page.goto(path.as_uri(), wait_until="load", timeout=45000)
                 section = page.locator("#etnika-space-photo")
                 page.evaluate("window.scrollTo({top:document.getElementById('etnika-space-photo').getBoundingClientRect().top+window.scrollY-document.getElementById('etnika-site-header').getBoundingClientRect().height,behavior:'instant'})")
                 page.evaluate("() => document.fonts.ready")
