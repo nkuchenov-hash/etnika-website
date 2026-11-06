@@ -7,7 +7,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 FILES = (ROOT / "site/index.html", ROOT / "site/review-2026-11.html")
-SPACE_SECTION = re.compile(r'<section id="etnika-space-photo"\b[\s\S]*?</section>')
+SPACE_SECTION = re.compile(r'<section id="etnika-space-photo"[\s\S]*?</section>')
 SPACE_CSS = re.compile(r'<style id="etnika-space-owner-corrections-20261105">[\s\S]*?</style>')
 SHARED_CSS = re.compile(r'<style id="etnika-v19-spacing-and-type-lock">[\s\S]*?</style>')
 FORBIDDEN = "Просторный зал, профессиональный свет, лаунж-зона, большое зеркало и реквизит"
