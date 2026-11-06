@@ -8310,6 +8310,28 @@ body.etnika-gallery-lock{
 }
 </style>
 
+
+<!-- ETNIKA B-REV · existing Yandex reviews widget, before the location section -->
+<style id="etnika-reviews-section-style">
+#etnika-reviews{
+  box-sizing:border-box;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  padding:clamp(56px,7vh,104px) max(80px,calc((100vw - 1760px)/2));
+  background:#f5f3f2;
+  color:#0a0a0a;
+}
+#etnika-reviews .etnika-reviews-mount{width:100%;min-width:0}
+@media(max-width:800px){
+  #etnika-reviews{padding:64px 20px;min-height:100svh}
+}
+</style>
+<section id="etnika-reviews" aria-label="Отзывы гостей ЭТНИКА">
+  <div class="etnika-reviews-mount" data-reviews-project="etnika"></div>
+</section>
+<script src="https://nkuchenov-hash.github.io/reviews-widget/embed.js" defer></script>
+
 <section id="etnika-contacts-source" aria-label="Контакты ЭТНИКА">
   <div class="location">
 
@@ -11832,7 +11854,7 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
  // HERO is managed by the slideshow component; retain remaining full-site initialization.
  const slideUrls=['assets/etnika-portrait-beige.jpg','assets/etnika-portrait-dark.jpg','assets/etnika-bw-portrait.jpg','assets/etnika-portrait-etnika.jpg','assets/etnika-bw-guest.jpg'];
  document.querySelectorAll('#etnika-block-02-final .etnika-b02__slide').forEach((img,i)=>{if(slideUrls[i]){img.src=slideUrls[i];img.loading=i?'lazy':'eager';img.style.objectPosition='center 38%'}});
- const ids=['etnika-hero','etnika-stories','etnika-space-photo','etnika-studio-features','etnika-block-02-final','etnika-process-interactive','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-contacts-source'];
+ const ids=['etnika-hero','etnika-stories','etnika-space-photo','etnika-studio-features','etnika-block-02-final','etnika-process-interactive','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-reviews','etnika-contacts-source'];
  const flow=document.createElement('main');flow.id='etnika-review-flow';flow.setAttribute('aria-label','Предварительная композиция всей главной');
  for(const id of ids){const item=document.getElementById(id);if(item)flow.appendChild(item);}
  document.body.appendChild(flow);
