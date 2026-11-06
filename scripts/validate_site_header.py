@@ -35,7 +35,7 @@ def static():
         assert 'assets/etnika-editorial-overline.css?v=20261106' in s, (path,"shared editorial stylesheet missing")
         for section_id, top_class in EDITORIAL_SECTIONS:
             import re
-            section=re.search(r'<section id="'+section_id+r'"[\\s\\S]*?</section>',s)
+            section=re.search(r'<section id="'+section_id+r'"[\s\S]*?</section>',s)
             assert section and ('class="'+top_class+' etnika-editorial-top"') in section.group(0), (path, section_id,"overline did not use shared component")
         reviews=s.split('<style id="etnika-reviews-section-style">',1)[1].split('</style>',1)[0]
         assert 'font-size:16px' not in reviews, (path,"reviews must not override the editorial text scale")
