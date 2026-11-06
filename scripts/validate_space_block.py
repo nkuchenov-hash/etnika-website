@@ -29,16 +29,18 @@ def static_checks():
         assert HEADLINE in part, f"{path}: heading is missing"
         assert part.count('class="spf-img ') == 3, f"{path}: expected 3 original photos"
         assert part.count('class="spf-tab') == 5, f"{path}: expected 5 selectable categories"
-        assert "height:calc(100svh - var(--etnika-nav-height,72px))!important" in css, f"{path}: fixed header not subtracted from viewport"
+        assert "height:100svh!important" in css, f"{path}: studio must occupy the full viewport"
         assert "padding:0!important;margin:0!important;" in css, f"{path}: legacy v15 external frame padding still steals gallery height"
         assert "grid-template-rows:auto auto minmax(0,1fr) auto!important" in css, f"{path}: photos do not get remaining height"
-        assert "padding:var(--etnika-photo-section-y) 0!important" in css, f"{path}: not using shared photo-section spacing"
+        assert "padding:calc(var(--etnika-nav-height,60px) + var(--etnika-photo-section-y)) 0 var(--etnika-photo-section-y)!important" in css, f"{path}: missing header clearance and balanced black margins"
         assert "font-size:var(--etnika-section-title)!important" in css, f"{path}: rogue title size"
         assert "font-family:var(--etnika-font-display)!important" in css, f"{path}: display font not using token"
         assert "font-family:var(--etnika-font-ui)!important" in css, f"{path}: UI font not using token"
         assert "--etnika-text-size:16px" in shared_code, f"{path}: min UI text size token missing"
         assert "--etnika-section-title:clamp(62px,6.25vw,118px)" in shared_code
-        assert "--etnika-photo-section-y:clamp(12px,1.8svh,20px)" in html, f"{path}: photo-section spacing token missing"
+        assert "--etnika-photo-section-y:clamp(26px,3.8svh,42px)" in html, f"{path}: black margin spacing token missing"
+        assert ".spf-small:hover::before" in css and "display:none!important;content:none!important" in css, f"{path}: pink hover border returned"
+        assert "font-size:clamp(12px,.8vw,14px)!important" in css, f"{path}: category labels are too large"
         assert "etnika-space-title-fit-20261104" not in html, f"{path}: distorted scaleX title script returned"
         assert "11svh" not in css, f"{path}: local font shrinking returned"
         sections.append(part)
@@ -63,7 +65,7 @@ def render_checks():
                 page = browser.new_page(viewport={"width":w,"height":h}, device_scale_factor=1)
                 page.goto(path.as_uri(), wait_until="domcontentloaded", timeout=45000)
                 section = page.locator("#etnika-space-photo")
-                page.evaluate("document.getElementById('etnika-space-photo').scrollIntoView({block:'start',behavior:'instant'})")
+                page.evaluate("window.scrollTo({top:document.getElementById('etnika-space-photo').getBoundingClientRect().top+window.scrollY,behavior:'instant'})")
                 page.evaluate("() => document.fonts.ready")
                 result = page.evaluate("""() => {
                     const block = document.getElementById('etnika-space-photo');
@@ -100,24 +102,28 @@ def render_checks():
                        titleFamily: getComputedStyle(heading).fontFamily,
                        expectedSize,
                        fontUi: getComputedStyle(nav.querySelector('button')).fontFamily,
+                       navFontSize:parseFloat(getComputedStyle(nav.querySelector('button')).fontSize),
+                       hoverFrame:getComputedStyle(mini[0],'::before').display,
                        intro: block.querySelector('.spf-intro'),
                        images: [...block.querySelectorAll('.spf-gallery img')].map(i => ({ok:i.complete && i.naturalWidth>0, src:i.currentSrc}))
                     };
                 }""")
                 box=result["section"]; photos=result["photos"]
                 err=lambda msg: f"{path.name} {w}x{h}: {msg}; metrics {result}"
-                assert abs(box["height"]-(h-result["headerHeight"]))<=2, err("block does not occupy viewport below fixed header")
+                assert abs(box["height"]-h)<=2, err("studio section height must equal viewport")
                 assert result["sectionPaddingTop"]<=.5 and result["sectionPaddingBottom"]<=.5, err("legacy outer frame padding still active")
-                assert abs(box["top"]-result["headerHeight"])<=3, err("block starts behind the fixed header")
+                assert abs(box["top"])<=3, err("studio section not aligned with top of viewport")
                 assert abs(box["bottom"]-h)<=3, err("section extends outside the viewport")
-                assert abs(result["shellPaddingTop"]-result["shellPaddingBottom"])<=1, err("vertical padding is not symmetrical")
-                assert 11<=result["shellPaddingTop"]<=21, err("wrong photo-first breathing space")
+                assert abs((result["shellPaddingTop"]-result["headerHeight"])-result["shellPaddingBottom"])<=1, err("black margins above and below content are not symmetrical")
+                assert 25<=result["shellPaddingBottom"]<=43, err("black bottom margin missing or too large")
                 assert result["intro"] is None, err("removed text still present")
-                assert result["top"]["y"]-box["y"]>=12, err("top margin missing")
-                assert box["bottom"]-result["nav"]["bottom"]>=12, err("bottom margin missing")
+                assert result["top"]["y"]-box["y"]>=result["headerHeight"]+25, err("header overlaps studio title or upper content")
+                assert box["bottom"]-result["nav"]["bottom"]>=25, err("black bottom margin missing")
                 assert result["heading"]["bottom"]<=photos["y"]+3, err("title overlaps photos")
                 assert photos["bottom"]<=result["nav"]["y"]+3, err("photos overlap category nav")
-                assert photos["height"]>=0.61*(h-result["headerHeight"]), err("gallery too small: photos must dominate the viewport")
+                assert photos["height"]>=0.50*h, err("gallery too small: photos must dominate the viewport")
+                assert result["navFontSize"]<=14.2, err("category text too large")
+                assert result["hoverFrame"]=="none", err("pink hover border still present")
                 assert all(r["height"]>35 for r in [result["main"], *result["mini"]]), err("a photo collapsed")
                 assert abs(result["titleSize"]-result["expectedSize"])<=1, err("heading deviates from shared token")
                 assert "Forum" in result["titleFamily"], err("wrong heading font family")
