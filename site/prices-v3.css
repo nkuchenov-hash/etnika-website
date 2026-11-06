@@ -160,7 +160,7 @@
 }
 /* Full-viewport side sheet: NEVER confined to the photo. */
 #etnika-prices-clear.ev3 .ev3-sheet{
-  display:block;position:fixed;inset:0;z-index:9500;
+  display:block;position:fixed;inset:0;z-index:100500;
   visibility:hidden;pointer-events:none;
 }
 #etnika-prices-clear.ev3 .ev3-sheet[data-open=true]{
