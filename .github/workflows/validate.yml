@@ -47,18 +47,15 @@ jobs:
           assert set(state['tasks'].values()).issubset(accepted), 'Unknown status value'
           assert pathlib.Path('site/index.html').is_file(), 'Site source missing'
           from html.parser import HTMLParser
-          for preview in ('site/review-2026-11.html','site/hero-photo.html','site/hero-video.html'):
-            assert pathlib.Path(preview).is_file(), 'Staging preview missing: '+preview
-            phtml=pathlib.Path(preview).read_text(encoding='utf-8')
-            assert 'name="robots" content="noindex,nofollow,noarchive"' in phtml, 'Staging must not be indexed'
-            assert phtml.count('id="etnika-hero"')==1, 'Staging must have one HERO'
-            assert 'Geologica' in phtml and 'Forum' in phtml, 'Staging fonts missing'
-            assert 'etnika-new-hero::before' in phtml, 'Old HERO overlay not disabled'
-            assert phtml.count('<h1')==1, 'Preview H1 mismatch'
-          review_html=pathlib.Path('site/review-2026-11.html').read_text(encoding='utf-8')
+          site_paths=list(pathlib.Path('site').glob('*.html'))
+          assert [p.name for p in site_paths]==['index.html'], 'Only site/index.html may define the site'
+          canonical=site_paths[0].read_text(encoding='utf-8')
+          assert canonical.count('id="etnika-hero"')==1, 'Canonical site must have one HERO'
+          assert "const ids=['etnika-process-interactive','etnika-hero'" in canonical, 'Interactive process must be first'
+          assert '#etnika-faq{\n  --paper:#f3f0eb !important;' in canonical, 'Before visit background mismatch'
           ids=('etnika-hero','etnika-stories','etnika-space-photo','etnika-studio-features','etnika-block-02-final','etnika-process-interactive','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-contacts-source')
-          assert all('id="'+v+'"' in review_html for v in ids), 'Staging content lost'
-          assert 'assets/etnika-portrait-dark.jpg' in review_html, 'Staging photos missing'
+          assert all('id="'+v+'"' in canonical for v in ids), 'Canonical site content lost'
+          assert 'assets/etnika-portrait-dark.jpg' in canonical, 'Site photo missing'
           for asset in ('etnika-portrait-beige.jpg','etnika-portrait-dark.jpg','etnika-portrait-etnika.jpg','etnika-bw-portrait.jpg','etnika-bw-guest.jpg','etnika-studio.jpg'):
             assert pathlib.Path('site/assets/'+asset).is_file(), 'Photo asset missing: '+asset
           html=pathlib.Path('index.html').read_text(encoding='utf-8')
