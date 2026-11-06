@@ -1080,7 +1080,7 @@
 (()=>{
   const root=document.getElementById('etnika-process-interactive');
   if(!root) return;
-  const ASSETS={"s1":"https://static.tildacdn.com/tild6264-3664-4062-b261-326438376434/fa239ddc-2f27-4d8a-a.png", "s2":"https://static.tildacdn.com/tild3864-3765-4565-b063-636338613134/24ef8b6a-1b82-4dde-8.png", "s3":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png", "s4":"https://static.tildacdn.com/tild6262-6239-4231-b361-643136363234/e7aff60e-c85b-4ddb-9.png", "s5":"https://static.tildacdn.com/tild3636-3761-4338-a635-323335633566/c85b790c-33af-48a9-9.png", "studio":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png", "p1":"assets/etnika-portrait-beige.jpg", "p2":"assets/etnika-portrait-dark.jpg", "p3":"assets/etnika-portrait-etnika.jpg", "p4":"assets/etnika-bw-portrait.jpg", "p5":"assets/etnika-bw-guest.jpg"};
+  const ASSETS={"s1":"https://static.tildacdn.com/tild6264-3664-4062-b261-326438376434/fa239ddc-2f27-4d8a-a.png", "s2":"https://static.tildacdn.com/tild3864-3765-4565-b063-636338613134/24ef8b6a-1b82-4dde-8.png", "s3":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png", "s4":"https://static.tildacdn.com/tild6262-6239-4231-b361-643136363234/e7aff60e-c85b-4ddb-9.png", "s5":"https://static.tildacdn.com/tild3636-3761-4338-a635-323335633566/c85b790c-33af-48a9-9.png", "studio":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png"};
   const STEPS=[{"id": 1, "title": "Бронируете удобное время", "desc": "Выбираете дату и время съёмки — онлайн за пару минут.", "detailTitle": "Бронируете удобное время", "accent": "Запись — на сайте или через администратора", "body": "Выберите удобный слот онлайн. Если удобнее, можно написать в Telegram / MAX или позвонить администратору.", "sections": [["Перед визитом", ["Можно подготовить несколько образов.", "Гайд по позированию для подготовки к съёмке — в подарок.", "Студия работает ежедневно с 10:00 до 22:00."]]], "gallery": ["s1", "s2", "studio"]}, {"id": 2, "title": "Готовитесь и приходите к нам", "desc": "Спокойно готовите образ и приходите к назначенному времени.", "detailTitle": "Готовитесь и приходите к нам", "accent": "В студии есть всё, чтобы спокойно подготовиться к съёмке", "body": "Перед съёмкой можно привести образ в порядок и переодеться. Для гостей предусмотрены зеркало, гримёрная зона и ширма.", "sections": [["В вашем распоряжении", ["Зеркало для подготовки к съёмке.", "Гримёрная зона и отпариватель для одежды.", "Ширма для смены образов.", "Лаунж-зона, вода, чай и кофе — в зависимости от тарифа."]]], "gallery": ["s2", "s1", "studio"]}, {"id": 3, "title": "Узнаёте, как устроена студия", "desc": "Администратор показывает пространство, свет, зеркало, камеру и монитор.", "detailTitle": "В нашей студии нет фотографа", "accent": "Вы управляете фотокамерой, встроенной в зеркало, с помощью пульта", "body": "Перед фотосессией администратор проконсультирует вас и покажет, как работает фотостудия.", "sections": [["Процесс съёмки устроен очень просто", ["Вы смотрите в специальное полноростовое зеркало, чтобы понять, какой получится кадр.", "Нажимая на кнопку пульта, вы делаете кадр.", "Сделанные фотографии можно посмотреть на специальном мониторе на стене."]], ["Также в вашем распоряжении", ["Зеркало для подготовки к съёмке.", "Удобная лаунж-зона.", "Ширма для смены образов.", "Набор реквизита для ваших образов."]]], "gallery": ["studio", "s3", "s4"]}, {"id": 4, "title": "Проводите свою фотосессию", "desc": "Вы сами управляете съёмкой и выбираете момент каждого кадра.", "detailTitle": "Проводите свою фотосессию", "accent": "В зале нет фотографа — только вы, зеркало, камера и пульт", "body": "Вы сами выбираете момент кадра и управляете съёмкой. Это помогает чувствовать себя свободнее и не стесняться камеры.", "sections": [["Во время съёмки", ["Смотрите на себя в большом зеркале и сразу понимаете композицию кадра.", "Делаете столько кадров, сколько хотите.", "Смотрите результат на мониторе и меняете позы, ракурсы и настроение.", "Можно получить и цветные, и чёрно-белые фотографии за один сет."]]], "gallery": ["s4", "s3", "s2"]}, {"id": 5, "title": "Получаете ваши фото онлайн", "desc": "Готовые фотографии приходят онлайн после съёмки.", "detailTitle": "Получаете ваши фото онлайн", "accent": "Готовые фотографии — онлайн в течение 24 часов", "body": "Цветокоррекция входит в съёмку. Готовые фотографии передаются онлайн.", "sections": [["Что вы получаете", ["Неограниченное количество фотографий.", "Цветокоррекция всех готовых кадров.", "JPEG-файлы с разрешением от 3000 px.", "Исходники можно получить дополнительно по запросу."]]], "gallery": ["s5", "s4", "s1"]}];
   const grid=root.querySelector('.epi-grid');
   const modal=root.querySelector('.epi-modal');
@@ -1099,7 +1099,7 @@
     const card=document.createElement('article');
     card.className='epi-card'; card.dataset.step=step.id;
     card.innerHTML=`<img alt="${esc(step.title)}"><div class="epi-base"><div class="epi-num">${String(step.id).padStart(2,'0')}</div><div class="epi-rule"></div><h3 class="epi-title">${esc(step.title)}</h3></div><div class="epi-reveal"><p class="epi-desc">${esc(step.desc)}</p><button class="epi-more" type="button">Подробнее <span>→</span></button></div>`;
-    card.querySelector('img').src=ASSETS['p'+step.id] || ASSETS['s'+step.id];
+    card.querySelector('img').src=ASSETS['s'+step.id];
     card.querySelector('.epi-more').addEventListener('click',e=>{e.stopPropagation();openStep(step,e.currentTarget)});
     grid.appendChild(card);
   });
@@ -12782,20 +12782,35 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 </script>
 
 <style id="etnika-process-editorial-20261106">
-/* The five existing process photos remain in the modal gallery.
-   The cover images are original ETNIKA portraits from site/assets/. */
+/* ETNIKA · process photos · Anna TG11-07:
+   preserve the FIVE original source pictures, simplify backgrounds rather than replace models.
+   Minimalist image treatment is reversible and does not change detail-gallery originals. */
 #etnika-process-interactive{--blush:#f5f3f2!important;--coral:#a9151d!important}
 #etnika-process-interactive .epi-num,#etnika-process-interactive .epi-head h2 span{color:#f5f3f2!important}
 #etnika-process-interactive .epi-kicker,#etnika-process-interactive .epi-sub-hint{color:rgba(255,255,255,.70)!important}
-#etnika-process-interactive .epi-card{background:#0f0f0f!important}
+#etnika-process-interactive .epi-card{
+ background:linear-gradient(110deg,#101010 0%,#2a2a2a 62%,#121212 100%)!important;
+ --subject-x:65%;--subject-y:50%;--focus-x:55%;--focus-y:42%;
+}
+#etnika-process-interactive .epi-card[data-step="1"]{--subject-x:59%;--subject-y:49%;--focus-x:53%;--focus-y:40%}
+#etnika-process-interactive .epi-card[data-step="2"]{--subject-x:63%;--subject-y:46%;--focus-x:57%;--focus-y:41%}
+#etnika-process-interactive .epi-card[data-step="3"]{--subject-x:71%;--subject-y:49%;--focus-x:67%;--focus-y:43%}
+#etnika-process-interactive .epi-card[data-step="4"]{--subject-x:54%;--subject-y:48%;--focus-x:45%;--focus-y:34%}
+#etnika-process-interactive .epi-card[data-step="5"]{--subject-x:62%;--subject-y:46%;--focus-x:61%;--focus-y:39%}
 #etnika-process-interactive .epi-card img,
 #etnika-process-interactive .epi-card:hover img,
 #etnika-process-interactive .epi-card:focus-within img{
- filter:grayscale(1) contrast(1.1) brightness(.88)!important;transform:none!important;object-fit:cover!important}
+  object-fit:cover!important;object-position:var(--subject-x) var(--subject-y)!important;
+  filter:grayscale(1) contrast(1.06) brightness(.9)!important;
+  transform:none!important;
+  -webkit-mask-image:radial-gradient(ellipse 70% 91% at var(--focus-x) var(--focus-y),#000 0%,#000 46%,rgba(0,0,0,.86) 62%,transparent 100%)!important;
+  mask-image:radial-gradient(ellipse 70% 91% at var(--focus-x) var(--focus-y),#000 0%,#000 46%,rgba(0,0,0,.86) 62%,transparent 100%)!important;
+}
 #etnika-process-interactive .epi-card:after,
 #etnika-process-interactive .epi-card:hover:after,
 #etnika-process-interactive .epi-card:focus-within:after{
- background:linear-gradient(180deg,rgba(0,0,0,.62),rgba(0,0,0,.09) 42%,rgba(0,0,0,.1) 52%,rgba(0,0,0,.82))!important}
+ background:linear-gradient(90deg,rgba(0,0,0,.68) 0%,rgba(0,0,0,.22) 48%,rgba(0,0,0,.07) 100%),
+ linear-gradient(0deg,rgba(0,0,0,.77) 0%,transparent 38%,rgba(0,0,0,.12) 100%)!important}
 #etnika-process-interactive .epi-num{font-size:clamp(54px,4.4vw,78px)!important;line-height:.86!important}
 #etnika-process-interactive .epi-title{font-size:clamp(25px,1.9vw,35px)!important;line-height:1.04!important;max-width:420px!important}
 #etnika-process-interactive .epi-reveal,
@@ -12806,7 +12821,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  color:#fff!important;font-size:16px!important;line-height:1.43!important;font-weight:300!important;opacity:1!important;
  text-shadow:0 2px 16px rgba(0,0,0,.75)!important;margin-bottom:12px!important}
 #etnika-process-interactive .epi-more{
- color:#fff!important;background:rgba(0,0,0,.7)!important;border:1px solid rgba(255,255,255,.65)!important;
+ color:#fff!important;background:rgba(0,0,0,.70)!important;border:1px solid rgba(255,255,255,.65)!important;
  font-size:16px!important;line-height:1.2!important;letter-spacing:0!important;padding:10px 15px!important}
 #etnika-process-interactive .epi-more:hover,#etnika-process-interactive .epi-more:focus-visible{
  color:#fff!important;background:#a9151d!important;border-color:#a9151d!important}
