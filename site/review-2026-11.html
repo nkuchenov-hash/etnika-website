@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="etnika-map.css">
 </head>
 <body>
 
@@ -8403,10 +8404,13 @@ body.etnika-gallery-lock{
     <div class="location-map">
       <div class="map-fallback">МОСКВА</div>
       <iframe
-        title="ЭТНИКА на карте"
-        src="https://yandex.ru/map-widget/v1/?text=%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%A1%D0%BB%D0%BE%D0%B1%D0%BE%D0%B4%D0%B0%2026%D0%90%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0&z=16"
-        loading="lazy">
-      </iframe>
+        class="etnika-map-widget-fallback"
+        title="ЭТНИКА на карте — резервный виджет"
+        data-map-src="https://yandex.ru/map-widget/v1/?text=%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%A1%D0%BB%D0%BE%D0%B1%D0%BE%D0%B4%D0%B0%2026%D0%90%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0&z=16"
+        loading="lazy"></iframe>
+      <div id="etnika-contacts-map-live" class="etnika-map-live"
+           role="region" aria-label="Интерактивная карта: метро Автозаводская и адрес студии"></div>
+      <noscript><iframe title="ЭТНИКА на карте" src="https://yandex.ru/map-widget/v1/?text=%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%A1%D0%BB%D0%BE%D0%B1%D0%BE%D0%B4%D0%B0%2026%D0%90%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0&z=16" loading="lazy"></iframe></noscript>
 
     </div>
 
@@ -12824,5 +12828,6 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 </style>
 <link rel="stylesheet" href="assets/etnika-editorial-overline.css?v=20261106">
+<script src="etnika-map.js"></script>
 </body>
 </html>
