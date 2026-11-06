@@ -38,7 +38,10 @@ jobs:
           cp index.html _site/index.html
           cp site/index.html _site/site/index.html
           cp site/etnika-map.css site/etnika-map.js _site/site/
+          cp site/prices-v3.css site/prices-v3.js _site/site/
           cp -R site/assets _site/site/
+          test -s _site/site/prices-v3.css
+          test -s _site/site/prices-v3.js
           cp -R data docs _site/
           touch _site/.nojekyll
           test -s _site/index.html
