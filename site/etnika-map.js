@@ -1,100 +1,183 @@
-/* ETNIKA contacts: georeferenced station label via Yandex Maps JS API 3.
-   Public browser API key is HTTP Referer restricted by its owner.
-   The native map widget is loaded only as a fallback. */
-(function(){
+/* ETNIKA · contacts map · 2026-11-06
+   Yandex Maps API 3: georeferenced marks for the studio and metro.
+   The built-in Yandex map widget remains the error fallback.
+   All station and studio marks must move with the map on pan/zoom. */
+(function () {
   'use strict';
-  var root=document.getElementById('etnika-contacts-map-live');
-  if(!root || root.dataset.initialized) return;
-  root.dataset.initialized='1';
-  var shell=root.closest('.location-map');
-  var section=document.getElementById('etnika-contacts-source');
-  var fallbackFrame=shell && shell.querySelector('.etnika-map-widget-fallback');
-  if(!shell || !section) return;
-  var API_KEY='0c3d5b94-7c1d-4e23-b323-f4a620b3dcb1';
-  // Moscow Metro: Avtozavodskaya, Zamoskvoretskaya line (not MCK).
-  // Coordinate order in Yandex JS API v3 is [longitude, latitude].
-  var STATION=[37.660467,55.706854];
-  var VIEW_CENTER=[37.6566,55.7090];
-  var started=false;
+  const root = document.getElementById('etnika-contacts-map-live');
+  if (!root || root.dataset.initialized === '1') return;
+  root.dataset.initialized = '1';
 
-  function useFallback(){
-    shell.dataset.mapState='fallback';
-    if(fallbackFrame && !fallbackFrame.getAttribute('src')){
-      fallbackFrame.setAttribute('src',fallbackFrame.getAttribute('data-map-src'));
+  const shell = root.closest('.location-map');
+  const section = document.getElementById('etnika-contacts-source');
+  const fallbackFrame = shell && shell.querySelector('.etnika-map-widget-fallback');
+  if (!shell || !section) return;
+
+  // This is a public, HTTP-Referer-restricted browser API key.
+  const API_KEY = '0c3d5b94-7c1d-4e23-b323-f4a620b3dcb1';
+  // Coordinates are [longitude, latitude]. Avtozavodskaya Zamoskvoretskaya
+  // line: vmetro.moscow/station/avtozavodskaya/.
+  const METRO = [37.660467, 55.706854];
+  // Business center Omega-2, Leninskaya Sloboda 26/26A:
+  // Yandex building location yandex.com/maps/213/moscow/house/ulitsa_leninskaya_sloboda_26/.
+  // The marker denotes the building, not an individual office entrance.
+  const STUDIO = [37.654610, 55.710130];
+  const MAP_CENTER = [37.6573, 55.70865];
+  const MAPS_URL = 'https://yandex.ru/maps/?text=' +
+    encodeURIComponent('Москва, улица Ленинская Слобода, 26А, БЦ Омега-2');
+  const METRO_SVG_URL =
+    'https://upload.wikimedia.org/wikipedia/commons/5/5f/Mosmetro.svg';
+  let started = false;
+
+  function useFallback() {
+    shell.dataset.mapState = 'fallback';
+    if (fallbackFrame && !fallbackFrame.getAttribute('src')) {
+      fallbackFrame.src = fallbackFrame.getAttribute('data-map-src');
     }
   }
-  function makeStationLabel(){
-    var marker=document.createElement('div');
-    marker.className='etnika-map-station';
-    marker.setAttribute('role','img');
-    marker.setAttribute('aria-label','Метро Автозаводская');
-    var icon=document.createElement('span');
-    icon.className='etnika-map-station__icon';
-    icon.textContent='М';
-    icon.setAttribute('aria-hidden','true');
-    var label=document.createElement('span');
-    label.className='etnika-map-station__label';
-    label.textContent='Автозаводская';
-    marker.append(icon,label);
-    return marker;
+
+  function createMetroMark() {
+    const mark = document.createElement('div');
+    mark.className = 'etnika-map-station';
+    mark.setAttribute('role', 'img');
+    mark.setAttribute('aria-label', 'Метро Автозаводская, Замоскворецкая линия');
+
+    // The real Moscow Metro symbol, not a text glyph in a black square.
+    // Public-domain geometric logo from Wikimedia Commons (Mosmetro.svg).
+    const logo = document.createElement('img');
+    logo.className = 'etnika-map-station__logo';
+    logo.alt = '';
+    logo.src = METRO_SVG_URL;
+    logo.decoding = 'async';
+    logo.onerror = function () {
+      // Vector fallback in case a third-party image host is blocked.
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 100 84');
+      svg.setAttribute('class', 'etnika-map-station__logo');
+      svg.setAttribute('aria-hidden', 'true');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('fill', '#eb2435');
+      path.setAttribute('d',
+        'M4 82 25 3 50 49 75 3 96 82H76L70 46 50 81 30 46 24 82Z');
+      svg.appendChild(path);
+      logo.replaceWith(svg);
+    };
+
+    const label = document.createElement('span');
+    label.className = 'etnika-map-station__label';
+    label.textContent = 'Автозаводская';
+    mark.append(logo, label);
+    return mark;
   }
 
-  async function initialize(){
-    if(!window.ymaps3) throw new Error('Yandex Maps API loader is unavailable');
-    await window.ymaps3.ready;
-    var api=window.ymaps3;
-    var map=new api.YMap(root,{
-      location:{center:VIEW_CENTER,zoom:15.8},
-      mode:'vector',
-      theme:'dark',
-      showScaleInCopyrights:true
+  function createStudioMark() {
+    const mark = document.createElement('div');
+    mark.className = 'etnika-map-studio';
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'etnika-map-studio__button';
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', 'ЭТНИКА — студия автопортрета, показать адрес');
+
+    const pin = document.createElement('span');
+    pin.className = 'etnika-map-studio__pin';
+    pin.setAttribute('aria-hidden', 'true');
+    pin.innerHTML = '<svg viewBox="0 0 32 42" width="32" height="42" aria-hidden="true">' +
+      '<path d="M16 1C7.7 1 1 7.7 1 16c0 10 15 25 15 25s15-15 15-25C31 7.7 24.3 1 16 1Z" fill="#B31727" stroke="#fff" stroke-width="1.5"/>' +
+      '<circle cx="16" cy="16" r="6" fill="#fff"/></svg>';
+    const studioName = document.createElement('span');
+    studioName.className = 'etnika-map-studio__name';
+    studioName.textContent = 'ЭТНИКА';
+    button.append(pin, studioName);
+
+    const popup = document.createElement('div');
+    popup.className = 'etnika-map-studio__popup';
+    popup.hidden = true;
+    const title = document.createElement('strong');
+    title.textContent = 'ЭТНИКА · студия автопортрета';
+    const address = document.createElement('span');
+    address.textContent = 'Ленинская Слобода, 26А · БЦ «Омега-2», офис 416';
+    const link = document.createElement('a');
+    link.href = MAPS_URL;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Открыть в Яндекс Картах ↗';
+    popup.append(title, address, link);
+
+    button.addEventListener('click', function () {
+      const isOpen = popup.hidden;
+      popup.hidden = !isOpen;
+      button.setAttribute('aria-expanded', String(isOpen));
     });
+
+    mark.append(popup, button);
+    return mark;
+  }
+
+  async function init() {
+    if (!window.ymaps3) throw new Error('Yandex Maps v3 did not load');
+    await window.ymaps3.ready;
+    const api = window.ymaps3;
+    const map = new api.YMap(root, {
+      location: {center: MAP_CENTER, zoom: 15.6},
+      mode: 'vector',
+      showScaleInCopyrights: true
+    });
+    // Desaturate the native base map, including default POI and transit icons.
+    // Branded markers are DOM elements above the map, so they remain red/white.
+    const monochrome = [
+      {elements: 'geometry', stylers: [{saturation: -1}]},
+      {elements: 'label.icon', stylers: [{saturation: -1}]},
+      {elements: 'label.text', stylers: [{saturation: -1}]}
+    ];
     map.addChild(new api.YMapDefaultSchemeLayer({
-      // Remove duplicate native station/stop labels; the target metro
-      // gets a legible branded marker at its true geographic coordinate.
-      customization:[{
-        tags:{any:['transit_location']},
-        elements:'label',
-        stylers:[{visibility:'off'}]
-      }]
+      theme: 'dark',
+      customization: monochrome
     }));
-    map.addChild(new api.YMapDefaultFeaturesLayer({zIndex:1800}));
-    map.addChild(new api.YMapMarker({
-      coordinates:STATION,
-      draggable:false
-    },makeStationLabel()));
-    shell.dataset.mapState='ready';
-    try{
-      var ui=await api.import('@yandex/ymaps3-default-ui-theme');
-      if(ui && ui.YMapZoomControl && api.YMapControls){
-        map.addChild(new api.YMapControls({position:'right'})
+    map.addChild(new api.YMapDefaultFeaturesLayer({zIndex: 1800}));
+    // Both marks are anchored to geographic points and move with the map.
+    map.addChild(new api.YMapMarker(
+      {coordinates: STUDIO, draggable: false}, createStudioMark()
+    ));
+    map.addChild(new api.YMapMarker(
+      {coordinates: METRO, draggable: false}, createMetroMark()
+    ));
+    shell.dataset.mapState = 'ready';
+
+    try {
+      const ui = await api.import('@yandex/ymaps3-default-ui-theme');
+      if (ui && ui.YMapZoomControl && api.YMapControls) {
+        map.addChild(new api.YMapControls({position: 'right'})
           .addChild(new ui.YMapZoomControl({})));
       }
-    }catch(ignore){
-      // The map itself remains usable with mouse/touch zoom.
+    } catch (e) {
+      // Native scroll and touch zoom still work.
     }
   }
 
-  function load(){
-    if(started) return;
-    started=true;
-    shell.dataset.mapState='loading';
-    var loader=document.createElement('script');
-    loader.src='https://api-maps.yandex.ru/v3/?apikey='+encodeURIComponent(API_KEY)+'&lang=ru_RU';
-    loader.async=true;
-    loader.onload=function(){initialize().catch(useFallback);};
-    loader.onerror=useFallback;
+  function load() {
+    if (started) return;
+    started = true;
+    shell.dataset.mapState = 'loading';
+    const loader = document.createElement('script');
+    loader.src = 'https://api-maps.yandex.ru/v3/?apikey=' +
+      encodeURIComponent(API_KEY) + '&lang=ru_RU';
+    loader.async = true;
+    loader.onload = function () {init().catch(useFallback);};
+    loader.onerror = useFallback;
     document.head.appendChild(loader);
   }
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(entries){
-      if(entries.some(function(entry){return entry.isIntersecting;})){
-        io.disconnect();
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(function (entries) {
+      if (entries.some(function (e) {return e.isIntersecting;})) {
+        observer.disconnect();
         load();
       }
-    },{rootMargin:'350px 0px'});
-    io.observe(section);
-  }else{
+    }, {rootMargin: '350px 0px'});
+    observer.observe(section);
+  } else {
     load();
   }
 })();
