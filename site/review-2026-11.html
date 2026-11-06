@@ -12870,7 +12870,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-process-interactive .epi-card:hover img,
 #etnika-process-interactive .epi-card:focus-within img{
   object-fit:cover!important;object-position:var(--subject-x) var(--subject-y)!important;
-  filter:grayscale(1) contrast(1.06) brightness(.9)!important;
+  filter:grayscale(1) contrast(1.06) brightness(.9)!important;transition:filter .35s ease!important;
   transform:none!important;
   -webkit-mask-image:radial-gradient(ellipse 70% 91% at var(--focus-x) var(--focus-y),#000 0%,#000 46%,rgba(0,0,0,.86) 62%,transparent 100%)!important;
   mask-image:radial-gradient(ellipse 70% 91% at var(--focus-x) var(--focus-y),#000 0%,#000 46%,rgba(0,0,0,.86) 62%,transparent 100%)!important;
@@ -12917,6 +12917,14 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  #etnika-process-interactive .epi-grid{display:block!important;height:auto!important;margin:0 20px!important}
  #etnika-process-interactive .epi-card{height:clamp(430px,113vw,580px)!important;min-height:0!important}
  #etnika-process-interactive .epi-title{font-size:clamp(27px,7vw,36px)!important}
+}
+
+/* Desktop: restore full colour on hover. Keyboard focus behaves the same. */
+@media (hover:hover) and (pointer:fine){
+ #etnika-process-interactive .epi-card:hover img,
+ #etnika-process-interactive .epi-card:focus-within img{
+   filter:grayscale(0) contrast(1.03) brightness(.97)!important;
+ }
 }
 </style>
 </body>
