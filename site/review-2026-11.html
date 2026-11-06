@@ -12258,6 +12258,9 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   --red:#b21a28!important;
   --edge:var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)))!important;
   height:calc(100svh - var(--etnika-nav-height,72px))!important;min-height:0!important;max-height:calc(100svh - var(--etnika-nav-height,72px))!important;
+  box-sizing:border-box!important;
+  /* Reset the legacy v15 frame's 72px top/bottom padding; otherwise it steals gallery height. */
+  padding:0!important;margin:0!important;
   overflow:hidden!important;background:#090909!important;
   scroll-margin-top:var(--etnika-nav-height,72px)!important;
 }
@@ -12412,7 +12415,7 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
   --etnika-nav-height:72px;
   --etnika-overline-size:clamp(9px,.62vw,11px);
   --etnika-overline-weight:200;
-  --etnika-photo-section-y:clamp(20px,3.1svh,34px);
+  --etnika-photo-section-y:clamp(12px,1.8svh,20px);
 }
 @media(max-width:700px){:root{--etnika-overline-size:8px;}}
 #etnika-site-header,#etnika-site-header *{box-sizing:border-box;}
