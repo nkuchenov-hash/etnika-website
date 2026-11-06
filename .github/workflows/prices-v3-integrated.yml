@@ -1,0 +1,29 @@
+name: Validate redesigned tariff section
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/index.html"
+      - "site/prices-v3.css"
+      - "site/prices-v3.js"
+      - "scripts/validate_prices_v3_integrated.py"
+      - ".github/workflows/prices-v3-integrated.yml"
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+      - name: Verify tariff section inside full site
+        run: python3 scripts/validate_prices_v3_integrated.py
+      - name: Save real-site screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-prices-v3-full-site
+          path: reports/etnika-v3-integrated-*.png
+          if-no-files-found: ignore
