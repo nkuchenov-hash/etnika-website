@@ -1149,7 +1149,7 @@
 <section id="etnika-faq" aria-label="Частые вопросы перед визитом">
   <div class="faq-shell">
 
-    <div class="faq-top">
+    <div class="faq-top etnika-editorial-top">
       <div>ЭТНИКА</div>
       <div class="faq-topline"></div>
       <div class="faq-accent">FAQ / сервис</div>
@@ -1876,7 +1876,7 @@ body.etnika-gallery-lock{
 <section id="etnika-stories" aria-label="Снимки наших гостей">
   <div class="stories-shell">
 
-    <div class="stories-top">
+    <div class="stories-top etnika-editorial-top">
       <div>ЭТНИКА</div>
       <div class="stories-topline"></div>
       <div class="stories-accent">Снимки наших гостей</div>
@@ -2596,7 +2596,7 @@ body.etnika-gallery-lock{
 <section id="etnika-space-photo" aria-label="Пространство студии ЭТНИКА">
   <div class="spf-shell">
 
-    <div class="spf-top">
+    <div class="spf-top etnika-editorial-top">
       <div>ЭТНИКА</div>
       <div class="spf-line"></div>
       <div class="spf-accent">Пространство студии</div>
@@ -4183,7 +4183,7 @@ body.etnika-gallery-lock{
 <section id="etnika-studio-features" aria-label="Преимущества студии ЭТНИКА">
   <div class="b05-shell">
 
-    <div class="b05-top">
+    <div class="b05-top etnika-editorial-top">
       <div>ЭТНИКА</div>
       <div class="b05-topline"></div>
       <div class="b05-accent">Преимущества студии</div>
@@ -5289,7 +5289,7 @@ body.etnika-gallery-lock{
 <section id="etnika-prices-clear" aria-label="Цены и тарифы ЭТНИКА" data-plan-theme="standard">
   <div class="pc-shell">
 
-    <div class="pc-top">
+    <div class="pc-top etnika-editorial-top">
       <div>ЭТНИКА</div>
       <div class="pc-line"></div>
       <div class="pc-accent">Время для себя</div>
@@ -6136,7 +6136,7 @@ body.etnika-gallery-lock{
 <section id="etnika-faq-tariffs" aria-label="Частые вопросы о тарифах">
   <div class="faq-shell">
 
-    <div class="faq-top">
+    <div class="faq-top etnika-editorial-top">
       <div>ЭТНИКА</div>
       <div class="faq-topline"></div>
       <div class="faq-accent">FAQ / тарифы</div>
@@ -8320,39 +8320,36 @@ body.etnika-gallery-lock{
 </style>
 
 
-<!-- ETNIKA B-REV · keep the independent Yandex reviews widget, use the same editorial heading as the site -->
+<!-- ETNIKA B-REV · shared editorial overline + independent Yandex widget -->
 <style id="etnika-reviews-section-style">
+/* Only block-specific layout belongs here. Editorial lines/labels are defined
+   centrally in site/assets/etnika-editorial-overline.css. */
 #etnika-reviews{
   box-sizing:border-box;
   min-height:100svh;
   display:flex;
-  align-items:center;
-  padding:clamp(48px,6vh,88px) max(80px,calc((100vw - 1760px)/2));
+  align-items:stretch;
+  padding:var(--et-u-top,clamp(48px,6vh,88px))
+          var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)))
+          var(--et-u-bottom,clamp(48px,6vh,88px));
   background:#f5f3f2;
   color:#0a0a0a;
-  font-family:'Geologica',Arial,sans-serif;
+  font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif);
 }
-#etnika-reviews .etnika-reviews-inner{width:100%;max-width:1440px;margin:0 auto;min-width:0}
-#etnika-reviews .etnika-reviews-overline{
-  display:grid;
-  grid-template-columns:auto minmax(80px,1fr) auto 1px auto minmax(80px,1fr);
-  gap:clamp(12px,1vw,20px);
-  align-items:center;
-  margin-bottom:clamp(24px,3.6vh,46px);
-  font-size:16px;
-  font-weight:200;
-  line-height:1.2;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-  white-space:nowrap;
+#etnika-reviews .etnika-reviews-inner{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  width:100%;
+  min-width:0;
+  max-width:none;
+  margin:0;
 }
-#etnika-reviews .etnika-reviews-rule{height:1px;background:rgba(10,10,10,.16)}
-#etnika-reviews .etnika-reviews-divider{width:1px;height:28px;background:rgba(10,10,10,.16)}
-#etnika-reviews .etnika-reviews-overline-accent{color:#981018}
+#etnika-reviews .etnika-editorial-top{margin-bottom:clamp(24px,3.6vh,46px)}
 #etnika-reviews .etnika-reviews-heading{
   margin:0 0 clamp(22px,3vh,38px);
-  font-family:'Forum',Georgia,serif;
-  font-size:clamp(54px,5.4vw,96px);
+  font-family:var(--etnika-font-display,'Forum',Georgia,serif);
+  font-size:clamp(54px,4.9vw,90px);
   font-weight:400;
   line-height:.84;
   letter-spacing:-.045em;
@@ -8363,28 +8360,18 @@ body.etnika-gallery-lock{
 #etnika-reviews .urw-title,
 #etnika-reviews .urw-kicker{display:none!important}
 #etnika-reviews .urw-head{align-items:center}
-@media(max-width:1100px){
-  #etnika-reviews .etnika-reviews-overline{
-    grid-template-columns:auto minmax(25px,1fr) auto;
-    gap:12px;
-  }
-  #etnika-reviews .etnika-reviews-divider,
-  #etnika-reviews .etnika-reviews-overline-context,
-  #etnika-reviews .etnika-reviews-rule-extra{display:none}
-}
-@media(max-width:800px){
-  #etnika-reviews{padding:48px 20px;min-height:100svh}
+@media(max-width:700px){
   #etnika-reviews .etnika-reviews-heading{
     font-size:clamp(42px,11.8vw,68px);
     line-height:.88;
   }
   #etnika-reviews .etnika-reviews-heading span{display:block}
-  #etnika-reviews .etnika-reviews-overline{margin-bottom:24px}
+  #etnika-reviews .etnika-editorial-top{margin-bottom:24px}
 }
 </style>
 <section id="etnika-reviews" aria-label="Отзывы наших клиентов">
   <div class="etnika-reviews-inner">
-    <div class="etnika-reviews-overline" aria-label="ЭТНИКА — отзывы с Яндекс Карт">
+    <div class="etnika-reviews-overline etnika-editorial-top" aria-label="ЭТНИКА — отзывы с Яндекс Карт">
       <span>ЭТНИКА</span>
       <span class="etnika-reviews-rule" aria-hidden="true"></span>
       <span class="etnika-reviews-overline-accent">Отзывы</span>
@@ -12825,5 +12812,6 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
 }
 </style>
+<link rel="stylesheet" href="assets/etnika-editorial-overline.css?v=20261106">
 </body>
 </html>
