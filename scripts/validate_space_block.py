@@ -30,6 +30,7 @@ def static_checks():
         assert part.count('class="spf-img ') == 3, f"{path}: expected 3 original photos"
         assert part.count('class="spf-tab') == 5, f"{path}: expected 5 selectable categories"
         assert "height:calc(100svh - var(--etnika-nav-height,72px))!important" in css, f"{path}: fixed header not subtracted from viewport"
+        assert "padding:0!important;margin:0!important;" in css, f"{path}: legacy v15 external frame padding still steals gallery height"
         assert "grid-template-rows:auto auto minmax(0,1fr) auto!important" in css, f"{path}: photos do not get remaining height"
         assert "padding:var(--etnika-photo-section-y) 0!important" in css, f"{path}: not using shared photo-section spacing"
         assert "font-size:var(--etnika-section-title)!important" in css, f"{path}: rogue title size"
@@ -37,7 +38,7 @@ def static_checks():
         assert "font-family:var(--etnika-font-ui)!important" in css, f"{path}: UI font not using token"
         assert "--etnika-text-size:16px" in shared_code, f"{path}: min UI text size token missing"
         assert "--etnika-section-title:clamp(62px,6.25vw,118px)" in shared_code
-        assert "--etnika-photo-section-y:clamp(20px,3.1svh,34px)" in html, f"{path}: photo-section spacing token missing"
+        assert "--etnika-photo-section-y:clamp(12px,1.8svh,20px)" in html, f"{path}: photo-section spacing token missing"
         assert "etnika-space-title-fit-20261104" not in html, f"{path}: distorted scaleX title script returned"
         assert "11svh" not in css, f"{path}: local font shrinking returned"
         sections.append(part)
@@ -52,7 +53,7 @@ def render_checks():
         from playwright.sync_api import sync_playwright
     except ImportError as e:
         raise SystemExit("Install playwright and its Chromium browser to run --render") from e
-    sizes = [(1920,1080), (1662,896), (1366,768), (1100,800), (390,844), (375,667)]
+    sizes = [(1920,1080), (1662,896), (1536,800), (1366,768), (1100,800), (390,844), (375,667)]
     output = ROOT / "reports"
     output.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as pw:
@@ -86,6 +87,8 @@ def render_checks():
                        shellPaddingTop: parseFloat(getComputedStyle(shell).paddingTop),
                        shellPaddingBottom: parseFloat(getComputedStyle(shell).paddingBottom),
                        section: rect(block).toJSON(),
+                       sectionPaddingTop:parseFloat(getComputedStyle(block).paddingTop),
+                       sectionPaddingBottom:parseFloat(getComputedStyle(block).paddingBottom),
                        shell: rect(shell).toJSON(),
                        heading: rect(heading).toJSON(),
                        top: rect(top).toJSON(),
@@ -104,16 +107,17 @@ def render_checks():
                 box=result["section"]; photos=result["photos"]
                 err=lambda msg: f"{path.name} {w}x{h}: {msg}; metrics {result}"
                 assert abs(box["height"]-(h-result["headerHeight"]))<=2, err("block does not occupy viewport below fixed header")
+                assert result["sectionPaddingTop"]<=.5 and result["sectionPaddingBottom"]<=.5, err("legacy outer frame padding still active")
                 assert abs(box["top"]-result["headerHeight"])<=3, err("block starts behind the fixed header")
                 assert abs(box["bottom"]-h)<=3, err("section extends outside the viewport")
                 assert abs(result["shellPaddingTop"]-result["shellPaddingBottom"])<=1, err("vertical padding is not symmetrical")
-                assert 19<=result["shellPaddingTop"]<=35, err("too much empty space around photographs")
+                assert 11<=result["shellPaddingTop"]<=21, err("wrong photo-first breathing space")
                 assert result["intro"] is None, err("removed text still present")
                 assert result["top"]["y"]-box["y"]>=12, err("top margin missing")
                 assert box["bottom"]-result["nav"]["bottom"]>=12, err("bottom margin missing")
                 assert result["heading"]["bottom"]<=photos["y"]+3, err("title overlaps photos")
                 assert photos["bottom"]<=result["nav"]["y"]+3, err("photos overlap category nav")
-                assert photos["height"]>=0.54*(h-result["headerHeight"]), err("gallery too small")
+                assert photos["height"]>=0.61*(h-result["headerHeight"]), err("gallery too small: photos must dominate the viewport")
                 assert all(r["height"]>35 for r in [result["main"], *result["mini"]]), err("a photo collapsed")
                 assert abs(result["titleSize"]-result["expectedSize"])<=1, err("heading deviates from shared token")
                 assert "Forum" in result["titleFamily"], err("wrong heading font family")
