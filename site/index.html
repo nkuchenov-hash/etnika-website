@@ -11895,6 +11895,8 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
  const flow=document.createElement('main');flow.id='etnika-review-flow';flow.setAttribute('aria-label','Предварительная композиция всей главной');
  for(const id of ids){const item=document.getElementById(id);if(item)flow.appendChild(item);}
  document.body.appendChild(flow);
+ // Re-evaluate the fixed header only after all sections are in their final order.
+ requestAnimationFrame(()=>window.dispatchEvent(new Event('scroll')));
  if(location.hash==='#etnika-process-interactive'){
    requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
    window.addEventListener('load',()=>window.scrollTo({top:0,behavior:'instant'}),{once:true});
@@ -12727,7 +12729,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     const r=hero.getBoundingClientRect();
     const viewportH=window.innerHeight;
     const complete=r.bottom<=Math.max(80,viewportH*.12);
-    const heroVisible=r.top<viewportH*.88 && !complete;
+    const heroVisible=r.top<=header.getBoundingClientRect().bottom+2 && !complete;
     header.dataset.hero=heroVisible?'true':'false';
     const distance=Math.max(1,r.height);
     const scrollIntoHero=Math.min(1,Math.max(0,-r.top/distance));
