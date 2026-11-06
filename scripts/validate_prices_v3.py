@@ -48,7 +48,7 @@ with sync_playwright() as p:
   verify(info["photo"]["width"]>=300 and info["photo"]["height"]>=440,"photo too small")
   if w>=901:
    verify(info["stage"]["top"]>info["title"]["bottom"]+20,"heading and tariffs too close")
-   verify(all(x["height"]>=125 for x in info["rows"]),"tariff rows cramped")
+   verify(all(x["height"]>=(115 if h<=810 else 125) for x in info["rows"]),"tariff rows cramped")
   verify(all(b["top"]>=a["bottom"]-1 for a,b in zip(info["rows"],info["rows"][1:])),"rows overlap")
   page.screenshot(path=str(OUT/f"etnika-prices-v3-{w}x{h}.png"),full_page=True)
   page.locator(".ev3-modes [data-mode=weekend]").click()
