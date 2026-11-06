@@ -10,7 +10,6 @@ EDITORIAL_SECTIONS=(
     ("etnika-stories","stories-top"),
     ("etnika-space-photo","spf-top"),
     ("etnika-studio-features","b05-top"),
-    ("etnika-prices-clear","pc-top"),
     ("etnika-faq","faq-top"),
     ("etnika-faq-tariffs","faq-top"),
     ("etnika-reviews","etnika-reviews-overline"),
@@ -89,7 +88,7 @@ def render():
                 # must use the same overline text metrics and responsive grid.
                 tops=page.evaluate("""() => {
                     const ids=['etnika-stories','etnika-space-photo','etnika-studio-features',
-                      'etnika-prices-clear','etnika-faq','etnika-faq-tariffs','etnika-reviews'];
+                      'etnika-faq','etnika-faq-tariffs','etnika-reviews'];
                     return ids.map(id=>{
                       const el=document.querySelector('#'+id+' .etnika-editorial-top');
                       if(!el)return null;
