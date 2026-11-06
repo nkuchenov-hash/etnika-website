@@ -11328,54 +11328,84 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
 }
 
 /* =========================================================
-   CONTACTS
-   Same top/bottom internal spacing as every other block.
-   No extra padding inside the route text itself.
-   Clear hierarchy:
-   title -> address -> route text group -> table -> button
+   CONTACTS — viewport floor accounts for fixed navigation.
+   The section grows rather than clipping its booking CTA.
+   Owner feedback: 06.11.2026 (clipped button / header height).
    ========================================================= */
-#etnika-contacts-source .location-copy{
-  height:calc(100% - var(--contact-cover)) !important;
+#etnika-contacts-source{
+  --contact-cover:0px !important;
+  --bottom-cover:0px !important;
+  height:auto !important;
+  min-height:calc(100svh - var(--etnika-nav-height,60px)) !important;
+  max-height:none !important;
+  overflow:visible !important;
+  padding:0 !important;
+}
+#etnika-contacts-source::after{
+  display:none !important;
+  content:none !important;
+}
+#etnika-contacts-source .location{
+  height:auto !important;
+  min-height:calc(100svh - var(--etnika-nav-height,60px)) !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  align-items:stretch !important;
+}
+#etnika-contacts-source .location-map{
+  height:auto !important;
   min-height:0 !important;
-  padding:
-    var(--etnika-section-y)
-    clamp(44px,3.6vw,70px)
-    var(--etnika-section-y) !important;
+  align-self:stretch !important;
+  overflow:hidden !important;
+}
+/* The Yandex iframe is taller than its map viewport; its
+   bottom UI is clipped by the map, never by the text column. */
+#etnika-contacts-source .location-map iframe{
+  top:-42px !important;
+  height:calc(100% + 230px) !important;
+}
+#etnika-contacts-source .location-copy{
+  height:auto !important;
+  min-height:0 !important;
+  align-self:stretch !important;
+  padding:clamp(28px,4svh,48px) clamp(44px,3.6vw,70px) !important;
   display:flex !important;
   flex-direction:column !important;
-  justify-content:flex-start !important;
+  justify-content:center !important;
 }
-
 #etnika-contacts-source .location-copy h2{
-  margin:0 0 28px !important;
+  margin:0 0 clamp(16px,2.2svh,24px) !important;
   padding:0 !important;
 }
-
 #etnika-contacts-source .location-copy .address{
-  margin:0 0 28px !important;
+  margin:0 0 clamp(16px,2.2svh,24px) !important;
   padding:0 !important;
 }
-
 #etnika-contacts-source .location-copy p{
   margin:0 !important;
   padding:0 !important;
   max-width:690px !important;
+  font-size:var(--etnika-text-size,16px) !important;
+  line-height:1.45 !important;
 }
-
 #etnika-contacts-source .location-copy p + p{
-  margin-top:8px !important;
+  margin-top:clamp(7px,1svh,10px) !important;
 }
-
 #etnika-contacts-source .location-copy p:last-of-type{
-  margin-bottom:28px !important;
+  margin-bottom:clamp(16px,2.2svh,24px) !important;
 }
-
 #etnika-contacts-source .contact-grid{
-  margin:0 0 28px !important;
+  margin:0 0 clamp(16px,2.2svh,24px) !important;
 }
-
+#etnika-contacts-source .contact-grid div{
+  padding:clamp(8px,1.1svh,12px) 0 !important;
+}
 #etnika-contacts-source .location-copy > div:last-child{
   margin:0 !important;
+  flex-shrink:0 !important;
+}
+#etnika-contacts-source .btn{
+  min-height:56px !important;
+  font-size:var(--etnika-text-size,16px) !important;
 }
 
 /* =========================================================
@@ -11393,8 +11423,27 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
     overflow:visible !important;
   }
 
+  #etnika-contacts-source{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+  #etnika-contacts-source .location{
+    height:auto !important;
+    min-height:0 !important;
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+  #etnika-contacts-source .location-map{
+    height:500px !important;
+  }
+  #etnika-contacts-source .location-map iframe{
+    top:0 !important;
+    height:calc(100% + 180px) !important;
+  }
   #etnika-contacts-source .location-copy{
     height:auto !important;
+    padding:56px 30px !important;
   }
 }
 
@@ -11404,9 +11453,11 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
     --etnika-section-title:clamp(48px,14vw,72px);
   }
 
+  #etnika-contacts-source .location-map{
+    height:430px !important;
+  }
   #etnika-contacts-source .location-copy{
-    padding-left:20px !important;
-    padding-right:20px !important;
+    padding:44px 20px !important;
   }
 }
 </style>
