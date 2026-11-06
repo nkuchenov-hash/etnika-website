@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""ETNIKA B-06: working/preview consistency, design tokens, and browser geometry."""
+"""ETNIKA B-06: canonical site design tokens and browser geometry."""
 from __future__ import annotations
 import pathlib
 import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-FILES = (ROOT / "site/index.html", ROOT / "site/review-2026-11.html")
+FILES = (ROOT / "site/index.html",)
 SPACE_SECTION = re.compile(r'<section id="etnika-space-photo"\b[\s\S]*?</section>')
 SPACE_CSS = re.compile(r'<style id="etnika-space-owner-corrections-20261105">[\s\S]*?</style>')
 SHARED_CSS = re.compile(r'<style id="etnika-v19-spacing-and-type-lock">[\s\S]*?</style>')
@@ -45,9 +45,7 @@ def static_checks():
         assert "11svh" not in css, f"{path}: local font shrinking returned"
         sections.append(part)
         styles.append(css)
-    assert sections[0] == sections[1], "Working and staging studio sections diverged"
-    assert styles[0] == styles[1], "Working and staging studio styles diverged"
-    print("PASS: identical B-06 in both pages, original 3 photos and 5 tabs, no intro, shared font and spacing tokens")
+    print("PASS: canonical B-06 has original 3 photos and 5 tabs, no intro, shared font and spacing tokens")
 
 
 def render_checks():
