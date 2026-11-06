@@ -76,7 +76,8 @@ def render():
                 page.evaluate("window.scrollTo(0,0)")
                 page.wait_for_timeout(80)
                 assert header.get_attribute("data-hero")=="false",(path,width,"process section must open before HERO")
-                assert page.locator(".esh__descriptor").is_visible()
+                assert not page.locator(".esh__descriptor").is_visible(),(path,width,"descriptor must hide outside HERO")
+                assert page.locator(".esh__logo").is_visible(),(path,width,"brand must show on first process screen")
                 assert page.locator(".esh__logo").evaluate("(el)=>getComputedStyle(el).opacity")=="1"
                 before=page.evaluate("""() => ({
                     space:parseFloat(getComputedStyle(document.querySelector('#etnika-space-photo .spf-top')).fontSize),
