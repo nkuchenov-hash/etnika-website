@@ -74,11 +74,18 @@ def render():
                 hero=page.locator("#etnika-hero")
                 assert header.count()==1
                 page.evaluate("window.scrollTo(0,0)")
-                page.wait_for_timeout(80)
-                assert header.get_attribute("data-hero")=="false",(path,width,"process section must open before HERO")
+                # Layout is finalized on DOMContentLoaded; header visibility transitions need time to settle.
+                page.wait_for_function("""() => {
+                    const h=document.querySelector('#etnika-site-header');
+                    const d=h.querySelector('.esh__descriptor');
+                    const l=h.querySelector('.esh__logo');
+                    return h.dataset.hero==='false'
+                        && getComputedStyle(d).visibility==='hidden'
+                        && getComputedStyle(l).visibility==='visible'
+                        && Number(getComputedStyle(l).opacity)>0.99;
+                }""",timeout=4000)
                 assert not page.locator(".esh__descriptor").is_visible(),(path,width,"descriptor must hide outside HERO")
                 assert page.locator(".esh__logo").is_visible(),(path,width,"brand must show on first process screen")
-                assert page.locator(".esh__logo").evaluate("(el)=>getComputedStyle(el).opacity")=="1"
                 before=page.evaluate("""() => ({
                     space:parseFloat(getComputedStyle(document.querySelector('#etnika-space-photo .spf-top')).fontSize),
                     other:parseFloat(getComputedStyle(document.querySelector('#etnika-stories .stories-top')).fontSize),
