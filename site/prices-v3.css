@@ -206,8 +206,13 @@
   letter-spacing:-.035em;margin:0 0 16px;
 }
 #etnika-prices-clear.ev3 .ev3-sheet-sub{
-  margin:0 0 clamp(30px,4svh,48px);
+  margin:0 0 11px;
   color:var(--ev3-copy);font:300 18px/1.5 'Geologica',Arial,sans-serif;
+}
+#etnika-prices-clear.ev3 .ev3-sheet-description{
+  margin:0 0 clamp(24px,3.4svh,36px);
+  max-width:700px;
+  color:#494545;font:300 16px/1.55 'Geologica',Arial,sans-serif;
 }
 #etnika-prices-clear.ev3 .ev3-feature-list{
   margin:0;padding:0;list-style:none;display:grid;
@@ -288,7 +293,8 @@
   #etnika-prices-clear.ev3 .ev3-sheet-top{padding:22px 22px 10px}
   #etnika-prices-clear.ev3 .ev3-sheet-scroll{padding:12px 22px 16px}
   #etnika-prices-clear.ev3 .ev3-sheet-title{font-size:clamp(54px,14vw,72px)}
-  #etnika-prices-clear.ev3 .ev3-sheet-sub{font-size:16px;margin-bottom:27px}
+  #etnika-prices-clear.ev3 .ev3-sheet-sub{font-size:16px;margin-bottom:10px}
+  #etnika-prices-clear.ev3 .ev3-sheet-description{margin-bottom:26px;font-size:16px}
   #etnika-prices-clear.ev3 .ev3-feature-list{grid-template-columns:1fr;gap:0}
   #etnika-prices-clear.ev3 .ev3-feature-list li{min-height:0;padding:14px 0;font-size:16px}
   #etnika-prices-clear.ev3 .ev3-sheet-footer{
