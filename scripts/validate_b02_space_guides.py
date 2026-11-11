@@ -13,7 +13,7 @@ def near(a,b,slack=3):
 
 with sync_playwright() as pw:
     browser=pw.chromium.launch(headless=True)
-    for w,h in [(1366,768),(1440,900),(1618,928),(1662,896),(1920,1080),(2048,1145)]:
+    for w,h in [(1366,768),(1440,900),(1618,928),(1662,896),(1920,1080),(2048,841),(2048,1145)]:
         page=browser.new_page(viewport={'width':w,'height':h})
         page.goto((ROOT/'site/index.html').as_uri(),wait_until='load',timeout=45000)
         page.evaluate('() => document.fonts.ready')
@@ -75,6 +75,8 @@ with sync_playwright() as pw:
         assert v['title']['top']>=v['overline']['bottom']+25,err('editorial header collides with title')
         assert v['pictureOk'],err('hero/second-block photograph failed to load')
         assert near(v['media']['height'],v['block']['height'],3),err('photo not filling full section')
+        assert near(v['block']['height'],h-v['header']['height'],3),err('extra blank white tail below the viewport')
+        assert near(v['copy']['height'],v['block']['height'],3),err('copy/text frame differs from photo height')
 
         assert v['bodyWidth']<=w+2,err('horizontal overflow')
         assert v['photoOverlayContent']=='none' and v['photoOverlayDisplay']=='none',err('unrequested darkening of B02 photo')
