@@ -13062,6 +13062,50 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 </style>
 
+<style id="etnika-gift-viewport-fix-20261111">
+/* Owner correction, 2026-11-11: the WHOLE gift section is one viewport,
+   not a 100svh inner panel plus two additional outer spacing fields.
+   Keep a natural height on small screens rather than clip any content. */
+@media (min-width:1101px){
+  #etnika-review-flow > section#etnika-gift{
+    box-sizing:border-box!important;
+    height:100svh!important;
+    min-height:0!important;
+    max-height:100svh!important;
+    padding:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-shell{
+    box-sizing:border-box!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+    padding:clamp(70px,8svh,86px) 0 clamp(26px,4svh,42px)!important;
+    grid-template-rows:auto minmax(0,1fr) auto!important;
+  }
+}
+@media (max-width:1100px){
+  #etnika-review-flow > section#etnika-gift{
+    box-sizing:border-box!important;
+    height:auto!important;
+    min-height:100svh!important;
+    max-height:none!important;
+    padding:clamp(60px,7svh,76px) 0 clamp(24px,3.5svh,38px)!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-shell{
+    box-sizing:border-box!important;
+    height:auto!important;
+    min-height:calc(100svh - clamp(60px,7svh,76px) - clamp(24px,3.5svh,38px))!important;
+    max-height:none!important;
+    padding:0!important;
+    grid-template-rows:auto minmax(0,1fr) auto!important;
+  }
+}
+</style>
+
 <style id="etnika-owner-corrections-20261111-1227">
 /* Deliberate per-section exceptions: do not reapply global 100svh caps. */
 /* 01 · HOW IT WORKS: centered separate introduction; five photographic cards
