@@ -13166,5 +13166,74 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
 }
 </style>
+
+<style id="etnika-b02-space-alignment-20261111">
+/* Explicit owner correction: the two consecutive blocks share one horizontal
+   editorial guide. No flex/grid auto-stretch between ETNIKA and the accent. */
+:root{--etnika-overline-guide:clamp(58px,6vw,135px);}
+@media(min-width:1101px){
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__top,
+ #etnika-review-flow #etnika-space-photo .spf-top{
+   font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif)!important;
+   font-size:var(--etnika-overline-size,11px)!important;
+   font-weight:var(--etnika-overline-weight,200)!important;
+   letter-spacing:var(--etnika-overline-letter-spacing,.13em)!important;
+   gap:var(--etnika-overline-gap,12px)!important;
+   transform:none!important;
+   align-items:center!important;
+   text-align:left!important;
+   justify-items:start!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__top{
+   grid-template-columns:auto var(--etnika-overline-guide) auto 1px minmax(0,1fr)!important;
+ }
+ #etnika-review-flow #etnika-space-photo .spf-top{
+   grid-template-columns:auto var(--etnika-overline-guide) auto 1px auto minmax(0,1fr)!important;
+   width:100%!important;max-width:none!important;overflow:visible!important;
+   margin:0!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__top-line,
+ #etnika-review-flow #etnika-space-photo .spf-line:first-of-type{
+   width:100%!important;max-width:none!important;
+ }
+ #etnika-review-flow #etnika-space-photo .spf-line-extra{
+   justify-self:stretch!important;width:100%!important;
+ }
+ /* B02 PHOTO still covers full block. Its textual payload, including the
+    complete lower features grid, must end ABOVE the screen fold on desktop.
+    The extra lower visual background remains outside the content viewport. */
+ #etnika-review-flow > section#etnika-block-02-final .etnika-b02__copy{
+   box-sizing:border-box!important;
+   grid-template-rows:auto minmax(0,1fr) auto!important;
+   height:100%!important;min-height:0!important;
+   padding-top:clamp(28px,3.8svh,52px)!important;
+   padding-bottom:calc(2 * var(--etnika-section-outer) + var(--etnika-nav-height,60px) + clamp(22px,3.5svh,42px))!important;
+   row-gap:clamp(10px,1.5svh,22px)!important;
+   overflow:visible!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__main{
+   min-height:0!important;
+   align-self:center!important;
+   padding-bottom:0!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__features{
+   align-self:end!important;
+   min-height:0!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__feature{
+   min-height:clamp(48px,5.7svh,66px)!important;
+ }
+}
+@media(min-width:1101px) and (max-height:800px){
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__copy{
+   padding-top:clamp(22px,3svh,35px)!important;
+   padding-bottom:calc(2 * var(--etnika-section-outer) + var(--etnika-nav-height,60px) + 18px)!important;
+   row-gap:10px!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__description{margin-top:clamp(12px,2svh,19px)!important;}
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__description p+p{margin-top:12px!important;}
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__feature{min-height:45px!important;padding-top:6px!important;padding-bottom:6px!important;}
+}
+</style>
 </body>
 </html>
