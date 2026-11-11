@@ -207,13 +207,25 @@ with sync_playwright() as playwright:
                           featuresTop:r('#etnika-block-02-final .etnika-b02__features').top,
                           copyTop:r('#etnika-block-02-final .etnika-b02__top').top,
                           mediaHeight:r('#etnika-block-02-final .etnika-b02__media').height,
-                          sectionHeight:r('#etnika-block-02-final').height
+                          sectionHeight:r('#etnika-block-02-final').height,
+                          stampTop:r('#etnika-block-02-final .etnika-b02__stamp').top,
+                          counterTop:r('#etnika-block-02-final .etnika-b02__counter').top,
+                          captionBottom:r('#etnika-block-02-final .etnika-b02__caption').bottom,
+                          controlsBottom:r('#etnika-block-02-final .etnika-b02__controls').bottom,
+                          overlayBottom:r('#etnika-block-02-final .etnika-b02__media-bottom').bottom,
+                          arrowBottom:r('#etnika-block-02-final .etnika-b02__arrow--next').bottom,
+                          headerBottom:r('#etnika-site-header').bottom
                         };
                     }""")
                     assert abs(guide["labelX"]-guide["spaceLabelX"])<=2, f"Live shared B02/space left edge mismatch: {guide}"
                     assert abs(guide["accentX"]-guide["spaceAccentX"])<=3, f"Live overline accents misaligned: {guide}"
                     assert guide["featuresBottom"]<height-12, f"Live B02 features are BELOW the screen fold: {guide}"
                     assert abs(guide["mediaHeight"]-guide["sectionHeight"])<=3, f"Live B02 photo shrunk again: {guide}"
+                    assert guide["stampTop"]>=guide["headerBottom"]+8, f"Live photo 'Moscow' title hidden behind menu: {guide}"
+                    assert guide["counterTop"]>=guide["headerBottom"]+8, f"Live photo count hidden behind menu: {guide}"
+                    assert guide["overlayBottom"]<=height-18, f"Live photo overlays positioned below visible screen: {guide}"
+                    assert guide["captionBottom"]<=height-18, f"Live B02 caption hidden below screen: {guide}"
+                    assert guide["controlsBottom"]<=height-18 and guide["arrowBottom"]<=height-18, f"Live carousel navigation hidden below screen: {guide}"
                     page.screenshot(path=str(REPORTS / "etnika-live-b02-fit.png"),full_page=False)
                     page.locator('#etnika-space-photo').scroll_into_view_if_needed()
                     page.mouse.move(0,0)
