@@ -6,12 +6,9 @@ on:
       - 'scripts/verify_live_why.py'
       - '.github/workflows/verify-live-why.yml'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'site/index.html'
-      - 'scripts/verify_live_why.py'
-      - '.github/workflows/verify-live-why.yml'
+  # Check the real public address only AFTER a GitHub Pages deployment.
+  # A push-to-main trigger raced the deploy and could falsely report stale CSS.
+  deployment_status:
 
 concurrency:
   group: etnika-live-why-${{ github.event.pull_request.number || github.ref }}
@@ -19,6 +16,7 @@ concurrency:
 
 jobs:
   verify-public:
+    if: ${{ github.event_name != 'deployment_status' || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'github-pages') }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
