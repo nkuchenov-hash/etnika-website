@@ -13190,7 +13190,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  #etnika-review-flow #etnika-space-photo .spf-top{
    grid-template-columns:auto var(--etnika-overline-guide) auto 1px auto minmax(0,1fr)!important;
    width:100%!important;max-width:none!important;overflow:visible!important;
-   margin:0!important;
+   /* Keep the approved vertical gap between overline and heading. */
+   margin:0 0 var(--etnika-overline-content-gap)!important;
  }
  #etnika-review-flow #etnika-block-02-final .etnika-b02__top-line,
  #etnika-review-flow #etnika-space-photo .spf-line:first-of-type{
@@ -13246,13 +13247,16 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-review-flow #etnika-space-photo .spf-top > .spf-line,
 #etnika-review-flow #etnika-space-photo .spf-top > .spf-line-extra{
   display:block!important;
-  background:rgba(255,255,255,.42)!important;
-  height:1px!important;min-width:0!important;
+  background:rgba(255,255,255,.68)!important;
+  height:1px!important;min-height:1px!important;min-width:0!important;
+  width:100%!important;align-self:center!important;
+  opacity:1!important;visibility:visible!important;
 }
 #etnika-review-flow #etnika-space-photo .spf-top > .spf-divider{
   display:block!important;
-  background:rgba(255,255,255,.42)!important;
+  background:rgba(255,255,255,.68)!important;
   width:1px!important;height:28px!important;
+  opacity:1!important;visibility:visible!important;
 }
 /* Main photo and both side photos always show the concise base title. */
 #etnika-review-flow #etnika-space-photo .spf-label{
@@ -13261,28 +13265,28 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   pointer-events:none!important;
 }
 #etnika-review-flow #etnika-space-photo :is(.spf-main,.spf-small)::after{
-  opacity:.73!important;
-  background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.19) 66%,rgba(0,0,0,.72) 100%)!important;
+  opacity:1!important;
+  /* Only the bottom caption area gets a subtle readability overlay. */
+  background:linear-gradient(180deg,transparent 62%,rgba(0,0,0,.06) 76%,rgba(0,0,0,.48) 100%)!important;
   transition:opacity .25s ease!important;
 }
 #etnika-review-flow #etnika-space-photo :is(.spf-main,.spf-small):is(:hover,:focus-visible,:focus-within)::after{
   opacity:1!important;
 }
-/* Forum offers one font weight. The lighter existing Geologica weight 300
-   is used instead, with unchanged design-system UI typeface. */
+/* Captions are display headings: Forum 400, as in the approved type system. */
 #etnika-review-flow #etnika-space-photo .spf-label-title,
 #etnika-review-flow #etnika-space-photo .spf-main .spf-label-title{
-  font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif)!important;
-  font-weight:300!important;
-  font-size:clamp(20px,1.52vw,29px)!important;
-  line-height:1.14!important;
-  letter-spacing:.025em!important;
+  font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important;
+  font-weight:400!important;
+  font-size:clamp(25px,1.7vw,34px)!important;
+  line-height:1.06!important;
+  letter-spacing:-.015em!important;
   text-transform:uppercase!important;
   color:#fff!important;
-  text-shadow:0 1px 8px rgba(0,0,0,.5)!important;
+  text-shadow:none!important;
 }
 #etnika-review-flow #etnika-space-photo .spf-main .spf-label-title{
-  font-size:clamp(24px,1.85vw,35px)!important;
+  font-size:clamp(30px,2.1vw,42px)!important;
 }
 /* Detailed description is hidden on desktop until hover/keyboard focus.
    The base title remains visible. */
@@ -13307,7 +13311,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   line-height:1.43!important;
   letter-spacing:0!important;
   color:#fff!important;
-  text-shadow:0 1px 9px rgba(0,0,0,.56)!important;
+  text-shadow:none!important;
 }
 @media(hover:none),(pointer:coarse){
  #etnika-review-flow #etnika-space-photo .spf-label-sub{
@@ -13315,6 +13319,21 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   max-height:none!important;margin-top:8px!important;
   transform:none!important;
  }
+}
+/* Captions, photo counter, overline and tabs have NO text shadows.
+   Increase contrast only via the localized bottom image gradient above. */
+#etnika-review-flow #etnika-space-photo :is(
+  .spf-top,.spf-top *,.spf-title,.spf-label,.spf-label *,
+  .spf-counter,.spf-nav .spf-tab
+){
+  text-shadow:none!important;
+}
+#etnika-review-flow #etnika-space-photo .spf-nav .spf-tab{
+  font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif)!important;
+  font-size:var(--etnika-text-size,16px)!important;
+  font-weight:200!important;
+  letter-spacing:.045em!important;
+  text-shadow:none!important;
 }
 </style>
 
