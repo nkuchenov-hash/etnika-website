@@ -50,8 +50,14 @@ with sync_playwright() as pw:
             nav.click()
             page.wait_for_timeout(1100)
         else:
-            # On mobile, click is intentionally absent from desktop navigation.
-            page.locator('#etnika-prices-clear').scroll_into_view_if_needed()
+            # Mobile tariff content is taller than the viewport; scroll to its TOP,
+            # not the element centre (Playwright's default on oversized elements).
+            page.evaluate("""() => {
+              const el=document.getElementById('etnika-prices-clear');
+              const header=document.getElementById('etnika-site-header');
+              window.scrollTo({top:el.getBoundingClientRect().top+scrollY-header.getBoundingClientRect().height,
+                behavior:'instant'});
+            }""")
             page.wait_for_timeout(300)
 
         data = page.evaluate(MEASURE)
@@ -74,6 +80,9 @@ with sync_playwright() as pw:
                 data["title"]["bottom"] <= data["modes"]["top"] - 4
             ), ("Heading overlaps weekday/weekend buttons", data)
         page.screenshot(path=str(OUT / f"etnika-live-prices-{width}x{height}.png"), full_page=False)
+        page.locator('#etnika-prices-clear').screenshot(
+            path=str(OUT / f"etnika-live-prices-section-{width}x{height}.png")
+        )
         page.locator('#etnika-prices-clear .ev3-modes [data-mode="weekend"]').click()
         assert page.locator('#etnika-prices-clear .ev3-plan[data-plan="premium"] .ev3-plan-price').inner_text().strip() == "9 000 ₽"
         page.locator('#etnika-prices-clear .ev3-plan[data-plan="premium"]').click()
