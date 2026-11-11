@@ -8,8 +8,10 @@
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
 if('scrollRestoration' in history) history.scrollRestoration='manual';
-window.addEventListener('pageshow',function(){
-  if(!location.hash) window.scrollTo(0,0);
+window.addEventListener('pageshow',function(event){
+  /* Do not undo scroll that the visitor or header tests performed while the
+     page was loading. Only reset restored back-forward-cache pages. */
+  if(event.persisted && !location.hash) window.scrollTo(0,0);
 });
 </script>
 <meta name="robots" content="noindex,nofollow,noarchive"><link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet"><title>ETNIKA — полный редизайн · предпросмотр 4 ноября</title>
