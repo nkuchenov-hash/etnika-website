@@ -5953,7 +5953,7 @@ body.etnika-gallery-lock{
     </div>
 
     <div class="ee-copy">
-      <h2 class="ee-title etnika-section-heading">
+      <h2 class="ee-title">
         Подчеркните образ
         <span>деталями</span>
       </h2>
@@ -8258,7 +8258,7 @@ body.etnika-gallery-lock{
   <div class="location">
 
     <div class="location-map">
-      <div class="map-fallback">МОСКВА</div>
+      <div class="map-fallback"><span>Ленинская Слобода, 26А</span><a href="https://yandex.ru/maps/?text=%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%A1%D0%BB%D0%BE%D0%B1%D0%BE%D0%B4%D0%B0%2026%D0%90" target="_blank" rel="noopener">Открыть карту ↗</a></div>
       <iframe
         class="etnika-map-widget-fallback"
         title="ЭТНИКА на карте — резервный виджет"
@@ -8278,11 +8278,11 @@ body.etnika-gallery-lock{
         БЦ «Омега-2», офис 416
       </div>
 
-      <p><b>Пешком:</b> около 3 минут от м. Автозаводская, выход №3. Вход в бизнес-центр — рядом со Stars Coffee.</p>
+      <p class="etnika-route"><svg class="etnika-route-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="3.7" r="2.2"/><path d="m10 21 2-5-3.2-3.1 1.4-5 4.2-.5 3.1 4.4M8.8 12.9l-4 3.4M12 16l4.8 5M9.5 7.8 6 12"/></svg><span><b>Пешком:</b> около 3 минут от м. Автозаводская, выход №3. Вход в бизнес-центр — рядом со Stars Coffee.</span></p>
 
-      <p><b>На машине:</b> рекомендуем приезжать примерно за 20 минут до съёмки. На выходных на территории Roomer крытая парковка в течение трёх часов бесплатно. В будни — платная парковка.</p>
+      <p class="etnika-route"><svg class="etnika-route-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 16V11.5l2-5h12l2 5V16M4 11.5h16M4 16h16M6.5 16v2.5M17.5 16v2.5M7.3 13.3h2M14.7 13.3h2" /></svg><span><b>На машине:</b> рекомендуем приезжать примерно за 20 минут до съёмки. На выходных на территории Roomer крытая парковка в течение трёх часов бесплатно. В будни — платная парковка.</span></p>
 
-      <p><b>В бизнес-центре:</b> на ресепшн скажите, что вы в офис 416, оформите гостевой пропуск и поднимитесь на 4 этаж. Просим приходить примерно за 5 минут до начала съёмки.</p>
+      <p class="etnika-route"><svg class="etnika-route-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M11 21v-4h2v4"/></svg><span><b>В бизнес-центре:</b> на ресепшн скажите, что вы в офис 416, оформите гостевой пропуск и поднимитесь на 4 этаж. Просим приходить примерно за 5 минут до начала съёмки.</span></p>
 
       <div class="contact-grid">
         <div>
@@ -12966,6 +12966,201 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
    width:calc(100% - 2 * var(--et-u-edge))!important;
    margin-left:var(--et-u-edge)!important;
    margin-right:var(--et-u-edge)!important;
+ }
+}
+</style>
+
+<style id="etnika-owner-corrections-20261111-1227">
+/* Deliberate per-section exceptions: do not reapply global 100svh caps. */
+/* 01 · HOW IT WORKS: centered separate introduction; five photographic cards
+   in a true full-window grid, no horizontal gutters on ordinary desktops. */
+@media(min-width:1101px){
+ #etnika-review-flow > section#etnika-process-interactive{
+   height:auto!important;min-height:0!important;max-height:none!important;
+   padding:0 0 var(--etnika-section-outer)!important;
+   display:block!important;overflow:visible!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-head{
+   width:100%!important;padding:clamp(80px,10svh,120px) var(--et-u-edge) clamp(48px,7svh,88px)!important;
+   background:#090909!important;text-align:center!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-head h2{
+   text-align:center!important;margin-left:auto!important;margin-right:auto!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-sub{
+   margin:clamp(22px,3svh,36px) auto 0!important;max-width:850px!important;text-align:center!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-grid{
+   width:100%!important;max-width:none!important;height:100svh!important;
+   min-height:0!important;max-height:none!important;
+   margin:0!important;padding:0!important;
+   display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+   grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:1px!important;
+ }
+}
+/* Desktop cards keep the pre-regression hover interaction. */
+@media(hover:hover) and (pointer:fine){
+ #etnika-process-interactive .epi-reveal,
+ #etnika-process-interactive .epi-card .epi-reveal{
+   opacity:0!important;visibility:hidden!important;
+   transform:translateY(16px)!important;
+   pointer-events:none!important;
+   transition:opacity .26s ease, transform .26s ease,visibility .26s!important;
+ }
+ #etnika-process-interactive .epi-card:hover .epi-reveal,
+ #etnika-process-interactive .epi-card:focus-within .epi-reveal{
+   opacity:1!important;visibility:visible!important;transform:none!important;
+   pointer-events:auto!important;
+ }
+ #etnika-process-interactive .epi-desc{
+   opacity:1!important;
+ }
+}
+@media(hover:none),(pointer:coarse){
+ #etnika-process-interactive .epi-card .epi-reveal{
+   opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important;
+ }
+}
+/* Buttons remain opaque, with legible foreground when revealed. */
+#etnika-process-interactive .epi-more,
+#etnika-process-interactive .epi-card:hover .epi-more,
+#etnika-process-interactive .epi-card:focus-within .epi-more{
+ opacity:1!important;visibility:visible!important;filter:none!important;
+ background:#a9151d!important;border:1px solid #a9151d!important;color:#fff!important;
+ text-shadow:none!important;pointer-events:auto!important;
+}
+#etnika-process-interactive .epi-more:hover,
+#etnika-process-interactive .epi-more:focus-visible{
+ background:#781016!important;border-color:#781016!important;color:#fff!important;
+}
+#etnika-process-interactive :is(.epi-back,.epi-arrow){
+ opacity:1!important;visibility:visible!important;filter:none!important;
+ background:#fff!important;color:#121212!important;border:1px solid #fff!important;
+}
+#etnika-process-interactive .epi-cta a{
+ opacity:1!important;background:#a9151d!important;color:#fff!important;
+}
+#etnika-process-interactive .epi-cta a:hover{background:#781016!important;}
+
+/* 02 · WHY ETNIKA: WHITE, naturally-sized content; no squeezed cards/stage. */
+#etnika-review-flow > section#etnika-studio-features{
+ --paper:#fff!important;background:#fff!important;
+ height:auto!important;max-height:none!important;min-height:0!important;
+ padding-top:var(--etnika-section-outer)!important;
+ padding-bottom:var(--etnika-section-outer)!important;
+ overflow:visible!important;
+}
+#etnika-review-flow #etnika-studio-features .b05-shell{
+ height:auto!important;max-height:none!important;
+ min-height:100svh!important;padding:0!important;
+ display:grid!important;grid-template-rows:auto minmax(0,1fr)!important;
+ gap:clamp(30px,4svh,54px)!important;
+}
+#etnika-review-flow #etnika-studio-features .b05-main{
+ height:auto!important;min-height:0!important;
+ align-items:stretch!important;
+}
+#etnika-review-flow #etnika-studio-features .b05-copy{
+ height:auto!important;min-height:0!important;gap:clamp(12px,1.7svh,22px)!important;
+}
+#etnika-review-flow #etnika-studio-features .b05-item{
+ min-height:clamp(58px,6.5svh,80px)!important;
+}
+#etnika-review-flow #etnika-studio-features .b05-stage{
+ min-height:clamp(560px,70svh,850px)!important;height:100%!important;
+ background:#111!important;
+}
+
+/* 03 · "Highlight the look" is a SMALL SUBSECTION heading, not global H2. */
+#etnika-review-flow #etnika-extra h2.ee-title{
+ font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important;
+ font-size:clamp(44px,4.1vw,74px)!important;
+ line-height:.9!important;letter-spacing:-.04em!important;font-weight:400!important;
+ text-transform:uppercase!important;
+}
+
+/* 04 · Tariff FAQ and reviews should size to real content, not two tall fields. */
+#etnika-review-flow > section#etnika-faq-tariffs{
+ height:auto!important;min-height:0!important;max-height:none!important;
+ padding:clamp(30px,4svh,52px) 0!important;
+}
+#etnika-review-flow #etnika-faq-tariffs .faq-shell{
+ height:auto!important;min-height:0!important;max-height:none!important;
+ padding:0!important;gap:clamp(18px,2.5svh,30px)!important;
+}
+#etnika-review-flow #etnika-faq-tariffs .faq-top{margin-bottom:0!important;}
+#etnika-review-flow > section#etnika-reviews{
+ height:auto!important;min-height:0!important;max-height:none!important;
+ padding:clamp(34px,4.5svh,58px) var(--et-u-edge)!important;
+}
+#etnika-review-flow #etnika-reviews .etnika-reviews-inner{
+ height:auto!important;min-height:0!important;justify-content:flex-start!important;
+}
+#etnika-review-flow #etnika-reviews .etnika-editorial-top{
+ margin-bottom:clamp(22px,3svh,36px)!important;
+}
+#etnika-review-flow #etnika-reviews .etnika-reviews-heading{
+ margin-bottom:clamp(20px,2.5svh,30px)!important;
+}
+
+/* 05 · Contacts: map runs uninterrupted from the section top to bottom. */
+@media(min-width:1101px){
+ #etnika-review-flow > section#etnika-contacts-source{
+   height:auto!important;min-height:0!important;max-height:none!important;
+   padding:0!important;overflow:hidden!important;
+ }
+ #etnika-review-flow #etnika-contacts-source .location{
+   display:grid!important;grid-template-columns:1fr 1fr!important;
+   height:calc(100svh + 2 * var(--etnika-section-outer))!important;
+   min-height:0!important;max-height:none!important;align-items:stretch!important;
+ }
+ #etnika-review-flow #etnika-contacts-source .location-map{
+   align-self:stretch!important;height:100%!important;min-height:0!important;
+   padding:0!important;margin:0!important;
+ }
+ #etnika-review-flow #etnika-contacts-source .location-copy{
+   height:100%!important;box-sizing:border-box!important;
+   padding:clamp(24px,3svh,48px) clamp(32px,3.3vw,64px)!important;
+   justify-content:center!important;
+ }
+}
+#etnika-contacts-source .location-copy p.etnika-route{
+ display:grid!important;grid-template-columns:24px minmax(0,1fr)!important;
+ gap:12px!important;align-items:start!important;
+ max-width:100%!important;
+}
+#etnika-contacts-source .etnika-route-icon{
+ display:block;width:22px;height:22px;flex:none;margin-top:2px;
+ fill:none;stroke:#a9151d;stroke-width:1.7;
+ stroke-linecap:round;stroke-linejoin:round;
+}
+#etnika-contacts-source .location-map .map-fallback{
+ font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif)!important;
+ font-size:clamp(20px,2vw,32px)!important;
+ display:flex;flex-direction:column;gap:16px;
+ color:#eee!important;background:#151515;
+ padding:28px;text-align:center;
+}
+#etnika-contacts-source .location-map .map-fallback a{
+ pointer-events:auto;color:#fff;font:400 16px/1.4 'Geologica',Arial,sans-serif;
+ text-decoration:underline;text-underline-offset:5px;
+}
+#etnika-contacts-source .location-map[data-map-state="ready"] .map-fallback{
+ visibility:hidden!important;
+}
+@media(max-width:1100px){
+ #etnika-review-flow #etnika-studio-features .b05-shell{height:auto!important;min-height:0!important;}
+ #etnika-review-flow #etnika-studio-features .b05-main{height:auto!important;}
+ #etnika-review-flow #etnika-studio-features .b05-stage{height:clamp(420px,65svh,740px)!important;}
+ #etnika-review-flow > section#etnika-faq-tariffs,
+ #etnika-review-flow > section#etnika-reviews{
+  height:auto!important;min-height:0!important;max-height:none!important;
+  padding-top:clamp(28px,4svh,44px)!important;
+  padding-bottom:clamp(28px,4svh,44px)!important;
+ }
+ #etnika-review-flow #etnika-faq-tariffs .faq-shell,
+ #etnika-review-flow #etnika-reviews .etnika-reviews-inner{
+  min-height:0!important;height:auto!important;
  }
 }
 </style>
