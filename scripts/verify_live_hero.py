@@ -73,7 +73,22 @@ with sync_playwright() as playwright:
                            processLeft:document.querySelector('#etnika-process-interactive .epi-grid')?.getBoundingClientRect().left,
                            storiesLeft:document.querySelector('#etnika-stories .stories-shell')?.getBoundingClientRect().left,
                            spaceFrameHeight:document.querySelector('#etnika-space-photo .spf-shell')?.getBoundingClientRect().height,
-                           b02Gap:(() => {const a=document.querySelector('#etnika-block-02-final .etnika-b02__top');const b=document.querySelector('#etnika-block-02-final .etnika-b02__main');return a&&b?b.getBoundingClientRect().top-a.getBoundingClientRect().bottom:null})()
+                           b02Gap:(() => {const a=document.querySelector('#etnika-block-02-final .etnika-b02__top');const b=document.querySelector('#etnika-block-02-final .etnika-b02__main');return a&&b?b.getBoundingClientRect().top-a.getBoundingClientRect().bottom:null})(),
+                           fullScreenMedia:(() => {
+                             const height=el=>el?.getBoundingClientRect().height;
+                             const b02=document.getElementById('etnika-block-02-final');
+                             const space=document.getElementById('etnika-space-photo');
+                             return {
+                               b02Block:height(b02),b02Photo:height(b02?.querySelector('.etnika-b02__media')),
+                               spaceSection:height(space),spaceGallery:height(space?.querySelector('.spf-gallery')),
+                               storiesGrid:height(document.querySelector('#etnika-stories .stories-grid')),
+                               processGrid:height(document.querySelector('#etnika-process-interactive .epi-grid')),
+                               featuresMain:height(document.querySelector('#etnika-studio-features .b05-main')),
+                               pricesVisual:height(document.querySelector('#etnika-prices-clear .ev3-visual')),
+                               extraGallery:height(document.querySelector('#etnika-extra .ee-gallery')),
+                               giftShell:height(document.querySelector('#etnika-gift .eg-shell'))
+                             };
+                           })()
                          };
                        })()
                     };
@@ -98,7 +113,15 @@ with sync_playwright() as playwright:
                         assert block["height"] > height, f"Section content+fields must exceed one viewport: {block}"
                 assert abs(system["processLeft"]-system["storiesLeft"]) <= 2, f"Process grid off shared left alignment: {system}"
                 assert system["b02Gap"] >= 30, f"Insufficient gap after editorial overline: {system}"
-                assert abs(system["spaceFrameHeight"]-(height-(60 if width>1160 else 56))) <= 3, f"Studio content does not fit its viewport frame: {system}"
+                assert abs(system["spaceFrameHeight"]-height) <= 3, f"Studio content is shorter than the viewport: {system}"
+                media=system["fullScreenMedia"]
+                if width >= 1101:
+                    assert abs(media["b02Block"]-media["b02Photo"]) <= 3, f"B02 photo must cover FULL section including outer fields: {media}"
+                    assert media["spaceGallery"] >= height*.56, f"Studio photos too small: {media}"
+                    assert media["storiesGrid"] >= height*.56, f"Stories photos too small: {media}"
+                    assert media["processGrid"] >= height*.62, f"Process photos too small: {media}"
+                    assert media["extraGallery"] >= height*.85, f"Extra gallery does not fill viewport: {media}"
+                    assert abs(media["giftShell"]-height) <= 3, f"Gift content frame too short: {media}"
                 assert metrics["studioLabel"] == "СТУДИЯ АВТОПОРТРЕТА", f"Header studio label is not uppercase: {metrics}"
                 assert metrics["heartLeft"] - metrics["logoRight"] >= (9 if width <= 760 else 20), f"Heart too close to brand: {metrics}"
                 assert metrics["heartRight"] <= width + 2, f"Heart overflows viewport: {metrics}"
