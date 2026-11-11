@@ -13663,9 +13663,12 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     box-sizing:border-box!important;
     display:block!important;
     width:100%!important;
-    height:100%!important;
+    /* The section has border-box height 100svh and 60px top padding.
+       Percentage height was incorrectly resolved to 100svh and overflowed
+       the parent by the navbar height. Exactly subtract the navbar here. */
+    height:calc(100svh - var(--etnika-nav-height,60px))!important;
     min-height:0!important;
-    max-height:100%!important;
+    max-height:calc(100svh - var(--etnika-nav-height,60px))!important;
     margin:0!important;
     padding:0!important;
   }
