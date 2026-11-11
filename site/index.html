@@ -4384,6 +4384,19 @@ body.etnika-gallery-lock{
 
   var current = 0;
   var stageImage = section.querySelector('.b05-stage-image');
+  /* Keep the original remote slide; if its CDN fails, expose the approved
+     locally hosted red studio photograph underneath instead of a black panel. */
+  if(stageImage){
+    stageImage.addEventListener('error',function(){
+      stageImage.style.opacity='0';
+    });
+    stageImage.addEventListener('load',function(){
+      stageImage.style.opacity='1';
+    });
+    if(stageImage.complete && !stageImage.naturalWidth){
+      stageImage.style.opacity='0';
+    }
+  }
   var counter = section.querySelector('.b05-counter');
   var title = section.querySelector('.b05-caption-title');
   var text = section.querySelector('.b05-caption-text');
