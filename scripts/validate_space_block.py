@@ -127,7 +127,7 @@ def render_checks():
                 assert result["heading"]["bottom"]<=photos["y"]+3, err("title overlaps photos")
                 assert result["nav"]["bottom"]<=result["shell"]["bottom"]-32, err("navigation intrudes on internal bottom padding")
                 assert photos["bottom"]<=result["nav"]["y"]+3, err("photos overlap category nav")
-                assert photos["height"]>=(0.43*h if h<=600 else 0.50*h), err("gallery too small: photos must dominate the viewport")
+                assert photos["height"]>=(0.39*h if h<=700 else 0.48*h), err("gallery too small after accounting for the larger shared heading and kicker gap")
                 assert 15.5<=result["navFontSize"]<=16.5, err("category text must be readable at 16px")
                 assert result["hoverFrame"]=="none", err("pink hover border still present")
                 assert all(r["height"]>35 for r in [result["main"], *result["mini"]]), err("a photo collapsed")
