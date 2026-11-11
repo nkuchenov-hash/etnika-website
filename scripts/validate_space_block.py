@@ -10,8 +10,9 @@ FILES = (ROOT / "site/index.html",)
 SPACE_SECTION = re.compile(r'<section id="etnika-space-photo"(?=\s|>)[\s\S]*?</section>')
 SPACE_CSS = re.compile(r'<style id="etnika-space-owner-corrections-20261105">[\s\S]*?</style>')
 SHARED_CSS = re.compile(r'<style id="etnika-v19-spacing-and-type-lock">[\s\S]*?</style>')
+FRAME_CSS = re.compile(r'<style id="etnika-section-system-20261111">[\s\S]*?</style>')
 FORBIDDEN = "Просторный зал, профессиональный свет, лаунж-зона, большое зеркало и реквизит"
-HEADLINE = '<h2 class="spf-title">Пространство <span class="red">ЭТНИКА</span></h2>'
+HEADLINE = '<h2 class="spf-title etnika-section-heading">Пространство <span class="red">ЭТНИКА</span></h2>'
 
 
 def static_checks():
@@ -21,16 +22,18 @@ def static_checks():
         section = SPACE_SECTION.search(html)
         style = SPACE_CSS.search(html)
         shared = SHARED_CSS.search(html)
-        assert section and style and shared, f"{path}: studio/shared design system missing"
+        frame=FRAME_CSS.search(html)
+        assert section and style and shared and frame, f"{path}: studio/shared design system missing"
         part = section.group(0)
         css = style.group(0)
         shared_code = shared.group(0)
+        frame_code=frame.group(0)
         assert FORBIDDEN not in html, f"{path}: removed description has returned"
         assert HEADLINE in part, f"{path}: heading is missing"
         assert part.count('class="spf-img ') == 3, f"{path}: expected 3 original photos"
         assert part.count('class="spf-tab') == 5, f"{path}: expected 5 selectable categories"
-        assert "height:calc(100svh - var(--etnika-nav-height,60px))!important;min-height:0!important" in css, f"{path}: studio must be exactly one viewport below header"
-        assert "padding:0!important;margin:0!important;" in css, f"{path}: legacy v15 external frame padding still steals gallery height"
+        assert "height:var(--etnika-content-screen)!important" in frame_code, f"{path}: full-screen studio photo frame missing"
+        assert "padding-top:var(--etnika-section-outer)!important" in frame_code, f"{path}: separate outer fields missing"
         assert "grid-template-rows:auto auto minmax(0,1fr) auto!important" in css, f"{path}: gallery must take remaining height without pushing content beyond viewport"
         assert "padding:var(--etnika-photo-section-y) 0!important" in css, f"{path}: black margins must use a single symmetric padding rule"
         assert "font-size:var(--etnika-section-title)!important" in css, f"{path}: rogue title size"
@@ -109,18 +112,20 @@ def render_checks():
                 }""")
                 box=result["section"]; photos=result["photos"]
                 err=lambda msg: f"{path.name} {w}x{h}: {msg}; metrics {result}"
-                assert abs(box["height"]-(h-result["headerHeight"]))<=2, err("studio section must equal viewport height below header, no scrolling within block")
-                assert result["sectionPaddingTop"]<=.5 and result["sectionPaddingBottom"]<=.5, err("legacy outer frame padding still active")
+                outer=result["sectionPaddingTop"]
+                assert outer>=34 and abs(outer-result["sectionPaddingBottom"])<=1, err("symmetric external top/bottom fields missing")
+                assert abs(box["height"]-((h-result["headerHeight"])+2*outer))<=3, err("section must equal one content screen plus two outer fields")
+                assert box["height"]>h, err("complete block must exceed viewport")
+                assert abs(result["shell"]["height"]-(h-result["headerHeight"]))<=3, err("photo content frame must equal one viewport below header")
                 assert abs(box["top"]-result["headerHeight"])<=3, err("studio section not aligned immediately under header")
-                assert abs(box["bottom"]-h)<=3, err("gallery or tabs overflow the screen, or unused empty space exists after section")
                 assert abs(result["shellPaddingTop"]-result["shellPaddingBottom"])<=1, err("CSS black padding must be equal above and below")
-                assert abs((result["top"]["y"]-result["headerHeight"])-(box["bottom"]-result["nav"]["bottom"]))<=2, err("VISIBLE black margins above and below content are not equal")
+                assert abs((result["top"]["y"]-result["shell"]["y"])-(result["shell"]["bottom"]-result["nav"]["bottom"]))<=3, err("visible internal top/bottom margins unequal")
                 assert 32<=result["shellPaddingBottom"]<=61, err("balanced black margins must be at least 32px")
                 assert result["intro"] is None, err("removed text still present")
-                assert result["top"]["y"]-box["y"]>=32, err("black upper margin missing")
-                assert box["bottom"]-result["nav"]["bottom"]>=32, err("black bottom margin missing")
+                assert result["top"]["y"]-result["shell"]["y"]>=32, err("inner black upper margin missing")
+                assert result["shell"]["bottom"]-result["nav"]["bottom"]>=32, err("inner black bottom margin missing")
                 assert result["heading"]["bottom"]<=photos["y"]+3, err("title overlaps photos")
-                assert result["nav"]["bottom"]<=box["bottom"]-32, err("navigation intrudes on black bottom padding")
+                assert result["nav"]["bottom"]<=result["shell"]["bottom"]-32, err("navigation intrudes on internal bottom padding")
                 assert photos["bottom"]<=result["nav"]["y"]+3, err("photos overlap category nav")
                 assert photos["height"]>=(0.43*h if h<=600 else 0.50*h), err("gallery too small: photos must dominate the viewport")
                 assert 15.5<=result["navFontSize"]<=16.5, err("category text must be readable at 16px")
