@@ -11,13 +11,15 @@
   width:100%;
   height:100%;
   background:#171717;
+  visibility:hidden;
+  pointer-events:none;
 }
 /* WebGL/canvas color desaturation supplements the JS scheme styling. */
 #etnika-contacts-source .etnika-map-live canvas{
   filter:grayscale(1)!important;
 }
 #etnika-contacts-source .location-map[data-map-state="loading"] .etnika-map-live{opacity:0;}
-#etnika-contacts-source .location-map[data-map-state="ready"] .etnika-map-live{opacity:1;}
+#etnika-contacts-source .location-map[data-map-state="ready"] .etnika-map-live{opacity:1;visibility:visible;pointer-events:auto;}
 #etnika-contacts-source .location-map[data-map-state="fallback"] .etnika-map-live{display:none;}
 #etnika-contacts-source .location-map iframe.etnika-map-widget-fallback{
   position:absolute!important;
@@ -27,10 +29,10 @@
   top:0!important;
   filter:grayscale(1) invert(92%) contrast(90%);
   z-index:1;
-  display:none;
-}
-#etnika-contacts-source .location-map[data-map-state="fallback"] iframe.etnika-map-widget-fallback{
   display:block;
+}
+#etnika-contacts-source .location-map[data-map-state="ready"] iframe.etnika-map-widget-fallback{
+  display:none;
 }
 #etnika-contacts-source .etnika-map-station{
   display:inline-flex;
@@ -162,4 +164,38 @@
 @media(max-width:700px){
  #etnika-contacts-source .etnika-map-station{padding:6px 9px 6px 6px;gap:6px;}
  #etnika-contacts-source .etnika-map-station__logo{width:28px;height:24px;flex-basis:28px;}
+}
+
+/* Stable iframe-first display: never leave the visitor with an empty black map.
+   The open-in-Yandex link remains usable if third-party maps are blocked. */
+#etnika-contacts-source .location-map .map-fallback{
+  position:absolute!important;
+  inset:auto 22px 22px 22px!important;
+  z-index:4!important;
+  display:flex!important;
+  justify-content:flex-start!important;
+  align-items:flex-end!important;
+  padding:0!important;
+  background:transparent!important;
+  font-size:14px!important;
+  pointer-events:none!important;
+}
+#etnika-contacts-source .location-map .map-fallback span{display:none!important;}
+#etnika-contacts-source .location-map .map-fallback a{
+  display:inline-flex!important;
+  padding:11px 14px!important;
+  background:rgba(10,10,10,.94)!important;
+  color:#fff!important;
+  border:1px solid rgba(255,255,255,.45)!important;
+  text-decoration:none!important;
+  font:400 14px/1.25 'Geologica',Arial,sans-serif!important;
+  pointer-events:auto!important;
+}
+#etnika-contacts-source .location-map .map-fallback a:hover,
+#etnika-contacts-source .location-map .map-fallback a:focus-visible{
+  background:#981018!important;
+  border-color:#fff!important;
+}
+#etnika-contacts-source .location-map[data-map-state="ready"] .map-fallback{
+  display:none!important;
 }
