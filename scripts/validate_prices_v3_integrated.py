@@ -34,7 +34,10 @@ with sync_playwright() as pw:
      dark:getComputedStyle(q('.ev3-plan[data-plan=express] .ev3-plan-name')).color,
      opacity:getComputedStyle(q('.ev3-plan[data-plan=express]')).opacity,
      photoLoaded:photo.complete&&photo.naturalWidth>0,
-     rowTop:getComputedStyle(q('.ev3-plan')).borderTopWidth};
+     rowTop:getComputedStyle(q('.ev3-plan')).borderTopWidth,
+     rowHeights:[...root.querySelectorAll('.ev3-plan')].map(e=>e.getBoundingClientRect().height),
+     titleFontSize:parseFloat(getComputedStyle(title).fontSize),
+     stageHeight:r(q('.ev3-stage')).height};
   }""")
   assert values['pageWidth']<=w+2,(w,'horizontal overflow',values)
   assert values['photoLoaded'],(w,'missing photo',values)
@@ -50,6 +53,11 @@ with sync_playwright() as pw:
   assert values['dark']=='rgb(24, 23, 23)',(w,'muted plan names',values)
   assert values['stage']['top']>=values['title']['bottom']+18,(w,'heading cramped',values)
   assert 'Forum' in values['font'],(w,'heading font',values)
+  if w>=1200:
+   assert values['titleFontSize']<=83,(w,'heading dominates section',values)
+   assert values['stageHeight']<=545,(w,'oversized stage',values)
+   assert max(values['rowHeights'])<=175,(w,'tariff rows too expansive',values)
+   assert values['stageHeight']>=430,(w,'stage became too small',values)
   page.locator('.ev3-modes [data-mode=weekend]').click()
   assert page.locator('.ev3-plan[data-plan=premium] .ev3-plan-price').inner_text().strip()=='9 000 ₽'
   page.locator('.ev3-plan[data-plan=premium]').click()
