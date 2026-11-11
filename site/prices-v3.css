@@ -18,9 +18,10 @@
 #etnika-prices-clear.ev3 .ev3-shell{
   width:auto!important;margin:0 var(--ev3-edge)!important;
   min-height:calc(100svh - var(--etnika-nav-height,60px));
-  padding:clamp(34px,4.5svh,60px) 0!important;
-  display:grid;grid-template-rows:auto auto minmax(460px,1fr);
-  gap:clamp(22px,3svh,40px);
+  padding:clamp(30px,4.2svh,54px) 0!important;
+  display:grid;grid-template-rows:auto auto auto;
+  align-content:center;
+  gap:clamp(20px,2.5svh,30px);
 }
 /* Use the same six-cell editorial grid and typography as other sections. */
 #etnika-prices-clear.ev3 .ev3-overline{
@@ -42,8 +43,8 @@
 #etnika-prices-clear.ev3 .ev3-title{
   margin:0!important;
   font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important;
-  font-size:var(--etnika-section-title,clamp(62px,6.25vw,118px))!important;
-  font-weight:400!important;line-height:.8!important;letter-spacing:-.04em!important;
+  font-size:clamp(60px,4.45vw,82px)!important;
+  font-weight:400!important;line-height:.92!important;letter-spacing:-.035em!important;
   text-transform:uppercase;
 }
 #etnika-prices-clear.ev3 .ev3-title span{display:inline;color:var(--ev3-red)}
@@ -61,13 +62,13 @@
   color:var(--ev3-red);border-bottom-color:var(--ev3-red);
 }
 #etnika-prices-clear.ev3 .ev3-stage{
-  min-height:0;display:grid;
-  grid-template-columns:minmax(0,1.22fr) minmax(390px,.85fr);
-  gap:clamp(52px,5vw,96px);
+  min-height:0;height:clamp(445px,57svh,540px);display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(390px,.82fr);
+  gap:clamp(42px,4vw,74px);
 }
 #etnika-prices-clear.ev3 .ev3-left{
   display:grid;grid-template-rows:minmax(0,1fr) auto;
-  min-height:0;gap:clamp(18px,2.5svh,30px);
+  min-height:0;gap:clamp(12px,1.8svh,20px);
 }
 #etnika-prices-clear.ev3 .ev3-plans{
   display:grid;grid-template-rows:repeat(3,minmax(0,1fr));
@@ -77,7 +78,7 @@
 #etnika-prices-clear.ev3 .ev3-plan{
   width:100%;min-width:0;min-height:0;
   border:0!important;border-bottom:1px solid var(--ev3-rule)!important;
-  padding:clamp(18px,2.7svh,33px) 0!important;
+  padding:clamp(13px,1.8svh,22px) 0!important;
   background:transparent!important;color:var(--ev3-ink)!important;
   display:grid;grid-template-columns:minmax(0,1fr) auto;
   grid-template-rows:auto auto;gap:8px 18px;
@@ -89,7 +90,7 @@
 #etnika-prices-clear.ev3 .ev3-plan:last-child{border-bottom:0!important}
 #etnika-prices-clear.ev3 .ev3-plan-name{
   grid-column:1;grid-row:1;
-  font:400 clamp(44px,3.1vw,60px)/.94 'Forum',Georgia,serif!important;
+  font:400 clamp(38px,2.5vw,48px)/.96 'Forum',Georgia,serif!important;
   color:var(--ev3-ink)!important;letter-spacing:-.025em;
 }
 #etnika-prices-clear.ev3 .ev3-plan[aria-pressed=true] .ev3-plan-name{
@@ -107,13 +108,13 @@
   grid-column:2;grid-row:1/span 2;
   justify-self:end;align-self:center;white-space:nowrap;
   color:var(--ev3-ink)!important;
-  font:400 clamp(39px,2.7vw,52px)/1 'Forum',Georgia,serif!important;
+  font:400 clamp(34px,2.3vw,44px)/1 'Forum',Georgia,serif!important;
   letter-spacing:-.02em;
 }
 #etnika-prices-clear.ev3 .ev3-plan:hover .ev3-plan-name{color:var(--ev3-red)!important}
 #etnika-prices-clear.ev3 .ev3-actions{
   display:flex;align-items:center;justify-content:space-between;gap:25px;
-  min-height:65px;
+  min-height:56px;
 }
 #etnika-prices-clear.ev3 .ev3-details-open{
   display:inline-flex;align-items:center;gap:16px;
@@ -128,9 +129,9 @@
 }
 #etnika-prices-clear.ev3 .ev3-details-open:hover{color:var(--ev3-red);border-color:var(--ev3-red)}
 #etnika-prices-clear.ev3 .ev3-book{
-  min-width:215px;min-height:62px;
+  min-width:205px;min-height:55px;
   display:flex;align-items:center;justify-content:space-between;gap:22px;
-  padding:17px 21px;background:var(--ev3-red);color:#fff;
+  padding:14px 20px;background:var(--ev3-red);color:#fff;
   font:400 16px/1.3 'Geologica',Arial,sans-serif;
   text-decoration:none;white-space:nowrap;
 }
@@ -160,7 +161,7 @@
   letter-spacing:.04em;margin-bottom:12px;
 }
 #etnika-prices-clear.ev3 .ev3-photo-label strong{
-  display:block;font:400 clamp(40px,2.8vw,55px)/.95 'Forum',Georgia,serif;
+  display:block;font:400 clamp(32px,2.35vw,44px)/.97 'Forum',Georgia,serif;
 }
 /* Full-viewport side sheet: NEVER confined to the photo. */
 #etnika-prices-clear.ev3 .ev3-sheet{
@@ -259,10 +260,10 @@
   #etnika-prices-clear.ev3 .ev3-stage{grid-template-columns:minmax(0,1.25fr) minmax(0,.85fr)}
 }
 @media(max-width:1320px) and (min-width:901px){
-  #etnika-prices-clear.ev3 .ev3-stage{grid-template-columns:minmax(0,1.2fr) minmax(350px,.8fr);gap:36px}
+  #etnika-prices-clear.ev3 .ev3-stage{grid-template-columns:minmax(0,1.18fr) minmax(350px,.82fr);gap:34px}
   #etnika-prices-clear.ev3 .ev3-plan{grid-template-columns:minmax(0,1fr) auto;gap:8px 10px}
-  #etnika-prices-clear.ev3 .ev3-plan-name{font-size:clamp(38px,3.4vw,48px)}
-  #etnika-prices-clear.ev3 .ev3-plan-price{font-size:clamp(35px,3vw,43px)}
+  #etnika-prices-clear.ev3 .ev3-plan-name{font-size:clamp(36px,2.9vw,44px)}
+  #etnika-prices-clear.ev3 .ev3-plan-price{font-size:clamp(33px,2.65vw,40px)}
 }
 @media(max-width:900px){
   #etnika-prices-clear.ev3 .ev3-shell{
@@ -270,7 +271,7 @@
     display:flex;flex-direction:column;gap:30px;min-height:0;
     padding:var(--etnika-section-y,56px) 0!important;
   }
-  #etnika-prices-clear.ev3 .ev3-stage{display:flex;flex-direction:column;gap:35px}
+  #etnika-prices-clear.ev3 .ev3-stage{display:flex;flex-direction:column;gap:30px;height:auto}
   #etnika-prices-clear.ev3 .ev3-plans{grid-template-rows:repeat(3,auto)}
   #etnika-prices-clear.ev3 .ev3-plan{min-height:142px}
   #etnika-prices-clear.ev3 .ev3-head{flex-wrap:wrap;gap:28px}
@@ -317,13 +318,13 @@
 }
 @media(max-height:810px) and (min-width:901px){
   #etnika-prices-clear.ev3 .ev3-shell{
-    gap:clamp(25px,3.4svh,29px);
-    padding:clamp(24px,3.1svh,37px) 0!important;
-    grid-template-rows:auto auto minmax(445px,1fr);
+    gap:clamp(16px,2.2svh,22px);
+    padding:clamp(26px,3.4svh,38px) 0!important;
+    grid-template-rows:auto auto auto;
   }
-  #etnika-prices-clear.ev3 .ev3-plan{padding:15px 0!important}
-  #etnika-prices-clear.ev3 .ev3-plan-name{font-size:clamp(38px,3vw,54px)!important}
-  #etnika-prices-clear.ev3 .ev3-plan-price{font-size:clamp(34px,2.55vw,46px)!important}
+  #etnika-prices-clear.ev3 .ev3-plan{padding:12px 0!important}
+  #etnika-prices-clear.ev3 .ev3-plan-name{font-size:clamp(35px,2.7vw,44px)!important}
+  #etnika-prices-clear.ev3 .ev3-plan-price{font-size:clamp(32px,2.25vw,41px)!important}
 }
 @media(prefers-reduced-motion:reduce){
   #etnika-prices-clear.ev3 .ev3-sheet-panel,
