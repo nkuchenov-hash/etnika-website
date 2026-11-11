@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""B02 owner screenshot regression: overline, copy and benefits remain visible during natural scrolling."""
+"""B02 static vertical alignment: equal top/bottom space and no sticky scroll motion."""
 from pathlib import Path
 import shutil
 from playwright.sync_api import sync_playwright
@@ -35,21 +35,26 @@ with sync_playwright() as p:
                 media:box(q('.etnika-b02__media')),
                 controls:box(q('.etnika-b02__media-bottom')),
                 position:getComputedStyle(q('.etnika-b02__copy')).position,
+                groupPosition:getComputedStyle(q('.etnika-b02__composition')).position,
+                groupTransform:getComputedStyle(q('.etnika-b02__composition')).transform,
                 overflow:getComputedStyle(block).overflow,
               };
             }""")
             msg=f'{width}x{height}, scroll depth {depth}: {v}'
             print('B02 GEOMETRY',msg,flush=True)
-            assert v['position']=='sticky',msg
+            assert v['position']=='relative',msg
+            assert v['groupPosition']=='static',msg
+            assert v['groupTransform']=='none',msg
             assert v['block']['height']>height+110, msg
             assert abs(v['media']['height']-v['block']['height'])<3,msg
-            assert v['overline']['top']>=50,msg
+            assert v['overline']['top']-v['block']['top']>=24,msg
             assert v['title']['top']>=v['overline']['bottom']+16,msg
             assert v['desc']['bottom']<v['features']['top']-10,msg
-            assert v['features']['bottom']<=height-18,msg
+            assert v['features']['bottom']<=v['block']['bottom']-24,msg
             assert abs(v['copy']['center']-v['composition']['center'])<3,msg
-            assert v['composition']['top']>=60,msg
-            assert v['controls']['bottom']<=height-14,msg
+            assert v['composition']['top']-v['block']['top']>=130,msg
+            assert abs((v['composition']['top']-v['block']['top'])-(v['block']['bottom']-v['composition']['bottom']))<2,msg
+            assert v['controls']['bottom']<=v['block']['bottom']-14,msg
             if depth==180 and width==1660:
                 page.screenshot(path=str(REPORTS/'etnika-b02-owner-1660x930-mid-scroll.png'))
         page.close()
