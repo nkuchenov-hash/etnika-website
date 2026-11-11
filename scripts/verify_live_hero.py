@@ -216,7 +216,34 @@ with sync_playwright() as playwright:
                     assert abs(guide["mediaHeight"]-guide["sectionHeight"])<=3, f"Live B02 photo shrunk again: {guide}"
                     page.screenshot(path=str(REPORTS / "etnika-live-b02-fit.png"),full_page=False)
                     page.locator('#etnika-space-photo').scroll_into_view_if_needed()
+                    page.mouse.move(0,0)
+                    page.wait_for_timeout(300)
+                    photoStyles=page.evaluate("""() => {
+                        const root=document.getElementById('etnika-space-photo');
+                        const cards=[root.querySelector('.spf-main'),...root.querySelectorAll('.spf-small')];
+                        return {
+                          line:getComputedStyle(root.querySelector('.spf-top .spf-line')).backgroundColor,
+                          divider:getComputedStyle(root.querySelector('.spf-top .spf-divider')).backgroundColor,
+                          labels:cards.map(card=>({
+                            opacity:getComputedStyle(card.querySelector('.spf-label')).opacity,
+                            title:card.querySelector('.spf-label-title').textContent.trim(),
+                            weight:getComputedStyle(card.querySelector('.spf-label-title')).fontWeight,
+                            detailOpacity:getComputedStyle(card.querySelector('.spf-label-sub')).opacity,
+                            detailVisibility:getComputedStyle(card.querySelector('.spf-label-sub')).visibility
+                          }))
+                        };
+                    }""")
+                    assert photoStyles["line"]=="rgba(255, 255, 255, 0.42)",f"Published studio editorial line invisible: {photoStyles}"
+                    assert photoStyles["divider"]=="rgba(255, 255, 255, 0.42)",f"Published studio editorial divider invisible: {photoStyles}"
+                    assert all(item["title"] and item["opacity"]=="1" and item["weight"]=="300" for item in photoStyles["labels"]),f"Default photo titles invisible or too heavy: {photoStyles}"
+                    assert all(item["detailVisibility"]=="hidden" for item in photoStyles["labels"]),f"All detail labels exposed before hover: {photoStyles}"
                     page.screenshot(path=str(REPORTS / "etnika-live-space-alignment.png"),full_page=False)
+                    photo=page.locator('#etnika-space-photo .spf-main')
+                    photo.hover()
+                    page.wait_for_timeout(350)
+                    active=photo.locator('.spf-label-sub').evaluate("(el)=>({opacity:getComputedStyle(el).opacity,visibility:getComputedStyle(el).visibility})")
+                    assert float(active["opacity"])>.95 and active["visibility"]=="visible",f"Published studio description not revealed on hover: {active}"
+                    page.screenshot(path=str(REPORTS / "etnika-live-space-hover.png"),full_page=False)
                     print(f"PASS LIVE B02/SPACE {width}x{height}: {guide}",flush=True)
                 print(f"PASS LIVE {width}x{height}: {metrics}; screenshot={path}", flush=True)
                 break
