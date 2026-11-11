@@ -3,6 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="etnika-build" content="20261111-hero-first">
+<script id="etnika-first-screen-guard-20261111">
+/* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
+   Explicit section deep links remain usable. */
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+window.addEventListener('pageshow',function(){
+  if(!location.hash) window.scrollTo(0,0);
+});
+</script>
 <meta name="robots" content="noindex,nofollow,noarchive"><link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet"><title>ETNIKA — полный редизайн · предпросмотр 4 ноября</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
