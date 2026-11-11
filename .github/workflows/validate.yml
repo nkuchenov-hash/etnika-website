@@ -51,7 +51,12 @@ jobs:
           assert [p.name for p in site_paths]==['index.html'], 'Only site/index.html may define the site'
           canonical=site_paths[0].read_text(encoding='utf-8')
           assert canonical.count('id="etnika-hero"')==1, 'Canonical site must have one HERO'
-          assert "const ids=['etnika-process-interactive','etnika-hero'" in canonical, 'Interactive process must be first'
+          section_order=re.search(r"const ids=\\[([^\\]]+)\\]",canonical)
+          assert section_order, 'Page section ordering is missing'
+          display_ids=re.findall(r"'([^']+)'",section_order.group(1))
+          assert display_ids[0]=='etnika-hero', 'HERO must be the first visible section'
+          assert display_ids.index('etnika-hero')<display_ids.index('etnika-process-interactive'), 'Process must follow HERO'
+          assert len(display_ids)==len(set(display_ids)), 'Duplicate section IDs in runtime order'
           assert '#etnika-faq{\n  --paper:#f3f0eb !important;' in canonical, 'Before visit background mismatch'
           ids=('etnika-hero','etnika-stories','etnika-space-photo','etnika-studio-features','etnika-block-02-final','etnika-process-interactive','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-contacts-source')
           assert all('id="'+v+'"' in canonical for v in ids), 'Canonical site content lost'
