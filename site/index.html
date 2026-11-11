@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261111-section-system">
+<meta name="etnika-build" content="20261111-hero-type-refinement">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -13365,13 +13365,74 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 </style>
 
 <style id="etnika-hero-footer-type-20261111">
-/* Lighter editorial typography only for the address and opening hours
-   on HERO. Keep the existing size, layout and slider controls unchanged. */
+/* Owner's 11 Nov 2026 HERO feedback: lighter navigation and bottom metadata,
+   larger FORUM studio descriptor; preserve exact photos, copy and CTA layout. */
+
+/* Header: elegant studio identity (Forum), not bold interface uppercase. */
+#etnika-site-header .esh__descriptor{
+  font-family:'Forum',Georgia,serif!important;
+  font-size:clamp(21px,1.5vw,25px)!important;
+  font-weight:400!important;
+  line-height:1.05!important;
+  letter-spacing:.008em!important;
+}
+@media(min-width:1341px){
+  #etnika-site-header .esh__identity{min-width:clamp(225px,16vw,265px);}
+}
+#etnika-site-header .esh__nav a,
+#etnika-site-header .esh__phone,
+#etnika-site-header .esh__mobile a{
+  font-family:'Geologica',Arial,sans-serif;
+  font-weight:200!important;
+  letter-spacing:.005em;
+}
+#etnika-site-header .esh__booking,
+#etnika-site-header .esh__mobile a.esh__mobile-book{
+  font-weight:300!important;
+}
+#etnika-hero.etnika-carousel .ec-actions .ec-book{
+  font-weight:300!important;
+}
+
+/* HERO bottom bar: the slim light lettering requested for the address/hours. */
+#etnika-hero.etnika-carousel .ec-bottom{
+  font-family:'Geologica',Arial,sans-serif!important;
+  font-weight:100!important;
+  letter-spacing:.045em!important;
+}
 #etnika-hero.etnika-carousel .ec-bottom > div:first-child,
 #etnika-hero.etnika-carousel .ec-bottom > div:last-child{
   font-family:'Geologica',Arial,sans-serif!important;
+  font-weight:100!important;
+  letter-spacing:.045em!important;
+}
+#etnika-hero.etnika-carousel .ec-award{
   font-weight:200!important;
-  letter-spacing:.035em!important;
+}
+
+/* The approved scarf photo is 1672x941. object-fit:contain leaves a
+   few unpainted horizontal pixels on slightly narrower viewport ratios.
+   Backfill with the SAME photo beneath it; never crop the foreground image. */
+#etnika-hero.etnika-carousel .ec-slide--scarf{
+  background-image:url('assets/hero-carousel/scarf-from-approved-reference-20261104.webp')!important;
+  background-size:cover!important;
+  background-position:right center!important;
+  background-repeat:no-repeat!important;
+}
+
+/* Keep header links clear of the larger studio descriptor at narrow desktop widths. */
+@media (min-width:1161px) and (max-width:1340px){
+  #etnika-site-header .esh__descriptor{font-size:21px!important;}
+  #etnika-site-header .esh__identity{min-width:205px!important;}
+  #etnika-site-header .esh__nav{gap:clamp(12px,1.1vw,18px);}
+  #etnika-site-header .esh__nav a{font-size:15px!important;}
+}
+@media(max-width:1160px){
+  #etnika-site-header .esh__identity{min-width:0!important;}
+  #etnika-site-header .esh__descriptor{font-size:clamp(20px,4.2vw,24px)!important;}
+}
+@media(max-width:365px){
+  #etnika-site-header .esh__descriptor{font-size:19px!important;}
 }
 </style>
 </body>
