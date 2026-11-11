@@ -7,6 +7,11 @@ on:
       - 'scripts/validate_b02_visible_on_scroll.py'
       - '.github/workflows/b02-visible.yml'
   workflow_dispatch:
+# Stale QA runs should never delay the site deployment.
+concurrency:
+  group: etnika-qa-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   b02-visible:
     runs-on: ubuntu-latest
