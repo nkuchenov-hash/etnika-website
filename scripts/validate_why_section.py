@@ -26,6 +26,8 @@ with sync_playwright() as pw:
           const q='#etnika-studio-features ';
           return {
             header:r('#etnika-site-header'),section:r('#etnika-studio-features'),
+            shell:r('#etnika-studio-features .b05-shell'), main:r('#etnika-studio-features .b05-main'),
+            metrics:(()=>{let e=document.querySelector('#etnika-studio-features .b05-shell');let m=document.querySelector('#etnika-studio-features .b05-main');let a=document.querySelector('#etnika-studio-features');const cs=(x)=>({height:getComputedStyle(x).height,minHeight:getComputedStyle(x).minHeight,maxHeight:getComputedStyle(x).maxHeight,boxSizing:getComputedStyle(x).boxSizing,display:getComputedStyle(x).display,paddingTop:getComputedStyle(x).paddingTop});return {section:cs(a),shell:cs(e),main:cs(m),nav:getComputedStyle(document.documentElement).getPropertyValue('--etnika-nav-height')};})(),
             stage:r(q+'.b05-stage'),copy:r(q+'.b05-copy'),
             title:r(q+'.b05-title'),bottom:r(q+'.b05-stage-bottom'),
             caption:r(q+'.b05-caption'),prev:r(q+'.b05-prev'),
@@ -37,7 +39,7 @@ with sync_playwright() as pw:
         }""")
         path=OUT/f'etnika-why-{w}x{h}.png'
         page.screenshot(path=str(path),full_page=False)
-        print(f"WHY {w}x{h}: section={v['section']['top']:.1f}..{v['section']['bottom']:.1f}, photo={v['stage']['top']:.1f}..{v['stage']['bottom']:.1f}, heading={v['title']['top']:.1f}..{v['title']['bottom']:.1f}, final={v['last']['bottom']:.1f}, caption={v['caption']['bottom']:.1f}, imageOK={v['imageOK']}, background={v['background']}",flush=True)
+        print(f"WHY {w}x{h}: section={v['section']['top']:.1f}..{v['section']['bottom']:.1f}, shell={v['shell']['height']:.1f}, main={v['main']['height']:.1f}, computed={v['metrics']}, photo={v['stage']['top']:.1f}..{v['stage']['bottom']:.1f}, heading={v['title']['top']:.1f}..{v['title']['bottom']:.1f}, final={v['last']['bottom']:.1f}, caption={v['caption']['bottom']:.1f}, imageOK={v['imageOK']}, background={v['background']}",flush=True)
         err=lambda m:f'{w}x{h}: {m}: {v}'
         assert abs(v['stage']['top']-v['header']['bottom'])<4,err("photo does not start below fixed menu")
         assert v['title']['top']>=v['header']['bottom']+6,err("title obscured by menu")
