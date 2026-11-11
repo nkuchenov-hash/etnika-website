@@ -185,6 +185,39 @@ with sync_playwright() as playwright:
                     assert page.locator('#etnika-process-interactive .epi-modal.open').count()==0,"Modal would not close"
                     page.locator('#etnika-studio-features').scroll_into_view_if_needed()
                     page.screenshot(path=str(REPORTS / "etnika-live-why-white.png"),full_page=False)
+                    # Live first-screen regression: the B02 lower feature row must
+                    # be visible before scrolling further; the next block uses
+                    # exactly the same editorial label + accent left guides.
+                    page.evaluate("""() => {
+                        const b=document.getElementById('etnika-block-02-final');
+                        const h=document.getElementById('etnika-site-header').getBoundingClientRect().height;
+                        window.scrollTo({top:b.getBoundingClientRect().top+scrollY-h,behavior:'instant'});
+                    }""")
+                    page.wait_for_timeout(250)
+                    guide=page.evaluate("""() => {
+                        const r=s=>document.querySelector(s).getBoundingClientRect();
+                        const top=document.querySelector('#etnika-block-02-final .etnika-b02__top');
+                        const sp=document.querySelector('#etnika-space-photo .spf-top');
+                        return {
+                          labelX:r('#etnika-block-02-final .etnika-b02__top span:first-child').left,
+                          spaceLabelX:r('#etnika-space-photo .spf-top > :first-child').left,
+                          accentX:r('#etnika-block-02-final .etnika-b02__top-accent').left,
+                          spaceAccentX:r('#etnika-space-photo .spf-accent').left,
+                          featuresBottom:r('#etnika-block-02-final .etnika-b02__features').bottom,
+                          featuresTop:r('#etnika-block-02-final .etnika-b02__features').top,
+                          copyTop:r('#etnika-block-02-final .etnika-b02__top').top,
+                          mediaHeight:r('#etnika-block-02-final .etnika-b02__media').height,
+                          sectionHeight:r('#etnika-block-02-final').height
+                        };
+                    }""")
+                    assert abs(guide["labelX"]-guide["spaceLabelX"])<=2, f"Live shared B02/space left edge mismatch: {guide}"
+                    assert abs(guide["accentX"]-guide["spaceAccentX"])<=3, f"Live overline accents misaligned: {guide}"
+                    assert guide["featuresBottom"]<height-12, f"Live B02 features are BELOW the screen fold: {guide}"
+                    assert abs(guide["mediaHeight"]-guide["sectionHeight"])<=3, f"Live B02 photo shrunk again: {guide}"
+                    page.screenshot(path=str(REPORTS / "etnika-live-b02-fit.png"),full_page=False)
+                    page.locator('#etnika-space-photo').scroll_into_view_if_needed()
+                    page.screenshot(path=str(REPORTS / "etnika-live-space-alignment.png"),full_page=False)
+                    print(f"PASS LIVE B02/SPACE {width}x{height}: {guide}",flush=True)
                 print(f"PASS LIVE {width}x{height}: {metrics}; screenshot={path}", flush=True)
                 break
             except Exception as exc:
