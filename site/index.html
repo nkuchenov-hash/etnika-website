@@ -12883,7 +12883,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
  #etnika-review-flow #etnika-prices-clear.ev3 .ev3-shell{
    display:grid!important;grid-template-rows:auto auto minmax(0,1fr)!important;
-   gap:var(--etnika-content-grid-gap)!important;
+   gap:clamp(24px,2.6svh,34px)!important;
  }
  #etnika-review-flow #etnika-prices-clear.ev3 .ev3-stage{
    height:100%!important;min-height:0!important;
@@ -12945,6 +12945,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
  #etnika-review-flow #etnika-space-photo .spf-shell{
    height:var(--etnika-content-screen)!important;max-height:none!important;
+   padding:0!important;gap:var(--etnika-content-grid-gap)!important;
  }
  #etnika-review-flow #etnika-space-photo .spf-gallery{min-height:0!important;}
  #etnika-review-flow #etnika-prices-clear.ev3{
