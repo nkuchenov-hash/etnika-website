@@ -55,6 +55,7 @@ jobs:
           section_order=canonical.split('const ids=[',1)[1].split(']',1)[0]
           display_ids=re.findall(r"'([^']+)'",section_order)
           assert display_ids[0]=='etnika-hero', 'HERO must be the first visible section'
+          assert display_ids[1:4]==['etnika-block-02-final','etnika-space-photo','etnika-stories'], 'First content blocks must be B02, space, stories'
           assert display_ids.index('etnika-hero')<display_ids.index('etnika-process-interactive'), 'Process must follow HERO'
           assert len(display_ids)==len(set(display_ids)), 'Duplicate section IDs in runtime order'
           assert '#etnika-faq{\n  --paper:#f3f0eb !important;' in canonical, 'Before visit background mismatch'
