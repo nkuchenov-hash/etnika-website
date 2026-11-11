@@ -13313,5 +13313,49 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
 }
 </style>
+
+<style id="etnika-b02-overlay-screen-fit-20261111">
+/* B02 image deliberately remains taller than the viewport (full-bleed).
+   Position its OVERLAYS in the visible 100svh area, not relative to the
+   much lower section bottom. Text content and photographs are unchanged. */
+@media(min-width:1101px){
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__media-top{
+    top:clamp(28px,3.8svh,52px)!important;
+    left:clamp(22px,2.8vw,56px)!important;
+    right:var(--et-u-edge)!important;
+    align-items:flex-start!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__stamp{
+    transform:none!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__media-bottom{
+    bottom:calc(2 * var(--etnika-section-outer) + var(--etnika-nav-height,60px) + clamp(28px,4svh,46px))!important;
+    left:clamp(22px,2.8vw,56px)!important;
+    right:var(--et-u-edge)!important;
+    width:auto!important;
+    align-items:flex-end!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__caption,
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__counter,
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__stamp{
+    visibility:visible!important;opacity:1!important;
+    text-shadow:0 1px 7px rgba(0,0,0,.76),0 2px 18px rgba(0,0,0,.42)!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__controls{
+    visibility:visible!important;opacity:1!important;
+    flex:0 0 148px!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__arrow{
+    visibility:visible!important;opacity:1!important;
+    filter:drop-shadow(0 1px 3px rgba(0,0,0,.75))!important;
+  }
+  /* Tiny photo-only vignettes keep white overlay text legible on the bright
+     and dark frames in the carousel; the portraits remain fully visible. */
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__media::after{
+    background:
+      linear-gradient(180deg,rgba(0,0,0,.25) 0%,transparent 19%,transparent 62%,rgba(0,0,0,.20) 75%,transparent 100%)!important;
+  }
+}
+</style>
 </body>
 </html>
