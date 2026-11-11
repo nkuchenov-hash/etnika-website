@@ -13036,12 +13036,13 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 @media(min-width:1101px){
   #etnika-review-flow > section#etnika-stories{
-    --etnika-stories-bottom-extra:clamp(24px,3.2svh,38px);
+    --etnika-stories-bottom-gap:clamp(36px,4.8svh,52px);
     --etnika-stories-photo-extra:clamp(40px,6svh,70px);
     /* The section follows its content; the extra 40–70px belongs to the photos, not empty space. */
     height:auto!important;
     min-height:0!important;
-    padding-bottom:calc(var(--etnika-section-outer) + var(--etnika-stories-bottom-extra))!important;
+    /* The blank region ends here; no 72–112px global section padding on top of it. */
+    padding-bottom:var(--etnika-stories-bottom-gap)!important;
   }
   #etnika-review-flow #etnika-stories .stories-shell{
     height:auto!important;
@@ -13057,7 +13058,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 @media(max-width:1100px){
   #etnika-review-flow > section#etnika-stories{
-    padding-bottom:calc(var(--etnika-section-outer) + clamp(18px,2.5svh,28px))!important;
+    padding-bottom:clamp(32px,4.5svh,48px)!important;
   }
 }
 </style>
