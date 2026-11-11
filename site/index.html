@@ -13844,11 +13844,14 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
    belongs to the editorial shell, matches the TOP gray hairline (same --line),
    and has the same breathing room BELOW as the top line has ABOVE. */
 #etnika-review-flow > section#etnika-faq{
+  /* The top gray rule sits at the midpoint of the 28px editorial kicker row.
+     Match that measured 14px inset below the lower rule too. */
+  --etnika-faq-rule-midpoint:14px;
   height:auto!important;
   min-height:0!important;
   max-height:none!important;
   padding-top:var(--etnika-section-outer,clamp(72px,9svh,112px))!important;
-  padding-bottom:var(--etnika-section-outer,clamp(72px,9svh,112px))!important;
+  padding-bottom:calc(var(--etnika-section-outer,clamp(72px,9svh,112px)) + var(--etnika-faq-rule-midpoint))!important;
 }
 #etnika-review-flow #etnika-faq .faq-shell{
   box-sizing:border-box!important;
@@ -13888,8 +13891,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
    matching padding below the final editorial rule. */
 @media(max-width:1100px){
   #etnika-review-flow > section#etnika-faq{
+    /* Mobile hides the 28px divider, leaving a ~14px high kicker row. */
+    --etnika-faq-rule-midpoint:7px;
     padding-top:var(--etnika-section-outer,clamp(36px,6svh,60px))!important;
-    padding-bottom:var(--etnika-section-outer,clamp(36px,6svh,60px))!important;
+    padding-bottom:calc(var(--etnika-section-outer,clamp(36px,6svh,60px)) + var(--etnika-faq-rule-midpoint))!important;
   }
   #etnika-review-flow #etnika-faq .faq-top{
     margin-bottom:clamp(28px,4svh,40px)!important;
