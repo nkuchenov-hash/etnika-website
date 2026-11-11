@@ -74,18 +74,20 @@ def render():
                 hero=page.locator("#etnika-hero")
                 assert header.count()==1
                 page.evaluate("window.scrollTo(0,0)")
-                # Layout is finalized on DOMContentLoaded; header visibility transitions need time to settle.
+                # HERO must be the first runtime section, not just the first section in raw HTML.
                 page.wait_for_function("""() => {
                     const h=document.querySelector('#etnika-site-header');
                     const d=h.querySelector('.esh__descriptor');
                     const l=h.querySelector('.esh__logo');
-                    return h.dataset.hero==='false'
-                        && getComputedStyle(d).visibility==='hidden'
-                        && getComputedStyle(l).visibility==='visible'
-                        && Number(getComputedStyle(l).opacity)>0.99;
-                }""",timeout=4000)
-                assert not page.locator(".esh__descriptor").is_visible(),(path,width,"descriptor must hide outside HERO")
-                assert page.locator(".esh__logo").is_visible(),(path,width,"brand must show on first process screen")
+                    const flow=document.getElementById('etnika-review-flow');
+                    const first=flow && flow.querySelector(':scope > section');
+                    return first && first.id==='etnika-hero'
+                        && h.dataset.hero==='true'
+                        && getComputedStyle(d).visibility==='visible'
+                        && getComputedStyle(l).visibility==='hidden';
+                }""",timeout=6000)
+                assert page.locator(".esh__descriptor").is_visible(),(path,width,"descriptor must show on HERO")
+                assert not page.locator(".esh__logo").is_visible(),(path,width,"header logo must remain hidden on HERO")
                 before=page.evaluate("""() => ({
                     space:parseFloat(getComputedStyle(document.querySelector('#etnika-space-photo .spf-top')).fontSize),
                     other:parseFloat(getComputedStyle(document.querySelector('#etnika-stories .stories-top')).fontSize),
@@ -148,8 +150,11 @@ def render():
                     assert all(g>=-1 for g in nav_metrics['siblingGaps']),(path,width,"header group overlap",nav_metrics)
                     assert nav_metrics['rightEdge']<=width-15,(path,width,"header overflows viewport",nav_metrics)
                 page.evaluate("window.scrollTo({top:document.getElementById('etnika-hero').getBoundingClientRect().top+window.scrollY+document.getElementById('etnika-hero').offsetHeight+100,behavior:'instant'})")
-                page.wait_for_timeout(400)
-                assert header.get_attribute("data-hero")=="false",(path,width,"header did not acquire logo")
+                page.wait_for_function("""() => {
+                    const h=document.getElementById('etnika-site-header');
+                    return h.dataset.hero==='false' && getComputedStyle(h.querySelector('.esh__logo')).opacity==='1';
+                }""",timeout=5000)
+                assert header.get_attribute("data-hero")=="false",(path,width,"header did not acquire logo after HERO")
                 assert page.locator(".esh__logo").evaluate("(el)=>getComputedStyle(el).opacity")=="1"
                 assert page.locator("#etnika-brand-flight").evaluate("(el)=>getComputedStyle(el).display")=="none"
                 page.close()
