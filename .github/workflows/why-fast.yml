@@ -4,6 +4,11 @@ on:
     branches: [main]
   push:
     branches: [main]
+# Stale QA runs should never delay the site deployment.
+concurrency:
+  group: etnika-qa-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   why-geometry:
     runs-on: ubuntu-latest
