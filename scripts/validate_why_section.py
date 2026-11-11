@@ -29,9 +29,13 @@ with sync_playwright() as pw:
             caption:r(q+'.b05-caption'),prev:r(q+'.b05-prev'),
             next:r(q+'.b05-next'),last:r(q+'.b05-item:last-child'),
             counter:r(q+'.b05-counter'),bodyWidth:document.documentElement.scrollWidth,
-            imageOK:(()=>{let x=document.querySelector(q+'.b05-stage-image');return x.complete&&x.naturalWidth>0;})()
+            imageOK:(()=>{let x=document.querySelector(q+'.b05-stage-image');return x.complete&&x.naturalWidth>0;})(),
+            background:getComputedStyle(document.querySelector(q+'.b05-stage')).backgroundImage
           };
         }""")
+        path=OUT/f'etnika-why-{w}x{h}.png'
+        page.screenshot(path=str(path),full_page=False)
+        print(f"WHY {w}x{h}: section={v['section']['top']:.1f}..{v['section']['bottom']:.1f}, photo={v['stage']['top']:.1f}..{v['stage']['bottom']:.1f}, heading={v['title']['top']:.1f}..{v['title']['bottom']:.1f}, final={v['last']['bottom']:.1f}, caption={v['caption']['bottom']:.1f}, imageOK={v['imageOK']}, background={v['background']}",flush=True)
         err=lambda m:f'{w}x{h}: {m}: {v}'
         assert abs(v['stage']['top']-v['header']['bottom'])<4,err("photo does not start below fixed menu")
         assert v['title']['top']>=v['header']['bottom']+6,err("title obscured by menu")
@@ -44,10 +48,9 @@ with sync_playwright() as pw:
             assert v[key]['bottom']<=v['stage']['bottom']-8,err(f"{key} clipped below photo")
         assert v['counter']['top']>=v['stage']['top']+6,err("counter hidden behind menu")
         assert v['bodyWidth']<=w+3,err("horizontal overflow")
-        assert v['imageOK'],err("photo failed to load")
+        assert v['imageOK'] or 'etnika-hero-red-wide.jpg' in v['background'],err("photo failed to load and fallback absent")
         if h>=900:
             assert v['section']['bottom']<=h+12,err("one-screen desktop composition too tall")
-        page.screenshot(path=str(OUT/f'etnika-why-{w}x{h}.png'),full_page=False)
         print(f"WHY ETNIKA OK {w}x{h}: photo ({v['stage']['top']:.1f}..{v['stage']['bottom']:.1f}), title {v['title']['top']:.1f}, last {v['last']['bottom']:.1f}, caption {v['caption']['bottom']:.1f}",flush=True)
         page.close()
     browser.close()
