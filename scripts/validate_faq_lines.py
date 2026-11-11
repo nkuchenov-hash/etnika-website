@@ -29,7 +29,9 @@ MEASURE = r"""() => {
     bottomGap: sr.bottom - sh.bottom + 0.5,
     lowerSeparation: sh.bottom - mr.bottom,
     topColor: getComputedStyle(top).backgroundColor,
+    topOpacity: getComputedStyle(top.parentElement).opacity,
     bottomColor: rule.backgroundColor,
+    bottomOpacity: rule.opacity,
     bottomRuleHeight: rule.height,
     bottomRuleContent: rule.content,
     firstBorderWidth: getComputedStyle(firstBorder).borderTopWidth,
@@ -53,6 +55,7 @@ with sync_playwright() as p:
             section.screenshot(path=str(OUT / f"etnika-faq-lines-{name}.png"), timeout=30000)
             print(f"{name}: {json.dumps(m, ensure_ascii=False)}")
             assert m["topColor"] == m["bottomColor"], f"{name}: mismatched gray strokes"
+            assert abs(float(m["topOpacity"]) - float(m["bottomOpacity"])) < 0.001, f"{name}: rendered gray lines differ in opacity"
             assert m["firstBorderWidth"] == "0px", f"{name}: first crossed-out stroke still visible"
             assert m["lastBorderWidth"] == "0px", f"{name}: last crossed-out stroke still visible"
             assert m["bottomRuleContent"] not in ("none", "normal"), f"{name}: no independent lower rule"
