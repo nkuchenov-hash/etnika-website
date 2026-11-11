@@ -13068,45 +13068,101 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 </style>
 
 <style id="etnika-gift-viewport-fix-20261111">
-/* Owner correction, 2026-11-11: the WHOLE gift section is one viewport,
-   not a 100svh inner panel plus two additional outer spacing fields.
-   Keep a natural height on small screens rather than clip any content. */
+/* Owner's 11 Nov correction: the COMPLETE certificate section (not its
+   background alone) fits into the visible screen below the fixed menu.
+   Keep every original text line, fact, CTA and footer visible. */
 @media (min-width:1101px){
   #etnika-review-flow > section#etnika-gift{
     box-sizing:border-box!important;
-    height:100svh!important;
+    height:calc(100svh - var(--etnika-nav-height,60px))!important;
     min-height:0!important;
-    max-height:100svh!important;
+    max-height:none!important;
     padding:0!important;
     margin:0!important;
     overflow:hidden!important;
+    /* html already has scroll-padding-top for the fixed navigation. */
+    scroll-margin-top:0!important;
   }
   #etnika-review-flow #etnika-gift .eg-shell{
     box-sizing:border-box!important;
     height:100%!important;
     min-height:0!important;
-    max-height:100%!important;
-    padding:clamp(70px,8svh,86px) 0 clamp(26px,4svh,42px)!important;
-    grid-template-rows:auto minmax(0,1fr) auto!important;
+    max-height:none!important;
+    padding:clamp(26px,4svh,46px) 0 clamp(22px,3svh,38px)!important;
+    display:grid!important;
+    grid-template-rows:auto auto auto!important;
+    align-content:space-between!important;
+    row-gap:clamp(10px,1.8svh,20px)!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-main{
+    align-self:center!important;
+    width:min(710px,58vw)!important;
+    min-height:0!important;
+    padding:0!important;
+  }
+  #etnika-review-flow > section#etnika-gift h2.eg-title.etnika-section-heading{
+    font-size:clamp(44px,min(5.15vw,8svh),88px)!important;
+    line-height:.84!important;
+    margin:0 0 clamp(12px,1.55svh,18px)!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-sub{
+    margin:0 0 clamp(10px,1.45svh,16px)!important;
+    font-size:clamp(14px,1.12vw,16px)!important;
+    line-height:1.4!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-fact{
+    min-height:clamp(38px,5.5svh,52px)!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-fact strong{
+    font-size:clamp(27px,3.6svh,34px)!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-note{
+    margin-bottom:8px!important;
+    line-height:1.35!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-cta{
+    min-height:clamp(45px,5.8svh,52px)!important;
   }
 }
 @media (max-width:1100px){
   #etnika-review-flow > section#etnika-gift{
     box-sizing:border-box!important;
     height:auto!important;
-    min-height:100svh!important;
+    min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
     max-height:none!important;
-    padding:clamp(60px,7svh,76px) 0 clamp(24px,3.5svh,38px)!important;
+    padding:clamp(28px,5svh,48px) 0 clamp(24px,4svh,36px)!important;
     margin:0!important;
-    overflow:hidden!important;
+    overflow:visible!important;
+    scroll-margin-top:0!important;
   }
   #etnika-review-flow #etnika-gift .eg-shell{
     box-sizing:border-box!important;
     height:auto!important;
-    min-height:calc(100svh - clamp(60px,7svh,76px) - clamp(24px,3.5svh,38px))!important;
+    min-height:calc(100svh - var(--etnika-nav-height,56px) - clamp(28px,5svh,48px) - clamp(24px,4svh,36px))!important;
     max-height:none!important;
     padding:0!important;
-    grid-template-rows:auto minmax(0,1fr) auto!important;
+    display:grid!important;
+    grid-template-rows:auto auto auto!important;
+    align-content:space-between!important;
+    row-gap:clamp(18px,3svh,30px)!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-main{
+    min-height:0!important;
+    padding:0!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-footer{
+    grid-template-columns:1fr!important;
+    gap:12px!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-sub{margin-bottom:14px!important;}
+  #etnika-review-flow #etnika-gift .eg-fact{min-height:45px!important;}
+}
+@media (max-width:700px){
+  #etnika-review-flow #etnika-gift .eg-title-line{
+    white-space:normal!important;
+  }
+  #etnika-review-flow #etnika-gift .eg-shell{
+    row-gap:clamp(18px,2.7svh,26px)!important;
   }
 }
 </style>
