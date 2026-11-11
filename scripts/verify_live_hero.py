@@ -9,7 +9,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 BASE = "https://nkuchenov-hash.github.io/etnika-website/site/"
-EXPECTED_BUILD = "20261111-hero-first"
+EXPECTED_BUILD = "20261111-section-system"
 REPORTS = Path("reports")
 REPORTS.mkdir(exist_ok=True)
 SHA = os.environ.get("GITHUB_SHA", "manual")[:12]
@@ -50,11 +50,37 @@ with sync_playwright() as playwright:
                        studioLabel:document.querySelector('#etnika-site-header .esh__descriptor')?.textContent?.trim(),
                        logoRight:document.querySelector('#etnika-hero .ec-brand')?.getBoundingClientRect().right,
                        heartLeft:document.querySelector('#etnika-hero .ec-love')?.getBoundingClientRect().left,
-                       heartRight:document.querySelector('#etnika-hero .ec-love')?.getBoundingClientRect().right
+                       heartRight:document.querySelector('#etnika-hero .ec-love')?.getBoundingClientRect().right,
+                       order:Array.from(flow?.children||[]).map(el=>el.id).slice(0,5),
+                       sectionSystem:(() => {
+                         const key=['etnika-block-02-final','etnika-space-photo','etnika-stories','etnika-process-interactive','etnika-studio-features','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-reviews','etnika-contacts-source'];
+                         const reference=document.createElement('i');
+                         reference.style.fontSize='var(--etnika-section-title)';
+                         document.body.appendChild(reference);
+                         const titleToken=parseFloat(getComputedStyle(reference).fontSize);
+                         reference.remove();
+                         return {
+                           titleToken,
+                           edge:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--et-u-edge')),
+                           blocks:key.map(id=>{
+                             const node=document.getElementById(id);
+                             const h=node?.querySelector('h2.etnika-section-heading');
+                             const st=node&&getComputedStyle(node);
+                             return {id,h2:!!h,titleSize:h?parseFloat(getComputedStyle(h).fontSize):null,titleFamily:h?getComputedStyle(h).fontFamily:null,
+                               height:node?.getBoundingClientRect().height, outerTop:parseFloat(st?.paddingTop||0),
+                               outerBottom:parseFloat(st?.paddingBottom||0)};
+                           }),
+                           processLeft:document.querySelector('#etnika-process-interactive .epi-grid')?.getBoundingClientRect().left,
+                           storiesLeft:document.querySelector('#etnika-stories .stories-shell')?.getBoundingClientRect().left,
+                           spaceFrameHeight:document.querySelector('#etnika-space-photo .spf-shell')?.getBoundingClientRect().height,
+                           b02Gap:(() => {const a=document.querySelector('#etnika-block-02-final .etnika-b02__top');const b=document.querySelector('#etnika-block-02-final .etnika-b02__main');return a&&b?b.getBoundingClientRect().top-a.getBoundingClientRect().bottom:null})()
+                         };
+                       })()
                     };
                 }""")
                 assert metrics["build"] == EXPECTED_BUILD, f"Old deployed HTML: {metrics}"
                 assert metrics["first"] == "etnika-hero", f"Wrong runtime section order: {metrics}"
+                assert metrics["order"][:4] == ["etnika-hero","etnika-block-02-final","etnika-space-photo","etnika-stories"], f"Wrong owner-approved section order: {metrics}"
                 assert abs(metrics["initialScrollY"]) < 4, f"Page opened below HERO: {metrics}"
                 assert metrics["heroTop"] <= 70, f"HERO starts too low: {metrics}"
                 assert metrics["heroBottom"] >= height * 0.85, f"HERO is not a full first screen: {metrics}"
