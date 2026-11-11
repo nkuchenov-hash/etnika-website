@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261111-hero-first">
+<meta name="etnika-build" content="20261111-section-system">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -682,7 +682,7 @@ window.addEventListener('pageshow',function(){
       </div>
 
       <div class="etnika-b02__main">
-        <h2 class="etnika-b02__title">
+        <h2 class="etnika-b02__title etnika-section-heading">
           <span class="red">ФОТОСТУДИЯ</span><br>
           БЕЗ ФОТОГРАФА
         </h2>
@@ -1067,7 +1067,7 @@ window.addEventListener('pageshow',function(){
 
 <section id="etnika-process-interactive" aria-label="Как проходит весь процесс">
   <div class="epi-head">
-    <h2>Как проходит <span>весь процесс</span></h2>
+    <h2 class="etnika-section-heading">Как проходит <span>весь процесс</span></h2>
     <p class="epi-sub">Пять шагов — от выбора времени до готовых фотографий.<span class="epi-sub-hint">Наведите на карточку, чтобы увидеть детали.</span></p>
   </div>
   <div class="epi-grid"></div>
@@ -1180,7 +1180,7 @@ window.addEventListener('pageshow',function(){
 
     <div class="faq-main">
       <div class="faq-intro">
-        <h2 class="faq-title">
+        <h2 class="faq-title etnika-section-heading">
           <span>Перед</span>
           <span class="red">визитом</span>
         </h2>
@@ -1905,7 +1905,7 @@ body.etnika-gallery-lock{
       <div class="stories-topline stories-line-extra"></div>
     </div>
 
-    <h2 class="stories-title">
+    <h2 class="stories-title etnika-section-heading">
       <span class="black">Каждая съёмка —</span>
       <span class="red">своя история</span>
     </h2>
@@ -2626,7 +2626,7 @@ body.etnika-gallery-lock{
     </div>
 
     <div class="spf-head">
-      <h2 class="spf-title">Пространство <span class="red">ЭТНИКА</span></h2>
+      <h2 class="spf-title etnika-section-heading">Пространство <span class="red">ЭТНИКА</span></h2>
     </div>
 
     <div class="spf-gallery">
@@ -4215,7 +4215,7 @@ body.etnika-gallery-lock{
     <div class="b05-main">
       <div class="b05-copy">
 
-        <h2 class="b05-title">
+        <h2 class="b05-title etnika-section-heading">
           Почему<br>
           <span class="red">ЭТНИКА</span>
         </h2>
@@ -5315,7 +5315,7 @@ body.etnika-gallery-lock{
       <span>Цены и тарифы</span>
     </div>
     <div class="ev3-head">
-      <h2 class="ev3-title">Выберите <span>свой формат</span></h2>
+      <h2 class="ev3-title etnika-section-heading">Выберите <span>свой формат</span></h2>
       <div class="ev3-modes" role="group" aria-label="Выбор дня">
         <button type="button" data-mode="weekday" aria-pressed="true">Будни</button>
         <button type="button" data-mode="weekend" aria-pressed="false">Выходные</button>
@@ -5951,7 +5951,7 @@ body.etnika-gallery-lock{
     </div>
 
     <div class="ee-copy">
-      <h2 class="ee-title">
+      <h2 class="ee-title etnika-section-heading">
         Подчеркните образ
         <span>деталями</span>
       </h2>
@@ -6007,7 +6007,7 @@ body.etnika-gallery-lock{
 
     <div class="faq-main">
       <div class="faq-intro">
-        <h2 class="faq-title">
+        <h2 class="faq-title etnika-section-heading">
           <span>О</span>
           <span class="red">тарифах</span>
         </h2>
@@ -6434,7 +6434,7 @@ body.etnika-gallery-lock{
     </div>
 
     <div class="eg-main">
-      <h2 class="eg-title">
+      <h2 class="eg-title etnika-section-heading">
         <span class="eg-title-line">Подарите фотосессию</span>
         <span class="accent eg-title-line">своим близким</span>
       </h2>
@@ -8244,7 +8244,7 @@ body.etnika-gallery-lock{
       <span class="etnika-reviews-overline-context">Яндекс Карты</span>
       <span class="etnika-reviews-rule etnika-reviews-rule-extra" aria-hidden="true"></span>
     </div>
-    <h2 class="etnika-reviews-heading">Отзывы <span>наших клиентов</span></h2>
+    <h2 class="etnika-reviews-heading etnika-section-heading">Отзывы <span>наших клиентов</span></h2>
     <div class="etnika-reviews-mount" data-reviews-project="etnika"></div>
   </div>
 </section>
@@ -8269,7 +8269,7 @@ body.etnika-gallery-lock{
     </div>
 
     <div class="location-copy">
-      <h2>К нам легко добраться</h2>
+      <h2 class="etnika-section-heading">К нам легко добраться</h2>
 
       <div class="address">
         ул. Ленинская Слобода, 26А<br>
@@ -11775,7 +11775,7 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
  // HERO is managed by the slideshow component; retain remaining full-site initialization.
  const slideUrls=['assets/etnika-portrait-beige.jpg','assets/etnika-portrait-dark.jpg','assets/etnika-bw-portrait.jpg','assets/etnika-portrait-etnika.jpg','assets/etnika-bw-guest.jpg'];
  document.querySelectorAll('#etnika-block-02-final .etnika-b02__slide').forEach((img,i)=>{if(slideUrls[i]){img.src=slideUrls[i];img.loading=i?'lazy':'eager';img.style.objectPosition='center 38%'}});
- const ids=['etnika-hero','etnika-process-interactive','etnika-stories','etnika-space-photo','etnika-studio-features','etnika-block-02-final','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-reviews','etnika-contacts-source'];
+ const ids=['etnika-hero','etnika-block-02-final','etnika-space-photo','etnika-stories','etnika-process-interactive','etnika-studio-features','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-reviews','etnika-contacts-source'];
  const flow=document.createElement('main');flow.id='etnika-review-flow';flow.setAttribute('aria-label','Предварительная композиция всей главной');
  for(const id of ids){const item=document.getElementById(id);if(item)flow.appendChild(item);}
  document.body.appendChild(flow);
@@ -12733,5 +12733,194 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 </style>
 <link rel="stylesheet" href="prices-v3.css?v=20261106e">
+
+<style id="etnika-section-system-20261111">
+/* Owner-approved unified editorial system: titles, overlines, one viewport of
+   content plus independent outer fields. Keep every original photo and text. */
+:root{
+  --etnika-section-outer:clamp(72px,9svh,112px);
+  --etnika-content-screen:calc(100svh - var(--etnika-nav-height,60px));
+  --etnika-overline-content-gap:clamp(32px,4svh,52px);
+}
+
+/* One headline scale, font, leading and tracking — no per-block exceptions.
+   The class is assigned to the primary H2 in every section, never to card titles. */
+#etnika-review-flow .etnika-section-heading{
+  font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important;
+  font-size:var(--etnika-section-title,clamp(62px,6.25vw,118px))!important;
+  font-style:normal!important;
+  font-weight:400!important;
+  line-height:.84!important;
+  letter-spacing:-.04em!important;
+  text-transform:uppercase!important;
+  white-space:normal!important;
+  text-wrap:balance!important;
+  transform:none!important;
+}
+
+/* The first content screen has its own height and background. Top and bottom
+   fields sit OUTSIDE that screen, so the entire section scrolls beyond 100svh.
+   This does not apply to HERO, which remains exactly the first viewport. */
+@media(min-width:1101px){
+ #etnika-review-flow > section:is(
+   #etnika-block-02-final,#etnika-space-photo,#etnika-stories,
+   #etnika-process-interactive,#etnika-studio-features,#etnika-faq,
+   #etnika-prices-clear,#etnika-extra,#etnika-faq-tariffs,
+   #etnika-gift,#etnika-reviews,#etnika-contacts-source
+ ){
+   box-sizing:border-box!important;
+   height:auto!important;
+   min-height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer))!important;
+   max-height:none!important;
+   padding-top:var(--etnika-section-outer)!important;
+   padding-bottom:var(--etnika-section-outer)!important;
+   margin-top:0!important;margin-bottom:0!important;
+   overflow:visible!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__grid{
+   height:var(--etnika-content-screen)!important;
+   min-height:0!important;
+ }
+ #etnika-review-flow #etnika-stories .stories-shell,
+ #etnika-review-flow #etnika-space-photo .spf-shell,
+ #etnika-review-flow #etnika-studio-features .b05-shell,
+ #etnika-review-flow #etnika-gift .eg-shell{
+   height:var(--etnika-content-screen)!important;
+   min-height:0!important;max-height:none!important;
+   box-sizing:border-box!important;
+ }
+ #etnika-review-flow #etnika-faq .faq-shell,
+ #etnika-review-flow #etnika-faq-tariffs .faq-shell,
+ #etnika-review-flow #etnika-extra .ee-shell,
+ #etnika-review-flow #etnika-reviews .etnika-reviews-inner,
+ #etnika-review-flow #etnika-contacts-source .location{
+   min-height:var(--etnika-content-screen)!important;
+   height:auto!important;max-height:none!important;
+   box-sizing:border-box!important;
+ }
+ #etnika-review-flow #etnika-prices-clear.ev3{
+   padding-top:var(--etnika-section-outer)!important;
+   padding-bottom:var(--etnika-section-outer)!important;
+ }
+ #etnika-review-flow #etnika-prices-clear.ev3 .ev3-shell{
+   min-height:var(--etnika-content-screen)!important;
+   height:var(--etnika-content-screen)!important;
+   box-sizing:border-box!important;
+   grid-template-rows:auto auto minmax(0,1fr)!important;
+   padding-top:clamp(24px,3svh,38px)!important;
+   padding-bottom:clamp(24px,3svh,38px)!important;
+ }
+ #etnika-review-flow #etnika-process-interactive{
+   --edge:var(--et-u-edge)!important;
+   display:grid!important;
+   grid-template-rows:auto minmax(0,1fr)!important;
+   grid-template-columns:minmax(0,1fr)!important;
+   height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer))!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-head{
+   padding:clamp(20px,3svh,38px) var(--et-u-edge) var(--etnika-overline-content-gap)!important;
+   text-align:left!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-grid{
+   box-sizing:border-box!important;
+   width:calc(100% - 2 * var(--et-u-edge))!important;
+   height:100%!important;
+   min-height:0!important;
+   margin-left:var(--et-u-edge)!important;
+   margin-right:var(--et-u-edge)!important;
+   display:grid!important;
+   grid-template-rows:repeat(2,minmax(0,1fr))!important;
+ }
+}
+
+/* A single shared alignment and larger editorial-to-headline breathing room. */
+#etnika-review-flow #etnika-block-02-final{
+  --edge:var(--et-u-edge)!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__top{
+  margin-bottom:var(--etnika-overline-content-gap)!important;
+}
+#etnika-review-flow #etnika-stories .stories-top,
+#etnika-review-flow #etnika-space-photo .spf-top,
+#etnika-review-flow #etnika-studio-features .b05-top,
+#etnika-review-flow #etnika-faq .faq-top,
+#etnika-review-flow #etnika-faq-tariffs .faq-top,
+#etnika-review-flow #etnika-reviews .etnika-editorial-top,
+#etnika-review-flow #etnika-prices-clear .ev3-overline{
+  margin-bottom:var(--etnika-overline-content-gap)!important;
+}
+#etnika-review-flow #etnika-stories .stories-shell{
+  margin-left:var(--et-u-edge)!important;
+  margin-right:var(--et-u-edge)!important;
+}
+#etnika-review-flow #etnika-space-photo .spf-shell,
+#etnika-review-flow #etnika-studio-features .b05-shell,
+#etnika-review-flow #etnika-faq .faq-shell,
+#etnika-review-flow #etnika-faq-tariffs .faq-shell{
+  margin-left:var(--et-u-edge)!important;
+  margin-right:var(--et-u-edge)!important;
+}
+#etnika-review-flow #etnika-process-interactive{
+  --edge:var(--et-u-edge)!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-head{
+  padding-left:var(--et-u-edge)!important;
+  padding-right:var(--et-u-edge)!important;
+  text-align:left!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid{
+  box-sizing:border-box!important;
+  width:calc(100% - 2 * var(--et-u-edge))!important;
+  margin-left:var(--et-u-edge)!important;
+  margin-right:var(--et-u-edge)!important;
+}
+
+/* Keep the photos and text readable at mobile/tablet sizes. Their individual
+   cards may extend naturally if five steps or many FAQ answers cannot fit one screen. */
+@media(max-width:1100px){
+ :root{
+   --etnika-section-outer:clamp(36px,6svh,60px);
+   --etnika-overline-content-gap:clamp(26px,4svh,38px);
+ }
+ #etnika-review-flow > section:is(
+   #etnika-block-02-final,#etnika-space-photo,#etnika-stories,
+   #etnika-process-interactive,#etnika-studio-features,#etnika-faq,
+   #etnika-prices-clear,#etnika-extra,#etnika-faq-tariffs,
+   #etnika-gift,#etnika-reviews,#etnika-contacts-source
+ ){
+   box-sizing:border-box!important;
+   height:auto!important;
+   min-height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer))!important;
+   max-height:none!important;
+   padding-top:var(--etnika-section-outer)!important;
+   padding-bottom:var(--etnika-section-outer)!important;
+   margin:0!important;
+   overflow:visible!important;
+ }
+ #etnika-review-flow #etnika-space-photo .spf-shell{
+   height:var(--etnika-content-screen)!important;
+   max-height:none!important;
+ }
+ #etnika-review-flow #etnika-prices-clear.ev3{
+   padding-top:var(--etnika-section-outer)!important;
+   padding-bottom:var(--etnika-section-outer)!important;
+ }
+ #etnika-review-flow #etnika-stories .stories-shell{
+   height:auto!important;min-height:var(--etnika-content-screen)!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__grid{
+   height:auto!important;min-height:var(--etnika-content-screen)!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-head{
+   padding-left:var(--et-u-edge)!important;
+   padding-right:var(--et-u-edge)!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-grid{
+   width:calc(100% - 2 * var(--et-u-edge))!important;
+   margin-left:var(--et-u-edge)!important;
+   margin-right:var(--et-u-edge)!important;
+ }
+}
+</style>
 </body>
 </html>
