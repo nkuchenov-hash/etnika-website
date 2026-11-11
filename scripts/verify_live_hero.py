@@ -71,6 +71,19 @@ with sync_playwright() as playwright:
                                outerBottom:parseFloat(st?.paddingBottom||0)};
                            }),
                            processLeft:document.querySelector('#etnika-process-interactive .epi-grid')?.getBoundingClientRect().left,
+                           processWidth:document.querySelector('#etnika-process-interactive .epi-grid')?.getBoundingClientRect().width,
+                           processHeadingCenter:(() => {const r=document.querySelector('#etnika-process-interactive .epi-head h2')?.getBoundingClientRect();return r?.left+r?.width/2})(),
+                           processHeaderBottom:document.querySelector('#etnika-process-interactive .epi-head')?.getBoundingClientRect().bottom,
+                           processPhotosTop:document.querySelector('#etnika-process-interactive .epi-grid')?.getBoundingClientRect().top,
+                           whyBackground:getComputedStyle(document.getElementById('etnika-studio-features')).backgroundColor,
+                           extraSubheading:parseFloat(getComputedStyle(document.querySelector('#etnika-extra .ee-title')).fontSize),
+                           tariffFaqHeight:document.getElementById('etnika-faq-tariffs')?.getBoundingClientRect().height,
+                           reviewsHeight:document.getElementById('etnika-reviews')?.getBoundingClientRect().height,
+                           mapFrameHeight:document.querySelector('#etnika-contacts-source .location-map')?.getBoundingClientRect().height,
+                           mapBlockHeight:document.getElementById('etnika-contacts-source')?.getBoundingClientRect().height,
+                           mapFrameTop:document.querySelector('#etnika-contacts-source .location-map')?.getBoundingClientRect().top,
+                           mapBlockTop:document.getElementById('etnika-contacts-source')?.getBoundingClientRect().top,
+                           routeIcons:document.querySelectorAll('#etnika-contacts-source .etnika-route-icon').length,
                            storiesLeft:document.querySelector('#etnika-stories .stories-shell')?.getBoundingClientRect().left,
                            spaceFrameHeight:document.querySelector('#etnika-space-photo .spf-shell')?.getBoundingClientRect().height,
                            b02Gap:(() => {const a=document.querySelector('#etnika-block-02-final .etnika-b02__top');const b=document.querySelector('#etnika-block-02-final .etnika-b02__main');return a&&b?b.getBoundingClientRect().top-a.getBoundingClientRect().bottom:null})(),
@@ -105,18 +118,34 @@ with sync_playwright() as playwright:
                 system = metrics["sectionSystem"]
                 assert len(system["blocks"]) == 12, f"Missing content sections: {system}"
                 for block in system["blocks"]:
-                    assert block["h2"], f"Missing shared section heading: {block}"
-                    assert abs(block["titleSize"]-system["titleToken"]) < 1, f"Nonstandard H2 size: {block}"
-                    assert "Forum" in block["titleFamily"], f"Nonstandard H2 font: {block}"
-                    if width >= 1101 and block["id"] == "etnika-block-02-final":
-                        # Unlike the other sections, B02's photograph covers both outer
-                        # fields. Photo and background therefore have zero section padding.
-                        assert block["outerTop"] == 0 and block["outerBottom"] == 0, f"B02 photo is inset again: {block}"
+                    if block["id"] == "etnika-extra":
+                        assert not block["h2"], f"Extras is a subsection, must NOT use the primary heading token: {block}"
                     else:
-                        assert block["outerTop"] >= 34 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Missing symmetric outer fields: {block}"
-                    if width >= 1101:
-                        assert block["height"] > height, f"Section content+fields must exceed one viewport: {block}"
-                assert abs(system["processLeft"]-system["storiesLeft"]) <= 2, f"Process grid off shared left alignment: {system}"
+                        assert block["h2"], f"Missing shared section heading: {block}"
+                        assert abs(block["titleSize"]-system["titleToken"]) < 1, f"Nonstandard H2 size: {block}"
+                        assert "Forum" in block["titleFamily"], f"Nonstandard H2 font: {block}"
+                    if width >= 1101 and block["id"] in ("etnika-block-02-final","etnika-contacts-source"):
+                        assert block["outerTop"] == 0 and block["outerBottom"] == 0, f"Full-bleed image/map cannot have section padding: {block}"
+                    elif width >= 1101 and block["id"] == "etnika-process-interactive":
+                        assert block["outerTop"] == 0 and block["outerBottom"] >= 34, f"Process heading is a separate unpadded top section: {block}"
+                    else:
+                        assert block["outerTop"] >= 20 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Broken outer fields: {block}"
+                    if width >= 1101 and block["id"] not in ("etnika-faq-tariffs","etnika-reviews"):
+                        assert block["height"] > height, f"Full-screen content+fields should exceed viewport: {block}"
+                if width >= 1101:
+                    assert abs(system["processLeft"]) < 2, f"Process photos must be FULL BLEED: {system}"
+                    assert abs(system["processWidth"]-width) < 3, f"Process grid does not span viewport: {system}"
+                    assert abs(system["processHeadingCenter"]-width/2) < 3, f"Process title not centered: {system}"
+                    assert system["processPhotosTop"] >= system["processHeaderBottom"]-2, f"Process header overlaps photo grid: {system}"
+                else:
+                    assert abs(system["processLeft"]-system["storiesLeft"]) <= 2, f"Mobile process alignment broken: {system}"
+                assert system["whyBackground"] == "rgb(255, 255, 255)", f"WHY ETNIKA should be pure white: {system}"
+                assert system["extraSubheading"] < system["titleToken"], f"Extras subsection headline too large: {system}"
+                assert system["routeIcons"] == 3, f"Missing route icons: {system}"
+                if width >= 1101:
+                    assert abs(system["mapFrameTop"]-system["mapBlockTop"]) <= 2, f"Map has an unwanted upper inset: {system}"
+                    assert abs(system["mapFrameHeight"]-system["mapBlockHeight"]) <= 3, f"Map has an unwanted lower inset: {system}"
+                    assert system["tariffFaqHeight"] < height, f"Tariff FAQ is too tall: {system}"
                 assert system["b02Gap"] >= 30, f"Insufficient gap after editorial overline: {system}"
                 assert abs(system["spaceFrameHeight"]-height) <= 3, f"Studio content is shorter than the viewport: {system}"
                 media=system["fullScreenMedia"]
@@ -124,7 +153,7 @@ with sync_playwright() as playwright:
                     assert abs(media["b02Block"]-media["b02Photo"]) <= 3, f"B02 photo must cover FULL section including outer fields: {media}"
                     assert media["spaceGallery"] >= height*.56, f"Studio photos too small: {media}"
                     assert media["storiesGrid"] >= height*.56, f"Stories photos too small: {media}"
-                    assert media["processGrid"] >= height*.62, f"Process photos too small: {media}"
+                    assert abs(media["processGrid"] - height) < 3, f"Process PHOTO GRID must be a full viewport tall: {media}"
                     assert media["extraGallery"] >= height*.85, f"Extra gallery does not fill viewport: {media}"
                     assert abs(media["giftShell"]-height) <= 3, f"Gift content frame too short: {media}"
                 assert metrics["studioLabel"] == "СТУДИЯ АВТОПОРТРЕТА", f"Header studio label is not uppercase: {metrics}"
