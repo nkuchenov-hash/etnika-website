@@ -31,6 +31,9 @@ def static_checks():
         assert FORBIDDEN not in html, f"{path}: removed description has returned"
         assert HEADLINE in part, f"{path}: heading is missing"
         assert 'id="etnika-space-photo-caption-and-rule-20261111"' in html, f"{path}: latest captions and white editorial rules are missing"
+        assert "margin:0 0 var(--etnika-overline-content-gap)!important" in html, f"{path}: kicker/title breathing space reverted"
+        assert "font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important" in html, f"{path}: photo captions must use Forum"
+        assert "text-shadow:none!important" in html, f"{path}: caption text shadows must be off"
         assert part.count('class="spf-img ') == 3, f"{path}: expected 3 original photos"
         assert part.count('class="spf-tab') == 5, f"{path}: expected 5 selectable categories"
         assert "height:var(--etnika-content-screen)!important" in frame_code, f"{path}: full-screen studio photo frame missing"
@@ -106,6 +109,9 @@ def render_checks():
                        expectedSize,
                        fontUi: getComputedStyle(nav.querySelector('button')).fontFamily,
                        navFontSize:parseFloat(getComputedStyle(nav.querySelector('button')).fontSize),
+                       navWeight:getComputedStyle(nav.querySelector('button')).fontWeight,
+                       navTextShadow:getComputedStyle(nav.querySelector('button')).textShadow,
+                       headingGap:rect(heading).y-rect(top).bottom,
                        hoverFrame:getComputedStyle(mini[0],'::before').display,
                        intro: block.querySelector('.spf-intro'),
                        images: [...block.querySelectorAll('.spf-gallery img')].map(i => ({ok:i.complete && i.naturalWidth>0, src:i.currentSrc}))
@@ -130,6 +136,10 @@ def render_checks():
                 assert photos["bottom"]<=result["nav"]["y"]+3, err("photos overlap category nav")
                 assert photos["height"]>=(0.40*h if w<=700 else 0.57*h), err("gallery is not maximized within the full-screen frame")
                 assert 15.5<=result["navFontSize"]<=16.5, err("category text must be readable at 16px")
+                assert result["navWeight"]=="200", err("category tabs must use Geologica 200")
+                assert result["navTextShadow"]=="none", err("category tab text must have no shadow")
+                if w>1100:
+                    assert result["headingGap"]>=30, err("editorial overline touches the main heading")
                 assert result["hoverFrame"]=="none", err("pink hover border still present")
                 assert all(r["height"]>35 for r in [result["main"], *result["mini"]]), err("a photo collapsed")
                 assert abs(result["titleSize"]-result["expectedSize"])<=1, err("heading deviates from shared token")
@@ -145,6 +155,10 @@ def render_checks():
                   const cards=[block.querySelector('.spf-main'),...block.querySelectorAll('.spf-small')];
                   return {
                     rule:getComputedStyle(block.querySelector('.spf-top .spf-line')).backgroundColor,
+                    ruleDisplay:getComputedStyle(block.querySelector('.spf-top .spf-line')).display,
+                    ruleWidth:block.querySelector('.spf-top .spf-line').getBoundingClientRect().width,
+                    trailingRuleDisplay:getComputedStyle(block.querySelector('.spf-top .spf-line-extra')).display,
+                    trailingRuleWidth:block.querySelector('.spf-top .spf-line-extra').getBoundingClientRect().width,
                     divider:getComputedStyle(block.querySelector('.spf-top .spf-divider')).backgroundColor,
                     cards:cards.map(card=>{
                       const title=card.querySelector('.spf-label-title');
@@ -156,17 +170,23 @@ def render_checks():
                         labelVisibility:getComputedStyle(label).visibility,
                         titleFont:getComputedStyle(title).fontFamily,
                         titleWeight:getComputedStyle(title).fontWeight,
+                        titleShadow:getComputedStyle(title).textShadow,
                         detailWeight:getComputedStyle(detail).fontWeight,
+                        detailShadow:getComputedStyle(detail).textShadow,
                         detailOpacity:parseFloat(getComputedStyle(detail).opacity),
                         detailVisibility:getComputedStyle(detail).visibility
                       };
                     })
                   };
                 }""")
-                assert captions["rule"]=="rgba(255, 255, 255, 0.42)", err("the first white editorial line is missing")
-                assert captions["divider"]=="rgba(255, 255, 255, 0.42)" if w>1100 else True, err("editorial divider missing on desktop")
+                if w>1100:
+                    assert captions["rule"]=="rgba(255, 255, 255, 0.68)", err("the first editorial line is not bright enough")
+                    assert captions["divider"]=="rgba(255, 255, 255, 0.68)", err("editorial divider missing on desktop")
+                    assert captions["ruleDisplay"]!="none" and captions["ruleWidth"]>=40, err("first editorial line has no visible width")
+                    assert captions["trailingRuleDisplay"]!="none" and captions["trailingRuleWidth"]>=40, err("right editorial line has no visible width")
                 assert all(c["labelOpacity"]>.98 and c["labelVisibility"]=="visible" for c in captions["cards"]), err("photo titles are not visible by default")
-                assert all(c["title"] and "Geologica" in c["titleFont"] and c["titleWeight"]=="300" for c in captions["cards"]), err("photo headings do not use light weight 300")
+                assert all(c["title"] and "Forum" in c["titleFont"] and c["titleWeight"]=="400" for c in captions["cards"]), err("photo headings must use Forum 400")
+                assert all(c["titleShadow"]=="none" and c["detailShadow"]=="none" for c in captions["cards"]), err("photo captions have text shadows")
                 assert all(c["detailWeight"]=="200" for c in captions["cards"]), err("secondary photo copy not using lighter weight 200")
                 page.screenshot(path=str(output / f"etnika-space-{path.stem}-{w}x{h}.png"))
                 if w>=1101:
