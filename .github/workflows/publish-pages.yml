@@ -78,6 +78,9 @@ jobs:
           python3 -m pip install --disable-pip-version-check playwright==1.56.0
           python3 -m playwright install --with-deps chromium
 
+      - name: Verify published pricing composition, navigation and tariff interactions
+        run: python3 scripts/verify_live_prices.py
+
       - name: Verify the published first screen on desktop and mobile
         run: python3 scripts/verify_live_hero.py
 
@@ -86,6 +89,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: etnika-live-hero
-          path: reports/etnika-live-first-screen-*.png
+          path: |
+            reports/etnika-live-first-screen-*.png
+            reports/etnika-live-prices-*.png
           if-no-files-found: ignore
 
