@@ -54,6 +54,7 @@
   const planButtons=[...root.querySelectorAll('.ev3-plan')];
   const modeButtons=[...root.querySelectorAll('.ev3-modes button')];
   const photo=root.querySelector('.ev3-photo');
+  const visual=root.querySelector('.ev3-visual');
   const photoLabel=root.querySelector('.ev3-photo-label strong');
   const photoKicker=root.querySelector('.ev3-photo-label span');
   const sheet=root.querySelector('.ev3-sheet');
@@ -96,8 +97,22 @@
     priceSheet.textContent=data.prices[mode]+' ₽';
     root.dataset.planTheme=plan;
   }
+  function updateDockGeometry(){
+    if(!visual || window.innerWidth<=900) return;
+    const box=visual.getBoundingClientRect();
+    /* Dock the feature sheet strictly over the right-hand photo, NEVER over
+       the tariff list or its prices. Account for the current page scroll. */
+    const top=Math.max(8,box.top);
+    const bottom=Math.min(window.innerHeight-8,box.bottom);
+    sheet.style.setProperty('--ev3-dock-left',Math.max(0,box.left)+'px');
+    sheet.style.setProperty('--ev3-dock-width',box.width+'px');
+    sheet.style.setProperty('--ev3-dock-top',top+'px');
+    sheet.style.setProperty('--ev3-dock-height',Math.max(180,bottom-top)+'px');
+  }
+  window.addEventListener('resize',()=>{if(sheetOpen)updateDockGeometry();},{passive:true});
   function open(){
     if(sheetOpen) return;
+    updateDockGeometry();
     sheetOpen=true;
     lastFocus=document.activeElement;
     previousBodyOverflow=document.body.style.overflow;
