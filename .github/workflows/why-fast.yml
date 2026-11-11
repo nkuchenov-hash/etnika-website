@@ -1,0 +1,27 @@
+name: Fast WHY ETNIKA browser geometry
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+jobs:
+  why-geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Playwright API (use preinstalled Chrome)
+        run: python3 -m pip install --disable-pip-version-check playwright==1.56.0
+      - name: Verify browser executable
+        run: |
+          command -v google-chrome || command -v google-chrome-stable
+          google-chrome --version || google-chrome-stable --version
+      - name: Check WHY ETNIKA, incl. hash navigation
+        run: python3 scripts/validate_why_section.py
+      - name: Upload screenshot diagnostics
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: why-etnika-rendered-geometry
+          path: reports/etnika-why-*.png
+          if-no-files-found: ignore
