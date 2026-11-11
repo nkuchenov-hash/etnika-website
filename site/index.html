@@ -13203,11 +13203,15 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     complete lower features grid, must end ABOVE the screen fold on desktop.
     The extra lower visual background remains outside the content viewport. */
  #etnika-review-flow > section#etnika-block-02-final .etnika-b02__copy{
+   /* The left editorial composition fits strictly into the screen BELOW
+      the fixed menu. Only the photo continues into the outer section field. */
    box-sizing:border-box!important;
    grid-template-rows:auto minmax(0,1fr) auto!important;
-   height:100%!important;min-height:0!important;
+   height:calc(100svh - var(--etnika-nav-height,60px))!important;
+   min-height:0!important;max-height:none!important;
+   align-self:start!important;
    padding-top:clamp(28px,3.8svh,52px)!important;
-   padding-bottom:calc(2 * var(--etnika-section-outer) + var(--etnika-nav-height,60px) + clamp(22px,3.5svh,42px))!important;
+   padding-bottom:clamp(22px,3svh,38px)!important;
    row-gap:clamp(10px,1.5svh,22px)!important;
    overflow:visible!important;
  }
@@ -13227,7 +13231,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media(min-width:1101px) and (max-height:800px){
  #etnika-review-flow #etnika-block-02-final .etnika-b02__copy{
    padding-top:clamp(22px,3svh,35px)!important;
-   padding-bottom:calc(2 * var(--etnika-section-outer) + var(--etnika-nav-height,60px) + 18px)!important;
+   padding-bottom:18px!important;
    row-gap:10px!important;
  }
  #etnika-review-flow #etnika-block-02-final .etnika-b02__description{margin-top:clamp(12px,2svh,19px)!important;}
@@ -13339,7 +13343,11 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   #etnika-review-flow #etnika-block-02-final .etnika-b02__counter,
   #etnika-review-flow #etnika-block-02-final .etnika-b02__stamp{
     visibility:visible!important;opacity:1!important;
-    text-shadow:0 1px 7px rgba(0,0,0,.76),0 2px 18px rgba(0,0,0,.42)!important;
+    text-shadow:none!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__stamp-title,
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__stamp-sub{
+    text-shadow:none!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__controls{
     visibility:visible!important;opacity:1!important;
@@ -13347,13 +13355,11 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__arrow{
     visibility:visible!important;opacity:1!important;
-    filter:drop-shadow(0 1px 3px rgba(0,0,0,.75))!important;
+    filter:none!important;
   }
-  /* Tiny photo-only vignettes keep white overlay text legible on the bright
-     and dark frames in the carousel; the portraits remain fully visible. */
+  /* Preserve the source photo, without vignette or dark overlay. */
   #etnika-review-flow #etnika-block-02-final .etnika-b02__media::after{
-    background:
-      linear-gradient(180deg,rgba(0,0,0,.25) 0%,transparent 19%,transparent 62%,rgba(0,0,0,.20) 75%,transparent 100%)!important;
+    content:none!important;background:none!important;display:none!important;
   }
 }
 </style>
