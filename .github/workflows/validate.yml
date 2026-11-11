@@ -51,9 +51,9 @@ jobs:
           assert [p.name for p in site_paths]==['index.html'], 'Only site/index.html may define the site'
           canonical=site_paths[0].read_text(encoding='utf-8')
           assert canonical.count('id="etnika-hero"')==1, 'Canonical site must have one HERO'
-          section_order=re.search(r"const ids=\\[([^\\]]+)\\]",canonical)
-          assert section_order, 'Page section ordering is missing'
-          display_ids=re.findall(r"'([^']+)'",section_order.group(1))
+          assert 'const ids=[' in canonical, 'Page section ordering is missing'
+          section_order=canonical.split('const ids=[',1)[1].split(']',1)[0]
+          display_ids=re.findall(r"'([^']+)'",section_order)
           assert display_ids[0]=='etnika-hero', 'HERO must be the first visible section'
           assert display_ids.index('etnika-hero')<display_ids.index('etnika-process-interactive'), 'Process must follow HERO'
           assert len(display_ids)==len(set(display_ids)), 'Duplicate section IDs in runtime order'
