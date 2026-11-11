@@ -13999,6 +13999,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   width:100%;
   height:1px;
   background:var(--line,rgba(9,9,9,.18))!important;
+  /* The upper hairline is inside .faq-top (opacity: .7).
+     Apply exactly the same compositing to the lower hairline. */
+  opacity:.7!important;
 }
 /* On narrow viewports retain natural FAQ height, readable questions and
    matching padding below the final editorial rule. */
