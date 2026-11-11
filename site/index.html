@@ -13933,11 +13933,12 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 
 
 <style id="etnika-faq-balanced-bottom-rule-20261111">
-/* 11 Nov owner screenshot: remove BOTH outer FAQ accordion strokes (red crosses).
+/* Consistent treatment for both "Перед визитом" and "О тарифах".
+   11 Nov owner screenshot: remove BOTH outer FAQ accordion strokes (red crosses).
    Only the individual question separators remain. The full-width lower rule
    belongs to the editorial shell, matches the TOP gray hairline (same --line),
    and has the same breathing room BELOW as the top line has ABOVE. */
-#etnika-review-flow > section#etnika-faq{
+#etnika-review-flow > section:is(#etnika-faq,#etnika-faq-tariffs){
   /* The top gray rule sits at the midpoint of the 28px editorial kicker row.
      Match that measured 14px inset below the lower rule too. */
   --etnika-faq-rule-midpoint:14px;
@@ -13947,7 +13948,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   padding-top:var(--etnika-section-outer,clamp(72px,9svh,112px))!important;
   padding-bottom:calc(var(--etnika-section-outer,clamp(72px,9svh,112px)) + var(--etnika-faq-rule-midpoint))!important;
 }
-#etnika-review-flow #etnika-faq .faq-shell{
+#etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-shell{
   box-sizing:border-box!important;
   height:auto!important;
   min-height:0!important;
@@ -13957,21 +13958,21 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   grid-template-rows:auto auto 1px!important;
   gap:0!important;
 }
-#etnika-review-flow #etnika-faq .faq-top{
+#etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-top{
   margin-bottom:clamp(42px,5.5svh,58px)!important;
 }
-#etnika-review-flow #etnika-faq .faq-main{
+#etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-main{
   min-height:0!important;
   align-items:start!important;
   margin-bottom:clamp(52px,7svh,68px)!important;
 }
-#etnika-review-flow #etnika-faq .faq-list{
+#etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-list{
   border-top:0!important;
 }
-#etnika-review-flow #etnika-faq .faq-item:last-child{
+#etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-item:last-child{
   border-bottom:0!important;
 }
-#etnika-review-flow #etnika-faq .faq-shell::after{
+#etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-shell::after{
   content:"";
   display:block;
   grid-column:1;
@@ -13984,16 +13985,16 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 /* On narrow viewports retain natural FAQ height, readable questions and
    matching padding below the final editorial rule. */
 @media(max-width:1100px){
-  #etnika-review-flow > section#etnika-faq{
+  #etnika-review-flow > section:is(#etnika-faq,#etnika-faq-tariffs){
     /* Mobile hides the 28px divider, leaving a ~14px high kicker row. */
     --etnika-faq-rule-midpoint:7px;
     padding-top:var(--etnika-section-outer,clamp(36px,6svh,60px))!important;
     padding-bottom:calc(var(--etnika-section-outer,clamp(36px,6svh,60px)) + var(--etnika-faq-rule-midpoint))!important;
   }
-  #etnika-review-flow #etnika-faq .faq-top{
+  #etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-top{
     margin-bottom:clamp(28px,4svh,40px)!important;
   }
-  #etnika-review-flow #etnika-faq .faq-main{
+  #etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-main{
     margin-bottom:clamp(34px,5svh,52px)!important;
   }
 }
