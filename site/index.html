@@ -13188,7 +13188,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
    between the heading and service list unnaturally tall. */
 #etnika-review-flow > section#etnika-extra{
  height:auto!important;min-height:0!important;max-height:none!important;
- padding:0!important;overflow:hidden!important;
+ /* Additional white breathing space AFTER the compact gallery and price list. */
+ padding:0 0 var(--etnika-section-outer,88px)!important;overflow:hidden!important;
 }
 #etnika-review-flow #etnika-extra .ee-shell{
  height:auto!important;min-height:0!important;max-height:none!important;
