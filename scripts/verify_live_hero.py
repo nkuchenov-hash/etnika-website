@@ -46,7 +46,11 @@ with sync_playwright() as playwright:
                        heroBottom:hr?.bottom,
                        processTop:pr?.top,
                        middleSection:center?.closest('section')?.id,
-                       headerState:document.getElementById('etnika-site-header')?.dataset.hero
+                       headerState:document.getElementById('etnika-site-header')?.dataset.hero,
+                       studioLabel:document.querySelector('#etnika-site-header .esh__descriptor')?.textContent?.trim(),
+                       logoRight:document.querySelector('#etnika-hero .ec-brand')?.getBoundingClientRect().right,
+                       heartLeft:document.querySelector('#etnika-hero .ec-love')?.getBoundingClientRect().left,
+                       heartRight:document.querySelector('#etnika-hero .ec-love')?.getBoundingClientRect().right
                     };
                 }""")
                 assert metrics["build"] == EXPECTED_BUILD, f"Old deployed HTML: {metrics}"
@@ -57,6 +61,9 @@ with sync_playwright() as playwright:
                 assert metrics["processTop"] >= metrics["heroBottom"] - 5, f"Process overlaps HERO: {metrics}"
                 assert metrics["middleSection"] == "etnika-hero", f"Process hides the visible HERO: {metrics}"
                 assert metrics["headerState"] == "true", f"Header already outside HERO: {metrics}"
+                assert metrics["studioLabel"] == "СТУДИЯ АВТОПОРТРЕТА", f"Header studio label is not uppercase: {metrics}"
+                assert metrics["heartLeft"] - metrics["logoRight"] >= (9 if width <= 760 else 20), f"Heart too close to brand: {metrics}"
+                assert metrics["heartRight"] <= width + 2, f"Heart overflows viewport: {metrics}"
                 path = REPORTS / f"etnika-live-first-screen-{width}x{height}.png"
                 page.screenshot(path=str(path), full_page=False)
                 print(f"PASS LIVE {width}x{height}: {metrics}; screenshot={path}", flush=True)
