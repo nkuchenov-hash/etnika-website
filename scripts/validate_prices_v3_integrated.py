@@ -16,8 +16,20 @@ with sync_playwright() as pw:
   values=page.evaluate("""() => {
    let root=document.querySelector('#etnika-prices-clear.ev3');
    let q=s=>root.querySelector(s),r=e=>e.getBoundingClientRect().toJSON();
-   let photo=q('.ev3-photo');
-   return {stage:r(q('.ev3-stage')),title:r(q('.ev3-title')),photo:r(q('.ev3-visual')),
+   let photo=q('.ev3-photo'),title=q('.ev3-title'),span=title.querySelector('span');
+   const overline=q('.ev3-overline'),other=document.querySelector('#etnika-stories .etnika-editorial-top');
+   let firstText=title.firstChild,range=document.createRange();
+   range.selectNodeContents(firstText);let titleTextRects=[...range.getClientRects()].map(r);
+   return {stage:r(q('.ev3-stage')),title:r(title),photo:r(q('.ev3-visual')),
+     titleLineSame:!!titleTextRects.length && Math.abs(titleTextRects[0].top-span.getBoundingClientRect().top)<9,
+     titleSpanDisplay:getComputedStyle(span).display,
+     modeLeft:r(q('.ev3-modes')).left,
+     titleRight:r(title).right,
+     overlineCount:overline.children.length,
+     overlineGrid:getComputedStyle(overline).display,
+     overlineCols:getComputedStyle(overline).gridTemplateColumns.split(' ').length,
+     overlineTextSize:getComputedStyle(overline).fontSize,
+     otherOverlineSize:other?getComputedStyle(other).fontSize:null,
      pageWidth:document.documentElement.scrollWidth,font:getComputedStyle(q('.ev3-title')).fontFamily,
      dark:getComputedStyle(q('.ev3-plan[data-plan=express] .ev3-plan-name')).color,
      opacity:getComputedStyle(q('.ev3-plan[data-plan=express]')).opacity,
@@ -26,6 +38,13 @@ with sync_playwright() as pw:
   }""")
   assert values['pageWidth']<=w+2,(w,'horizontal overflow',values)
   assert values['photoLoaded'],(w,'missing photo',values)
+  assert values['overlineCount']==6,(w,'overline must share 6-cell structure',values)
+  assert values['overlineGrid']=='grid',(w,'overline not using common editorial grid',values)
+  assert values['overlineCols']==(6 if w>1100 else 3),(w,'wrong shared overline columns',values)
+  assert values['overlineTextSize']==values['otherOverlineSize'],(w,'overline font differs from other sections',values)
+  if w>=1200:
+   assert values['titleLineSame'],(w,'title does not fit on one line',values)
+   assert values['titleRight']+16<values['modeLeft'],(w,'title overlaps day switch',values)
   assert values['opacity']=='1',(w,'faded plans',values)
   assert values['rowTop']=='0px',(w,'unwanted rule',values)
   assert values['dark']=='rgb(24, 23, 23)',(w,'muted plan names',values)
