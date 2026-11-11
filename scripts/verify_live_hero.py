@@ -131,7 +131,7 @@ with sync_playwright() as playwright:
                     else:
                         assert block["outerTop"] >= 20 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Broken outer fields: {block}"
                     if width >= 1101 and block["id"] == "etnika-block-02-final":
-                        assert abs(block["height"]-(height-60)) <= 3, f"White photo section extends past visible viewport: {block}"
+                        assert block["height"] > height+90, f"B02 lost its enlarged full-section height: {block}"
                     elif width >= 1101 and block["id"] not in ("etnika-faq-tariffs","etnika-reviews"):
                         assert block["height"] > height, f"Full-screen content+fields should exceed viewport: {block}"
                 if width >= 1101:
@@ -210,6 +210,8 @@ with sync_playwright() as playwright:
                           copyTop:r('#etnika-block-02-final .etnika-b02__top').top,
                           mediaHeight:r('#etnika-block-02-final .etnika-b02__media').height,
                           sectionHeight:r('#etnika-block-02-final').height,
+                          blockTop:r('#etnika-block-02-final').top,
+                          mainTop:r('#etnika-block-02-final .etnika-b02__main').top,
                           stampTop:r('#etnika-block-02-final .etnika-b02__stamp').top,
                           counterTop:r('#etnika-block-02-final .etnika-b02__counter').top,
                           captionBottom:r('#etnika-block-02-final .etnika-b02__caption').bottom,
@@ -221,7 +223,8 @@ with sync_playwright() as playwright:
                     }""")
                     assert abs(guide["labelX"]-guide["spaceLabelX"])<=2, f"Live shared B02/space left edge mismatch: {guide}"
                     assert abs(guide["accentX"]-guide["spaceAccentX"])<=3, f"Live overline accents misaligned: {guide}"
-                    assert guide["featuresBottom"]<height-12, f"Live B02 features are BELOW the screen fold: {guide}"
+                    assert guide["featuresBottom"] < guide["blockTop"] + guide["sectionHeight"] - 12, f"B02 benefits extend below its enlarged block: {guide}"
+                    assert abs((guide["mainTop"]+guide["featuresBottom"])/2-(guide["blockTop"]+guide["sectionHeight"]/2)) <= 18, f"B02 content is not vertically centered inside entire block: {guide}"
                     assert abs(guide["mediaHeight"]-guide["sectionHeight"])<=3, f"Live B02 photo shrunk again: {guide}"
                     assert guide["stampTop"]>=guide["headerBottom"]+8, f"Live photo 'Moscow' title hidden behind menu: {guide}"
                     assert guide["counterTop"]>=guide["headerBottom"]+8, f"Live photo count hidden behind menu: {guide}"
