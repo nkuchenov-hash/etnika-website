@@ -70,27 +70,27 @@ with sync_playwright() as pw:
         assert near(v['topLabel']['left'],v['spaceLabel']['left'],2),err('ETNIKA label not at shared left guide')
         assert near(v['topAccent']['left'],v['spaceAccent']['left'],3),err('red overline accent columns not aligned')
         assert v['overline']['top']>=v['header']['bottom']+8,err('top editorial label hidden under menu')
-        assert v['features']['bottom']<=h-12,err('BOTTOM FEATURE ROW IS BELOW THE VISIBLE SCREEN')
+        assert v['features']['bottom']<=v['block']['bottom']-12,err('feature grid overflows the enlarged section')
         assert v['features']['top']>v['description']['bottom']-2,err('features collide with description')
         assert v['title']['top']>=v['overline']['bottom']+25,err('editorial header collides with title')
         assert v['pictureOk'],err('hero/second-block photograph failed to load')
         assert near(v['media']['height'],v['block']['height'],3),err('photo not filling full section')
-        assert near(v['block']['height'],h-v['header']['height'],3),err('extra blank white tail below the viewport')
+        assert v['block']['height']>h+90,err('B02 section no longer extends beyond viewport with outer breathing fields')
         assert near(v['copy']['height'],v['block']['height'],3),err('copy/text frame differs from photo height')
 
         assert v['bodyWidth']<=w+2,err('horizontal overflow')
         assert v['photoOverlayContent']=='none' and v['photoOverlayDisplay']=='none',err('unrequested darkening of B02 photo')
         assert all(shadow=='none' for shadow in v['photoTextShadows']),err('unrequested text shadow over B02 photo')
         assert v['arrowFilter']=='none',err('unrequested carousel drop shadow')
-        assert near(v['copy']['height'],h-v['header']['height'],3),err('left content not confined to visible screen')
+        assert near(v['copy']['height'],v['block']['height'],3),err('text composition does not fill the full extended block')
         assert near(v['copy']['top'],v['block']['top'],2),err('left content shifted from photo top')
         assert v['main']['top']>=v['overline']['bottom']+20,err('headline too close to top line')
         assert v['main']['bottom']<v['features']['top']-8,err('description overlaps bottom benefits')
         # Main heading, explanatory text and four benefits form ONE vertically
         # centered composition. The small overline is independently top-anchored.
         actual_center=(v['main']['top']+v['features']['bottom'])/2
-        screen_center=(v['header']['bottom']+h)/2
-        assert abs(actual_center-screen_center)<=18,err(f'LEFT CONTENT IS NOT CENTERED: group {actual_center:.1f}, available screen {screen_center:.1f}')
+        screen_center=v['block']['top']+v['block']['height']/2
+        assert abs(actual_center-screen_center)<=18,err(f'LEFT CONTENT IS NOT CENTERED INSIDE ENTIRE BLOCK: group {actual_center:.1f}, section {screen_center:.1f}')
         assert v['main']['top']>v['overline']['bottom']+28,err('main text starts too high, close to overline')
         assert v['counter']['top']>=v['header']['bottom']+8,err('photo counter hidden under sticky navigation')
         assert v['stamp']['top']>=v['header']['bottom']+8,err('Moscow photo stamp hidden under menu')
