@@ -6,6 +6,7 @@ on:
     # Rebuild Pages only when deployed content or this workflow changes.
     paths:
       - 'site/**'
+      - 'scripts/verify_live_hero.py'
       - 'data/**'
       - 'docs/**'
       - 'index.html'
@@ -61,3 +62,19 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Install Chromium for public-site verification
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+
+      - name: Verify the published first screen on desktop and mobile
+        run: python3 scripts/verify_live_hero.py
+
+      - name: Upload actual published-site screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-live-hero
+          path: reports/etnika-live-first-screen-*.png
+          if-no-files-found: ignore
+
