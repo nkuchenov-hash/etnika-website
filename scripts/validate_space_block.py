@@ -30,6 +30,7 @@ def static_checks():
         frame_code=frame.group(0)
         assert FORBIDDEN not in html, f"{path}: removed description has returned"
         assert HEADLINE in part, f"{path}: heading is missing"
+        assert 'id="etnika-space-photo-caption-and-rule-20261111"' in html, f"{path}: latest captions and white editorial rules are missing"
         assert part.count('class="spf-img ') == 3, f"{path}: expected 3 original photos"
         assert part.count('class="spf-tab') == 5, f"{path}: expected 5 selectable categories"
         assert "height:var(--etnika-content-screen)!important" in frame_code, f"{path}: full-screen studio photo frame missing"
@@ -135,7 +136,58 @@ def render_checks():
                 assert "Forum" in result["titleFamily"], err("wrong heading font family")
                 assert "Geologica" in result["fontUi"], err("wrong tab font family")
                 assert all(i["ok"] for i in result["images"]), err("missing studio photo asset")
+                # Keep the basic photo title always visible while the detail
+                # description appears only on hover or keyboard focus.
+                page.mouse.move(0, 0)
+                page.wait_for_timeout(300)
+                captions = page.evaluate("""() => {
+                  const block=document.getElementById('etnika-space-photo');
+                  const cards=[block.querySelector('.spf-main'),...block.querySelectorAll('.spf-small')];
+                  return {
+                    rule:getComputedStyle(block.querySelector('.spf-top .spf-line')).backgroundColor,
+                    divider:getComputedStyle(block.querySelector('.spf-top .spf-divider')).backgroundColor,
+                    cards:cards.map(card=>{
+                      const title=card.querySelector('.spf-label-title');
+                      const detail=card.querySelector('.spf-label-sub');
+                      const label=card.querySelector('.spf-label');
+                      return {
+                        title:title.textContent.trim(),
+                        labelOpacity:parseFloat(getComputedStyle(label).opacity),
+                        labelVisibility:getComputedStyle(label).visibility,
+                        titleFont:getComputedStyle(title).fontFamily,
+                        titleWeight:getComputedStyle(title).fontWeight,
+                        detailWeight:getComputedStyle(detail).fontWeight,
+                        detailOpacity:parseFloat(getComputedStyle(detail).opacity),
+                        detailVisibility:getComputedStyle(detail).visibility
+                      };
+                    })
+                  };
+                }""")
+                assert captions["rule"]=="rgba(255, 255, 255, 0.42)", err("the first white editorial line is missing")
+                assert captions["divider"]=="rgba(255, 255, 255, 0.42)" if w>1100 else True, err("editorial divider missing on desktop")
+                assert all(c["labelOpacity"]>.98 and c["labelVisibility"]=="visible" for c in captions["cards"]), err("photo titles are not visible by default")
+                assert all(c["title"] and "Geologica" in c["titleFont"] and c["titleWeight"]=="300" for c in captions["cards"]), err("photo headings do not use light weight 300")
+                assert all(c["detailWeight"]=="200" for c in captions["cards"]), err("secondary photo copy not using lighter weight 200")
                 page.screenshot(path=str(output / f"etnika-space-{path.stem}-{w}x{h}.png"))
+                if w>=1101:
+                    assert all(c["detailOpacity"]<.02 and c["detailVisibility"]=="hidden" for c in captions["cards"]), err("detailed photo copy is already open without hover")
+                    card=page.locator("#etnika-space-photo .spf-main")
+                    card.hover()
+                    page.wait_for_timeout(350)
+                    hover=page.evaluate("""() => {
+                      const card=document.querySelector('#etnika-space-photo .spf-main');
+                      const title=card.querySelector('.spf-label-title');
+                      const detail=card.querySelector('.spf-label-sub');
+                      return {
+                        titleOpacity:getComputedStyle(card.querySelector('.spf-label')).opacity,
+                        detailOpacity:parseFloat(getComputedStyle(detail).opacity),
+                        visibility:getComputedStyle(detail).visibility,
+                        height:detail.getBoundingClientRect().height
+                      };
+                    }""")
+                    assert hover["detailOpacity"]>.95 and hover["visibility"]=="visible" and hover["height"]>15, err("full photo details fail to appear on hover")
+                    assert float(hover["titleOpacity"])>.98, err("base photo heading disappears on hover")
+                    page.screenshot(path=str(output / f"etnika-space-hover-{path.stem}-{w}x{h}.png"))
                 print(f"PASS: {path.name} {w}x{h}; gallery {photos['height']:.0f}px; heading {result['titleSize']:.1f}px")
                 page.close()
         browser.close()
