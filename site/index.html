@@ -13235,5 +13235,83 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  #etnika-review-flow #etnika-block-02-final .etnika-b02__feature{min-height:45px!important;padding-top:6px!important;padding-bottom:6px!important;}
 }
 </style>
+
+<style id="etnika-space-photo-caption-and-rule-20261111">
+/* The shared overline line token is dark on this black block.
+   Provide a pair of visible light rules plus the matching divider. */
+#etnika-review-flow #etnika-space-photo .spf-top > .spf-line,
+#etnika-review-flow #etnika-space-photo .spf-top > .spf-line-extra{
+  display:block!important;
+  background:rgba(255,255,255,.42)!important;
+  height:1px!important;min-width:0!important;
+}
+#etnika-review-flow #etnika-space-photo .spf-top > .spf-divider{
+  display:block!important;
+  background:rgba(255,255,255,.42)!important;
+  width:1px!important;height:28px!important;
+}
+/* Main photo and both side photos always show the concise base title. */
+#etnika-review-flow #etnika-space-photo .spf-label{
+  opacity:1!important;visibility:visible!important;
+  transform:none!important;transition:none!important;
+  pointer-events:none!important;
+}
+#etnika-review-flow #etnika-space-photo :is(.spf-main,.spf-small)::after{
+  opacity:.73!important;
+  background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.19) 66%,rgba(0,0,0,.72) 100%)!important;
+  transition:opacity .25s ease!important;
+}
+#etnika-review-flow #etnika-space-photo :is(.spf-main,.spf-small):is(:hover,:focus-visible,:focus-within)::after{
+  opacity:1!important;
+}
+/* Forum offers one font weight. The lighter existing Geologica weight 300
+   is used instead, with unchanged design-system UI typeface. */
+#etnika-review-flow #etnika-space-photo .spf-label-title,
+#etnika-review-flow #etnika-space-photo .spf-main .spf-label-title{
+  font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif)!important;
+  font-weight:300!important;
+  font-size:clamp(20px,1.52vw,29px)!important;
+  line-height:1.14!important;
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+  color:#fff!important;
+  text-shadow:0 1px 8px rgba(0,0,0,.5)!important;
+}
+#etnika-review-flow #etnika-space-photo .spf-main .spf-label-title{
+  font-size:clamp(24px,1.85vw,35px)!important;
+}
+/* Detailed description is hidden on desktop until hover/keyboard focus.
+   The base title remains visible. */
+@media(hover:hover) and (pointer:fine){
+ #etnika-review-flow #etnika-space-photo .spf-label-sub{
+  visibility:hidden!important;opacity:0!important;
+  max-height:0!important;overflow:hidden!important;
+  margin-top:0!important;
+  transform:translateY(7px)!important;
+  transition:max-height .28s ease,opacity .22s ease,transform .28s ease,margin-top .28s ease!important;
+ }
+ #etnika-review-flow #etnika-space-photo :is(.spf-main,.spf-small):is(:hover,:focus-visible,:focus-within) .spf-label-sub{
+  visibility:visible!important;opacity:1!important;
+  max-height:155px!important;margin-top:12px!important;
+  transform:none!important;
+ }
+}
+#etnika-review-flow #etnika-space-photo .spf-label-sub{
+  font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif)!important;
+  font-weight:200!important;
+  font-size:var(--etnika-text-size,16px)!important;
+  line-height:1.43!important;
+  letter-spacing:0!important;
+  color:#fff!important;
+  text-shadow:0 1px 9px rgba(0,0,0,.56)!important;
+}
+@media(hover:none),(pointer:coarse){
+ #etnika-review-flow #etnika-space-photo .spf-label-sub{
+  visibility:visible!important;opacity:1!important;
+  max-height:none!important;margin-top:8px!important;
+  transform:none!important;
+ }
+}
+</style>
 </body>
 </html>
