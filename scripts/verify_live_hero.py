@@ -87,6 +87,18 @@ with sync_playwright() as playwright:
                 assert metrics["processTop"] >= metrics["heroBottom"] - 5, f"Process overlaps HERO: {metrics}"
                 assert metrics["middleSection"] == "etnika-hero", f"Process hides the visible HERO: {metrics}"
                 assert metrics["headerState"] == "true", f"Header already outside HERO: {metrics}"
+                system = metrics["sectionSystem"]
+                assert len(system["blocks"]) == 12, f"Missing content sections: {system}"
+                for block in system["blocks"]:
+                    assert block["h2"], f"Missing shared section heading: {block}"
+                    assert abs(block["titleSize"]-system["titleToken"]) < 1, f"Nonstandard H2 size: {block}"
+                    assert "Forum" in block["titleFamily"], f"Nonstandard H2 font: {block}"
+                    assert block["outerTop"] >= 34 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Missing symmetric outer fields: {block}"
+                    if width >= 1101:
+                        assert block["height"] > height, f"Section content+fields must exceed one viewport: {block}"
+                assert abs(system["processLeft"]-system["storiesLeft"]) <= 2, f"Process grid off shared left alignment: {system}"
+                assert system["b02Gap"] >= 30, f"Insufficient gap after editorial overline: {system}"
+                assert abs(system["spaceFrameHeight"]-(height-(60 if width>1160 else 56))) <= 3, f"Studio content does not fit its viewport frame: {system}"
                 assert metrics["studioLabel"] == "СТУДИЯ АВТОПОРТРЕТА", f"Header studio label is not uppercase: {metrics}"
                 assert metrics["heartLeft"] - metrics["logoRight"] >= (9 if width <= 760 else 20), f"Heart too close to brand: {metrics}"
                 assert metrics["heartRight"] <= width + 2, f"Heart overflows viewport: {metrics}"
