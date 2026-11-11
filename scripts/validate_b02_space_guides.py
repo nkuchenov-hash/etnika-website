@@ -13,7 +13,7 @@ def near(a,b,slack=3):
 
 with sync_playwright() as pw:
     browser=pw.chromium.launch(headless=True)
-    for w,h in [(1366,768),(1440,900),(1662,896),(1920,1080),(2048,1145)]:
+    for w,h in [(1366,768),(1440,900),(1618,928),(1662,896),(1920,1080),(2048,1145)]:
         page=browser.new_page(viewport={'width':w,'height':h})
         page.goto((ROOT/'site/index.html').as_uri(),wait_until='load',timeout=45000)
         page.evaluate('() => document.fonts.ready')
@@ -41,7 +41,16 @@ with sync_playwright() as pw:
               title:box(q('#etnika-block-02-final .etnika-b02__title')),
               description:box(q('#etnika-block-02-final .etnika-b02__description')),
               features:box(feat),
+
               lastFeature:box(feat.lastElementChild),
+              overlayTop:box(q('#etnika-block-02-final .etnika-b02__media-top')),
+              overlayBottom:box(q('#etnika-block-02-final .etnika-b02__media-bottom')),
+              counter:box(q('#etnika-block-02-final .etnika-b02__counter')),
+              stamp:box(q('#etnika-block-02-final .etnika-b02__stamp')),
+              caption:box(q('#etnika-block-02-final .etnika-b02__caption')),
+              prev:box(q('#etnika-block-02-final .etnika-b02__arrow--prev')),
+              next:box(q('#etnika-block-02-final .etnika-b02__arrow--next')),
+              bottomControls:box(q('#etnika-block-02-final .etnika-b02__controls')),
               heroHeight:box(q('#etnika-hero')).height,
               pictureOk:[...media.querySelectorAll('img')].some(i=>i.complete&&i.naturalWidth>0),
               bodyWidth:document.documentElement.scrollWidth,
@@ -56,9 +65,17 @@ with sync_playwright() as pw:
         assert v['title']['top']>=v['overline']['bottom']+25,err('editorial header collides with title')
         assert v['pictureOk'],err('hero/second-block photograph failed to load')
         assert near(v['media']['height'],v['block']['height'],3),err('photo not filling full section')
+
         assert v['bodyWidth']<=w+2,err('horizontal overflow')
+        assert v['counter']['top']>=v['header']['bottom']+8,err('photo counter hidden under sticky navigation')
+        assert v['stamp']['top']>=v['header']['bottom']+8,err('Moscow photo stamp hidden under menu')
+        assert v['stamp']['bottom']<=h-50,err('photo stamp extends below screen')
+        assert v['overlayBottom']['bottom']<=h-18,err('PHOTO CAPTION/ARROWS BELOW THE SCREEN')
+        assert v['caption']['bottom']<=h-18,err('photo description below screen')
+        assert v['prev']['bottom']<=h-18 and v['next']['bottom']<=h-18,err('carousel arrows below screen')
+        assert v['overlayBottom']['top']>v['header']['bottom']+60,err('photo caption collides with top overlays')
         path=OUT/f'etnika-b02-space-guides-{w}x{h}.png'
         page.screenshot(path=str(path),full_page=False)
-        print(f"PASS GUIDES {w}x{h}: labels {v['topLabel']['left']:.1f}/{v['spaceLabel']['left']:.1f}, accents {v['topAccent']['left']:.1f}/{v['spaceAccent']['left']:.1f}, features bottom {v['features']['bottom']:.1f} < screen {h}, photo {v['media']['height']:.1f}px",flush=True)
+        print(f"PASS GUIDES {w}x{h}: labels {v['topLabel']['left']:.1f}/{v['spaceLabel']['left']:.1f}, accents {v['topAccent']['left']:.1f}/{v['spaceAccent']['left']:.1f}, features bottom {v['features']['bottom']:.1f} < screen {h}, photo {v['media']['height']:.1f}px, stamp top {v['stamp']['top']:.1f}, photo caption bottom {v['overlayBottom']['bottom']:.1f}",flush=True)
         page.close()
     browser.close()
