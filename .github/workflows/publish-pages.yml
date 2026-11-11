@@ -24,8 +24,8 @@ permissions:
 jobs:
   deploy:
     concurrency:
-      group: etnika-github-pages-deploy-v2
-      cancel-in-progress: true
+      group: etnika-github-pages-deploy-stable-v3
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     environment:
       name: github-pages
