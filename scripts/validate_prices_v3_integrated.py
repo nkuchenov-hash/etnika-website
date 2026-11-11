@@ -36,6 +36,7 @@ with sync_playwright() as pw:
   page.locator('.ev3-plan[data-plan=premium]').click()
   page.locator('.ev3-details-open').click()
   assert page.locator('.ev3-sheet').get_attribute('data-open')=='true'
+  page.wait_for_timeout(600)  # Wait for 480ms slide-in before measuring the panel's final bounds.
   assert page.locator('.ev3-feature-list li').count()==10
   if w>900:
    # On a desktop the sheet is confined to the photograph, not over tariff prices.
