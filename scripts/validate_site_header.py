@@ -22,7 +22,7 @@ def static():
         assert s.count('id="etnika-site-header"')==1,(path,"missing or duplicate site navigation")
         assert 'id="etnika-header-interaction-20261105"' in s
         assert 'id="etnika-brand-flight"' in s
-        assert 'class="esh__descriptor">Студия автопортрета</span>' in s
+        assert 'class="esh__descriptor">СТУДИЯ АВТОПОРТРЕТА</span>' in s
         assert 'href="#etnika-prices-clear"' in s
         assert 'href="#etnika-gift"' in s
         assert 'href="#etnika-contacts-source"' in s
