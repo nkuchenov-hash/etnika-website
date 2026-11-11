@@ -13743,5 +13743,25 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 </style>
 
+
+<style id="etnika-faq-balanced-bottom-rule-20261111">
+/* Owner-approved "Перед визитом": use the SAME hairline as the upper editorial rule.
+   The line is the last row of the existing FAQ shell, so the section's symmetric
+   outer spacing is preserved BELOW it on desktop, tablet and mobile. */
+#etnika-review-flow #etnika-faq .faq-shell{
+  grid-template-rows:auto minmax(0,1fr) 1px!important;
+}
+#etnika-review-flow #etnika-faq .faq-shell::after{
+  content:"";
+  display:block;
+  grid-column:1;
+  grid-row:3;
+  width:100%;
+  height:1px;
+  background:var(--line,rgba(9,9,9,.18));
+  align-self:end;
+}
+</style>
+
 </body>
 </html>
