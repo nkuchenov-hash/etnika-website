@@ -108,7 +108,12 @@ with sync_playwright() as playwright:
                     assert block["h2"], f"Missing shared section heading: {block}"
                     assert abs(block["titleSize"]-system["titleToken"]) < 1, f"Nonstandard H2 size: {block}"
                     assert "Forum" in block["titleFamily"], f"Nonstandard H2 font: {block}"
-                    assert block["outerTop"] >= 34 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Missing symmetric outer fields: {block}"
+                    if width >= 1101 and block["id"] == "etnika-block-02-final":
+                        # Unlike the other sections, B02's photograph covers both outer
+                        # fields. Photo and background therefore have zero section padding.
+                        assert block["outerTop"] == 0 and block["outerBottom"] == 0, f"B02 photo is inset again: {block}"
+                    else:
+                        assert block["outerTop"] >= 34 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Missing symmetric outer fields: {block}"
                     if width >= 1101:
                         assert block["height"] > height, f"Section content+fields must exceed one viewport: {block}"
                 assert abs(system["processLeft"]-system["storiesLeft"]) <= 2, f"Process grid off shared left alignment: {system}"
