@@ -45,8 +45,9 @@ with sync_playwright() as pw:
   assert values['overlineGrid']=='grid',(w,'overline not using common editorial grid',values)
   assert values['overlineCols']==(6 if w>1100 else 3),(w,'wrong shared overline columns',values)
   assert values['overlineTextSize']==values['otherOverlineSize'],(w,'overline font differs from other sections',values)
+  if w>=1360:
+   assert values['titleLineSame'],(w,'title does not fit on one line at wide desktop width',values)
   if w>=1200:
-   assert values['titleLineSame'],(w,'title does not fit on one line',values)
    assert values['titleRight']+16<values['modeLeft'],(w,'title overlaps day switch',values)
   assert values['opacity']=='1',(w,'faded plans',values)
   assert values['rowTop']=='0px',(w,'unwanted rule',values)
