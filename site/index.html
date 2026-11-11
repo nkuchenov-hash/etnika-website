@@ -14100,58 +14100,53 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 </style>
 
 
-<style id="etnika-b02-sticky-scroll-chain-20261111">
-/* The previous site-wide overflow-x:hidden on html/body created a scrolling
-   ancestor which disabled viewport-sticky positioning of the second block.
-   clip retains horizontal cropping without creating a scroll container. */
-@media(min-width:1101px){
-  html,body{overflow-x:clip!important;}
-}
-</style>
-
 <style id="etnika-b02-centered-composition-20261111">
-/* Owner screenshot 11 Nov 2026: full-height section was taller than the
-   viewport, so a normal scroll clipped the centered copy at the top.
-   Keep the requested tall, edge-to-edge photo; retain the FULL text group
-   centered in a STICKY viewport frame while the long section scrolls. */
+/* Owner request 11 Nov 2026: NO sticky, no scroll-coupled repositioning.
+   One ordinary, in-flow text group centered vertically in the full
+   enlarged B02 section. The overline is independently positioned at top.
+   Top and bottom empty space around the text group are mathematically equal. */
 @media(min-width:1101px){
   #etnika-review-flow > section#etnika-block-02-final{
-    overflow:clip!important; /* Unlike hidden, clip doesn't disable sticky. */
+    overflow:hidden!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__grid{
-    align-items:start!important;
+    align-items:stretch!important;
   }
   #etnika-review-flow > section#etnika-block-02-final .etnika-b02__copy{
-    position:sticky!important;
-    top:var(--etnika-nav-height,60px)!important;
-    align-self:start!important;
+    position:relative!important;
+    top:auto!important;
+    align-self:stretch!important;
     box-sizing:border-box!important;
-    display:block!important;
-    height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+    align-items:stretch!important;
+    height:100%!important;
     min-height:0!important;
-    max-height:none!important;
     padding:0!important;
     overflow:visible!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__composition{
-    position:absolute!important;
-    left:var(--edge)!important;
-    right:var(--pad)!important;
-    top:50%!important;
-    transform:translateY(-50%)!important;
+    position:static!important;
+    inset:auto!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    transform:none!important;
     display:flex!important;
     flex-direction:column!important;
     justify-content:center!important;
     align-items:stretch!important;
     gap:clamp(24px,3svh,44px)!important;
     width:auto!important;
+    height:auto!important;
     min-height:0!important;
-    margin:0!important;
+    margin:0 var(--pad) 0 var(--edge)!important;
     padding:0!important;
+    flex:0 0 auto!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__composition > .etnika-b02__main,
   #etnika-review-flow #etnika-block-02-final .etnika-b02__composition > .etnika-b02__features{
-    display:block;
     position:static!important;
     align-self:stretch!important;
     width:100%!important;
