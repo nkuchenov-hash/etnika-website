@@ -27,6 +27,29 @@
     encodeURIComponent('Москва, улица Ленинская Слобода, 26А, БЦ Омега-2');
   let started = false;
 
+  // The embedded map is always usable as a backup when the v3 API, its key,
+  // WebGL or any optional module fails to initialize.
+  function useFallback(error) {
+    if (shell.dataset.mapState === 'ready') return;
+    shell.dataset.mapState = 'fallback';
+    root.setAttribute('aria-hidden', 'true');
+    if (fallbackFrame && fallbackFrame.dataset.mapSrc &&
+        !fallbackFrame.getAttribute('src')) {
+      fallbackFrame.src = fallbackFrame.dataset.mapSrc;
+    }
+    if (error && window.console && console.warn) {
+      console.warn('ETNIKA map: switched to embedded Yandex map', error);
+    }
+  }
+
+  // Load the reliable embedded map before attempting the enhanced v3 layer.
+  // This also keeps the map functional if the v3 CDN never answers.
+  root.setAttribute('aria-hidden', 'true');
+  if (fallbackFrame && fallbackFrame.dataset.mapSrc &&
+      !fallbackFrame.getAttribute('src')) {
+    fallbackFrame.src = fallbackFrame.dataset.mapSrc;
+  }
+
   function createMetroMark() {
     const mark = document.createElement('div');
     mark.className = 'etnika-map-station';
@@ -125,6 +148,7 @@
       {coordinates: METRO, draggable: false}, createMetroMark()
     ));
     shell.dataset.mapState = 'ready';
+    root.setAttribute('aria-hidden', 'false');
 
     try {
       const ui = await api.import('@yandex/ymaps3-default-ui-theme');
@@ -146,8 +170,16 @@
       encodeURIComponent(API_KEY) + '&lang=ru_RU';
     loader.async = true;
     loader.onload = function () {init().catch(useFallback);};
-    loader.onerror = useFallback;
+    loader.onerror = function () {
+      useFallback(new Error('Yandex Maps script failed to load'));
+    };
     document.head.appendChild(loader);
+    // Some privacy/ad blockers silently stall the script without onerror.
+    window.setTimeout(function () {
+      if (shell.dataset.mapState !== 'ready') {
+        useFallback(new Error('Yandex Maps v3 timed out'));
+      }
+    }, 10000);
   }
 
   /* Warm the browser API before the visitor reaches this last section.
