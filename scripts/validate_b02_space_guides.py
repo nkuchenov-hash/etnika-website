@@ -92,7 +92,7 @@ with sync_playwright() as pw:
         # centered composition. The small overline is independently top-anchored.
         actual_center=v['composition']['top']+v['composition']['height']/2
         section_center=v['block']['top']+v['block']['height']/2
-        assert v['compositionPosition']=='absolute',err('B02 composition must be positioned as a single centered group')
+        assert v['compositionPosition']=='static',err('B02 text group must be static, never sticky or absolutely moved')
         assert abs(actual_center-section_center)<=2,err(f'B02 TEXT NOT CENTERED: composition midpoint {actual_center:.1f}, section midpoint {section_center:.1f}')
         assert abs(v['main']['top']-v['composition']['top'])<=2,err('B02 headline is not at the top of the composition')
         assert abs(v['features']['bottom']-v['composition']['bottom'])<=2,err('B02 benefits detached from centered composition')
