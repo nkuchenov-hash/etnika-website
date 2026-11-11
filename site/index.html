@@ -1072,7 +1072,7 @@ window.addEventListener('pageshow',function(event){
 <section id="etnika-process-interactive" aria-label="Как проходит весь процесс">
   <div class="epi-head">
     <h2 class="etnika-section-heading">Как проходит <span>весь процесс</span></h2>
-    <p class="epi-sub">Пять шагов — от выбора времени до готовых фотографий.<span class="epi-sub-hint">Наведите на карточку, чтобы увидеть детали.</span></p>
+    <p class="epi-sub">Пять шагов — от&nbsp;выбора времени до&nbsp;готовых фотографий.<span class="epi-sub-hint">Наведите на карточку, чтобы увидеть детали.</span></p>
   </div>
   <div class="epi-grid"></div>
 
@@ -1118,11 +1118,15 @@ window.addEventListener('pageshow',function(event){
   let currentStep=null,currentGallery=[],galleryIndex=0,lastFocus=null;
 
   const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  // Nonbreaking spaces keep short Russian prepositions attached to the next word.
+  // This changes line wrapping only; source copy remains untouched.
+  const keepPrepositions=s=>String(s).replace(/(^|[\s«„(])((?:[авикосуя]|на|по|за|от|до|из|во|со|об|без|для|под|над|при))\s+/giu,
+    (_,leading,word)=>leading+word+'\u00a0');
 
   STEPS.forEach(step=>{
     const card=document.createElement('article');
     card.className='epi-card'; card.dataset.step=step.id;
-    card.innerHTML=`<img alt="${esc(step.title)}"><div class="epi-base"><div class="epi-num">${String(step.id).padStart(2,'0')}</div><div class="epi-rule"></div><h3 class="epi-title">${esc(step.title)}</h3></div><div class="epi-reveal"><p class="epi-desc">${esc(step.desc)}</p><button class="epi-more" type="button">Подробнее <span>→</span></button></div>`;
+    card.innerHTML=`<img alt="${esc(step.title)}"><div class="epi-base"><div class="epi-num">${String(step.id).padStart(2,'0')}</div><div class="epi-rule"></div><h3 class="epi-title">${esc(keepPrepositions(step.title))}</h3></div><div class="epi-reveal"><p class="epi-desc">${esc(keepPrepositions(step.desc))}</p><button class="epi-more" type="button">Подробнее <span>→</span></button></div>`;
     card.querySelector('img').src=ASSETS['s'+step.id];
     card.querySelector('.epi-more').addEventListener('click',e=>{e.stopPropagation();openStep(step,e.currentTarget)});
     grid.appendChild(card);
@@ -1141,14 +1145,14 @@ window.addEventListener('pageshow',function(event){
   function openStep(step,focusEl){
     currentStep=step; currentGallery=step.gallery.slice(); galleryIndex=0; lastFocus=focusEl;
     detailNo.textContent=String(step.id).padStart(2,'0')+' / 05';
-    detailTitle.textContent=step.detailTitle;
-    detailAccent.textContent=step.accent;
-    detailBody.textContent=step.body;
+    detailTitle.textContent=keepPrepositions(step.detailTitle);
+    detailAccent.textContent=keepPrepositions(step.accent);
+    detailBody.textContent=keepPrepositions(step.body);
     sections.innerHTML='';
     step.sections.forEach(([title,items],idx)=>{
       const sec=document.createElement('div');sec.className='epi-section';
       const tag=(step.id===3 && idx===0)?'ol':'ul';
-      sec.innerHTML=`<h4>${esc(title)}</h4><${tag}>${items.map(x=>`<li>${esc(x)}</li>`).join('')}</${tag}>`;
+      sec.innerHTML=`<h4>${esc(keepPrepositions(title))}</h4><${tag}>${items.map(x=>`<li>${esc(keepPrepositions(x))}</li>`).join('')}</${tag}>`;
       sections.appendChild(sec);
     });
     renderGallery();
@@ -13007,8 +13011,35 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
    min-height:0!important;max-height:none!important;
    margin:0!important;padding:0!important;
    display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
-   grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:1px!important;
+   grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:0!important;
  }
+ /* Photo backgrounds bleed to the viewport. Overlay copy aligns to the same
+    horizontal content guide as the other ETNIKA sections. */
+ #etnika-review-flow #etnika-process-interactive .epi-grid .epi-card{
+   border:0!important;box-shadow:none!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-grid
+   .epi-card:is(:nth-child(1),:nth-child(4)) :is(.epi-base,.epi-reveal){
+   padding-left:var(--et-u-edge)!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-grid
+   .epi-card:is(:nth-child(3),:nth-child(5)) :is(.epi-base,.epi-reveal){
+   padding-right:var(--et-u-edge)!important;
+ }
+}
+@media(max-width:1100px){
+ #etnika-review-flow #etnika-process-interactive .epi-grid{
+   width:100%!important;margin:0!important;padding:0!important;gap:0!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-grid :is(.epi-base,.epi-reveal){
+   padding-left:var(--et-u-edge)!important;
+   padding-right:var(--et-u-edge)!important;
+ }
+}
+/* Avoid orphaned Russian short prepositions and broken card titles. */
+#etnika-process-interactive .epi-title{
+ text-wrap:balance!important;hyphens:none!important;
+ word-break:normal!important;overflow-wrap:normal!important;
 }
 /* Desktop cards keep the pre-regression hover interaction. */
 @media(hover:hover) and (pointer:fine){
