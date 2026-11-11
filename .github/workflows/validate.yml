@@ -116,6 +116,9 @@ jobs:
       - name: Check site navigation and shared editorial type
         run: python3 scripts/validate_site_header.py --render
 
+      - name: Check WHY ETNIKA photo, caption, and six-item viewport geometry
+        run: python3 scripts/validate_why_section.py
+
       - name: Save layout screenshots for visual review
         if: always()
         uses: actions/upload-artifact@v4
@@ -124,4 +127,5 @@ jobs:
           path: |
             reports/etnika-space-*.png
             reports/etnika-b02-space-guides-*.png
+            reports/etnika-why-*.png
           if-no-files-found: ignore
