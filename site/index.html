@@ -11766,16 +11766,12 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
  // HERO is managed by the slideshow component; retain remaining full-site initialization.
  const slideUrls=['assets/etnika-portrait-beige.jpg','assets/etnika-portrait-dark.jpg','assets/etnika-bw-portrait.jpg','assets/etnika-portrait-etnika.jpg','assets/etnika-bw-guest.jpg'];
  document.querySelectorAll('#etnika-block-02-final .etnika-b02__slide').forEach((img,i)=>{if(slideUrls[i]){img.src=slideUrls[i];img.loading=i?'lazy':'eager';img.style.objectPosition='center 38%'}});
- const ids=['etnika-process-interactive','etnika-hero','etnika-stories','etnika-space-photo','etnika-studio-features','etnika-block-02-final','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-reviews','etnika-contacts-source'];
+ const ids=['etnika-hero','etnika-process-interactive','etnika-stories','etnika-space-photo','etnika-studio-features','etnika-block-02-final','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-reviews','etnika-contacts-source'];
  const flow=document.createElement('main');flow.id='etnika-review-flow';flow.setAttribute('aria-label','Предварительная композиция всей главной');
  for(const id of ids){const item=document.getElementById(id);if(item)flow.appendChild(item);}
  document.body.appendChild(flow);
  // Re-evaluate the fixed header only after all sections are in their final order.
  requestAnimationFrame(()=>window.dispatchEvent(new Event('scroll')));
- if(location.hash==='#etnika-process-interactive'){
-   requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
-   window.addEventListener('load',()=>window.scrollTo({top:0,behavior:'instant'}),{once:true});
- }
  const links=document.querySelectorAll('#etnika-hero a[href="#etnika-process-interactive"]');links.forEach(x=>x.href='#etnika-process-interactive');
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
