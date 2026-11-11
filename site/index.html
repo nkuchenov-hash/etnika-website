@@ -12168,6 +12168,13 @@ html,body{background:#f8f8f7;font-family:'Geologica',Arial,sans-serif}
 }
 /* Labels are visible immediately; the arrow appears on hover/focus. */
 #etnika-stories .story-arrow{
+  /* Keep the arrow outside the normal flow: invisible controls may not lift the caption. */
+  position:absolute!important;
+  right:0!important;
+  bottom:0!important;
+  margin:0!important;
+  width:30px!important;
+  text-align:right!important;
   opacity:0!important;
   transform:translateX(-8px)!important;
   transition:opacity .26s ease,transform .26s ease!important;
