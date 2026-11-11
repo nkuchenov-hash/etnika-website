@@ -14082,9 +14082,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   width:100%;
   height:1px;
   background:var(--line,rgba(9,9,9,.18))!important;
-  /* Both strokes now share height, color and effective .7 opacity;
-     upper stroke is a child of the undimmed editorial row. */
-  opacity:.7!important;
+  /* Screenshot pixel calibration (2026-11-11): the upper grid line is
+     antialiased and appears lighter than a 1px rule snapped to a device pixel.
+     0.61 matches its actual sampled darkest RGB (217,214,210) on #f3f0eb. */
+  opacity:.61!important;
 }
 /* On narrow viewports retain natural FAQ height, readable questions and
    matching padding below the final editorial rule. */
