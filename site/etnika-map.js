@@ -171,7 +171,11 @@
     const monochrome = [
       {elements: 'geometry', stylers: [{saturation: -1}]},
       {elements: 'label.icon', stylers: [{saturation: -1}]},
-      {elements: 'label.text', stylers: [{saturation: -1}]}
+      {elements: 'label.text', stylers: [{saturation: -1}]},
+      // Hide original transit-station captions so the real Moscow Metro
+      // sign and our station name are the sole clean readable label.
+      {tags: {all: ['transit_location']}, elements: 'label.text',
+        stylers: [{visibility: 'off'}]}
     ];
     map.addChild(new api.YMapDefaultSchemeLayer({
       theme: 'dark',
