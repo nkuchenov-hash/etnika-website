@@ -110,6 +110,7 @@ def render_checks():
                        fontUi: getComputedStyle(nav.querySelector('button')).fontFamily,
                        navFontSize:parseFloat(getComputedStyle(nav.querySelector('button')).fontSize),
                        navWeight:getComputedStyle(nav.querySelector('button')).fontWeight,
+                       navTracking:parseFloat(getComputedStyle(nav.querySelector('button')).letterSpacing),
                        navTextShadow:getComputedStyle(nav.querySelector('button')).textShadow,
                        headingGap:rect(heading).y-rect(top).bottom,
                        hoverFrame:getComputedStyle(mini[0],'::before').display,
@@ -136,7 +137,8 @@ def render_checks():
                 assert photos["bottom"]<=result["nav"]["y"]+3, err("photos overlap category nav")
                 assert photos["height"]>=(0.40*h if w<=700 else 0.57*h), err("gallery is not maximized within the full-screen frame")
                 assert 15.5<=result["navFontSize"]<=16.5, err("category text must be readable at 16px")
-                assert result["navWeight"]=="200", err("category tabs must use Geologica 200")
+                assert result["navWeight"]=="100", err("category tabs must match HERO address Geologica 100")
+                assert abs(float(result["navTracking"])-1.04)<.3, err("category tabs must match HERO address letter spacing of .065em")
                 assert result["navTextShadow"]=="none", err("category tab text must have no shadow")
                 if w>1100:
                     assert result["headingGap"]>=30, err("editorial overline touches the main heading")
@@ -180,8 +182,8 @@ def render_checks():
                   };
                 }""")
                 if w>1100:
-                    assert captions["rule"]=="rgba(255, 255, 255, 0.68)", err("the first editorial line is not bright enough")
-                    assert captions["divider"]=="rgba(255, 255, 255, 0.68)", err("editorial divider missing on desktop")
+                    assert captions["rule"]=="rgba(255, 255, 255, 0.3)", err("the first editorial line is not bright enough")
+                    assert captions["divider"]=="rgba(255, 255, 255, 0.3)", err("editorial divider missing on desktop")
                     assert captions["ruleDisplay"]!="none" and captions["ruleWidth"]>=40, err("first editorial line has no visible width")
                     assert captions["trailingRuleDisplay"]!="none" and captions["trailingRuleWidth"]>=40, err("right editorial line has no visible width")
                 assert all(c["labelOpacity"]>.98 and c["labelVisibility"]=="visible" for c in captions["cards"]), err("photo titles are not visible by default")
