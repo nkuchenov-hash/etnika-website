@@ -13036,15 +13036,23 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 @media(min-width:1101px){
   #etnika-review-flow > section#etnika-stories{
-    --etnika-stories-heading-extra:clamp(26px,3.3svh,40px);
     --etnika-stories-bottom-extra:clamp(24px,3.2svh,38px);
-    /* Photo wall grows; editorial gaps and lower breathing room remain unchanged. */
     --etnika-stories-photo-extra:clamp(40px,6svh,70px);
-    min-height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer) + var(--etnika-stories-heading-extra) + var(--etnika-stories-bottom-extra) + var(--etnika-stories-photo-extra))!important;
+    /* The section follows its content; the extra 40–70px belongs to the photos, not empty space. */
+    height:auto!important;
+    min-height:0!important;
     padding-bottom:calc(var(--etnika-section-outer) + var(--etnika-stories-bottom-extra))!important;
   }
   #etnika-review-flow #etnika-stories .stories-shell{
-    height:calc(var(--etnika-content-screen) + var(--etnika-stories-heading-extra) + var(--etnika-stories-photo-extra))!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+  #etnika-review-flow #etnika-stories .stories-grid{
+    /* Explicit photo mosaic height. Override the legacy flex:1 / height:0 rules. */
+    flex:0 0 auto!important;
+    height:calc(clamp(640px,75svh,960px) + var(--etnika-stories-photo-extra))!important;
+    min-height:0!important;
+    max-height:none!important;
   }
 }
 @media(max-width:1100px){
