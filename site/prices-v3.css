@@ -325,3 +325,58 @@
   #etnika-prices-clear.ev3 .ev3-sheet-panel,
   #etnika-prices-clear.ev3 .ev3-scrim{transition:none}
 }
+
+/* Owner correction 2026-11-11: on desktop, the details drawer is docked
+   precisely OVER THE RIGHT PHOTO; it cannot obscure tariff names or prices. */
+@media(min-width:901px){
+ #etnika-prices-clear.ev3 .ev3-sheet[data-open="true"]{
+   pointer-events:none!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet .ev3-scrim,
+ #etnika-prices-clear.ev3 .ev3-sheet[data-open="true"] .ev3-scrim{
+   background:transparent!important;
+   pointer-events:none!important;opacity:0!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel{
+   position:fixed!important;right:auto!important;bottom:auto!important;
+   left:var(--ev3-dock-left,60vw)!important;
+   top:var(--ev3-dock-top,12px)!important;
+   width:var(--ev3-dock-width,38vw)!important;
+   height:var(--ev3-dock-height,80dvh)!important;
+   max-height:100dvh!important;max-width:none!important;
+   pointer-events:auto!important;z-index:1!important;
+   box-shadow:-10px 0 30px rgba(0,0,0,.10)!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-top{
+   padding:clamp(16px,1.5vw,25px) clamp(20px,2vw,32px) 8px!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-title{
+   font-size:clamp(42px,3.6vw,60px)!important;line-height:.94!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-scroll{
+   padding:8px clamp(20px,2vw,32px) 10px!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-feature-list{
+   grid-template-columns:1fr!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-feature-list li{
+   min-height:0!important;padding:9px 0!important;
+   font-size:16px!important;line-height:1.35!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-sub{
+   font-size:16px!important;margin-bottom:8px!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-description{
+   font-size:16px!important;margin-bottom:12px!important;line-height:1.4!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-footer{
+   padding:12px clamp(20px,2vw,32px) 14px!important;
+   gap:12px!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-price{
+   font-size:clamp(31px,2.6vw,47px)!important;
+ }
+ #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-book{
+   min-height:49px!important;padding:12px 14px!important;
+ }
+}
