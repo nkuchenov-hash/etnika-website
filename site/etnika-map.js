@@ -25,16 +25,7 @@
   const MAP_CENTER = [37.6573, 55.70865];
   const MAPS_URL = 'https://yandex.ru/maps/?text=' +
     encodeURIComponent('Москва, улица Ленинская Слобода, 26А, БЦ Омега-2');
-  const METRO_SVG_URL =
-    'https://upload.wikimedia.org/wikipedia/commons/5/5f/Mosmetro.svg';
   let started = false;
-
-  function useFallback() {
-    shell.dataset.mapState = 'fallback';
-    if (fallbackFrame && !fallbackFrame.getAttribute('src')) {
-      fallbackFrame.src = fallbackFrame.getAttribute('data-map-src');
-    }
-  }
 
   function createMetroMark() {
     const mark = document.createElement('div');
@@ -42,31 +33,21 @@
     mark.setAttribute('role', 'img');
     mark.setAttribute('aria-label', 'Метро Автозаводская, Замоскворецкая линия');
 
-    // The real Moscow Metro symbol, not a text glyph in a black square.
-    // Public-domain geometric logo from Wikimedia Commons (Mosmetro.svg).
-    const logo = document.createElement('img');
-    logo.className = 'etnika-map-station__logo';
-    logo.alt = '';
-    logo.src = METRO_SVG_URL;
-    logo.decoding = 'async';
-    logo.onerror = function () {
-      // Vector fallback in case a third-party image host is blocked.
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('viewBox', '0 0 100 84');
-      svg.setAttribute('class', 'etnika-map-station__logo');
-      svg.setAttribute('aria-hidden', 'true');
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('fill', '#eb2435');
-      path.setAttribute('d',
-        'M4 82 25 3 50 49 75 3 96 82H76L70 46 50 81 30 46 24 82Z');
-      svg.appendChild(path);
-      logo.replaceWith(svg);
-    };
+    /* One local vector: no remote Wikimedia dependency or broken black square.
+       High-contrast red Moscow metro M and compact clear station label. */
+    const logo=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    logo.setAttribute('class','etnika-map-station__logo');
+    logo.setAttribute('viewBox','0 0 72 55');
+    logo.setAttribute('aria-hidden','true');
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('fill','#da182a');
+    path.setAttribute('d','M4 49 18 5 36 33 54 5 68 49H55L49 27 36 51 23 27 17 49Z');
+    logo.appendChild(path);
 
-    const label = document.createElement('span');
-    label.className = 'etnika-map-station__label';
-    label.textContent = 'Автозаводская';
-    mark.append(logo, label);
+    const label=document.createElement('span');
+    label.className='etnika-map-station__label';
+    label.textContent='Автозаводская';
+    mark.append(logo,label);
     return mark;
   }
 
@@ -169,15 +150,19 @@
     document.head.appendChild(loader);
   }
 
+  /* Warm the browser API before the visitor reaches this last section.
+     A longer intersection threshold still handles fast-scrolling visitors. */
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(function (entries) {
-      if (entries.some(function (e) {return e.isIntersecting;})) {
-        observer.disconnect();
-        load();
+    const observer=new IntersectionObserver(function(entries){
+      if(entries.some(function(entry){return entry.isIntersecting;})){
+        observer.disconnect();load();
       }
-    }, {rootMargin: '350px 0px'});
+    },{rootMargin:'2500px 0px'});
     observer.observe(section);
+  }
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(load,{timeout:1800});
   } else {
-    load();
+    window.addEventListener('load',load,{once:true});
   }
 })();
