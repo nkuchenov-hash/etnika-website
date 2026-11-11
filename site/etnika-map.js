@@ -15,9 +15,11 @@
 
   // This is a public, HTTP-Referer-restricted browser API key.
   const API_KEY = '0c3d5b94-7c1d-4e23-b323-f4a620b3dcb1';
-  // Coordinates are [longitude, latitude]. Avtozavodskaya Zamoskvoretskaya
-  // line: vmetro.moscow/station/avtozavodskaya/.
-  const METRO = [37.660467, 55.706854];
+  // Actual Avtozavodskaya station on the Zamoskvoretskaya line.
+  // The previous coordinate [37.660467,55.706854] was positioned toward the MCC
+  // and placed our badge to the RIGHT of the native station label.
+  // Station coordinate: https://en.wikipedia.org/wiki/List_of_Moscow_Metro_stations
+  const METRO = [37.6576, 55.7074];
   // Business center Omega-2, Leninskaya Sloboda 26/26A:
   // Yandex building location yandex.com/maps/213/moscow/house/ulitsa_leninskaya_sloboda_26/.
   // The marker denotes the building, not an individual office entrance.
@@ -25,6 +27,11 @@
   const MAP_CENTER = [37.6573, 55.70865];
   const MAPS_URL = 'https://yandex.ru/maps/?text=' +
     encodeURIComponent('Москва, улица Ленинская Слобода, 26А, БЦ Омега-2');
+  // Official Yandex Maps walking route if the browser router API is unavailable.
+  const WALK_ROUTE_URL = 'https://yandex.ru/maps/?rtext=' +
+    '55.7074%2C37.6576~55.710130%2C37.654610&rtt=pd';
+  const walkingLink = shell.querySelector('.etnika-map-directions');
+  if (walkingLink) walkingLink.href = WALK_ROUTE_URL;
   let started = false;
 
   // The embedded map is always usable as a backup when the v3 API, its key,
@@ -56,16 +63,14 @@
     mark.setAttribute('role', 'img');
     mark.setAttribute('aria-label', 'Метро Автозаводская, Замоскворецкая линия');
 
-    /* One local vector: no remote Wikimedia dependency or broken black square.
-       High-contrast red Moscow metro M and compact clear station label. */
-    const logo=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    logo.setAttribute('class','etnika-map-station__logo');
-    logo.setAttribute('viewBox','0 0 72 55');
-    logo.setAttribute('aria-hidden','true');
-    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-    path.setAttribute('fill','#da182a');
-    path.setAttribute('d','M4 49 18 5 36 33 54 5 68 49H55L49 27 36 51 23 27 17 49Z');
-    logo.appendChild(path);
+    // Real Moscow Metro sign from Simple Icons, stored locally as SVG.
+    const logo = document.createElement('img');
+    logo.className = 'etnika-map-station__logo';
+    logo.src = 'assets/moscow-metro-mark.svg';
+    logo.width = 34;
+    logo.height = 28;
+    logo.alt = '';
+    logo.decoding = 'async';
 
     const label=document.createElement('span');
     label.className='etnika-map-station__label';
@@ -119,6 +124,39 @@
     return mark;
   }
 
+  async function drawPedestrianRoute(map, api) {
+    if (typeof api.route !== 'function' || typeof api.YMapFeature !== 'function') return;
+    try {
+      // Routing is a separate Yandex service; this API key might not have its
+      // routing entitlement. Never display a fabricated straight line.
+      if (typeof api.getDefaultConfig === 'function') {
+        const config = api.getDefaultConfig();
+        if (config && typeof config.setApikeys === 'function') {
+          config.setApikeys({router: API_KEY});
+        }
+      }
+      const routes = await api.route({points: [METRO, STUDIO], type: 'walking'});
+      const walking = routes && routes[0] && routes[0].toRoute();
+      if (!walking || !walking.geometry || !Array.isArray(walking.geometry.coordinates) ||
+          walking.geometry.coordinates.length < 2) return;
+      const route = new api.YMapFeature({
+        geometry: walking.geometry,
+        style: {
+          simplificationRate: 0,
+          stroke: [{width: 5, color: '#f32c43'}]
+        }
+      });
+      map.addChild(route);
+      shell.dataset.routeState = 'ready';
+    } catch (e) {
+      // The visible "Маршрут пешком" link opens an actual walking route.
+      shell.dataset.routeState = 'external';
+      if (window.console && console.warn) {
+        console.warn('ETNIKA map: router unavailable, external walking route remains available', e);
+      }
+    }
+  }
+
   async function init() {
     if (!window.ymaps3) throw new Error('Yandex Maps v3 did not load');
     await window.ymaps3.ready;
@@ -140,6 +178,9 @@
       customization: monochrome
     }));
     map.addChild(new api.YMapDefaultFeaturesLayer({zIndex: 1800}));
+    // Ask Yandex's pedestrian router for the real street-following geometry.
+    // Keep the two accurate geo-markers even when routing is unavailable.
+    drawPedestrianRoute(map, api);
     // Both marks are anchored to geographic points and move with the map.
     map.addChild(new api.YMapMarker(
       {coordinates: STUDIO, draggable: false}, createStudioMark()
