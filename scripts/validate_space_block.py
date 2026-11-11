@@ -34,6 +34,8 @@ def static_checks():
         assert "margin:0 0 var(--etnika-overline-content-gap)!important" in html, f"{path}: kicker/title breathing space reverted"
         assert "font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important" in html, f"{path}: photo captions must use Forum"
         assert "text-shadow:none!important" in html, f"{path}: caption text shadows must be off"
+        assert "height:min(76%,380px)!important" in html, f"{path}: gradient must remain constrained to caption region"
+        assert "opacity:.56!important" in html and "opacity:1!important" in html, f"{path}: photo captions require a stronger hover backdrop"
         assert part.count('class="spf-img ') == 3, f"{path}: expected 3 original photos"
         assert part.count('class="spf-tab') == 5, f"{path}: expected 5 selectable categories"
         assert "height:var(--etnika-content-screen)!important" in frame_code, f"{path}: full-screen studio photo frame missing"
@@ -176,7 +178,11 @@ def render_checks():
                         detailWeight:getComputedStyle(detail).fontWeight,
                         detailShadow:getComputedStyle(detail).textShadow,
                         detailOpacity:parseFloat(getComputedStyle(detail).opacity),
-                        detailVisibility:getComputedStyle(detail).visibility
+                        detailVisibility:getComputedStyle(detail).visibility,
+                        gradientOpacity:parseFloat(getComputedStyle(card,'::after').opacity),
+                        gradientHeight:parseFloat(getComputedStyle(card,'::after').height),
+                        cardHeight:card.getBoundingClientRect().height,
+                        gradientImage:getComputedStyle(card,'::after').backgroundImage
                       };
                     })
                   };
@@ -190,6 +196,12 @@ def render_checks():
                 assert all(c["title"] and "Forum" in c["titleFont"] and c["titleWeight"]=="400" for c in captions["cards"]), err("photo headings must use Forum 400")
                 assert all(c["titleShadow"]=="none" and c["detailShadow"]=="none" for c in captions["cards"]), err("photo captions have text shadows")
                 assert all(c["detailWeight"]=="200" for c in captions["cards"]), err("secondary photo copy not using lighter weight 200")
+                assert all(c["gradientHeight"]<c["cardHeight"] and c["gradientHeight"]>0 for c in captions["cards"]), err("caption gradient must cover only the lower area")
+                assert all("linear-gradient" in c["gradientImage"] for c in captions["cards"]), err("caption backdrop gradient is missing")
+                if w>=1101:
+                    assert all(.53<=c["gradientOpacity"]<=.59 for c in captions["cards"]), err("default photo captions must have a subtle gradient")
+                else:
+                    assert all(c["gradientOpacity"]>.98 for c in captions["cards"]), err("touch captions must have a readable gradient")
                 page.screenshot(path=str(output / f"etnika-space-{path.stem}-{w}x{h}.png"))
                 if w>=1101:
                     assert all(c["detailOpacity"]<.02 and c["detailVisibility"]=="hidden" for c in captions["cards"]), err("detailed photo copy is already open without hover")
@@ -204,10 +216,12 @@ def render_checks():
                         titleOpacity:getComputedStyle(card.querySelector('.spf-label')).opacity,
                         detailOpacity:parseFloat(getComputedStyle(detail).opacity),
                         visibility:getComputedStyle(detail).visibility,
-                        height:detail.getBoundingClientRect().height
+                        height:detail.getBoundingClientRect().height,
+                        gradientOpacity:parseFloat(getComputedStyle(card,'::after').opacity)
                       };
                     }""")
                     assert hover["detailOpacity"]>.95 and hover["visibility"]=="visible" and hover["height"]>15, err("full photo details fail to appear on hover")
+                    assert hover["gradientOpacity"]>.98, err("hover must strengthen the bottom-only text gradient")
                     assert float(hover["titleOpacity"])>.98, err("base photo heading disappears on hover")
                     page.screenshot(path=str(output / f"etnika-space-hover-{path.stem}-{w}x{h}.png"))
                 print(f"PASS: {path.name} {w}x{h}; gallery {photos['height']:.0f}px; heading {result['titleSize']:.1f}px")
