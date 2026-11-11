@@ -137,3 +137,29 @@
   #etnika-contacts-source .etnika-map-studio__name{font-size:16px;}
   #etnika-contacts-source .etnika-map-studio__popup{width:min(270px,80vw);}
 }
+
+/* Clear self-contained metro badge; independent of remote svg hosting. */
+#etnika-contacts-source .etnika-map-station{
+  transform:translate(-18px,-50%);
+  gap:9px;padding:8px 12px 8px 9px;
+  background:rgba(255,255,255,.97);
+  border:1px solid rgba(17,17,17,.15);
+  box-shadow:0 3px 14px rgba(0,0,0,.18);
+  max-width:none;
+}
+#etnika-contacts-source .etnika-map-station__logo{
+  width:34px;height:30px;flex:0 0 34px;
+  filter:none!important;
+}
+#etnika-contacts-source .etnika-map-station__label{
+  color:#171717;text-shadow:none;
+  font:500 clamp(16px,1vw,19px)/1.25 'Geologica',Arial,sans-serif;
+  letter-spacing:0;
+}
+#etnika-contacts-source .location-map[data-map-state="ready"] .map-fallback{
+  visibility:hidden!important;pointer-events:none!important;
+}
+@media(max-width:700px){
+ #etnika-contacts-source .etnika-map-station{padding:6px 9px 6px 6px;gap:6px;}
+ #etnika-contacts-source .etnika-map-station__logo{width:28px;height:24px;flex-basis:28px;}
+}
