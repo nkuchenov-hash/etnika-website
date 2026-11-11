@@ -13623,193 +13623,273 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 </style>
 
 <style id="etnika-why-photo-left-full-height-20261111">
-/* Direct owner request 11 Nov 2026, revised after screenshot:
-   photo on the LEFT; the whole image/overlay begins below the fixed 60px
-   menu and reaches the viewport bottom. Content is NEVER clipped. */
-@media (min-width:1101px){
-  #etnika-review-flow > section#etnika-studio-features{
+/* ETNIKA / Why: real one-viewport layout, 11 November 2026.
+   Root cause of the previous regression was a growing right-hand flex column
+   inside an auto-height section. That pushed the photo's bottom BELOW the
+   viewport. The entire desktop section now has an explicit viewport-sized
+   track, and ALL six interactive rows share the remaining track height.
+   Nothing is hidden or scrolls separately. */
+@media (min-width:1101px) {
+  #etnika-review-flow > section#etnika-studio-features {
     box-sizing:border-box!important;
-    height:auto!important;
-    min-height:100svh!important;
-    max-height:none!important;
+    display:block!important;
+    height:100svh!important;
+    min-height:0!important;
+    max-height:100svh!important;
+    width:100%!important;
     padding:var(--etnika-nav-height,60px) 0 0!important;
     margin:0!important;
     overflow:visible!important;
-    scroll-margin-top:0!important;
+    /* Cancel the global html scroll-padding only for this internally
+       menu-padded section, so a #hash puts the photo UNDER the menu. */
+    scroll-margin-top:calc(-1 * var(--etnika-nav-height,60px))!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-shell{
+  #etnika-review-flow #etnika-studio-features .b05-shell {
     box-sizing:border-box!important;
+    display:block!important;
     width:100%!important;
-    height:auto!important;
-    min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
     margin:0!important;
     padding:0!important;
-    display:block!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-top{display:none!important;}
-  #etnika-review-flow #etnika-studio-features .b05-main{
+  #etnika-review-flow #etnika-studio-features .b05-top {
+    display:none!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-main {
+    box-sizing:border-box!important;
     display:grid!important;
-    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)!important;
-    grid-template-rows:auto!important;
-    gap:0!important;
     width:100%!important;
-    height:auto!important;
-    min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)!important;
+    grid-template-rows:minmax(0,1fr)!important;
     align-items:stretch!important;
+    gap:0!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-stage{
+  #etnika-review-flow #etnika-studio-features .b05-stage {
+    position:relative!important;
     box-sizing:border-box!important;
     grid-column:1!important;
     grid-row:1!important;
-    position:relative!important;
+    align-self:stretch!important;
+    min-width:0!important;
     width:100%!important;
     height:100%!important;
-    min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    min-height:0!important;
+    max-height:100%!important;
     overflow:hidden!important;
-    align-self:stretch!important;
+    /* Local fallback appears only if the Tilda image is unavailable.
+       Original photos remain preferred and unchanged. */
+    background:#801018 url('assets/etnika-hero-red-wide.jpg') center center/cover no-repeat!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-stage-image{
-    width:100%!important;height:100%!important;
+  #etnika-review-flow #etnika-studio-features .b05-stage-image {
+    display:block!important;
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
     object-fit:cover!important;
     object-position:center center!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-stage-bottom{
+  #etnika-review-flow #etnika-studio-features .b05-stage-top {
+    top:clamp(16px,2svh,28px)!important;
+    left:clamp(20px,2vw,34px)!important;
+    right:clamp(20px,2vw,34px)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-stage-bottom {
     box-sizing:border-box!important;
-    left:clamp(22px,2vw,34px)!important;
-    right:clamp(22px,2vw,34px)!important;
-    bottom:clamp(22px,2.2svh,32px)!important;
+    bottom:clamp(16px,2svh,28px)!important;
+    left:clamp(20px,2vw,34px)!important;
+    right:clamp(20px,2vw,34px)!important;
     width:auto!important;
     max-width:none!important;
-    min-width:0!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:clamp(10px,1.5vw,20px)!important;
+    align-items:end!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-caption{
+  #etnika-review-flow #etnika-studio-features .b05-caption {
     min-width:0!important;
     max-width:100%!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-copy{
+  #etnika-review-flow #etnika-studio-features .b05-caption-title {
+    font-size:clamp(26px,2vw,36px)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-caption-text {
+    font-size:clamp(13px,.92vw,16px)!important;
+    line-height:1.4!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-arrow {
+    width:clamp(40px,3vw,50px)!important;
+    height:clamp(40px,3vw,50px)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-copy {
     box-sizing:border-box!important;
     grid-column:2!important;
     grid-row:1!important;
-    width:100%!important;
-    height:auto!important;
-    min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    display:grid!important;
+    grid-template-rows:auto auto auto minmax(0,1fr)!important;
     min-width:0!important;
-    padding:clamp(22px,3svh,36px) clamp(36px,4.8vw,80px)
-            clamp(22px,3svh,36px) clamp(30px,2.9vw,52px)!important;
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:stretch!important;
-    justify-content:flex-start!important;
-    gap:clamp(10px,1.5svh,18px)!important;
+    width:100%!important;
+    min-height:0!important;
+    height:100%!important;
+    max-height:100%!important;
+    padding:clamp(16px,2.1svh,30px) clamp(30px,4.6vw,78px)
+            clamp(16px,2.1svh,30px) clamp(25px,2.6vw,50px)!important;
+    gap:clamp(8px,1.15svh,16px)!important;
+    align-content:stretch!important;
     overflow:visible!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-title{
-    flex:0 0 auto!important;
-    max-width:100%!important;
+  #etnika-review-flow #etnika-studio-features .b05-title {
+    box-sizing:border-box!important;
+    font-size:clamp(58px,7.7svh,94px)!important;
+    line-height:.83!important;
     margin:0!important;
-  }
-  #etnika-review-flow #etnika-studio-features .b05-intro{
-    flex:0 0 auto!important;
     width:100%!important;
     max-width:100%!important;
-    margin:0!important;
-    font-size:clamp(16px,1vw,19px)!important;
-    line-height:1.48!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-meta{
-    flex:0 0 auto!important;
-    align-self:stretch!important;
+  #etnika-review-flow #etnika-studio-features .b05-intro {
+    box-sizing:border-box!important;
     margin:0!important;
+    padding:0!important;
+    max-width:100%!important;
+    width:100%!important;
+    font-size:clamp(15px,1vw,17px)!important;
+    line-height:1.42!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-meta-item{
-    min-height:66px!important;
-    padding:9px 11px!important;
-  }
-  #etnika-review-flow #etnika-studio-features .b05-list{
-    flex:1 0 auto!important;
-    align-self:stretch!important;
-    margin:0!important;
-    min-height:0!important;
+  #etnika-review-flow #etnika-studio-features .b05-meta {
     display:grid!important;
-    grid-template-rows:repeat(6,minmax(50px,1fr))!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    align-self:start!important;
+    min-width:0!important;
+    margin:0!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-item{
-    min-height:50px!important;
-    padding:6px 12px!important;
+  #etnika-review-flow #etnika-studio-features .b05-meta-item {
+    box-sizing:border-box!important;
+    min-height:0!important;
+    height:auto!important;
+    padding:8px 8px!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-item-title{
-    font-size:clamp(22px,1.5vw,28px)!important;
+  #etnika-review-flow #etnika-studio-features .b05-meta-num {
+    font-size:clamp(26px,1.9vw,35px)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-meta-label {
+    margin-top:6px!important;
+    font-size:clamp(9px,.65vw,11px)!important;
+    line-height:1.3!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-list {
+    box-sizing:border-box!important;
+    align-self:stretch!important;
+    display:grid!important;
+    grid-template-rows:repeat(6,minmax(0,1fr))!important;
+    gap:1px!important;
+    min-height:0!important;
+    height:100%!important;
+    width:100%!important;
+    margin:0!important;
+    overflow:visible!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-item {
+    box-sizing:border-box!important;
+    min-height:0!important;
+    height:100%!important;
+    padding:5px 12px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    align-items:center!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-item-title {
+    font-size:clamp(20px,1.48vw,27px)!important;
+    line-height:1.04!important;
   }
 }
 @media (min-width:1101px) and (max-width:1400px){
-  #etnika-review-flow #etnika-studio-features .b05-main{
+  #etnika-review-flow #etnika-studio-features .b05-main {
     grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr)!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-copy{
-    padding-left:clamp(24px,2.4vw,40px)!important;
-    padding-right:clamp(28px,3vw,48px)!important;
+  #etnika-review-flow #etnika-studio-features .b05-copy {
+    padding-right:clamp(26px,3vw,46px)!important;
+    padding-left:clamp(22px,2.4vw,40px)!important;
   }
 }
-@media (min-width:1101px) and (max-height:850px){
-  #etnika-review-flow #etnika-studio-features .b05-copy{
-    padding-top:16px!important;
-    padding-bottom:16px!important;
-    gap:9px!important;
+/* Short desktop: preserve readable text, six complete selectors, and photo
+   caption within one visible viewport without internal scrolling. */
+@media (min-width:1101px) and (max-height:820px){
+  #etnika-review-flow #etnika-studio-features .b05-copy {
+    gap:7px!important;
+    padding-top:12px!important;
+    padding-bottom:12px!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-title{
-    font-size:clamp(52px,4.2vw,76px)!important;
+    font-size:clamp(54px,7.4svh,65px)!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-intro{
-    line-height:1.38!important;
+  #etnika-review-flow #etnika-studio-features .b05-intro {
+    font-size:15px!important;
+    line-height:1.35!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-meta-item{
-    min-height:59px!important;
-    padding:8px 10px!important;
+  #etnika-review-flow #etnika-studio-features .b05-meta-item {
+    padding:6px 8px!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-item{
-    min-height:46px!important;
-    padding:5px 11px!important;
+  #etnika-review-flow #etnika-studio-features .b05-meta-num {
+    font-size:26px!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-list{
-    grid-template-rows:repeat(6,minmax(46px,1fr))!important;
+  #etnika-review-flow #etnika-studio-features .b05-meta-label {
+    margin-top:4px!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-item-title {
+    font-size:clamp(20px,1.4vw,24px)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-caption-title {
+    font-size:27px!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-caption-text {
+    font-size:13px!important;
   }
 }
+/* Tablet and narrow screens: the block grows naturally; nothing clipped. */
 @media (min-width:861px) and (max-width:1100px){
   #etnika-review-flow > section#etnika-studio-features{
-    height:auto!important;min-height:100svh!important;max-height:none!important;
+    height:auto!important;
+    min-height:100svh!important;max-height:none!important;
     padding:var(--etnika-nav-height,56px) 0 0!important;
-    overflow:visible!important;scroll-margin-top:0!important;
+    overflow:visible!important;
+    scroll-margin-top:calc(-1 * var(--etnika-nav-height,56px))!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-shell{
-    margin:0!important;padding:0!important;height:auto!important;min-height:0!important;
+    height:auto!important;min-height:0!important;margin:0!important;padding:0!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-top{display:none!important;}
   #etnika-review-flow #etnika-studio-features .b05-main{
-    display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
     grid-template-rows:auto!important;gap:0!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-stage{
-    grid-column:1!important;grid-row:1!important;height:100%!important;
-    min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
+    grid-column:1!important;grid-row:1!important;
+    height:100%!important;min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
+    background:#801018 url('assets/etnika-hero-red-wide.jpg') center/cover no-repeat!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-copy{
-    grid-column:2!important;grid-row:1!important;
-    padding:26px!important;width:100%!important;height:auto!important;
-    display:flex!important;flex-direction:column!important;overflow:visible!important;
+    grid-column:2!important;grid-row:1!important;width:100%!important;height:auto!important;
+    min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
+    padding:26px!important;overflow:visible!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-meta{
+  #etnika-review-flow #etnika-studio-features .b05-meta {
     grid-template-columns:repeat(3,minmax(0,1fr))!important;
   }
-  #etnika-review-flow #etnika-studio-features .b05-item-title{
+  #etnika-review-flow #etnika-studio-features .b05-item-title {
     font-size:clamp(21px,2.6vw,27px)!important;
   }
 }
-/* On narrow/mobile screens photo first, content naturally below, never cut off. */
 @media (max-width:860px){
   #etnika-review-flow > section#etnika-studio-features{
     height:auto!important;min-height:0!important;max-height:none!important;
-    padding:var(--etnika-nav-height,56px) 0 0!important;
-    overflow:visible!important;scroll-margin-top:0!important;
+    padding:var(--etnika-nav-height,56px) 0 0!important;overflow:visible!important;
+    scroll-margin-top:calc(-1 * var(--etnika-nav-height,56px))!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-shell{
     height:auto!important;min-height:0!important;margin:0!important;padding:0!important;
@@ -13822,10 +13902,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   #etnika-review-flow #etnika-studio-features .b05-stage{
     grid-column:1!important;grid-row:1!important;
     height:clamp(420px,65svh,740px)!important;min-height:0!important;
+    background:#801018 url('assets/etnika-hero-red-wide.jpg') center/cover no-repeat!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-copy{
-    grid-column:1!important;grid-row:2!important;
-    width:100%!important;height:auto!important;
+    grid-column:1!important;grid-row:2!important;width:100%!important;height:auto!important;
     padding:clamp(36px,6svh,60px) var(--et-u-edge,20px) 56px!important;
     overflow:visible!important;
   }
