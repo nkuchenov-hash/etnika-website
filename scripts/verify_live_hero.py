@@ -161,6 +161,30 @@ with sync_playwright() as playwright:
                 assert metrics["heartRight"] <= width + 2, f"Heart overflows viewport: {metrics}"
                 path = REPORTS / f"etnika-live-first-screen-{width}x{height}.png"
                 page.screenshot(path=str(path), full_page=False)
+                if width >= 1101:
+                    # Confirm the actual visitor interaction, not only CSS selectors.
+                    card=page.locator('#etnika-process-interactive .epi-card').first
+                    card.wait_for(state="visible",timeout=10000)
+                    page.mouse.move(0,0)
+                    card.scroll_into_view_if_needed()
+                    page.mouse.move(0,0)
+                    page.wait_for_timeout(300)
+                    idle=card.locator('.epi-reveal').evaluate("(e)=>({opacity:getComputedStyle(e).opacity,visibility:getComputedStyle(e).visibility})")
+                    assert idle["opacity"]=="0" and idle["visibility"]=="hidden",f"Process details exposed before hover: {idle}"
+                    card.hover()
+                    page.wait_for_function("""() => {
+                      const c=document.querySelector('#etnika-process-interactive .epi-card');
+                      return Number(getComputedStyle(c.querySelector('.epi-reveal')).opacity)>.95
+                        && getComputedStyle(c.querySelector('.epi-more')).backgroundColor==='rgb(169, 21, 29)';
+                    }""",timeout=5000)
+                    card.screenshot(path=str(REPORTS / "etnika-live-process-hover.png"))
+                    card.locator('.epi-more').click()
+                    page.locator('#etnika-process-interactive .epi-modal.open').wait_for(state="visible",timeout=6000)
+                    assert page.locator('#etnika-process-interactive .epi-arrow.next').is_visible(),"Process modal navigation is hidden"
+                    page.locator('#etnika-process-interactive .epi-close').click()
+                    assert page.locator('#etnika-process-interactive .epi-modal.open').count()==0,"Modal would not close"
+                    page.locator('#etnika-studio-features').scroll_into_view_if_needed()
+                    page.screenshot(path=str(REPORTS / "etnika-live-why-white.png"),full_page=False)
                 print(f"PASS LIVE {width}x{height}: {metrics}; screenshot={path}", flush=True)
                 break
             except Exception as exc:
