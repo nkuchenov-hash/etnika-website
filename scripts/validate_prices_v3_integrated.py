@@ -84,6 +84,31 @@ with sync_playwright() as pw:
   page.keyboard.press('Escape')
   assert page.locator('.ev3-sheet').get_attribute('data-open')=='false'
   page.screenshot(path=str(OUT/f'etnika-v3-integrated-{w}x{h}.png'))
+  # Assert the real header navigation brings the top of the prices section
+  # below the fixed header; a full-page screenshot hides this regression.
+  navlink=page.locator('#etnika-site-header .esh__nav a[href="#etnika-prices-clear"]')
+  if navlink.count() and w>1100:
+   navlink.click()
+   page.wait_for_timeout(950)
+   anchor=page.evaluate("""() => {
+     let root=document.querySelector('#etnika-prices-clear');
+     let header=document.querySelector('#etnika-site-header');
+     const box=(s)=>root.querySelector(s).getBoundingClientRect().toJSON();
+     return {headerBottom:header.getBoundingClientRect().bottom,
+       overline:box('.ev3-overline'),
+       title:box('.ev3-title'),
+       stage:box('.ev3-stage'),
+       section:root.getBoundingClientRect().toJSON(),
+       stageHeight:box('.ev3-stage').height,
+       titleSize:parseFloat(getComputedStyle(root.querySelector('.ev3-title')).fontSize)};
+   }""")
+   assert anchor['overline']['top']>=anchor['headerBottom']+8,(w,'section top clipped by navigation',anchor)
+   assert anchor['title']['top']>=anchor['headerBottom']+35,(w,'title under fixed header',anchor)
+   assert anchor['titleSize']<=75,(w,'global large title token overrides premium heading',anchor)
+   assert anchor['stageHeight']<=535,(w,'global full-screen stage overrides premium layout',anchor)
+   assert anchor['section']['height']<=h+35,(w,'global full-screen and outer padding expanded pricing section',anchor)
+   page.screenshot(path=str(OUT/f'etnika-v3-anchor-{w}x{h}.png'))
+
   print(f'PASS full site {w}x{h}: no fade, correct prices, header spacing and readable drawer',flush=True)
   page.close()
  browser.close()
