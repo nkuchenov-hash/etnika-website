@@ -199,3 +199,70 @@
 #etnika-contacts-source .location-map[data-map-state="ready"] .map-fallback{
   display:none!important;
 }
+
+/* 2026-11-11 · Owner request: one true Moscow Metro lettermark, and a badge
+   precisely covering the native station caption (not displaced to the right).
+   Anchor is the real Zamoskvoretskaya metro station, not the nearby MCC. */
+#etnika-contacts-source .etnika-map-station{
+  transform:translate(-2px,-50%);
+  padding:6px 10px 6px 9px;
+  gap:8px;
+  background:#fff;
+  border:0;
+  box-shadow:none;
+  min-height:42px;
+  max-width:min(250px,75vw);
+  white-space:nowrap;
+  z-index:1;
+}
+#etnika-contacts-source .etnika-map-station__logo{
+  display:block;
+  width:34px;
+  height:27px;
+  flex:0 0 34px;
+  object-fit:contain;
+}
+#etnika-contacts-source .etnika-map-station__label{
+  color:#171717;
+  font:500 17px/1.25 'Geologica',Arial,sans-serif;
+  text-shadow:none;
+  letter-spacing:0;
+}
+#etnika-contacts-source .etnika-map-directions{
+  position:absolute;
+  bottom:22px;
+  right:22px;
+  z-index:5;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 16px;
+  border:1px solid rgba(255,255,255,.45);
+  background:rgba(12,12,12,.95);
+  color:#fff;
+  font:400 15px/1.2 'Geologica',Arial,sans-serif;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:background .15s ease,border-color .15s ease;
+}
+#etnika-contacts-source .etnika-map-directions:hover,
+#etnika-contacts-source .etnika-map-directions:focus-visible{
+  background:#a61522;
+  border-color:#fff;
+}
+@media(max-width:700px){
+  #etnika-contacts-source .etnika-map-station{
+    transform:translate(-2px,-50%);
+    padding:6px 9px 6px 8px;
+    min-height:38px;
+  }
+  #etnika-contacts-source .etnika-map-station__logo{
+    width:29px;height:24px;flex-basis:29px;
+  }
+  #etnika-contacts-source .etnika-map-station__label{
+    font-size:16px;
+  }
+  #etnika-contacts-source .etnika-map-directions{
+    bottom:14px;right:14px;padding:10px 12px;font-size:14px;
+  }
+}
