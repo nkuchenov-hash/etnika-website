@@ -41,7 +41,17 @@ with sync_playwright() as pw:
               title:box(q('#etnika-block-02-final .etnika-b02__title')),
               description:box(q('#etnika-block-02-final .etnika-b02__description')),
               features:box(feat),
-
+              copy:box(q('#etnika-block-02-final .etnika-b02__copy')),
+              main:box(q('#etnika-block-02-final .etnika-b02__main')),
+              photoOverlayContent:getComputedStyle(media,'::after').content,
+              photoOverlayDisplay:getComputedStyle(media,'::after').display,
+              photoTextShadows:[
+                '#etnika-block-02-final .etnika-b02__counter',
+                '#etnika-block-02-final .etnika-b02__stamp',
+                '#etnika-block-02-final .etnika-b02__stamp-title',
+                '#etnika-block-02-final .etnika-b02__caption',
+              ].map(sel=>getComputedStyle(q(sel)).textShadow),
+              arrowFilter:getComputedStyle(q('#etnika-block-02-final .etnika-b02__arrow--prev')).filter,
               lastFeature:box(feat.lastElementChild),
               overlayTop:box(q('#etnika-block-02-final .etnika-b02__media-top')),
               overlayBottom:box(q('#etnika-block-02-final .etnika-b02__media-bottom')),
@@ -67,6 +77,13 @@ with sync_playwright() as pw:
         assert near(v['media']['height'],v['block']['height'],3),err('photo not filling full section')
 
         assert v['bodyWidth']<=w+2,err('horizontal overflow')
+        assert v['photoOverlayContent']=='none' and v['photoOverlayDisplay']=='none',err('unrequested darkening of B02 photo')
+        assert all(shadow=='none' for shadow in v['photoTextShadows']),err('unrequested text shadow over B02 photo')
+        assert v['arrowFilter']=='none',err('unrequested carousel drop shadow')
+        assert near(v['copy']['height'],h-v['header']['height'],3),err('left content not confined to visible screen')
+        assert near(v['copy']['top'],v['block']['top'],2),err('left content shifted from photo top')
+        assert v['main']['top']>=v['overline']['bottom']+20,err('headline too close to top line')
+        assert v['main']['bottom']<v['features']['top']-8,err('description overlaps bottom benefits')
         assert v['counter']['top']>=v['header']['bottom']+8,err('photo counter hidden under sticky navigation')
         assert v['stamp']['top']>=v['header']['bottom']+8,err('Moscow photo stamp hidden under menu')
         assert v['stamp']['bottom']<=h-50,err('photo stamp extends below screen')
@@ -76,6 +93,6 @@ with sync_playwright() as pw:
         assert v['overlayBottom']['top']>v['header']['bottom']+60,err('photo caption collides with top overlays')
         path=OUT/f'etnika-b02-space-guides-{w}x{h}.png'
         page.screenshot(path=str(path),full_page=False)
-        print(f"PASS GUIDES {w}x{h}: labels {v['topLabel']['left']:.1f}/{v['spaceLabel']['left']:.1f}, accents {v['topAccent']['left']:.1f}/{v['spaceAccent']['left']:.1f}, features bottom {v['features']['bottom']:.1f} < screen {h}, photo {v['media']['height']:.1f}px, stamp top {v['stamp']['top']:.1f}, photo caption bottom {v['overlayBottom']['bottom']:.1f}",flush=True)
+        print(f"PASS GUIDES {w}x{h}: labels {v['topLabel']['left']:.1f}/{v['spaceLabel']['left']:.1f}, accents {v['topAccent']['left']:.1f}/{v['spaceAccent']['left']:.1f}, features bottom {v['features']['bottom']:.1f} < screen {h}, photo {v['media']['height']:.1f}px, stamp top {v['stamp']['top']:.1f}, photo caption bottom {v['overlayBottom']['bottom']:.1f}, visible-copy {v['copy']['height']:.1f}px, no shadows",flush=True)
         page.close()
     browser.close()
