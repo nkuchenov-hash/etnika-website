@@ -110,6 +110,9 @@ jobs:
       - name: Check viewport geometry and photo visibility in Chromium
         run: python3 scripts/validate_space_block.py --render
 
+      - name: Check B02/SPACE horizontal guides and first-screen content fit
+        run: python3 scripts/validate_b02_space_guides.py
+
       - name: Check site navigation and shared editorial type
         run: python3 scripts/validate_site_header.py --render
 
@@ -118,5 +121,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: etnika-studio-space-layout
-          path: reports/etnika-space-*.png
+          path: |
+            reports/etnika-space-*.png
+            reports/etnika-b02-space-guides-*.png
           if-no-files-found: ignore
