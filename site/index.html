@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261111-header-geologica-restored">
+<meta name="etnika-build" content="20261111-header-fine-strokes">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -13400,18 +13400,21 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media(min-width:1341px){
   #etnika-site-header .esh__identity{min-width:clamp(225px,16vw,265px);}
 }
+/* Match the approved HERO footer's fine visual weight: Geologica 100,
+   16px readable size, generous tracking, softer contrast. No font swap. */
 #etnika-site-header .esh__nav a,
 #etnika-site-header .esh__phone,
 #etnika-site-header .esh__mobile a{
   font-family:'Geologica',Arial,sans-serif!important;
   font-weight:100!important;
-  letter-spacing:.02em;
-  color:rgba(255,255,255,.78);
+  letter-spacing:.065em!important;
+  color:rgba(255,255,255,.70);
 }
 #etnika-site-header .esh__booking,
 #etnika-site-header .esh__mobile a.esh__mobile-book{
   font-family:'Geologica',Arial,sans-serif!important;
-  font-weight:200!important;
+  font-weight:100!important;
+  letter-spacing:.035em!important;
 }
 #etnika-hero.etnika-carousel .ec-actions .ec-book{
   font-weight:300!important;
