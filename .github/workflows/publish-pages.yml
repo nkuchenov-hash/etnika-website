@@ -18,12 +18,14 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: etnika-github-pages
-  cancel-in-progress: false
-
+# Keep the Pages deployment independent of the slow browser QA job.
+# The previous workflow held this lock while installing Chromium and made
+# newer site builds cancel each other before they could publish.
 jobs:
   deploy:
+    concurrency:
+      group: etnika-github-pages-deploy-v2
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -62,6 +64,15 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  verify-live:
+    name: Verify published site (non-blocking)
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Install Chromium for public-site verification
         run: |
           python3 -m pip install --disable-pip-version-check playwright==1.56.0
