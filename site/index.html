@@ -13985,8 +13985,19 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   gap:0!important;
 }
 #etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-top{
+  /* Keep label dimming on the children, not on the entire row:
+     both upper and lower strokes must be rendered with the same opacity. */
+  opacity:1!important;
   margin-bottom:clamp(42px,5.5svh,58px)!important;
 }
+#etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-top > *{
+  opacity:.7!important;
+}
+#etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-topline{
+  height:1px!important;
+  background:var(--line,rgba(9,9,9,.18))!important;
+}
+
 #etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-main{
   min-height:0!important;
   align-items:start!important;
@@ -14007,8 +14018,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   width:100%;
   height:1px;
   background:var(--line,rgba(9,9,9,.18))!important;
-  /* The upper hairline is inside .faq-top (opacity: .7).
-     Apply exactly the same compositing to the lower hairline. */
+  /* Both strokes now share height, color and effective .7 opacity;
+     upper stroke is a child of the undimmed editorial row. */
   opacity:.7!important;
 }
 /* On narrow viewports retain natural FAQ height, readable questions and
