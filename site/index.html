@@ -12679,8 +12679,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-process-interactive .epi-card:hover img,
 #etnika-process-interactive .epi-card:focus-within img{
   object-fit:cover!important;object-position:var(--subject-x) var(--subject-y)!important;
-  filter:grayscale(1) contrast(1.06) brightness(.9)!important;transition:filter .35s ease!important;
-  transform:none!important;
+  filter:grayscale(1) contrast(1.06) brightness(.9)!important;
+  transition:filter .35s ease, transform .6s cubic-bezier(.2,.7,.2,1)!important;
+  transform:scale(1)!important;
   -webkit-mask-image:none!important;
   mask-image:none!important;
 }
@@ -12733,6 +12734,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  #etnika-process-interactive .epi-card:hover img,
  #etnika-process-interactive .epi-card:focus-within img{
    filter:grayscale(0) contrast(1.03) brightness(.97)!important;
+   transform:scale(1.045)!important;
  }
 }
 </style>
@@ -12993,9 +12995,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
    margin:clamp(22px,3svh,36px) auto 0!important;max-width:850px!important;text-align:center!important;
  }
  #etnika-review-flow #etnika-process-interactive .epi-grid{
-   width:100%!important;max-width:none!important;height:100svh!important;
+   width:calc(100% - 2 * var(--et-u-edge))!important;max-width:none!important;height:100svh!important;
    min-height:0!important;max-height:none!important;
-   margin:0!important;padding:0!important;
+   margin:0 var(--et-u-edge)!important;padding:0!important;
    display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
    grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:1px!important;
  }
@@ -13028,16 +13030,16 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-process-interactive .epi-card:hover .epi-more,
 #etnika-process-interactive .epi-card:focus-within .epi-more{
  opacity:1!important;visibility:visible!important;filter:none!important;
- background:#a9151d!important;border:1px solid #a9151d!important;color:#fff!important;
+ background:transparent!important;border:1px solid rgba(255,255,255,.85)!important;color:#fff!important;
  text-shadow:none!important;pointer-events:auto!important;
 }
 #etnika-process-interactive .epi-more:hover,
 #etnika-process-interactive .epi-more:focus-visible{
- background:#781016!important;border-color:#781016!important;color:#fff!important;
+ background:transparent!important;border-color:#fff!important;color:#fff!important;
 }
 #etnika-process-interactive :is(.epi-back,.epi-arrow){
  opacity:1!important;visibility:visible!important;filter:none!important;
- background:#fff!important;color:#121212!important;border:1px solid #fff!important;
+ background:transparent!important;color:#fff!important;border:1px solid rgba(255,255,255,.85)!important;
 }
 #etnika-process-interactive .epi-cta a{
  opacity:1!important;background:#a9151d!important;color:#fff!important;
