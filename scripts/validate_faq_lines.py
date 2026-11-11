@@ -2,6 +2,7 @@
 """Regression for the owner-marked FAQ lines and symmetrical outer spacing."""
 import json
 from pathlib import Path
+from PIL import Image
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,9 +30,11 @@ MEASURE = r"""() => {
     bottomGap: sr.bottom - sh.bottom + 0.5,
     lowerSeparation: sh.bottom - mr.bottom,
     topColor: getComputedStyle(top).backgroundColor,
-    topOpacity: getComputedStyle(top.parentElement).opacity,
+    topOpacity: getComputedStyle(top).opacity,
     bottomColor: rule.backgroundColor,
     bottomOpacity: rule.opacity,
+    upperStroke: {x: (tr.left + tr.width / 2) - sr.left, y: (tr.top + tr.height / 2) - sr.top},
+    lowerStroke: {x: (sh.left + sh.width / 2) - sr.left, y: (sh.bottom - 0.5) - sr.top},
     bottomRuleHeight: rule.height,
     bottomRuleContent: rule.content,
     firstBorderWidth: getComputedStyle(firstBorder).borderTopWidth,
@@ -41,6 +44,14 @@ MEASURE = r"""() => {
     sectionHeight: sr.height
   };
 }"""
+
+def darkest_rendered_pixel(image, position):
+    """Compare pixels actually painted by Chromium, not just CSS declarations."""
+    x = max(0, min(image.width - 1, round(position["x"])))
+    y = round(position["y"])
+    pixels = [image.getpixel((x, yy)) for yy in range(max(0, y - 3), min(image.height, y + 4))]
+    return min(pixels, key=sum)
+
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
@@ -52,10 +63,16 @@ with sync_playwright() as p:
             section = page.locator("#etnika-review-flow > section#etnika-faq")
             section.scroll_into_view_if_needed(timeout=15000)
             m = page.evaluate(MEASURE)
-            section.screenshot(path=str(OUT / f"etnika-faq-lines-{name}.png"), timeout=30000)
-            print(f"{name}: {json.dumps(m, ensure_ascii=False)}")
+            capture = OUT / f"etnika-faq-lines-{name}.png"
+            section.screenshot(path=str(capture), timeout=30000)
+            with Image.open(capture) as snapshot:
+                top_pixel = darkest_rendered_pixel(snapshot.convert("RGB"), m["upperStroke"])
+                bottom_pixel = darkest_rendered_pixel(snapshot.convert("RGB"), m["lowerStroke"])
+            print(f"{name}: {json.dumps(m, ensure_ascii=False)}; rendered top={top_pixel}, bottom={bottom_pixel}")
+            assert max(abs(a-b) for a, b in zip(top_pixel, bottom_pixel)) <= 8, (
+                f"{name}: bottom rule visually differs from top: {bottom_pixel} vs {top_pixel}"
+            )
             assert m["topColor"] == m["bottomColor"], f"{name}: mismatched gray strokes"
-            assert abs(float(m["topOpacity"]) - float(m["bottomOpacity"])) < 0.001, f"{name}: rendered gray lines differ in opacity"
             assert m["firstBorderWidth"] == "0px", f"{name}: first crossed-out stroke still visible"
             assert m["lastBorderWidth"] == "0px", f"{name}: last crossed-out stroke still visible"
             assert m["bottomRuleContent"] not in ("none", "normal"), f"{name}: no independent lower rule"
