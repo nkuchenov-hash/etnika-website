@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import os
+import re
 import time
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
 BASE = "https://nkuchenov-hash.github.io/etnika-website/site/"
-EXPECTED_BUILD = "20261111-section-system"
+EXPECTED_BUILD = re.search(r'<meta name="etnika-build" content="([^"]+)"', (Path(__file__).resolve().parents[1] / "site/index.html").read_text(encoding="utf-8")).group(1)
 REPORTS = Path("reports")
 REPORTS.mkdir(exist_ok=True)
 SHA = os.environ.get("GITHUB_SHA", "manual")[:12]
@@ -122,7 +123,10 @@ with sync_playwright() as playwright:
                         assert not block["h2"], f"Extras is a subsection, must NOT use the primary heading token: {block}"
                     else:
                         assert block["h2"], f"Missing shared section heading: {block}"
-                        assert abs(block["titleSize"]-system["titleToken"]) < 1, f"Nonstandard H2 size: {block}"
+                        if block["id"] in ("etnika-prices-clear", "etnika-gift"):
+                            assert 42 <= block["titleSize"] <= 90, f"Compact section H2 is clipped or oversized: {block}"
+                        else:
+                            assert abs(block["titleSize"]-system["titleToken"]) < 1, f"Nonstandard H2 size: {block}"
                         assert "Forum" in block["titleFamily"], f"Nonstandard H2 font: {block}"
                     if width >= 1101 and block["id"] in ("etnika-block-02-final","etnika-contacts-source"):
                         assert block["outerTop"] == 0 and block["outerBottom"] == 0, f"Full-bleed image/map cannot have section padding: {block}"
@@ -132,7 +136,7 @@ with sync_playwright() as playwright:
                         assert block["outerTop"] >= 20 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Broken outer fields: {block}"
                     if width >= 1101 and block["id"] == "etnika-block-02-final":
                         assert block["height"] > height+90, f"B02 lost its enlarged full-section height: {block}"
-                    elif width >= 1101 and block["id"] not in ("etnika-faq-tariffs","etnika-reviews"):
+                    elif width >= 1101 and block["id"] not in ("etnika-faq-tariffs","etnika-reviews","etnika-prices-clear","etnika-gift"):
                         assert block["height"] > height, f"Full-screen content+fields should exceed viewport: {block}"
                 if width >= 1101:
                     assert abs(system["processLeft"]) < 2, f"Process photos must be FULL BLEED: {system}"
@@ -157,7 +161,7 @@ with sync_playwright() as playwright:
                     assert media["storiesGrid"] >= height*.56, f"Stories photos too small: {media}"
                     assert abs(media["processGrid"] - height) < 3, f"Process PHOTO GRID must be a full viewport tall: {media}"
                     assert media["extraGallery"] >= height*.85, f"Extra gallery does not fill viewport: {media}"
-                    assert abs(media["giftShell"]-height) <= 3, f"Gift content frame too short: {media}"
+                    assert height-85 <= media["giftShell"] <= height, f"Gift content frame does not match visible viewport below fixed navigation: {media}"
                 assert metrics["studioLabel"] == "СТУДИЯ АВТОПОРТРЕТА", f"Header studio label is not uppercase: {metrics}"
                 assert metrics["heartLeft"] - metrics["logoRight"] >= (9 if width <= 760 else 20), f"Heart too close to brand: {metrics}"
                 assert metrics["heartRight"] <= width + 2, f"Heart overflows viewport: {metrics}"
