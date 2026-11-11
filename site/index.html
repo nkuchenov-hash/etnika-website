@@ -12737,139 +12737,44 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 <link rel="stylesheet" href="prices-v3.css?v=20261106e">
 
 <style id="etnika-section-system-20261111">
-/* Owner-approved unified editorial system: titles, overlines, one viewport of
-   content plus independent outer fields. Keep every original photo and text. */
+/* ETNIKA screen composition. Content has a FULL screen of height.
+   The additional background breathing fields do NOT subtract from it. */
 :root{
   --etnika-section-outer:clamp(72px,9svh,112px);
-  --etnika-content-screen:calc(100svh - var(--etnika-nav-height,60px));
-  --etnika-overline-content-gap:clamp(32px,4svh,52px);
+  --etnika-content-screen:100svh;
+  --etnika-overline-content-gap:clamp(34px,4svh,52px);
+  --etnika-content-grid-gap:clamp(10px,1.4svh,16px);
 }
-
-/* One headline scale, font, leading and tracking — no per-block exceptions.
-   The class is assigned to the primary H2 in every section, never to card titles. */
+/* Titles: ONE shared design-system declaration; no local scaling. */
 #etnika-review-flow > section[id] h2.etnika-section-heading{
   font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important;
   font-size:var(--etnika-section-title,clamp(62px,6.25vw,118px))!important;
-  font-style:normal!important;
-  font-weight:400!important;
-  line-height:.84!important;
-  letter-spacing:-.04em!important;
-  text-transform:uppercase!important;
-  white-space:normal!important;
-  text-wrap:balance!important;
-  transform:none!important;
+  font-style:normal!important;font-weight:400!important;
+  line-height:.84!important;letter-spacing:-.04em!important;
+  text-transform:uppercase!important;white-space:normal!important;
+  text-wrap:balance!important;transform:none!important;
 }
-
-/* The first content screen has its own height and background. Top and bottom
-   fields sit OUTSIDE that screen, so the entire section scrolls beyond 100svh.
-   This does not apply to HERO, which remains exactly the first viewport. */
-@media(min-width:1101px){
- #etnika-review-flow > section:is(
-   #etnika-block-02-final,#etnika-space-photo,#etnika-stories,
-   #etnika-process-interactive,#etnika-studio-features,#etnika-faq,
-   #etnika-prices-clear,#etnika-extra,#etnika-faq-tariffs,
-   #etnika-gift,#etnika-reviews,#etnika-contacts-source
- ){
-   box-sizing:border-box!important;
-   height:auto!important;
-   min-height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer))!important;
-   max-height:none!important;
-   padding-top:var(--etnika-section-outer)!important;
-   padding-bottom:var(--etnika-section-outer)!important;
-   margin-top:0!important;margin-bottom:0!important;
-   overflow:visible!important;
- }
- #etnika-review-flow #etnika-block-02-final .etnika-b02__grid{
-   height:var(--etnika-content-screen)!important;
-   min-height:0!important;
- }
- #etnika-review-flow #etnika-stories .stories-shell,
- #etnika-review-flow #etnika-space-photo .spf-shell,
- #etnika-review-flow #etnika-studio-features .b05-shell,
- #etnika-review-flow #etnika-gift .eg-shell{
-   height:var(--etnika-content-screen)!important;
-   min-height:0!important;max-height:none!important;
-   box-sizing:border-box!important;
- }
- #etnika-review-flow #etnika-faq .faq-shell,
- #etnika-review-flow #etnika-faq-tariffs .faq-shell,
- #etnika-review-flow #etnika-extra .ee-shell,
- #etnika-review-flow #etnika-reviews .etnika-reviews-inner,
- #etnika-review-flow #etnika-contacts-source .location{
-   min-height:var(--etnika-content-screen)!important;
-   height:auto!important;max-height:none!important;
-   box-sizing:border-box!important;
- }
- #etnika-review-flow #etnika-prices-clear.ev3{
-   padding-top:var(--etnika-section-outer)!important;
-   padding-bottom:var(--etnika-section-outer)!important;
- }
- #etnika-review-flow #etnika-prices-clear.ev3 .ev3-shell{
-   min-height:var(--etnika-content-screen)!important;
-   height:var(--etnika-content-screen)!important;
-   box-sizing:border-box!important;
-   grid-template-rows:auto auto minmax(0,1fr)!important;
-   padding-top:clamp(24px,3svh,38px)!important;
-   padding-bottom:clamp(24px,3svh,38px)!important;
- }
- #etnika-review-flow #etnika-process-interactive{
-   --edge:var(--et-u-edge)!important;
-   display:grid!important;
-   grid-template-rows:auto minmax(0,1fr)!important;
-   grid-template-columns:minmax(0,1fr)!important;
-   height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer))!important;
- }
- #etnika-review-flow #etnika-process-interactive .epi-head{
-   padding:clamp(20px,3svh,38px) var(--et-u-edge) var(--etnika-overline-content-gap)!important;
-   text-align:left!important;
- }
- #etnika-review-flow #etnika-process-interactive .epi-grid{
-   box-sizing:border-box!important;
-   width:calc(100% - 2 * var(--et-u-edge))!important;
-   height:100%!important;
-   min-height:0!important;
-   margin-left:var(--et-u-edge)!important;
-   margin-right:var(--et-u-edge)!important;
-   display:grid!important;
-   grid-template-rows:repeat(2,minmax(0,1fr))!important;
- }
-}
-
-/* A single shared alignment and larger editorial-to-headline breathing room. */
-#etnika-review-flow #etnika-block-02-final{
-  --edge:var(--et-u-edge)!important;
-}
-#etnika-review-flow #etnika-block-02-final .etnika-b02__top{
-  margin-bottom:var(--etnika-overline-content-gap)!important;
-}
-#etnika-review-flow #etnika-stories .stories-top,
-#etnika-review-flow #etnika-space-photo .spf-top,
-#etnika-review-flow #etnika-studio-features .b05-top,
-#etnika-review-flow #etnika-faq .faq-top,
-#etnika-review-flow #etnika-faq-tariffs .faq-top,
-#etnika-review-flow #etnika-reviews .etnika-editorial-top,
-#etnika-review-flow #etnika-prices-clear .ev3-overline{
-  margin-bottom:var(--etnika-overline-content-gap)!important;
-}
-#etnika-review-flow #etnika-stories .stories-shell{
+/* Shared horizontal grid. Process content and all editorial text
+   must start at exactly the same x-coordinate. */
+#etnika-review-flow :is(#etnika-block-02-final,#etnika-process-interactive,
+  #etnika-stories,#etnika-space-photo,#etnika-studio-features,
+  #etnika-faq,#etnika-faq-tariffs){--edge:var(--et-u-edge)!important;}
+#etnika-review-flow :is(#etnika-stories .stories-shell,
+  #etnika-space-photo .spf-shell,#etnika-studio-features .b05-shell,
+  #etnika-faq .faq-shell,#etnika-faq-tariffs .faq-shell){
   margin-left:var(--et-u-edge)!important;
   margin-right:var(--et-u-edge)!important;
 }
-#etnika-review-flow #etnika-space-photo .spf-shell,
-#etnika-review-flow #etnika-studio-features .b05-shell,
-#etnika-review-flow #etnika-faq .faq-shell,
-#etnika-review-flow #etnika-faq-tariffs .faq-shell{
-  margin-left:var(--et-u-edge)!important;
-  margin-right:var(--et-u-edge)!important;
+/* Kicker/line must have clearly separated hierarchy from the H2/content. */
+#etnika-review-flow :is(
+  #etnika-block-02-final .etnika-b02__top,
+  #etnika-stories .stories-top,#etnika-space-photo .spf-top,
+  #etnika-studio-features .b05-top,#etnika-faq .faq-top,
+  #etnika-faq-tariffs .faq-top,#etnika-reviews .etnika-editorial-top,
+  #etnika-prices-clear .ev3-overline){
+  margin-bottom:var(--etnika-overline-content-gap)!important;
 }
-#etnika-review-flow #etnika-process-interactive{
-  --edge:var(--et-u-edge)!important;
-}
-#etnika-review-flow #etnika-process-interactive .epi-head{
-  padding-left:var(--et-u-edge)!important;
-  padding-right:var(--et-u-edge)!important;
-  text-align:left!important;
-}
+#etnika-review-flow #etnika-process-interactive .epi-head{text-align:left!important;}
 #etnika-review-flow #etnika-process-interactive .epi-grid{
   box-sizing:border-box!important;
   width:calc(100% - 2 * var(--et-u-edge))!important;
@@ -12877,8 +12782,149 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   margin-right:var(--et-u-edge)!important;
 }
 
-/* Keep the photos and text readable at mobile/tablet sizes. Their individual
-   cards may extend naturally if five steps or many FAQ answers cannot fit one screen. */
+@media(min-width:1101px){
+ /* A section is 100svh of CONTENT + its own additional outer fields.
+    Neither the fixed navigation height nor the outer fields are deducted
+    from the content frame. */
+ #etnika-review-flow > section:is(
+   #etnika-block-02-final,#etnika-space-photo,#etnika-stories,
+   #etnika-process-interactive,#etnika-studio-features,#etnika-faq,
+   #etnika-prices-clear,#etnika-extra,#etnika-faq-tariffs,
+   #etnika-gift,#etnika-reviews,#etnika-contacts-source
+ ){
+   box-sizing:border-box!important;height:auto!important;
+   min-height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer))!important;
+   max-height:none!important;
+   padding-top:var(--etnika-section-outer)!important;
+   padding-bottom:var(--etnika-section-outer)!important;
+   margin:0!important;overflow:visible!important;
+ }
+ /* BLOCK 02: the photograph extends ALL THE WAY from the section's
+    actual top to its actual bottom, INCLUDING the outer fields. The
+    written copy stays inset by those fields within its left column. */
+ #etnika-review-flow > section#etnika-block-02-final{
+   height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer))!important;
+   min-height:0!important;padding:0!important;overflow:hidden!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__grid{
+   height:100%!important;min-height:0!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__media{
+   align-self:stretch!important;height:100%!important;
+   min-height:0!important;max-height:none!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__copy{
+   height:100%!important;min-height:0!important;
+   padding-top:calc(var(--etnika-section-outer) + clamp(16px,2svh,26px))!important;
+   padding-bottom:calc(var(--etnika-section-outer) + clamp(16px,2svh,26px))!important;
+ }
+ /* Every other section has one full-height INNER frame — not a
+    reduced viewport-minus-header-and-paddings box. */
+ #etnika-review-flow :is(
+   #etnika-space-photo .spf-shell,#etnika-stories .stories-shell,
+   #etnika-studio-features .b05-shell,#etnika-gift .eg-shell,
+   #etnika-prices-clear.ev3 .ev3-shell
+ ){
+   box-sizing:border-box!important;height:var(--etnika-content-screen)!important;
+   min-height:0!important;max-height:none!important;
+   padding-top:0!important;padding-bottom:0!important;
+ }
+ #etnika-review-flow #etnika-space-photo .spf-shell{
+   display:grid!important;grid-template-rows:auto auto minmax(0,1fr) auto!important;
+   gap:var(--etnika-content-grid-gap)!important;
+ }
+ #etnika-review-flow #etnika-space-photo .spf-gallery{
+   height:100%!important;min-height:0!important;max-height:none!important;
+ }
+ #etnika-review-flow #etnika-stories .stories-shell{
+   display:flex!important;flex-direction:column!important;
+ }
+ #etnika-review-flow #etnika-stories .stories-title{
+   margin-top:0!important;margin-bottom:clamp(12px,2svh,22px)!important;
+ }
+ #etnika-review-flow #etnika-stories .stories-grid{
+   flex:1 1 0!important;height:0!important;min-height:0!important;
+   max-height:none!important;overflow:hidden!important;
+ }
+ #etnika-review-flow #etnika-studio-features .b05-shell{
+   display:grid!important;grid-template-rows:auto minmax(0,1fr)!important;
+   gap:var(--etnika-content-grid-gap)!important;
+ }
+ #etnika-review-flow #etnika-studio-features .b05-main{
+   min-height:0!important;height:100%!important;
+ }
+ #etnika-review-flow #etnika-process-interactive{
+   height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer))!important;
+   display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+   grid-template-rows:auto minmax(0,1fr)!important;
+   --edge:var(--et-u-edge)!important;overflow:hidden!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-head{
+   padding:0 var(--et-u-edge) clamp(20px,2.8svh,34px)!important;
+   align-self:start!important;
+ }
+ #etnika-review-flow #etnika-process-interactive .epi-grid{
+   height:100%!important;min-height:0!important;max-height:none!important;
+   display:grid!important;
+   grid-template-rows:repeat(2,minmax(0,1fr))!important;
+ }
+ /* FAQ bodies must grow naturally if a visitor opens several answers,
+    but a default collapsed FAQ always uses a full screen. */
+ #etnika-review-flow :is(#etnika-faq .faq-shell,#etnika-faq-tariffs .faq-shell){
+   box-sizing:border-box!important;
+   height:auto!important;min-height:var(--etnika-content-screen)!important;
+   padding:0!important;
+   display:grid!important;grid-template-rows:auto minmax(0,1fr)!important;
+   gap:var(--etnika-content-grid-gap)!important;
+ }
+ #etnika-review-flow #etnika-prices-clear.ev3{
+   padding-top:var(--etnika-section-outer)!important;
+   padding-bottom:var(--etnika-section-outer)!important;
+ }
+ #etnika-review-flow #etnika-prices-clear.ev3 .ev3-shell{
+   display:grid!important;grid-template-rows:auto auto minmax(0,1fr)!important;
+   gap:var(--etnika-content-grid-gap)!important;
+ }
+ #etnika-review-flow #etnika-prices-clear.ev3 .ev3-stage{
+   height:100%!important;min-height:0!important;
+ }
+ #etnika-review-flow #etnika-extra .ee-shell{
+   box-sizing:border-box!important;height:var(--etnika-content-screen)!important;
+   min-height:0!important;padding:0!important;
+   align-items:stretch!important;
+ }
+ #etnika-review-flow #etnika-extra .ee-gallery{
+   height:100%!important;min-height:0!important;max-height:none!important;
+ }
+ #etnika-review-flow #etnika-extra .ee-copy{
+   min-height:0!important;height:100%!important;
+ }
+ #etnika-review-flow #etnika-gift .eg-shell{
+   display:grid!important;grid-template-rows:auto minmax(0,1fr) auto!important;
+ }
+ #etnika-review-flow #etnika-reviews{
+   padding-left:var(--et-u-edge)!important;padding-right:var(--et-u-edge)!important;
+ }
+ #etnika-review-flow #etnika-reviews .etnika-reviews-inner{
+   height:var(--etnika-content-screen)!important;min-height:0!important;
+   display:flex!important;flex-direction:column!important;justify-content:flex-start!important;
+ }
+ #etnika-review-flow #etnika-reviews .etnika-reviews-mount{
+   flex:1 1 auto!important;min-height:0!important;
+ }
+ #etnika-review-flow #etnika-contacts-source .location{
+   height:var(--etnika-content-screen)!important;
+   min-height:0!important;max-height:none!important;
+ }
+ #etnika-review-flow #etnika-contacts-source .location-map{
+   height:100%!important;min-height:0!important;
+ }
+ /* Do not compress the text or shrink its images just to add whitespace. */
+}
+
+/* Mobile: preserve complete original content and photographs. The content
+   area is at LEAST a full screen, expanding where five cards or long FAQ
+   entries cannot physically fit a phone screen without hiding text. */
 @media(max-width:1100px){
  :root{
    --etnika-section-outer:clamp(36px,6svh,60px);
@@ -12890,19 +12936,17 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
    #etnika-prices-clear,#etnika-extra,#etnika-faq-tariffs,
    #etnika-gift,#etnika-reviews,#etnika-contacts-source
  ){
-   box-sizing:border-box!important;
-   height:auto!important;
+   box-sizing:border-box!important;height:auto!important;
    min-height:calc(var(--etnika-content-screen) + 2 * var(--etnika-section-outer))!important;
    max-height:none!important;
    padding-top:var(--etnika-section-outer)!important;
    padding-bottom:var(--etnika-section-outer)!important;
-   margin:0!important;
-   overflow:visible!important;
+   margin:0!important;overflow:visible!important;
  }
  #etnika-review-flow #etnika-space-photo .spf-shell{
-   height:var(--etnika-content-screen)!important;
-   max-height:none!important;
+   height:var(--etnika-content-screen)!important;max-height:none!important;
  }
+ #etnika-review-flow #etnika-space-photo .spf-gallery{min-height:0!important;}
  #etnika-review-flow #etnika-prices-clear.ev3{
    padding-top:var(--etnika-section-outer)!important;
    padding-bottom:var(--etnika-section-outer)!important;
