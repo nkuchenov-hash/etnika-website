@@ -3,6 +3,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'site/index.html'
       - 'scripts/verify_live_b02.py'
       - '.github/workflows/b02-live.yml'
   workflow_dispatch:
