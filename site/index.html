@@ -5745,9 +5745,11 @@ body.etnika-gallery-lock{
 #etnika-extra .ee-photo-num{
   display:block;
   margin-bottom:6px;
-  font-size:9px;
-  font-weight:200;
-  letter-spacing:.13em;
+  font-size:clamp(14px,.85vw,16px);
+  font-weight:300;
+  line-height:1.25;
+  letter-spacing:.10em;
+  text-shadow:0 1px 8px rgba(0,0,0,.35);
   text-transform:uppercase;
 }
 
@@ -5820,7 +5822,9 @@ body.etnika-gallery-lock{
   font-family:'Forum',Georgia,serif;
   font-size:clamp(25px,1.8vw,34px);
   font-weight:400;
-  line-height:1;
+  line-height:1.22;
+  padding-bottom:.12em;
+  overflow:visible;
   white-space:nowrap;
   color:var(--ink);
 }
@@ -13299,13 +13303,21 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
    The general 100svh inner-frame rule made the photos and the empty gap
    between the heading and service list unnaturally tall. */
 #etnika-review-flow > section#etnika-extra{
+ position:relative!important;
  height:auto!important;min-height:0!important;max-height:none!important;
- /* Additional white breathing space AFTER the compact gallery and price list. */
- padding:0 0 var(--etnika-section-outer,88px)!important;overflow:hidden!important;
+ /* Only one bottom field, equal to beige FAQ top-to-kicker-rule spacing. */
+ padding:0!important;overflow:hidden!important;
+}
+#etnika-review-flow > section#etnika-extra::before{
+ content:"";position:absolute;z-index:1;top:0;
+ left:var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)));
+ right:var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)));
+ height:1px;background:rgba(11,11,11,.16);pointer-events:none;
 }
 #etnika-review-flow #etnika-extra .ee-shell{
  height:auto!important;min-height:0!important;max-height:none!important;
- padding:64px 0!important;align-items:stretch!important;
+ padding:64px 0 calc(var(--etnika-section-outer,clamp(72px,9svh,112px)) + 14px)!important;
+ align-items:stretch!important;
 }
 #etnika-review-flow #etnika-extra .ee-gallery{
  height:100%!important;min-height:460px!important;max-height:none!important;
@@ -13315,7 +13327,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 @media(max-width:1100px){
  #etnika-review-flow #etnika-extra .ee-shell{
-   height:auto!important;min-height:0!important;padding:60px 0!important;
+   height:auto!important;min-height:0!important;
+   padding:60px 0 calc(var(--etnika-section-outer,clamp(36px,6svh,60px)) + 7px)!important;
    grid-template-columns:1fr!important;
  }
  #etnika-review-flow #etnika-extra .ee-gallery{
@@ -13326,7 +13339,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
 }
 @media(max-width:700px){
- #etnika-review-flow #etnika-extra .ee-shell{padding:46px 0!important;}
+ #etnika-review-flow #etnika-extra .ee-shell{
+ padding:46px 0 calc(var(--etnika-section-outer,clamp(36px,6svh,60px)) + 7px)!important;
+}
  #etnika-review-flow #etnika-extra .ee-gallery{height:390px!important;}
 }
 /* 03 · "Highlight the look" is a SMALL SUBSECTION heading, not global H2. */
