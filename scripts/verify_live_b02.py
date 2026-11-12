@@ -95,7 +95,7 @@ with sync_playwright() as p:
             }""")
             assert done=={'active':[1],'entering':0},f'Transition did not complete cleanly: {done}'
             print('PASS LIVE B02 SLIDER: no red flash, 1.35s image-on-image fade, counter and arrows work',flush=True)
-                page.screenshot(path=str(OUT/f'etnika-live-b02-split-{w}x{h}.png'),full_page=False)
+        page.screenshot(path=str(OUT/f'etnika-live-b02-split-{w}x{h}.png'),full_page=False)
         print(f'PASS LIVE B02 {w}x{h}: section={result["block"]["height"]:.0f}, copy={result["copy"]["height"]:.0f}, top_space={result["stack"]["top"]-result["copy"]["top"]:.1f}, bottom_space={result["copy"]["bottom"]-result["stack"]["bottom"]:.1f}, center_error={result["stack"]["mid"]-result["copy"]["mid"]:.1f}',flush=True)
         page.close()
     browser.close()
