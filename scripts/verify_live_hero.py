@@ -135,7 +135,7 @@ with sync_playwright() as playwright:
                     else:
                         assert block["outerTop"] >= 20 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Broken outer fields: {block}"
                     if width >= 1101 and block["id"] == "etnika-block-02-final":
-                        assert block["height"] > height+90, f"B02 photo must extend beyond viewport: {block}"
+                        assert abs(block["height"]-(height-60))<3, f"B02 visible section must not have blank scrolling tail: {block}"
                     elif width >= 1101 and block["id"] not in ("etnika-faq-tariffs","etnika-reviews","etnika-prices-clear","etnika-gift"):
                         assert block["height"] > height, f"Full-screen content+fields should exceed viewport: {block}"
                 if width >= 1101:
@@ -156,7 +156,7 @@ with sync_playwright() as playwright:
                 assert abs(system["spaceFrameHeight"]-height) <= 3, f"Studio content is shorter than the viewport: {system}"
                 media=system["fullScreenMedia"]
                 if width >= 1101:
-                    assert abs(media["b02Block"]-media["b02Photo"]) <= 3, f"B02 photo must cover FULL section including outer fields: {media}"
+                    assert media["b02Photo"] > height+90, f"B02 photographic media must be taller than one viewport: {media}"
                     assert media["spaceGallery"] >= height*.56, f"Studio photos too small: {media}"
                     assert media["storiesGrid"] >= height*.56, f"Stories photos too small: {media}"
                     assert abs(media["processGrid"] - height) < 3, f"Process PHOTO GRID must be a full viewport tall: {media}"
