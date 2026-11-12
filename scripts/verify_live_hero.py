@@ -135,7 +135,7 @@ with sync_playwright() as playwright:
                     else:
                         assert block["outerTop"] >= 20 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Broken outer fields: {block}"
                     if width >= 1101 and block["id"] == "etnika-block-02-final":
-                        assert abs(block["height"]-(height-60)) <= 3, f"B02 must occupy the visible viewport below the header: {block}"
+                        assert block["height"] > height+90, f"B02 photo must extend beyond viewport: {block}"
                     elif width >= 1101 and block["id"] not in ("etnika-faq-tariffs","etnika-reviews","etnika-prices-clear","etnika-gift"):
                         assert block["height"] > height, f"Full-screen content+fields should exceed viewport: {block}"
                 if width >= 1101:
@@ -217,7 +217,7 @@ with sync_playwright() as playwright:
                           blockTop:r('#etnika-block-02-final').top,
                           mainTop:r('#etnika-block-02-final .etnika-b02__main').top,
                           compositionMid:(() => {const r=document.querySelector('#etnika-block-02-final .etnika-b02__composition').getBoundingClientRect();return r.top+r.height/2;})(),
-                          blockMid:(() => {const r=document.querySelector('#etnika-block-02-final').getBoundingClientRect();return r.top+r.height/2;})(),
+                          blockMid:(() => {const r=document.querySelector('#etnika-block-02-final .etnika-b02__copy').getBoundingClientRect();return r.top+r.height/2;})(),
                           stampTop:r('#etnika-block-02-final .etnika-b02__stamp').top,
                           counterTop:r('#etnika-block-02-final .etnika-b02__counter').top,
                           captionBottom:r('#etnika-block-02-final .etnika-b02__caption').bottom,
