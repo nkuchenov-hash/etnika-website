@@ -28,6 +28,7 @@ with sync_playwright() as p:
               return {
                 block:box(block),copy:box(q('.etnika-b02__copy')),
                 composition:box(q('.etnika-b02__composition')),
+                stack:box(q('.etnika-b02__stack')),
                 title:box(q('.etnika-b02__title')),
                 overline:box(q('.etnika-b02__top')),
                 desc:box(q('.etnika-b02__description')),
@@ -51,12 +52,14 @@ with sync_playwright() as p:
             assert abs(v['copy']['height']-(height-60))<=3,msg
             assert v['media']['height']>height+60,msg
             assert v['overline']['top']-v['block']['top']>=24,msg
-            assert v['title']['top']>=v['overline']['bottom']+16,msg
+            assert v['title']['top']>=v['overline']['bottom']+25,msg
+            assert abs(v['stack']['top']-v['overline']['top'])<2,msg
+            assert abs(v['stack']['bottom']-v['features']['bottom'])<2,msg
             assert v['desc']['bottom']<v['features']['top']-10,msg
             assert v['features']['bottom']<=v['copy']['bottom']-35,msg
-            assert abs(v['copy']['center']-v['composition']['center'])<3,msg
-            assert v['composition']['top']-v['copy']['top']>=60,msg
-            assert abs((v['composition']['top']-v['copy']['top'])-(v['copy']['bottom']-v['composition']['bottom']))<2,msg
+            assert abs(v['copy']['center']-v['stack']['center'])<3,msg
+            assert v['stack']['top']-v['copy']['top']>=35,msg
+            assert abs((v['stack']['top']-v['copy']['top'])-(v['copy']['bottom']-v['stack']['bottom']))<2,msg
             assert v['controls']['bottom']<=v['block']['bottom']-14,msg
             if depth==180 and width==1660:
                 page.screenshot(path=str(REPORTS/'etnika-b02-owner-1660x930-mid-scroll.png'))
