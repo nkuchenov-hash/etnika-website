@@ -677,6 +677,7 @@ window.addEventListener('pageshow',function(event){
   <div class="etnika-b02__grid">
 
     <div class="etnika-b02__copy">
+      <div class="etnika-b02__stack">
       <div class="etnika-b02__top">
         <span>ЭТНИКА</span>
         <span class="etnika-b02__top-line"></span>
@@ -750,6 +751,7 @@ window.addEventListener('pageshow',function(event){
         </div>
       </div>
       </div><!-- /.etnika-b02__composition -->
+      </div><!-- /.etnika-b02__stack -->
     </div>
 
     <div class="etnika-b02__media">
@@ -14227,6 +14229,34 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     align-items:stretch!important;
     overflow:visible!important;
   }
+  /* The editorial overline is part of the CONTENT, not a separate top
+     decoration. Center the overline + title + text + 4 benefits together. */
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__stack{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    justify-content:center!important;
+    flex:0 0 auto!important;
+    width:auto!important;
+    max-height:none!important;
+    min-height:0!important;
+    margin:0 var(--pad) 0 var(--edge)!important;
+    padding:0!important;
+    gap:var(--etnika-overline-content-gap,clamp(34px,4svh,52px))!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__top{
+    position:static!important;
+    inset:auto!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    transform:none!important;
+    width:100%!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    flex:0 0 auto!important;
+  }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__composition{
     position:static!important;
     inset:auto!important;
@@ -14241,7 +14271,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     width:auto!important;
     height:auto!important;
     min-height:0!important;
-    margin:0 var(--pad) 0 var(--edge)!important;
+    margin:0!important;
     padding:0!important;
     gap:clamp(24px,3svh,44px)!important;
     flex:0 0 auto!important;
@@ -14274,6 +14304,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
 }
 @media(max-width:1100px){
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__stack,
   #etnika-review-flow #etnika-block-02-final .etnika-b02__composition{
     display:contents!important;
   }
