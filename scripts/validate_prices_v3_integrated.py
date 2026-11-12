@@ -67,20 +67,15 @@ with sync_playwright() as pw:
   assert page.locator('.ev3-sheet').get_attribute('data-open')=='true'
   page.wait_for_timeout(600)  # Wait for 480ms slide-in before measuring the panel's final bounds.
   assert page.locator('.ev3-feature-list li').count()==10
-  if w>900:
-   # On a desktop the sheet is confined to the photograph, not over tariff prices.
-   geometry=page.evaluate("""() => {
-     const a=document.querySelector('#etnika-prices-clear .ev3-sheet-panel').getBoundingClientRect();
-     const b=document.querySelector('#etnika-prices-clear .ev3-visual').getBoundingClientRect();
-     const prices=[...document.querySelectorAll('#etnika-prices-clear .ev3-plan-price')].map(el=>el.getBoundingClientRect());
-     return {panelLeft:a.left,panelRight:a.right,photoLeft:b.left,photoRight:b.right,
-       priceRight:Math.max(...prices.map(p=>p.right))};
-   }""")
-   assert geometry['panelLeft']>=geometry['priceRight']+4,(w,'sheet overlaps prices',geometry)
-   assert abs(geometry['panelLeft']-geometry['photoLeft'])<=3,(w,'sheet must dock to photograph',geometry)
-   assert abs(geometry['panelRight']-geometry['photoRight'])<=3,(w,'sheet must not exceed photograph',geometry)
-  else:
-   assert page.locator('.ev3-sheet-panel').evaluate('(x)=>x.getBoundingClientRect().width')>=min(800,w*.94)-3
+  geometry=page.evaluate("""() => {
+    const panel=document.querySelector('#etnika-prices-clear .ev3-sheet-panel').getBoundingClientRect();
+    const footer=document.querySelector('#etnika-prices-clear .ev3-sheet-footer').getBoundingClientRect();
+    return {top:panel.top, bottom:panel.bottom, right:panel.right, width:panel.width, footerBottom:footer.bottom};
+  }""")
+  assert abs(geometry['top'])<=2 and abs(geometry['bottom']-h)<=2,(w,'tariff sheet must fill entire viewport height',geometry)
+  assert abs(geometry['right']-w)<=2,(w,'tariff sheet must slide from screen right edge',geometry)
+  assert geometry['footerBottom']<=h+2,(w,'booking footer is clipped below viewport',geometry)
+  assert geometry['width']>=min(800,w*.79)-4,(w,'tariff sheet is unreasonably narrow',geometry)
   page.wait_for_timeout(520)
   page.screenshot(path=str(OUT/f'etnika-v3-integrated-panel-{w}x{h}.png'))
   page.keyboard.press('Escape')
