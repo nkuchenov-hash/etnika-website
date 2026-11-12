@@ -13065,102 +13065,95 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 </style>
 
 <style id="etnika-gift-viewport-fix-20261111">
-/* Owner's 11 Nov correction: the COMPLETE certificate section (not its
-   background alone) fits into the visible screen below the fixed menu.
-   Keep every original text line, fact, CTA and footer visible. */
-@media (min-width:1101px){
-  #etnika-review-flow > section#etnika-gift{
-    box-sizing:border-box!important;
-    height:calc(100svh - var(--etnika-nav-height,60px))!important;
-    min-height:0!important;
-    max-height:none!important;
-    padding:0!important;
-    margin:0!important;
-    overflow:hidden!important;
-    /* html already has scroll-padding-top for the fixed navigation. */
-    scroll-margin-top:0!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-shell{
-    box-sizing:border-box!important;
-    height:100%!important;
-    min-height:0!important;
-    max-height:none!important;
-    padding:clamp(26px,4svh,46px) 0 clamp(22px,3svh,38px)!important;
-    display:grid!important;
-    grid-template-rows:auto auto auto!important;
-    align-content:space-between!important;
-    row-gap:clamp(10px,1.8svh,20px)!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-main{
-    align-self:center!important;
-    width:min(710px,58vw)!important;
-    min-height:0!important;
-    padding:0!important;
-  }
-  #etnika-review-flow > section#etnika-gift h2.eg-title.etnika-section-heading{
-    font-size:clamp(44px,min(5.15vw,8svh),88px)!important;
-    line-height:.84!important;
-    margin:0 0 clamp(12px,1.55svh,18px)!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-sub{
-    margin:0 0 clamp(10px,1.45svh,16px)!important;
-    font-size:clamp(14px,1.12vw,16px)!important;
-    line-height:1.4!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-fact{
-    min-height:clamp(38px,5.5svh,52px)!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-fact strong{
-    font-size:clamp(27px,3.6svh,34px)!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-note{
-    margin-bottom:8px!important;
-    line-height:1.35!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-cta{
-    min-height:clamp(45px,5.8svh,52px)!important;
-  }
+/* Owner: gift certificate is a complete, readable section, never an
+   overflow-clipped fixed-height video. Fill the visible desktop screen
+   when content fits; grow naturally when typography requires more room. */
+#etnika-review-flow > section#etnika-gift{
+  box-sizing:border-box!important;
+  position:relative!important;
+  isolation:isolate!important;
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  height:auto!important;
+  min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+  max-height:none!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+  scroll-margin-top:0!important;
 }
-@media (max-width:1100px){
+#etnika-review-flow #etnika-gift .eg-video{
+  position:absolute!important;inset:0!important;z-index:0!important;
+  pointer-events:none!important;
+}
+#etnika-review-flow #etnika-gift .eg-video video{
+  object-fit:cover!important;
+}
+#etnika-review-flow #etnika-gift .eg-shade{
+  z-index:1!important;pointer-events:none!important;
+}
+#etnika-review-flow #etnika-gift .eg-shell{
+  box-sizing:border-box!important;
+  position:relative!important;
+  z-index:2!important;
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  align-content:space-between!important;
+  row-gap:clamp(16px,2.5svh,28px)!important;
+  height:auto!important;
+  min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+  max-height:none!important;
+  padding:clamp(28px,4.4svh,52px) 0 clamp(26px,3.8svh,44px)!important;
+}
+#etnika-review-flow #etnika-gift .eg-main{
+  align-self:center!important;
+  width:min(710px,58vw)!important;
+  min-height:0!important;
+  padding:0!important;
+}
+#etnika-review-flow > section#etnika-gift h2.eg-title.etnika-section-heading{
+  font-size:clamp(44px,min(5.0vw,8svh),86px)!important;
+  line-height:.93!important;
+  margin:0 0 clamp(12px,1.6svh,18px)!important;
+}
+#etnika-review-flow #etnika-gift .eg-sub{
+  margin:0 0 clamp(11px,1.5svh,17px)!important;
+  font-size:clamp(14px,1.1vw,16px)!important;
+  line-height:1.5!important;
+}
+#etnika-review-flow #etnika-gift .eg-fact{
+  min-height:clamp(40px,5.7svh,52px)!important;
+}
+#etnika-review-flow #etnika-gift .eg-fact strong{
+  font-size:clamp(27px,3.8svh,34px)!important;
+  line-height:1.15!important;
+}
+#etnika-review-flow #etnika-gift .eg-note{
+  margin-bottom:9px!important;
+  line-height:1.45!important;
+}
+#etnika-review-flow #etnika-gift .eg-cta{
+  min-height:clamp(48px,5.9svh,54px)!important;
+}
+@media(max-width:1100px){
   #etnika-review-flow > section#etnika-gift{
-    box-sizing:border-box!important;
-    height:auto!important;
     min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
-    max-height:none!important;
-    padding:clamp(28px,5svh,48px) 0 clamp(24px,4svh,36px)!important;
-    margin:0!important;
-    overflow:visible!important;
-    scroll-margin-top:0!important;
   }
   #etnika-review-flow #etnika-gift .eg-shell{
-    box-sizing:border-box!important;
-    height:auto!important;
-    min-height:calc(100svh - var(--etnika-nav-height,56px) - clamp(28px,5svh,48px) - clamp(24px,4svh,36px))!important;
-    max-height:none!important;
-    padding:0!important;
-    display:grid!important;
-    grid-template-rows:auto auto auto!important;
-    align-content:space-between!important;
+    min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
+    padding:clamp(35px,5svh,55px) 0!important;
     row-gap:clamp(18px,3svh,30px)!important;
   }
-  #etnika-review-flow #etnika-gift .eg-main{
-    min-height:0!important;
-    padding:0!important;
-  }
+  #etnika-review-flow #etnika-gift .eg-main{width:100%!important;}
   #etnika-review-flow #etnika-gift .eg-footer{
-    grid-template-columns:1fr!important;
-    gap:12px!important;
+    grid-template-columns:1fr!important;gap:12px!important;
   }
-  #etnika-review-flow #etnika-gift .eg-sub{margin-bottom:14px!important;}
-  #etnika-review-flow #etnika-gift .eg-fact{min-height:45px!important;}
+  #etnika-review-flow #etnika-gift .eg-title-line{white-space:normal!important;}
 }
-@media (max-width:700px){
-  #etnika-review-flow #etnika-gift .eg-title-line{
-    white-space:normal!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-shell{
-    row-gap:clamp(18px,2.7svh,26px)!important;
-  }
+@media(max-width:700px){
+  #etnika-review-flow #etnika-gift .eg-shell{padding:36px 0!important;}
+  #etnika-review-flow #etnika-gift .eg-fact{min-height:48px!important;}
 }
 </style>
 
@@ -14485,5 +14478,92 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 })();
 </script>
 
+<style id="etnika-extra-owner-visual-fixes-20261112">
+/* Owner screenshots 12 Nov: quiet separator between PRICES and DETAILS,
+   correct baseline-safe Forum prices, legible photo numbering, and symmetric
+   outside whitespace against the beige tariff-FAQ upper kicker line. */
+#etnika-review-flow > section#etnika-extra{
+  position:relative!important;
+  padding-bottom:0!important;
+}
+#etnika-review-flow > section#etnika-extra::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:var(--et-u-edge,max(40px,4vw));
+  right:var(--et-u-edge,max(40px,4vw));
+  height:1px;
+  background:rgba(16,16,16,.16);
+  pointer-events:none;
+}
+#etnika-review-flow #etnika-extra .ee-shell{
+  padding-bottom:calc(var(--etnika-section-outer,clamp(72px,9svh,112px)) + 14px)!important;
+}
+#etnika-review-flow #etnika-extra .ee-item{
+  overflow:visible!important;
+}
+#etnika-review-flow #etnika-extra .ee-item-price{
+  overflow:visible!important;
+  line-height:1.22!important;
+  padding:.08em 0 .12em!important;
+  font-variant-numeric:lining-nums;
+}
+#etnika-review-flow #etnika-extra .ee-item-price small{
+  line-height:1.4!important;
+  margin-top:6px!important;
+}
+#etnika-review-flow #etnika-extra .ee-photo-num{
+  font-size:clamp(14px,1vw,17px)!important;
+  font-weight:400!important;
+  line-height:1.3!important;
+  letter-spacing:.09em!important;
+  margin-bottom:7px!important;
+  color:#fff!important;
+  opacity:1!important;
+}
+@media(max-width:700px){
+  #etnika-review-flow #etnika-extra .ee-shell{
+    padding-bottom:calc(var(--etnika-section-outer,36px) + 14px)!important;
+  }
+  #etnika-review-flow #etnika-extra .ee-photo-num{
+    font-size:14px!important;
+  }
+}
+</style>
+<script id="etnika-gift-video-visibility-20261112">
+/* Background video should not decode/paint while visitors read tariff FAQ.
+   Keep the full certificate section usable even when video is unavailable. */
+(function(){
+  const section=document.getElementById('etnika-gift');
+  const video=section && section.querySelector('.eg-video video');
+  if(!section || !video)return;
+  video.pause();
+  video.autoplay=false;
+  video.preload='none';
+  video.removeAttribute('autoplay');
+  video.setAttribute('preload','none');
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  let near=false;
+  const sync=()=>{
+    if(near && !document.hidden && !reduced.matches){
+      if(video.preload==='none')video.preload='metadata';
+      if(video.paused)video.play().catch(()=>{});
+    }else if(!video.paused){
+      video.pause();
+    }
+  };
+  if('IntersectionObserver' in window){
+    const observer=new IntersectionObserver(entries=>{
+      near=!!(entries[0] && entries[0].isIntersecting);
+      sync();
+    },{rootMargin:'100px 0px',threshold:0});
+    observer.observe(section);
+  }else{
+    near=true;sync();
+  }
+  document.addEventListener('visibilitychange',sync);
+  if(reduced.addEventListener)reduced.addEventListener('change',sync);
+})();
+</script>
 </body>
 </html>
