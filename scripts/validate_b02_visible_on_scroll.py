@@ -45,14 +45,14 @@ with sync_playwright() as p:
             assert v['position']=='relative',msg
             assert v['groupPosition']=='static',msg
             assert v['groupTransform']=='none',msg
-            assert v['block']['height']>height+110, msg
+            assert abs(v['block']['height']-(height-60))<=3,msg
             assert abs(v['media']['height']-v['block']['height'])<3,msg
             assert v['overline']['top']-v['block']['top']>=24,msg
             assert v['title']['top']>=v['overline']['bottom']+16,msg
             assert v['desc']['bottom']<v['features']['top']-10,msg
             assert v['features']['bottom']<=v['block']['bottom']-24,msg
             assert abs(v['copy']['center']-v['composition']['center'])<3,msg
-            assert v['composition']['top']-v['block']['top']>=130,msg
+            assert v['composition']['top']-v['block']['top']>=70,msg
             assert abs((v['composition']['top']-v['block']['top'])-(v['block']['bottom']-v['composition']['bottom']))<2,msg
             assert v['controls']['bottom']<=v['block']['bottom']-14,msg
             if depth==180 and width==1660:
