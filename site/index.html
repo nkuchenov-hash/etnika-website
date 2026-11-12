@@ -14403,5 +14403,77 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 </style>
 
+
+<!-- ETNIKA · Portfolio flow repair, 12 Nov 2026: preserve full-size images and keep next section below them. -->
+<style id="etnika-stories-flow-fix-20261112">
+@media (min-width:1101px){
+  #etnika-review-flow > section#etnika-stories{
+    display:flow-root!important;
+    position:relative!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    margin-top:0!important;
+    margin-bottom:0!important;
+    padding-bottom:clamp(36px,4.8svh,52px)!important;
+  }
+  #etnika-review-flow #etnika-stories .stories-shell{
+    display:block!important;
+    box-sizing:border-box!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  #etnika-review-flow #etnika-stories .stories-grid{
+    display:grid!important;
+    flex:none!important;
+    height:calc(clamp(640px,75svh,960px) + clamp(40px,6svh,70px))!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+}
+</style>
+<script id="etnika-stories-flow-fix-20261112-guard">
+(function(){
+  "use strict";
+  const section=document.getElementById("etnika-stories");
+  const grid=section && section.querySelector(".stories-grid");
+  if(!section || !grid)return;
+  let pending=false;
+  function ensureNoOverlap(){
+    pending=false;
+    if(window.innerWidth<=1100){
+      section.style.removeProperty("min-height");
+      return;
+    }
+    // Reset a previous viewport's guard before calculating the current layout.
+    section.style.removeProperty("min-height");
+    const box=section.getBoundingClientRect();
+    const bottom=grid.getBoundingClientRect().bottom;
+    const padding=parseFloat(getComputedStyle(section).paddingBottom)||0;
+    const required=Math.ceil(bottom-box.top+padding);
+    if(required>box.height+1){
+      section.style.setProperty("min-height",required+"px","important");
+    }
+  }
+  function requestCheck(){
+    if(!pending){
+      pending=true;
+      requestAnimationFrame(ensureNoOverlap);
+    }
+  }
+  document.addEventListener("DOMContentLoaded",requestCheck,{once:true});
+  window.addEventListener("load",requestCheck,{once:true});
+  window.addEventListener("resize",requestCheck,{passive:true});
+  if(document.fonts && document.fonts.ready)document.fonts.ready.then(requestCheck);
+  requestCheck();
+})();
+</script>
+
 </body>
 </html>
