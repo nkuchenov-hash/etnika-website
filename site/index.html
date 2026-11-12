@@ -14701,7 +14701,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   opacity:1!important;
   width:100%!important;
   height:auto!important;
-  min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+  min-height:0!important;
   max-height:none!important;
   padding:0!important;
   margin:0!important;
@@ -14740,10 +14740,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   gap:clamp(13px,1.9svh,22px)!important;
   width:auto!important;
   height:auto!important;
-  min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+  min-height:0!important;
   max-height:none!important;
-  margin:0 var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)))!important;
-  padding:clamp(42px,6svh,66px) 0!important;
+  margin:0 max(80px,var(--et-u-edge,80px))!important;
+  padding:clamp(50px,6svh,72px) 0!important;
 }
 #etnika-review-flow > section#etnika-gift .eg-top{
   width:var(--gift-copy-width)!important;
