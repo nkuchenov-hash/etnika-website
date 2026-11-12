@@ -37,6 +37,10 @@ with sync_playwright() as pw:
             listRows:Array.from(document.querySelectorAll(q+'.b05-item'),e=>e.getBoundingClientRect().height),
             bottom:r(q+'.b05-stage-bottom'),
             caption:r(q+'.b05-caption'),prev:r(q+'.b05-prev'),
+            next:r(q+'.b05-next'),nav:r(q+'.b05-nav'),
+            imageTransform:getComputedStyle(document.querySelector(q+'.b05-stage-image')).transform,
+            arrowCSS:(()=>{const a=getComputedStyle(document.querySelector(q+'.b05-prev'));const n=getComputedStyle(document.querySelector(q+'.b05-nav'));return {width:a.width,height:a.height,border:a.borderTopWidth,background:a.backgroundColor,navBorder:n.borderBottomWidth,navWidth:n.width,svgWidth:getComputedStyle(document.querySelector(q+'.b05-prev svg')).width,svgBox:document.querySelector(q+'.b05-prev svg').getAttribute('viewBox')};})(),
+            otherArrowCSS:(()=>{const a=getComputedStyle(document.querySelector('#etnika-block-02-final .etnika-b02__arrow'));return {width:a.width,height:a.height,border:a.borderTopWidth,background:a.backgroundColor,svgWidth:getComputedStyle(document.querySelector('#etnika-block-02-final .etnika-b02__arrow svg')).width,svgBox:document.querySelector('#etnika-block-02-final .etnika-b02__arrow svg').getAttribute('viewBox')};})(),
             next:r(q+'.b05-next'),last:r(q+'.b05-item:last-child'),
             counter:r(q+'.b05-counter'),bodyWidth:document.documentElement.scrollWidth,
             imageOK:(()=>{let x=document.querySelector(q+'.b05-stage-image');return x.complete&&x.naturalWidth>0;})(),
@@ -74,6 +78,19 @@ with sync_playwright() as pw:
         assert v['last']['bottom']<=v['section']['bottom']-8,err("sixth advantage clipped")
         assert v['caption']['left']>=v['stage']['left']+8,err("photo caption clipped on left")
         assert v['caption']['right']<=v['stage']['right']-8,err("photo caption clipped on right")
+        # The image and all photo-overlay elements obey the global site grid.
+        edge=max(80,(w-1760)/2) if w>=1920 else (max(40,(w-1320)/2) if w<=1440 else max(80,(w-1760)/2))
+        assert abs(v['caption']['left']-v['stage']['left']-edge)<2,err("caption not on site grid")
+        assert abs(v['counter']['left']-v['caption']['left'])<2,err("photo counter and caption misaligned")
+        assert abs(v['nav']['right']-(v['stage']['right']-edge))<2,err("arrows not aligned to right grid")
+        assert v['stage']['bottom']-v['bottom']['bottom']>=40,err("photo overlay too close to bottom")
+        assert v['imageTransform']!='none',err("photo has not been raised within its frame")
+        # Use precisely the same visible arrow vocabulary as the photo slider
+        # in the 'ФОТОСТУДИЯ БЕЗ ФОТОГРАФА' block.
+        for prop in ('width','height','border','background','svgWidth','svgBox'):
+            assert v['arrowCSS'][prop]==v['otherArrowCSS'][prop],err(f"arrow differs from block 02: {prop}")
+        assert v['arrowCSS']['navBorder']=='1px',err("photo arrows missing shared underline")
+        print(f"PHOTO-GRID {w}x{h}: caption left {v['caption']['left']:.1f}, bottom inset {v['stage']['bottom']-v['bottom']['bottom']:.1f}, arrows match block 02",flush=True)
         for key in ('bottom','caption','prev','next'):
             assert v[key]['bottom']<=v['stage']['bottom']-8,err(f"{key} clipped below photo")
         assert v['counter']['top']>=v['stage']['top']+6,err("counter hidden behind menu")
