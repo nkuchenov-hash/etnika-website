@@ -37,6 +37,7 @@ with sync_playwright() as pw:
      rowTop:getComputedStyle(q('.ev3-plan')).borderTopWidth,
      rowHeights:[...root.querySelectorAll('.ev3-plan')].map(e=>e.getBoundingClientRect().height),
      titleFontSize:parseFloat(getComputedStyle(title).fontSize),
+     referenceTitleSize:parseFloat(getComputedStyle(document.querySelector('#etnika-stories h2.etnika-section-heading')).fontSize),
      stageHeight:r(q('.ev3-stage')).height};
   }""")
   assert values['pageWidth']<=w+2,(w,'horizontal overflow',values)
@@ -55,7 +56,7 @@ with sync_playwright() as pw:
   assert values['stage']['top']>=values['title']['bottom']+18,(w,'heading cramped',values)
   assert 'Forum' in values['font'],(w,'heading font',values)
   if w>=1200:
-   assert values['titleFontSize']<=83,(w,'heading dominates section',values)
+   assert abs(values['titleFontSize']-values['referenceTitleSize'])<1,(w,'pricing heading differs from shared H2',values)
    assert values['stageHeight']<=545,(w,'oversized stage',values)
    assert max(values['rowHeights'])<=175,(w,'tariff rows too expansive',values)
    assert values['stageHeight']>=430,(w,'stage became too small',values)
@@ -105,7 +106,6 @@ with sync_playwright() as pw:
    }""")
    assert anchor['overline']['top']>=anchor['headerBottom']+8,(w,'section top clipped by navigation',anchor)
    assert anchor['title']['top']>=anchor['headerBottom']+35,(w,'title under fixed header',anchor)
-   assert anchor['titleSize']<=75,(w,'global large title token overrides premium heading',anchor)
    assert anchor['stageHeight']<=535,(w,'global full-screen stage overrides premium layout',anchor)
    assert anchor['section']['height']<=h+35,(w,'global full-screen and outer padding expanded pricing section',anchor)
    page.screenshot(path=str(OUT/f'etnika-v3-anchor-{w}x{h}.png'))
