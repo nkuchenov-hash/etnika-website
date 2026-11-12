@@ -16,10 +16,11 @@ with sync_playwright() as pw:
         page.goto((ROOT/"site/index.html").as_uri(),wait_until="load",timeout=45000)
         page.evaluate("() => document.fonts.ready")
         page.wait_for_function("() => document.querySelector('#etnika-review-flow > section')?.id==='etnika-hero'")
-        page.evaluate("""() => {
-          const el=document.getElementById('etnika-studio-features');
-          window.scrollTo({top:el.getBoundingClientRect().top+scrollY,behavior:'instant'});
-        }""")
+        # Align the section through the actual sticky-header-aware scroll system.
+        # No artificial white strip is allowed above the photograph.
+        page.evaluate("""() =>
+          document.getElementById('etnika-studio-features')
+            .scrollIntoView({block:'start',behavior:'instant'})""")
         page.wait_for_timeout(250)
         v=page.evaluate("""() => {
           const r=s=>document.querySelector(s).getBoundingClientRect().toJSON();
@@ -47,6 +48,9 @@ with sync_playwright() as pw:
         print(f"WHY {w}x{h}: section={v['section']['top']:.1f}..{v['section']['bottom']:.1f}, shell={v['shell']['height']:.1f}, main={v['main']['height']:.1f}, computed={v['metrics']}, photo={v['stage']['top']:.1f}..{v['stage']['bottom']:.1f}, heading={v['title']['top']:.1f}..{v['title']['bottom']:.1f}, final={v['last']['bottom']:.1f}, caption={v['caption']['bottom']:.1f}, imageOK={v['imageOK']}, background={v['background']}",flush=True)
         err=lambda m:f'{w}x{h}: {m}: {v}'
         assert abs(v['stage']['top']-v['header']['bottom'])<4,err("photo does not start below fixed menu")
+        assert abs(v['stage']['top']-v['section']['top'])<2,err("white padding strip above left photo")
+        assert abs(v['section']['top']-v['header']['bottom'])<4,err("whole block should begin immediately below menu")
+        assert v['metrics']['section']['paddingTop']=='0px',err("section still contains extra top padding")
         assert v['title']['top']>=v['header']['bottom']+6,err("title obscured by menu")
         # Editorial hierarchy: headline matches the one shared sitewide size.
         # All six advantages form a compact intentional stack, not a stretched grid.
@@ -93,5 +97,18 @@ with sync_playwright() as pw:
         assert abs(anchor['photo']-anchor['header'])<=4,err("fragment scroll overlays photo with menu")
         assert anchor['heading']>=anchor['header']+6,err("fragment scroll hides heading under menu")
         assert anchor['bottom']<=h-8 and anchor['last']<=h-8,err("fragment scroll clips caption or final selector")
+        if w==1366:
+            # The old carousel had NO timer. Ensure slide 02 appears by itself
+            # after six seconds without pressing any controls.
+            initial=page.locator('#etnika-studio-features .b05-counter').inner_text().strip()
+            assert initial=='01 / 06',f"Unexpected carousel start: {initial}"
+            page.wait_for_timeout(6350)
+            advanced=page.locator('#etnika-studio-features .b05-counter').inner_text().strip()
+            assert advanced=='02 / 06',f"Carousel failed to advance automatically after 6s: {advanced}"
+            assert page.locator('#etnika-studio-features .b05-item.is-active').get_attribute('data-index')=='1'
+            # Clicking a manual selector still works and gets a fresh interval.
+            page.locator('#etnika-studio-features .b05-item[data-index="4"]').click()
+            assert page.locator('#etnika-studio-features .b05-counter').inner_text().strip()=='05 / 06'
+            print('AUTOPLAY: slides advance after 6s; manual selection remains functional',flush=True)
         page.close()
     browser.close()
