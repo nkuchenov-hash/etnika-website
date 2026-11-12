@@ -15008,6 +15008,56 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     margin-bottom:var(--etnika-editorial-heading-gap)!important;
   }
 }
+
+/* Mobile/tablet: remove the old three-row grid that separated B02
+   editorial text from its heading by 80–260px. Use one content stack. */
+@media(max-width:1100px){
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__copy{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    justify-content:center!important;
+    height:auto!important;
+    min-height:100svh!important;
+    gap:0!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__stack{
+    display:flex!important;
+    flex:0 0 auto!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    gap:var(--etnika-editorial-heading-gap)!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__top{
+    position:static!important;
+    transform:none!important;
+    margin:0!important;
+    flex:0 0 auto!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__composition{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    gap:clamp(20px,3svh,32px)!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  #etnika-review-flow #etnika-stories .stories-top{
+    margin-bottom:var(--etnika-editorial-heading-gap)!important;
+  }
+  #etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-top{
+    margin-bottom:var(--etnika-editorial-heading-gap)!important;
+  }
+  #etnika-review-flow #etnika-prices-clear.ev3 .ev3-overline{
+    margin-bottom:max(0px,calc(var(--etnika-editorial-heading-gap) - 24px))!important;
+  }
+  #etnika-review-flow #etnika-reviews .etnika-reviews-overline{
+    margin-bottom:var(--etnika-editorial-heading-gap)!important;
+  }
+}
 </style>
 </body>
 </html>
