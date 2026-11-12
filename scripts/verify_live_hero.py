@@ -123,8 +123,8 @@ with sync_playwright() as playwright:
                         assert not block["h2"], f"Extras is a subsection, must NOT use the primary heading token: {block}"
                     else:
                         assert block["h2"], f"Missing shared section heading: {block}"
-                        if block["id"] in ("etnika-prices-clear", "etnika-gift"):
-                            assert 42 <= block["titleSize"] <= 90, f"Compact section H2 is clipped or oversized: {block}"
+                        if block["id"] == "etnika-gift":
+                            assert 42 <= block["titleSize"] <= 90, f"Gift headline unexpectedly sized: {block}"
                         else:
                             assert abs(block["titleSize"]-system["titleToken"]) < 1, f"Nonstandard H2 size: {block}"
                         assert "Forum" in block["titleFamily"], f"Nonstandard H2 font: {block}"
