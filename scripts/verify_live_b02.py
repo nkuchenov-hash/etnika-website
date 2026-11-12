@@ -52,16 +52,16 @@ with sync_playwright() as p:
         assert abs(result['block']['top']-result['header']['bottom'])<3, 'B02 not aligned under navigation'
         assert result['block']['height']>h+90, 'PHOTO / B02 NOT TALLER THAN SCREEN'
         assert abs(result['media']['height']-result['block']['height'])<3, 'photo does not fill extended block'
-        assert abs(result['copy']['height']-(h-result['header']['height']))<3, 'TEXT NOT ONE VISIBLE SCREEN TALL'
+        assert abs(result['copy']['height']-result['block']['height'])<3, 'TEXT COLUMN MUST FILL THE FULL TALL BLOCK'
         assert abs(result['comp']['mid']-result['copy']['mid'])<2, 'TEXT NOT VERTICALLY CENTERED'
         assert abs((result['comp']['top']-result['copy']['top'])-(result['copy']['bottom']-result['comp']['bottom']))<2, 'UNEQUAL TOP/BOTTOM TEXT SPACE'
         assert result['overline']['top']>=result['header']['bottom']+8,'overline behind header'
         assert result['title']['top']>result['overline']['bottom']+20,'title sticks to overline'
-        assert result['features']['bottom']<h-35,'benefits below screen fold'
+        assert result['features']['bottom']<result['block']['bottom']-70,'benefits not centered in full height'
         assert result['bottomOverlay']['bottom']<h-15,'image controls below screen fold'
         assert result['copyPosition']=='relative' and result['compPosition']=='static' and result['compTransform']=='none', 'scroll-bound content repositioning'
         assert result['imageLoaded'],'photo not loaded'
         page.screenshot(path=str(OUT/f'etnika-live-b02-split-{w}x{h}.png'),full_page=False)
-        print(f'PASS LIVE B02 {w}x{h}: photo={result["media"]["height"]:.0f}, copy={result["copy"]["height"]:.0f}, center_error={result["comp"]["mid"]-result["copy"]["mid"]:.1f}',flush=True)
+        print(f'PASS LIVE B02 {w}x{h}: section={result["block"]["height"]:.0f}, copy={result["copy"]["height"]:.0f}, top_space={result["comp"]["top"]-result["copy"]["top"]:.1f}, bottom_space={result["copy"]["bottom"]-result["comp"]["bottom"]:.1f}, center_error={result["comp"]["mid"]-result["copy"]["mid"]:.1f}',flush=True)
         page.close()
     browser.close()
