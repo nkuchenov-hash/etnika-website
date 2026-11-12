@@ -77,21 +77,21 @@ with sync_playwright() as pw:
         assert v['title']['top']>=v['overline']['bottom']+25,err('editorial header collides with title')
         assert v['pictureOk'],err('hero/second-block photograph failed to load')
         assert near(v['media']['height'],v['block']['height'],3),err('photo not filling full section')
-        assert near(v['block']['height'],h-v['header']['height'],3),err('B02 must fill only the visible viewport below navigation without internal scroll')
-        assert near(v['copy']['height'],v['block']['height'],3),err('copy/text frame differs from photo height')
+        assert v['block']['height']>h+90,err('B02 photo must extend below the viewport')
+        assert near(v['copy']['height'],h-v['header']['height'],3),err('B02 text frame must occupy only the usable viewport')
 
         assert v['bodyWidth']<=w+2,err('horizontal overflow')
         assert v['photoOverlayContent']=='none' and v['photoOverlayDisplay']=='none',err('unrequested darkening of B02 photo')
         assert all(shadow=='none' for shadow in v['photoTextShadows']),err('unrequested text shadow over B02 photo')
         assert v['arrowFilter']=='none',err('unrequested carousel drop shadow')
-        assert near(v['copy']['height'],v['block']['height'],3),err('text composition does not fill the full extended block')
+        assert v['copy']['height']<v['block']['height']-90,err('text and photo heights must intentionally differ')
         assert near(v['copy']['top'],v['block']['top'],2),err('left content shifted from photo top')
         assert v['main']['top']>=v['overline']['bottom']+20,err('headline too close to top line')
         assert v['main']['bottom']<v['features']['top']-8,err('description overlaps bottom benefits')
         # Main heading, explanatory text and four benefits form ONE vertically
         # centered composition. The small overline is independently top-anchored.
         actual_center=v['composition']['top']+v['composition']['height']/2
-        section_center=v['block']['top']+v['block']['height']/2
+        section_center=v['copy']['top']+v['copy']['height']/2
         assert v['compositionPosition']=='static',err('B02 text group must be static, never sticky or absolutely moved')
         assert abs(actual_center-section_center)<=2,err(f'B02 TEXT NOT CENTERED: composition midpoint {actual_center:.1f}, section midpoint {section_center:.1f}')
         assert abs(v['main']['top']-v['composition']['top'])<=2,err('B02 headline is not at the top of the composition')
