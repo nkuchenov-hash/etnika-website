@@ -98,17 +98,27 @@ with sync_playwright() as pw:
         page.locator('#etnika-prices-clear .ev3-details-open').click()
         page.wait_for_timeout(550)
         assert page.locator('#etnika-prices-clear .ev3-sheet').get_attribute("data-open") == "true"
-        if width > 900:
-            dock = page.evaluate("""() => {
-              const r=s=>document.querySelector(s).getBoundingClientRect();
-              let panel=r('#etnika-prices-clear .ev3-sheet-panel');
-              let photo=r('#etnika-prices-clear .ev3-visual');
-              let prices=[...document.querySelectorAll('#etnika-prices-clear .ev3-plan-price')].map(e=>e.getBoundingClientRect());
-              return {panelLeft:panel.left, panelRight:panel.right, photoLeft:photo.left, photoRight:photo.right,
-                priceRight:Math.max(...prices.map(x=>x.right))};
-            }""")
-            assert dock["panelLeft"] >= dock["priceRight"] + 4, ("Details cover price column",dock)
-            assert abs(dock["panelLeft"] - dock["photoLeft"]) <= 4, ("Details not aligned with photo",dock)
+        geometry = page.evaluate("""() => {
+          const sel = s => document.querySelector(s);
+          const r = el => el.getBoundingClientRect();
+          const panel = sel('#etnika-prices-clear .ev3-sheet-panel');
+          const scroll = sel('#etnika-prices-clear .ev3-sheet-scroll');
+          const footer = sel('#etnika-prices-clear .ev3-sheet-footer');
+          const features = sel('#etnika-prices-clear .ev3-feature-list');
+          return {
+            top:r(panel).top, right:r(panel).right, bottom:r(panel).bottom,
+            height:r(panel).height, panelWidth:r(panel).width,
+            footerBottom:r(footer).bottom,
+            scrollClientHeight:scroll.clientHeight, scrollHeight:scroll.scrollHeight,
+            featureCount:features.children.length, backdrop:getComputedStyle(sel('#etnika-prices-clear .ev3-scrim')).pointerEvents
+          };
+        }""")
+        assert abs(geometry["top"]) <= 2 and abs(geometry["bottom"]-height) <= 2, ("Tariff drawer is not full viewport height",geometry)
+        assert abs(geometry["right"]-width) <= 2, ("Drawer not flush with screen right edge",geometry)
+        assert geometry["footerBottom"] <= height+2, ("Drawer booking footer below viewport",geometry)
+        assert geometry["scrollClientHeight"] > 0, ("Tariff features cannot scroll",geometry)
+        assert geometry["featureCount"] == 10, ("Selected premium inclusions missing",geometry)
+        assert geometry["backdrop"] != "none", ("Full-screen backdrop cannot dismiss drawer",geometry)
         page.screenshot(path=str(OUT / f"etnika-live-prices-details-{width}x{height}.png"),full_page=False)
         page.keyboard.press("Escape")
         assert page.locator('#etnika-prices-clear .ev3-sheet').get_attribute("data-open") == "false"
