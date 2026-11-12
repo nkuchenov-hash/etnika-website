@@ -217,7 +217,7 @@ with sync_playwright() as playwright:
                           blockTop:r('#etnika-block-02-final').top,
                           mainTop:r('#etnika-block-02-final .etnika-b02__main').top,
                           compositionMid:(() => {const r=document.querySelector('#etnika-block-02-final .etnika-b02__composition').getBoundingClientRect();return r.top+r.height/2;})(),
-                          blockMid:(() => {const r=document.querySelector('#etnika-block-02-final .etnika-b02__copy').getBoundingClientRect();return r.top+r.height/2;})(),
+                          blockMid:(() => {const r=document.querySelector('#etnika-block-02-final').getBoundingClientRect();return r.top+r.height/2;})(),
                           stampTop:r('#etnika-block-02-final .etnika-b02__stamp').top,
                           counterTop:r('#etnika-block-02-final .etnika-b02__counter').top,
                           captionBottom:r('#etnika-block-02-final .etnika-b02__caption').bottom,
