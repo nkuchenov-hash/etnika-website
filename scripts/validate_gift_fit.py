@@ -58,20 +58,31 @@ with sync_playwright() as pw:
         for elem in ("kicker","title","sub","footer","button","signoff"):
             assert v[elem]["top"] >= v["section"]["top"]-2, f"{label}: {elem} above section: {v}"
             assert v[elem]["bottom"] <= v["section"]["bottom"]+2, f"{label}: {elem} clipped at section end: {v}"
-        if width > 1100:
-            assert abs(v["section"]["height"]-(height-v["header"]["height"]))<=2, (
-                f"{label}: section longer than visible viewport below menu: {v}")
+        # The section prefers one viewport but NEVER cuts off CTA or copy
+        # when its natural content is taller on short/narrow screens.
+        visible_height=height-v["header"]["height"]
+        assert v["section"]["height"] >= visible_height-2, (
+            f"{label}: gift has collapsed below the usable viewport: {v}")
+        assert v["sectionScrollHeight"]<=v["sectionClientHeight"]+2, (
+            f"{label}: gift content is clipped or internally scrolling: {v}")
+        if width > 1100 and v["section"]["height"] <= visible_height+2:
             assert v["kicker"]["top"]>=v["header"]["bottom"]+8, (
                 f"{label}: label hidden under fixed navigation: {v}")
             assert v["button"]["bottom"]<=height-10, (
-                f"{label}: certificate action not visible without scrolling: {v}")
+                f"{label}: certificate button not visible within fitted section: {v}")
             assert v["signoff"]["bottom"]<=height-8, (
-                f"{label}: certificate slogan below viewport: {v}")
-            assert v["sectionScrollHeight"] <= v["sectionClientHeight"]+2, (
-                f"{label}: content scrolls outside fixed-height section: {v}")
-        else:
-            assert v["sectionScrollHeight"]<=v["sectionClientHeight"]+2, (
-                f"{label}: mobile section clips content: {v}")
+                f"{label}: certificate signoff below viewport: {v}")
+        # Key regression from 12 Nov: FAQ must be followed by a real,
+        # visible certificate section before reviews; never skip it.
+        sequence=page.evaluate("""() => Array.from(
+            document.querySelectorAll('#etnika-review-flow > section[id]'),
+            el => el.id)""")
+        assert sequence.index("etnika-faq-tariffs")+1 == sequence.index("etnika-gift"), (
+            f"{label}: gift must be immediately after tariffs FAQ: {sequence}")
+        assert sequence.index("etnika-gift")+1 == sequence.index("etnika-reviews"), (
+            f"{label}: reviews must follow gift, not replace it: {sequence}")
+        assert v["section"]["height"]>=min(400,visible_height-2), (
+            f"{label}: gift visually collapsed, scrolling will skip it: {v}")
         page.screenshot(path=str(REPORTS/f"etnika-gift-{label}.png"),
                         full_page=False)
         print(f"PASS GIFT {label}: section={v['section']['height']:.1f}px "
