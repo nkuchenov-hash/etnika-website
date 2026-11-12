@@ -43,6 +43,7 @@ with sync_playwright() as pw:
               features:box(feat),
               copy:box(q('#etnika-block-02-final .etnika-b02__copy')),
               composition:box(q('#etnika-block-02-final .etnika-b02__composition')),
+              stack:box(q('#etnika-block-02-final .etnika-b02__stack')),
               compositionPosition:getComputedStyle(q('#etnika-block-02-final .etnika-b02__composition')).position,
               main:box(q('#etnika-block-02-final .etnika-b02__main')),
               photoOverlayContent:getComputedStyle(media,'::after').content,
@@ -90,12 +91,15 @@ with sync_playwright() as pw:
         assert near(v['media']['height'],v['block']['height'],3),err('Photo must fill the taller section')
         assert v['main']['top']>=v['overline']['bottom']+20,err('headline too close to top line')
         assert v['main']['bottom']<v['features']['top']-8,err('description overlaps bottom benefits')
-        # Main heading, explanatory text and four benefits form ONE vertically
-        # centered composition. The small overline is independently top-anchored.
-        actual_center=v['composition']['top']+v['composition']['height']/2
+        # The top editorial overline AND main headline, body and features form
+        # ONE vertically centered composition, not separately anchored rows.
+        actual_center=v['stack']['top']+v['stack']['height']/2
         section_center=v['copy']['top']+v['copy']['height']/2
         assert v['compositionPosition']=='static',err('B02 text group must be static, never sticky or absolutely moved')
         assert abs(actual_center-section_center)<=2,err(f'B02 TEXT NOT CENTERED: composition midpoint {actual_center:.1f}, section midpoint {section_center:.1f}')
+        assert abs(v['stack']['top']-v['overline']['top'])<=2,err('Editorial overline separated from centered group')
+        assert abs(v['stack']['bottom']-v['features']['bottom'])<=2,err('Features detached from centered group')
+        assert near(v['stack']['top']-v['copy']['top'],v['copy']['bottom']-v['stack']['bottom'],2),err('Unequal real whitespace above overline vs below features')
         assert abs(v['main']['top']-v['composition']['top'])<=2,err('B02 headline is not at the top of the composition')
         assert abs(v['features']['bottom']-v['composition']['bottom'])<=2,err('B02 benefits detached from centered composition')
         assert v['main']['top']>v['overline']['bottom']+28,err('main text starts too high, close to overline')
