@@ -79,7 +79,7 @@ with sync_playwright() as pw:
         assert v['caption']['left']>=v['stage']['left']+8,err("photo caption clipped on left")
         assert v['caption']['right']<=v['stage']['right']-8,err("photo caption clipped on right")
         # The image and all photo-overlay elements obey the global site grid.
-        edge=max(80,(w-1760)/2) if w>=1920 else (max(40,(w-1320)/2) if w<=1440 else max(80,(w-1760)/2))
+        edge=max(180,(w-2600)/2) if w>=1920 else (max(40,(w-1320)/2) if w<=1440 else max(80,(w-1760)/2))
         assert abs(v['caption']['left']-v['stage']['left']-edge)<2,err("caption not on site grid")
         assert abs(v['counter']['left']-v['caption']['left'])<2,err("photo counter and caption misaligned")
         assert abs(v['nav']['right']-(v['stage']['right']-edge))<2,err("arrows not aligned to right grid")
