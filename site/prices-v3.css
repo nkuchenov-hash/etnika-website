@@ -358,6 +358,63 @@
   #etnika-prices-clear.ev3 .ev3-sheet-panel{width:100vw}
 }
 
+/* 12 Nov owner requirement: full-height drawer WITHOUT covering tariff prices.
+   Geometry is measured at open from the actual photo + rightmost price label.
+   Only desktop two-column layout uses the right-hand full-height rail. */
+@media (min-width:1101px){
+  #etnika-prices-clear.ev3 .ev3-sheet[data-open="true"]{
+    pointer-events:none!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-scrim,
+  #etnika-prices-clear.ev3 .ev3-sheet[data-open="true"] .ev3-scrim{
+    background:transparent!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-panel{
+    position:fixed!important;
+    top:0!important;
+    right:0!important;
+    bottom:0!important;
+    left:var(--ev3-panel-left,60vw)!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:100dvh!important;
+    max-height:100dvh!important;
+    pointer-events:auto!important;
+    box-shadow:-14px 0 40px rgba(0,0,0,.12)!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-top{
+    padding:clamp(20px,2.2vw,32px) clamp(20px,2.1vw,34px) 12px!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-scroll{
+    padding:10px clamp(20px,2.1vw,34px) 18px!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-title{
+    font-size:clamp(48px,3.7vw,68px)!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-feature-list{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-feature-list li{
+    min-height:0!important;
+    padding:12px 0!important;
+    font-size:16px!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-footer{
+    gap:12px!important;
+    padding:14px clamp(20px,2.1vw,34px) 20px!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-price{
+    font-size:clamp(34px,2.5vw,48px)!important;
+  }
+  #etnika-prices-clear.ev3 .ev3-sheet-panel .ev3-sheet-book{
+    min-height:48px!important;
+    padding:12px 14px!important;
+  }
+}
+
 /* Responsive title fallback when an inline heading cannot fit. */
 @media(max-width:1199px){
   #etnika-prices-clear.ev3 .ev3-title{white-space:normal!important}
