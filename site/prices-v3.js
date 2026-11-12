@@ -54,6 +54,7 @@
   const planButtons=[...root.querySelectorAll('.ev3-plan')];
   const modeButtons=[...root.querySelectorAll('.ev3-modes button')];
   const photo=root.querySelector('.ev3-photo');
+  const visual=root.querySelector('.ev3-visual');
   const photoLabel=root.querySelector('.ev3-photo-label strong');
   const photoKicker=root.querySelector('.ev3-photo-label span');
   const sheet=root.querySelector('.ev3-sheet');
@@ -96,8 +97,29 @@
     priceSheet.textContent=data.prices[mode]+' ₽';
     root.dataset.planTheme=plan;
   }
+  /* The drawer has 100dvh height, but its LEFT edge must never cover prices.
+     The photo's horizontal start is the natural boundary of the right rail.
+     Actual price-label geometry is a hard safety bound on narrower desktops. */
+  function updatePanelRail(){
+    const desktop=window.innerWidth>=1101;
+    sheet.setAttribute('aria-modal',String(!desktop));
+    if(!desktop){
+      sheet.style.removeProperty('--ev3-panel-left');
+      return;
+    }
+    const photoLeft=visual.getBoundingClientRect().left;
+    const priceRight=Math.max(...planButtons.map(button=>
+      button.querySelector('.ev3-plan-price').getBoundingClientRect().right
+    ));
+    const panelLeft=Math.ceil(Math.max(photoLeft,priceRight+24));
+    sheet.style.setProperty('--ev3-panel-left',panelLeft+'px');
+  }
+  window.addEventListener('resize',()=>{
+    if(sheetOpen)updatePanelRail();
+  },{passive:true});
   function open(){
     if(sheetOpen) return;
+    updatePanelRail();
     sheetOpen=true;
     lastFocus=document.activeElement;
     previousBodyOverflow=document.body.style.overflow;
@@ -134,12 +156,19 @@
   buttonOpen.addEventListener('click',open);
   buttonClose.addEventListener('click',close);
   backdrop.addEventListener('click',close);
+  document.addEventListener('pointerdown',event=>{
+    if(sheetOpen && window.innerWidth>=1101 &&
+       !sheetPanel.contains(event.target) &&
+       !buttonOpen.contains(event.target)){
+      close();
+    }
+  });
   document.addEventListener('keydown',event=>{
     if(!sheetOpen)return;
     if(event.key==='Escape'){
       event.preventDefault();close();return;
     }
-    if(event.key==='Tab'){
+    if(event.key==='Tab' && window.innerWidth<1101){
       const focusable=[...sheetPanel.querySelectorAll('button:not([disabled]),a[href],input:not([disabled])')].filter(x=>x.getClientRects().length);
       if(!focusable.length)return;
       const first=focusable[0],last=focusable[focusable.length-1];
