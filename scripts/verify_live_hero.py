@@ -135,7 +135,7 @@ with sync_playwright() as playwright:
                     else:
                         assert block["outerTop"] >= 20 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Broken outer fields: {block}"
                     if width >= 1101 and block["id"] == "etnika-block-02-final":
-                        assert block["height"] > height+90, f"B02 lost its enlarged full-section height: {block}"
+                        assert abs(block["height"]-(height-60)) <= 3, f"B02 must occupy the visible viewport below the header: {block}"
                     elif width >= 1101 and block["id"] not in ("etnika-faq-tariffs","etnika-reviews","etnika-prices-clear","etnika-gift"):
                         assert block["height"] > height, f"Full-screen content+fields should exceed viewport: {block}"
                 if width >= 1101:
