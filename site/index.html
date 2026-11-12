@@ -13643,7 +13643,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     transform:none!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__media-bottom{
-    bottom:clamp(24px,3.4svh,38px)!important;
+    bottom:calc(2 * var(--etnika-section-outer) + var(--etnika-nav-height,60px) + clamp(24px,3.4svh,38px))!important;
     left:clamp(22px,2.8vw,56px)!important;
     right:var(--et-u-edge)!important;
     width:auto!important;
@@ -14233,20 +14233,37 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
 }
 
-/* The section itself must fit the visible screen below the fixed navigation.
-   This makes its static content center coincide with the visible center;
-   no sticky movement or animation is involved. */
+/* Split-height composition, per owner's 12 Nov correction:
+   the TEXT column occupies one usable viewport and its content is
+   vertically centered inside it; the PHOTO extends BELOW one viewport.
+   Both columns scroll normally (NO sticky or animated movement). */
 @media(min-width:1101px){
   #etnika-review-flow > section#etnika-block-02-final{
-    height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    height:calc(100svh + 2 * var(--etnika-section-outer))!important;
     min-height:0!important;
     max-height:none!important;
     padding:0!important;
+    overflow:hidden!important;
   }
-  #etnika-review-flow #etnika-block-02-final .etnika-b02__grid,
-  #etnika-review-flow #etnika-block-02-final .etnika-b02__copy,
-  #etnika-review-flow #etnika-block-02-final .etnika-b02__media{
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__grid{
     height:100%!important;
+    align-items:start!important;
+  }
+  #etnika-review-flow > section#etnika-block-02-final .etnika-b02__copy{
+    position:relative!important;
+    top:auto!important;
+    align-self:start!important;
+    height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    min-height:0!important;
+    padding:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__media{
+    align-self:stretch!important;
+    height:calc(100svh + 2 * var(--etnika-section-outer))!important;
+    min-height:0!important;
   }
 }
 </style>
