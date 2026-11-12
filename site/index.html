@@ -14973,5 +14973,41 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   #etnika-review-flow > section#etnika-gift .eg-cta > span:first-child{font-size:16px!important;}
 }
 </style>
+<style id="etnika-unified-editorial-heading-gaps-20261112">
+/* Sitewide editorial rhythm audited 12 Nov 2026.
+   Baseline is the measured kicker→heading gap in “Пространство ЭТНИКА”:
+   the shared kicker margin plus the shell's row gap.
+   Keep space-photo unchanged and normalize all comparable other blocks. */
+:root{
+  --etnika-editorial-heading-gap:calc(
+    var(--etnika-overline-content-gap,clamp(34px,4svh,52px)) +
+    var(--etnika-content-grid-gap,clamp(10px,1.4svh,16px))
+  );
+}
+@media(min-width:1101px){
+  /* Whole B02 stack is vertically centered. Only its internal label→title
+     gap is brought into line with the approved space-photo reference. */
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__stack{
+    gap:var(--etnika-editorial-heading-gap)!important;
+  }
+  #etnika-review-flow #etnika-stories .stories-top{
+    margin-bottom:var(--etnika-editorial-heading-gap)!important;
+  }
+  #etnika-review-flow :is(#etnika-faq,#etnika-faq-tariffs) .faq-top{
+    margin-bottom:var(--etnika-editorial-heading-gap)!important;
+  }
+  /* Price section already has a separate shell row gap; subtract it
+     from the overline margin so the sum matches the approved reference. */
+  #etnika-review-flow #etnika-prices-clear.ev3 .ev3-overline{
+    margin-bottom:max(0px,calc(
+      var(--etnika-editorial-heading-gap) -
+      clamp(19px,2.4svh,28px)
+    ))!important;
+  }
+  #etnika-review-flow #etnika-reviews .etnika-reviews-overline{
+    margin-bottom:var(--etnika-editorial-heading-gap)!important;
+  }
+}
+</style>
 </body>
 </html>
