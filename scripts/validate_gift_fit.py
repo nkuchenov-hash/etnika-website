@@ -38,6 +38,11 @@ with sync_playwright() as pw:
               title:b(el('h2.eg-title')),sub:b(el('.eg-sub')),
               facts:facts,footer:b(el('.eg-footer')),note:b(el('.eg-note')),
               button:b(el('.eg-cta')),signoff:b(el('.eg-signoff')),
+              computedSectionHeight:getComputedStyle(root).height,
+              computedSectionMinHeight:getComputedStyle(root).minHeight,
+              computedShellHeight:getComputedStyle(el('.eg-shell')).height,
+              computedShellMinHeight:getComputedStyle(el('.eg-shell')).minHeight,
+              computedRootDisplay:getComputedStyle(root).display,
               viewportHeight:innerHeight,sectionScrollHeight:root.scrollHeight,
               sectionClientHeight:root.clientHeight,
               overflowsX:root.scrollWidth>root.clientWidth+2,
@@ -88,6 +93,8 @@ with sync_playwright() as pw:
         print(f"PASS GIFT {label}: section={v['section']['height']:.1f}px "
               f"title={v['title']['height']:.1f}px "
               f"button-bottom={v['button']['bottom']:.1f}px "
-              f"footer-bottom={v['footer']['bottom']:.1f}px",flush=True)
+              f"footer-bottom={v['footer']['bottom']:.1f}px "
+              f"min-height={v['computedSectionMinHeight']} "
+              f"shell-min-height={v['computedShellMinHeight']}",flush=True)
         page.close()
     browser.close()
