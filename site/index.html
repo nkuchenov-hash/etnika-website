@@ -14281,10 +14281,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
 }
 
-/* Split-height composition, per owner's 12 Nov correction:
-   the TEXT column occupies one usable viewport and its content is
-   vertically centered inside it; the PHOTO extends BELOW one viewport.
-   Both columns scroll normally (NO sticky or animated movement). */
+/* B02: the entire text composition is vertically centered in the same
+   extended section as the full-bleed photograph. Keep it in normal document
+   flow with equal upper/lower free space; no sticky, scroll animation, or
+   separate viewport-height copy that leaves an empty lower half. */
 @media(min-width:1101px){
   #etnika-review-flow > section#etnika-block-02-final{
     height:calc(100svh + 2 * var(--etnika-section-outer))!important;
@@ -14295,13 +14295,13 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__grid{
     height:100%!important;
-    align-items:start!important;
+    align-items:stretch!important;
   }
   #etnika-review-flow > section#etnika-block-02-final .etnika-b02__copy{
     position:relative!important;
     top:auto!important;
-    align-self:start!important;
-    height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    align-self:stretch!important;
+    height:100%!important;
     min-height:0!important;
     padding:0!important;
     display:flex!important;
@@ -14310,7 +14310,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__media{
     align-self:stretch!important;
-    height:calc(100svh + 2 * var(--etnika-section-outer))!important;
+    height:100%!important;
     min-height:0!important;
   }
 }
