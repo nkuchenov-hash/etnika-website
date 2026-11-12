@@ -50,6 +50,17 @@ with sync_playwright() as pw:
               noteSize:parseFloat(getComputedStyle(el('.eg-note')).fontSize),
               buttonSize:parseFloat(getComputedStyle(el('.eg-cta > span:first-child')).fontSize),
               videoPlaying:!el('.eg-video video').paused,
+              kickerWeight:Number(getComputedStyle(el('.eg-kicker')).fontWeight),
+              subWeight:Number(getComputedStyle(el('.eg-sub')).fontWeight),
+              factWeight:Number(getComputedStyle(el('.eg-fact span')).fontWeight),
+              noteWeight:Number(getComputedStyle(el('.eg-note')).fontWeight),
+              ctaWeight:Number(getComputedStyle(el('.eg-cta > span:first-child')).fontWeight),
+              signoffWeight:Number(getComputedStyle(el('.eg-signoff')).fontWeight),
+              topRuleDisplay:getComputedStyle(el('.eg-top-rule')).display,
+              signoffRuleDisplay:getComputedStyle(el('.eg-signoff'),'::before').display,
+              headingLineScroll:[...root.querySelectorAll('.eg-title-line')].map(x=>({
+                scroll:x.scrollWidth,width:x.clientWidth
+              })),
               viewportHeight:innerHeight,sectionScrollHeight:root.scrollHeight,
               sectionClientHeight:root.clientHeight,
               overflowsX:root.scrollWidth>root.clientWidth+2,
@@ -61,6 +72,22 @@ with sync_playwright() as pw:
         label=f"{width}x{height}"
         assert v["content"],f"{label}: original text or CTA missing"
         assert "Forum" in v["headingFont"],f"{label}: non-Forum headline: {v}"
+        assert max(v[w] for w in ("kickerWeight","subWeight","factWeight",
+                  "noteWeight","ctaWeight","signoffWeight"))<=200, (
+            f"{label}: Geologica became heavier than approved thin type: {v}")
+        assert v["topRuleDisplay"]=="none" and v["signoffRuleDisplay"]=="none", (
+            f"{label}: detached label-divider line returned: {v}")
+        if width>1100:
+            assert all(x["scroll"]<=x["width"]+3 for x in v["headingLineScroll"]), (
+                f"{label}: heading runs outside the left column: {v}")
+            assert v["kicker"]["left"]>=38, (
+                f"{label}: insufficient horizontal breathing room: {v}")
+            assert v["kicker"]["top"]>=v["section"]["top"]+22, (
+                f"{label}: caption is pressed against video top edge: {v}")
+            assert v["footer"]["bottom"]<=v["section"]["bottom"]-20, (
+                f"{label}: CTA/signoff are pressed against video bottom edge: {v}")
+            assert 0<=v["footer"]["top"]-v["main"]["bottom"]<=40, (
+                f"{label}: content detached from CTA by oversized blank field: {v}")
         assert v["headingSize"]>=43,f"{label}: headline unreadable: {v}"
         assert v["subtitleSize"]>=16,f"{label}: explanatory text too small: {v}"
         assert v["noteSize"]>=16,f"{label}: CTA note too small: {v}"
