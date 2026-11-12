@@ -4427,10 +4427,61 @@ body.etnika-gallery-lock{
     });
   });
 
-  prev.addEventListener('click', function(){ render(current - 1); });
-  next.addEventListener('click', function(){ render(current + 1); });
+  /* Advance all six slides automatically, but avoid timers for offscreen
+     content or hidden tabs. Manual selection restarts a full cycle. */
+  var autoplayDelay = 6000;
+  var autoplayTimer = null;
+  var carouselVisible = false;
+  var reducedMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function stopAutoplay(){
+    if(autoplayTimer !== null){
+      window.clearTimeout(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+  function scheduleAutoplay(){
+    stopAutoplay();
+    if(!carouselVisible || document.hidden || reducedMotion) return;
+    if(section.querySelector(':focus-visible')) return;
+    autoplayTimer = window.setTimeout(function(){
+      autoplayTimer = null;
+      render(current + 1);
+      scheduleAutoplay();
+    }, autoplayDelay);
+  }
+
+  items.forEach(function(item){
+    item.addEventListener('click', scheduleAutoplay);
+  });
+  prev.addEventListener('click', function(){
+    render(current - 1);
+    scheduleAutoplay();
+  });
+  next.addEventListener('click', function(){
+    render(current + 1);
+    scheduleAutoplay();
+  });
+
+  if('IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      carouselVisible = entries[0].isIntersecting &&
+        entries[0].intersectionRatio >= .3;
+      scheduleAutoplay();
+    }, {threshold:[0,.3,.5]});
+    observer.observe(section);
+  }else{
+    carouselVisible = true;
+  }
+  document.addEventListener('visibilitychange',scheduleAutoplay);
+  section.addEventListener('focusin',scheduleAutoplay);
+  section.addEventListener('focusout',function(){
+    window.requestAnimationFrame(scheduleAutoplay);
+  });
 
   render(0);
+  scheduleAutoplay();
 })();
 </script>
 
@@ -13777,27 +13828,24 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   #etnika-review-flow > section#etnika-studio-features {
     box-sizing:border-box!important;
     display:block!important;
-    height:100svh!important;
+    /* Full-bleed photo starts at the section edge, directly under fixed nav. */
+    height:calc(100svh - var(--etnika-nav-height,60px))!important;
     min-height:0!important;
-    max-height:100svh!important;
+    max-height:calc(100svh - var(--etnika-nav-height,60px))!important;
     width:100%!important;
-    padding:var(--etnika-nav-height,60px) 0 0!important;
+    padding:0!important;
     margin:0!important;
     overflow:visible!important;
-    /* Cancel the global html scroll-padding only for this internally
-       menu-padded section, so a #hash puts the photo UNDER the menu. */
-    scroll-margin-top:calc(-1 * var(--etnika-nav-height,60px))!important;
+    /* html scroll-padding already provides the fixed-menu clearance. */
+    scroll-margin-top:0!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-shell {
     box-sizing:border-box!important;
     display:block!important;
     width:100%!important;
-    /* The section has border-box height 100svh and 60px top padding.
-       Percentage height was incorrectly resolved to 100svh and overflowed
-       the parent by the navbar height. Exactly subtract the navbar here. */
-    height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    height:100%!important;
     min-height:0!important;
-    max-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    max-height:100%!important;
     margin:0!important;
     padding:0!important;
   }
@@ -14017,9 +14065,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   #etnika-review-flow > section#etnika-studio-features{
     height:auto!important;
     min-height:100svh!important;max-height:none!important;
-    padding:var(--etnika-nav-height,56px) 0 0!important;
+    padding:0!important;
     overflow:visible!important;
-    scroll-margin-top:calc(-1 * var(--etnika-nav-height,56px))!important;
+    scroll-margin-top:0!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-shell{
     height:auto!important;min-height:0!important;margin:0!important;padding:0!important;
@@ -14050,8 +14098,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media (max-width:860px){
   #etnika-review-flow > section#etnika-studio-features{
     height:auto!important;min-height:0!important;max-height:none!important;
-    padding:var(--etnika-nav-height,56px) 0 0!important;overflow:visible!important;
-    scroll-margin-top:calc(-1 * var(--etnika-nav-height,56px))!important;
+    padding:0!important;overflow:visible!important;
+    scroll-margin-top:0!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-shell{
     height:auto!important;min-height:0!important;margin:0!important;padding:0!important;
