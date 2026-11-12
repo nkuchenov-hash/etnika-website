@@ -66,7 +66,36 @@ with sync_playwright() as p:
         assert result['bottomOverlay']['bottom']<h-15,'image controls below screen fold'
         assert result['copyPosition']=='relative' and result['compPosition']=='static' and result['compTransform']=='none', 'scroll-bound content repositioning'
         assert result['imageLoaded'],'photo not loaded'
-        page.screenshot(path=str(OUT/f'etnika-live-b02-split-{w}x{h}.png'),full_page=False)
+        if w==1660:
+            media=page.locator('#etnika-block-02-final .etnika-b02__media')
+            assert media.evaluate("(e)=>getComputedStyle(e).backgroundColor")=='rgb(232, 229, 226)', 'RED SLIDER BACKGROUND MUST BE REMOVED'
+            slide=page.locator('#etnika-block-02-final .etnika-b02__slide')
+            assert slide.first.evaluate("(e)=>getComputedStyle(e).transitionDuration")=='1.35s', 'PHOTO TRANSITION SHOULD BE GENTLE'
+            page.wait_for_function("""() => {const e=document.querySelectorAll('#etnika-block-02-final .etnika-b02__slide')[1];return e.complete&&e.naturalWidth>0;}""",timeout=12000)
+            page.locator('#etnika-block-02-final .etnika-b02__arrow--next').click()
+            page.wait_for_timeout(120)
+            middle=page.evaluate("""() => {
+              const b=document.getElementById('etnika-block-02-final');
+              const slides=[...b.querySelectorAll('.etnika-b02__slide')];
+              return {outgoingActive:slides[0].classList.contains('is-active'),
+                 incoming:slides[1].classList.contains('is-entering'),
+                 outgoingOpacity:getComputedStyle(slides[0]).opacity,
+                 incomingOpacity:parseFloat(getComputedStyle(slides[1]).opacity),
+                 counter:b.querySelector('.etnika-b02__counter').textContent.trim()};
+            }""")
+            assert middle['outgoingActive'] and middle['incoming'] and middle['outgoingOpacity']=='1',f'RED FLASH: outgoing image faded prematurely: {middle}'
+            assert 0<middle['incomingOpacity']<1, f'Incoming slide should fade over previous photo: {middle}'
+            assert middle['counter']=='02 / 05',middle
+            page.wait_for_timeout(1450)
+            done=page.evaluate("""() => {
+              const b=document.getElementById('etnika-block-02-final');
+              const slides=[...b.querySelectorAll('.etnika-b02__slide')];
+              return {active:slides.map((e,i)=>e.classList.contains('is-active')?i:null).filter(i=>i!==null),
+                entering:b.querySelectorAll('.etnika-b02__slide.is-entering').length};
+            }""")
+            assert done=={'active':[1],'entering':0},f'Transition did not complete cleanly: {done}'
+            print('PASS LIVE B02 SLIDER: no red flash, 1.35s image-on-image fade, counter and arrows work',flush=True)
+                page.screenshot(path=str(OUT/f'etnika-live-b02-split-{w}x{h}.png'),full_page=False)
         print(f'PASS LIVE B02 {w}x{h}: section={result["block"]["height"]:.0f}, copy={result["copy"]["height"]:.0f}, top_space={result["stack"]["top"]-result["copy"]["top"]:.1f}, bottom_space={result["copy"]["bottom"]-result["stack"]["bottom"]:.1f}, center_error={result["stack"]["mid"]-result["copy"]["mid"]:.1f}',flush=True)
         page.close()
     browser.close()
