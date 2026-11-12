@@ -50,14 +50,14 @@ with sync_playwright() as p:
         }""")
         print(f'LIVE B02 {w}x{h}: {result}',flush=True)
         assert abs(result['block']['top']-result['header']['bottom'])<3, 'B02 not aligned under navigation'
-        assert result['block']['height']>h+90, 'PHOTO / B02 NOT TALLER THAN SCREEN'
-        assert abs(result['media']['height']-result['block']['height'])<3, 'photo does not fill extended block'
-        assert abs(result['copy']['height']-result['block']['height'])<3, 'TEXT COLUMN MUST FILL THE FULL TALL BLOCK'
+        assert abs(result['block']['height']-(h-result['header']['height']))<3, 'VISIBLE SECTION TOO TALL OR TOO SHORT'
+        assert result['media']['height']>h+90, 'PHOTOGRAPHIC MEDIA NOT TALLER THAN SCREEN'
+        assert abs(result['copy']['height']-result['block']['height'])<3, 'COPY MUST FILL VISIBLE SECTION'
         assert abs(result['comp']['mid']-result['copy']['mid'])<2, 'TEXT NOT VERTICALLY CENTERED'
         assert abs((result['comp']['top']-result['copy']['top'])-(result['copy']['bottom']-result['comp']['bottom']))<2, 'UNEQUAL TOP/BOTTOM TEXT SPACE'
         assert result['overline']['top']>=result['header']['bottom']+8,'overline behind header'
         assert result['title']['top']>result['overline']['bottom']+20,'title sticks to overline'
-        assert result['features']['bottom']<result['block']['bottom']-70,'benefits not centered in full height'
+        assert result['features']['bottom']<result['block']['bottom']-35,'features outside visible screen'
         assert result['bottomOverlay']['bottom']<h-15,'image controls below screen fold'
         assert result['copyPosition']=='relative' and result['compPosition']=='static' and result['compTransform']=='none', 'scroll-bound content repositioning'
         assert result['imageLoaded'],'photo not loaded'
