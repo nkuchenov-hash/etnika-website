@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Measure actual kicker-to-heading gaps on published ETNIKA desktop layouts."""
 from pathlib import Path
-import re, shutil
+import re, shutil, os, time
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 EXPECTED=re.search(r'<meta name="etnika-build" content="([^"]+)"',(ROOT/'site/index.html').read_text(encoding='utf-8')).group(1)
@@ -20,11 +20,17 @@ with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,executable_path=chrome) if chrome else p.chromium.launch(headless=True)
  for w,h in [(1440,900),(1660,930),(1920,1080)]:
   page=browser.new_page(viewport={'width':w,'height':h})
-  page.goto(URL,wait_until='domcontentloaded',timeout=40000)
+  for attempt in range(18):
+   page.goto(URL+f'&sha={os.environ.get("GITHUB_SHA","manual")[:12]}&attempt={attempt}',wait_until='domcontentloaded',timeout=40000)
+   ready=page.evaluate('() => !!document.getElementById("etnika-unified-editorial-heading-gaps-20261112")')
+   if ready: break
+   if attempt==17: raise AssertionError('Published CSS not available after 18 attempts')
+   time.sleep(2)
   page.evaluate('() => document.fonts.ready')
   page.wait_for_timeout(250)
   build=page.locator('meta[name="etnika-build"]').get_attribute('content')
   assert build==EXPECTED,(build,EXPECTED)
+  readings={}
   for name,(k,t) in PAIRS.items():
    d=page.evaluate("""([a,b])=>{
     const first=document.querySelector(a),last=document.querySelector(b);
@@ -35,6 +41,12 @@ with sync_playwright() as p:
       headingTop:h.top,marginBottom:st.marginBottom,parentGap:par.rowGap,display:st.display,
       visible:st.display!=='none' && k.height>0};
    }""",[k,t])
+   assert d is not None and d['visible'],(name,d)
+   readings[name]=d['gap']
    print('AUDIT',f'{w}x{h}',name,d,flush=True)
+  baseline=readings['Пространство ЭТНИКА']
+  for name,gap in readings.items():
+   assert abs(gap-baseline)<=1.25, f'{w}x{h}: {name} gap={gap}px, approved reference={baseline}px'
+  print('PASS ALL EDITORIAL HEADING GAPS',f'{w}x{h}',f'approved={baseline}px',readings,flush=True)
   page.close()
  browser.close()
