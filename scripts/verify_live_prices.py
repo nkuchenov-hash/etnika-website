@@ -105,12 +105,28 @@ with sync_playwright() as pw:
           const scroll = sel('#etnika-prices-clear .ev3-sheet-scroll');
           const footer = sel('#etnika-prices-clear .ev3-sheet-footer');
           const features = sel('#etnika-prices-clear .ev3-feature-list');
+          const backdrop = sel('#etnika-prices-clear .ev3-scrim');
+          const prices = [...document.querySelectorAll('#etnika-prices-clear .ev3-plan-price')];
+          const visiblePrices = prices.filter(el => {
+            const b=r(el);
+            return b.top>=0 && b.bottom<=innerHeight && b.left>=0 && b.right<=innerWidth;
+          });
+          const exposedPrices = visiblePrices.filter(el => {
+            const b=r(el);
+            const elAtPoint=document.elementFromPoint(b.left+b.width/2,b.top+b.height/2);
+            return !!elAtPoint && !!elAtPoint.closest('.ev3-plan');
+          });
           return {
-            top:r(panel).top, right:r(panel).right, bottom:r(panel).bottom,
+            top:r(panel).top, left:r(panel).left, right:r(panel).right, bottom:r(panel).bottom,
             height:r(panel).height, panelWidth:r(panel).width,
             footerBottom:r(footer).bottom,
             scrollClientHeight:scroll.clientHeight, scrollHeight:scroll.scrollHeight,
-            featureCount:features.children.length, backdrop:getComputedStyle(sel('#etnika-prices-clear .ev3-scrim')).pointerEvents
+            featureCount:features.children.length,
+            backdropPointer:getComputedStyle(backdrop).pointerEvents,
+            backdropOpacity:parseFloat(getComputedStyle(backdrop).opacity),
+            priceRight:Math.max(...prices.map(el=>r(el).right)),
+            visiblePriceCount:visiblePrices.length, exposedPriceCount:exposedPrices.length,
+            ariaModal:sel('#etnika-prices-clear .ev3-sheet').getAttribute('aria-modal')
           };
         }""")
         assert abs(geometry["top"]) <= 2 and abs(geometry["bottom"]-height) <= 2, ("Tariff drawer is not full viewport height",geometry)
@@ -118,7 +134,14 @@ with sync_playwright() as pw:
         assert geometry["footerBottom"] <= height+2, ("Drawer booking footer below viewport",geometry)
         assert geometry["scrollClientHeight"] > 0, ("Tariff features cannot scroll",geometry)
         assert geometry["featureCount"] == 10, ("Selected premium inclusions missing",geometry)
-        assert geometry["backdrop"] != "none", ("Full-screen backdrop cannot dismiss drawer",geometry)
+        if width >= 1101:
+            assert geometry["left"] >= geometry["priceRight"]+16, ("Full-height drawer hides tariff prices",geometry)
+            assert geometry["visiblePriceCount"] == geometry["exposedPriceCount"], ("Price is obstructed by drawer or overlay",geometry)
+            assert geometry["backdropOpacity"] == 0 and geometry["backdropPointer"] == "none", ("Backdrop dims or blocks prices",geometry)
+            assert geometry["ariaModal"] == "false", ("Non-modal right rail must preserve tariff access",geometry)
+        else:
+            assert geometry["backdropPointer"] != "none", ("Mobile backdrop cannot dismiss drawer",geometry)
+            assert geometry["ariaModal"] == "true", ("Mobile fullscreen drawer needs modal semantics",geometry)
         page.screenshot(path=str(OUT / f"etnika-live-prices-details-{width}x{height}.png"),full_page=False)
         page.keyboard.press("Escape")
         assert page.locator('#etnika-prices-clear .ev3-sheet').get_attribute("data-open") == "false"
