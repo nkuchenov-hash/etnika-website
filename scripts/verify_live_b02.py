@@ -38,9 +38,9 @@ with sync_playwright() as p:
           const nav=document.getElementById('etnika-site-header');
           const q=s=>b.querySelector(s);
           const r=e=>{const x=e.getBoundingClientRect();return {top:x.top,bottom:x.bottom,height:x.height,mid:(x.top+x.bottom)/2}};
-          const copy=q('.etnika-b02__copy'),comp=q('.etnika-b02__composition');
+          const copy=q('.etnika-b02__copy'),comp=q('.etnika-b02__composition'),stack=q('.etnika-b02__stack');
           const media=q('.etnika-b02__media');
-          return {block:r(b),header:r(nav),copy:r(copy),comp:r(comp),
+          return {block:r(b),header:r(nav),copy:r(copy),comp:r(comp),stack:r(stack),
             overline:r(q('.etnika-b02__top')),title:r(q('.etnika-b02__title')),
             features:r(q('.etnika-b02__features')),media:r(media),
             bottomOverlay:r(q('.etnika-b02__media-bottom')),
@@ -56,8 +56,10 @@ with sync_playwright() as p:
         assert abs(result['copy']['height']-(h-result['header']['height']))<3, 'COPY MUST OCCUPY ONE SCREEN UNDER MENU'
         assert result['copy']['top']-result['block']['top']>65, 'PHOTO DOES NOT EXTEND ABOVE CONTENT'
         assert abs((result['copy']['top']-result['block']['top'])-(result['block']['bottom']-result['copy']['bottom']))<2, 'PHOTO NOT EXTENDED EQUALLY ABOVE AND BELOW COPY'
-        assert abs(result['comp']['mid']-result['copy']['mid'])<2, 'TEXT NOT VERTICALLY CENTERED'
-        assert abs((result['comp']['top']-result['copy']['top'])-(result['copy']['bottom']-result['comp']['bottom']))<2, 'UNEQUAL TOP/BOTTOM TEXT SPACE'
+        assert abs(result['stack']['mid']-result['copy']['mid'])<2, 'EDITORIAL+TITLE+BENEFITS NOT VERTICALLY CENTERED'
+        assert abs((result['stack']['top']-result['copy']['top'])-(result['copy']['bottom']-result['stack']['bottom']))<2, 'UNEQUAL WHITESPACE ABOVE EDITORIAL LINE AND BELOW BENEFITS'
+        assert abs(result['stack']['top']-result['overline']['top'])<2, 'EDITORIAL LINE OUTSIDE THE CENTERED GROUP'
+        assert abs(result['stack']['bottom']-result['features']['bottom'])<2, 'BENEFITS OUTSIDE THE CENTERED GROUP'
         assert result['overline']['top']>=result['header']['bottom']+8,'overline behind header'
         assert result['title']['top']>result['overline']['bottom']+20,'title sticks to overline'
         assert result['features']['bottom']<result['copy']['bottom']-35,'features outside centered content area'
@@ -65,6 +67,6 @@ with sync_playwright() as p:
         assert result['copyPosition']=='relative' and result['compPosition']=='static' and result['compTransform']=='none', 'scroll-bound content repositioning'
         assert result['imageLoaded'],'photo not loaded'
         page.screenshot(path=str(OUT/f'etnika-live-b02-split-{w}x{h}.png'),full_page=False)
-        print(f'PASS LIVE B02 {w}x{h}: section={result["block"]["height"]:.0f}, copy={result["copy"]["height"]:.0f}, top_space={result["comp"]["top"]-result["copy"]["top"]:.1f}, bottom_space={result["copy"]["bottom"]-result["comp"]["bottom"]:.1f}, center_error={result["comp"]["mid"]-result["copy"]["mid"]:.1f}',flush=True)
+        print(f'PASS LIVE B02 {w}x{h}: section={result["block"]["height"]:.0f}, copy={result["copy"]["height"]:.0f}, top_space={result["stack"]["top"]-result["copy"]["top"]:.1f}, bottom_space={result["copy"]["bottom"]-result["stack"]["bottom"]:.1f}, center_error={result["stack"]["mid"]-result["copy"]["mid"]:.1f}',flush=True)
         page.close()
     browser.close()
