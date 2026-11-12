@@ -14299,7 +14299,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   margin-right:var(--et-u-edge,max(80px,calc((100vw - 1760px)/2)))!important;
 }
 #etnika-review-flow #etnika-prices-clear.ev3 .ev3-overline{
-  margin:0!important;
+  /* Preserve the same editorial line-to-heading separation as other sections. */
+  margin:0 0 var(--etnika-overline-content-gap,clamp(34px,4svh,52px))!important;
 }
 #etnika-review-flow > section#etnika-prices-clear.ev3 h2.ev3-title.etnika-section-heading{
   font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important;
