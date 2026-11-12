@@ -205,26 +205,27 @@
    Anchor is the real Zamoskvoretskaya metro station, not the nearby MCC. */
 #etnika-contacts-source .etnika-map-station{
   transform:translate(-38px,-20%);
-  padding:6px 10px 6px 9px;
+  padding:7px 11px 7px 9px;
   gap:8px;
-  background:#fff;
-  border:0;
-  box-shadow:none;
-  min-height:42px;
-  max-width:min(250px,75vw);
+  background:rgba(15,16,18,.94);
+  border:1px solid rgba(255,255,255,.19);
+  box-shadow:0 3px 12px rgba(0,0,0,.17);
+  border-radius:0;
+  min-height:0;
+  max-width:min(230px,78vw);
   white-space:nowrap;
   z-index:1;
 }
 #etnika-contacts-source .etnika-map-station__logo{
   display:block;
-  width:34px;
-  height:27px;
-  flex:0 0 34px;
+  width:26px;
+  height:23px;
+  flex:0 0 26px;
   object-fit:contain;
 }
 #etnika-contacts-source .etnika-map-station__label{
-  color:#171717;
-  font:500 17px/1.25 'Geologica',Arial,sans-serif;
+  color:#f5f5f5;
+  font:400 15px/1.2 'Geologica',Arial,sans-serif;
   text-shadow:none;
   letter-spacing:0;
 }
@@ -253,11 +254,11 @@
 @media(max-width:700px){
   #etnika-contacts-source .etnika-map-station{
     transform:translate(-38px,-20%);
-    padding:6px 9px 6px 8px;
-    min-height:38px;
+    padding:6px 9px 6px 7px;
+    min-height:0;
   }
   #etnika-contacts-source .etnika-map-station__logo{
-    width:29px;height:24px;flex-basis:29px;
+    width:24px;height:21px;flex-basis:24px;
   }
   #etnika-contacts-source .etnika-map-station__label{
     font-size:14px;
