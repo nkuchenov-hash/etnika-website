@@ -1,0 +1,20 @@
+name: Audit ETNIKA editorial heading gaps
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/audit_etnika_heading_gaps.py'
+      - '.github/workflows/editorial-heading-gap-audit.yml'
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up browser
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          command -v google-chrome || command -v google-chrome-stable
+      - name: Measure published headings
+        run: python3 scripts/audit_etnika_heading_gaps.py
