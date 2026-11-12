@@ -1,0 +1,27 @@
+name: Verify LIVE B02 split-height layout
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/verify_live_b02.py'
+      - '.github/workflows/b02-live.yml'
+  workflow_dispatch:
+jobs:
+  verify-live-b02:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare Chrome
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          command -v google-chrome || command -v google-chrome-stable
+      - name: Verify B02 on deployed GitHub Pages
+        run: python3 scripts/verify_live_b02.py
+      - name: Publish live proof screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-live-b02-split-height-screenshots
+          path: reports/etnika-live-b02-split-*.png
+          if-no-files-found: ignore
