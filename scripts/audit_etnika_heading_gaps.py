@@ -45,11 +45,8 @@ with sync_playwright() as p:
    readings[name]=d['gap']
    print('AUDIT',f'{w}x{h}',name,d,flush=True)
   baseline=readings['Пространство ЭТНИКА']
-  if w>=1101:
-   for name,gap in readings.items():
-    assert abs(gap-baseline)<=1.25, f'{w}x{h}: {name} gap={gap}px, approved reference={baseline}px'
-   print('PASS ALL EDITORIAL HEADING GAPS',f'{w}x{h}',f'approved={baseline}px',readings,flush=True)
-  else:
-   print('MOBILE/TABLET GAP DIAGNOSTICS',f'{w}x{h}',f'approved={baseline}px',readings,flush=True)
+  for name,gap in readings.items():
+   assert abs(gap-baseline)<=1.25, f'{w}x{h}: {name} gap={gap}px, approved reference={baseline}px'
+  print('PASS ALL EDITORIAL HEADING GAPS',f'{w}x{h}',f'approved={baseline}px',readings,flush=True)
   page.close()
  browser.close()
