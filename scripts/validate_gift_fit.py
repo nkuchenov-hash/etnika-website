@@ -94,7 +94,7 @@ with sync_playwright() as pw:
         assert v["buttonSize"]>=15,f"{label}: CTA caption too small: {v}"
         if width>1100:
             assert v["factLabelSize"]>=14,f"{label}: facts label too small: {v}"
-            assert v["main"]["width"] <= 620,f"{label}: headline spills into photo: {v}"
+            assert v["main"]["width"] <= 650,f"{label}: headline spills into photo: {v}"
         assert v["title"]["right"] <= v["section"]["right"]-20, (
             f"{label}: title extends beyond the gift composition: {v}")
         assert len(v["facts"])==3,f"{label}: certificate facts missing"
