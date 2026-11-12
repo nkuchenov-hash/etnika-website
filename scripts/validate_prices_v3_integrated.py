@@ -68,14 +68,24 @@ with sync_playwright() as pw:
   page.wait_for_timeout(600)  # Wait for 480ms slide-in before measuring the panel's final bounds.
   assert page.locator('.ev3-feature-list li').count()==10
   geometry=page.evaluate("""() => {
-    const panel=document.querySelector('#etnika-prices-clear .ev3-sheet-panel').getBoundingClientRect();
-    const footer=document.querySelector('#etnika-prices-clear .ev3-sheet-footer').getBoundingClientRect();
-    return {top:panel.top, bottom:panel.bottom, right:panel.right, width:panel.width, footerBottom:footer.bottom};
+    const r=s=>document.querySelector(s).getBoundingClientRect();
+    const panel=r('#etnika-prices-clear .ev3-sheet-panel');
+    const footer=r('#etnika-prices-clear .ev3-sheet-footer');
+    const prices=[...document.querySelectorAll('#etnika-prices-clear .ev3-plan-price')].map(e=>e.getBoundingClientRect());
+    const backdrop=getComputedStyle(document.querySelector('#etnika-prices-clear .ev3-scrim'));
+    return {top:panel.top, bottom:panel.bottom, right:panel.right, left:panel.left,
+      width:panel.width, footerBottom:footer.bottom,
+      priceRight:Math.max(...prices.map(x=>x.right)),
+      backdropOpacity:parseFloat(backdrop.opacity),backdropPointer:backdrop.pointerEvents};
   }""")
   assert abs(geometry['top'])<=2 and abs(geometry['bottom']-h)<=2,(w,'tariff sheet must fill entire viewport height',geometry)
   assert abs(geometry['right']-w)<=2,(w,'tariff sheet must slide from screen right edge',geometry)
   assert geometry['footerBottom']<=h+2,(w,'booking footer is clipped below viewport',geometry)
-  assert geometry['width']>=min(800,w*.79)-4,(w,'tariff sheet is unreasonably narrow',geometry)
+  if w>=1101:
+   assert geometry['left']>=geometry['priceRight']+16,(w,'full-height drawer covers tariff prices',geometry)
+   assert geometry['backdropOpacity']==0 and geometry['backdropPointer']=='none',(w,'backdrop obscures prices',geometry)
+  else:
+   assert geometry['width']>=min(800,w*.94)-4,(w,'mobile drawer too narrow',geometry)
   page.wait_for_timeout(520)
   page.screenshot(path=str(OUT/f'etnika-v3-integrated-panel-{w}x{h}.png'))
   page.keyboard.press('Escape')
