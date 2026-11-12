@@ -14256,11 +14256,14 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-review-flow > section#etnika-prices-clear.ev3{
   box-sizing:border-box!important;
   display:flex!important;flex-direction:column!important;
-  justify-content:center!important;align-items:stretch!important;
+  justify-content:flex-start!important;align-items:stretch!important;
   width:100%!important;height:auto!important;
   min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
   max-height:none!important;
-  padding:clamp(46px,5.8svh,70px) 0!important;
+  /* Match the previous beige FAQ's lower rule-to-section-edge distance:
+     its bottom field = shared outer field + 14px rule midpoint. */
+  padding:calc(var(--etnika-section-outer,clamp(72px,9svh,112px)) + 14px) 0
+          var(--etnika-section-outer,clamp(72px,9svh,112px))!important;
   overflow:visible!important;margin:0!important;
   scroll-margin-top:0!important;
 }
@@ -14281,9 +14284,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 #etnika-review-flow > section#etnika-prices-clear.ev3 h2.ev3-title.etnika-section-heading{
   font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important;
-  font-size:clamp(56px,4.0vw,74px)!important;
-  line-height:.92!important;
-  letter-spacing:-.035em!important;
+  /* This heading is NOT a smaller variant: keep the identical shared H2 token. */
+  font-size:var(--etnika-section-title,clamp(62px,6.25vw,118px))!important;
+  line-height:.84!important;
+  letter-spacing:-.04em!important;
   font-weight:400!important;
   white-space:nowrap!important;
   text-wrap:nowrap!important;
@@ -14354,14 +14358,14 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media(max-width:1350px){
   #etnika-review-flow > section#etnika-prices-clear.ev3 h2.ev3-title.etnika-section-heading{
     white-space:normal!important;text-wrap:balance!important;
-    font-size:clamp(51px,5.3vw,70px)!important;
   }
   #etnika-review-flow #etnika-prices-clear.ev3 .ev3-title > span{display:block!important}
 }
 @media(max-width:1100px){
   #etnika-review-flow > section#etnika-prices-clear.ev3{
     display:block!important;min-height:0!important;
-    padding:clamp(42px,5svh,58px) 0!important;
+    padding:calc(var(--etnika-section-outer,clamp(36px,6svh,60px)) + 7px) 0
+            var(--etnika-section-outer,clamp(36px,6svh,60px))!important;
   }
   #etnika-review-flow #etnika-prices-clear.ev3 .ev3-shell{
     display:flex!important;flex-direction:column!important;
@@ -14387,9 +14391,6 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media(max-width:700px){
   #etnika-review-flow #etnika-prices-clear.ev3 .ev3-shell{
     margin-left:20px!important;margin-right:20px!important;
-  }
-  #etnika-review-flow > section#etnika-prices-clear.ev3 h2.ev3-title.etnika-section-heading{
-    font-size:clamp(44px,12vw,62px)!important;
   }
   #etnika-review-flow #etnika-prices-clear.ev3 .ev3-plan-name{
     font-size:clamp(32px,8.7vw,40px)!important;
