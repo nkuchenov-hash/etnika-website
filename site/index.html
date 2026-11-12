@@ -314,7 +314,7 @@ window.addEventListener('pageshow',function(event){
   min-height:0;
   height:100%;
   overflow:hidden;
-  background:#8f1118;
+  background:#e8e5e2;
 }
 
 #etnika-block-02-final .etnika-b02__slide{
@@ -327,11 +327,21 @@ window.addEventListener('pageshow',function(event){
   object-position:center 38%;
   opacity:0;
   transform:scale(1.005);
-  transition:opacity .9s ease;
+  z-index:0;
+  transition:opacity 1.35s ease;
 }
-
 #etnika-block-02-final .etnika-b02__slide.is-active{
+  z-index:1;
   opacity:1;
+}
+/* Incoming photo fades over the previous fully opaque photograph:
+   the neutral background is never exposed during slide transitions. */
+#etnika-block-02-final .etnika-b02__slide.is-entering{
+  z-index:2;
+  opacity:1;
+}
+@media (prefers-reduced-motion:reduce){
+  #etnika-block-02-final .etnika-b02__slide{transition:none!important;}
 }
 
 #etnika-block-02-final .etnika-b02__media::after{
@@ -859,11 +869,38 @@ window.addEventListener('pageshow',function(event){
       String(slides.length).padStart(2,'0');
   }
 
+  var transitioning = false;
+  var transitionTimer = null;
+
   function show(nextIndex){
-    slides[index].classList.remove('is-active');
-    index = (nextIndex + slides.length) % slides.length;
-    slides[index].classList.add('is-active');
-    updateCounter();
+    if(transitioning) return;
+    var nextPos = (nextIndex + slides.length) % slides.length;
+    if(nextPos === index) return;
+    var incoming = slides[nextPos];
+    var outgoing = slides[index];
+
+    function crossfade(){
+      if(transitioning) return;
+      transitioning = true;
+      /* Outgoing remains fully opaque UNDER incoming throughout the fade. */
+      incoming.classList.add('is-entering');
+      index = nextPos;
+      updateCounter();
+      transitionTimer = window.setTimeout(function(){
+        incoming.classList.add('is-active');
+        incoming.classList.remove('is-entering');
+        outgoing.classList.remove('is-active');
+        transitioning = false;
+        transitionTimer = null;
+      }, reduceMotion ? 0 : 1450);
+    }
+
+    /* Never transition to an image that has not been downloaded. */
+    if(incoming.complete && incoming.naturalWidth){
+      crossfade();
+    }else{
+      incoming.addEventListener('load', crossfade, {once:true});
+    }
   }
 
   function restart(){
@@ -875,7 +912,7 @@ window.addEventListener('pageshow',function(event){
     if(reduceMotion || document.hidden || !visible || timer) return;
     timer = window.setInterval(function(){
       show(index + 1);
-    }, 6000);
+    }, 10000);
   }
 
   function stop(){
