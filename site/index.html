@@ -13115,99 +13115,6 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 }
 </style>
 
-<style id="etnika-gift-viewport-fix-20261111">
-/* Owner: gift certificate is a complete, readable section, never an
-   overflow-clipped fixed-height video. Fill the visible desktop screen
-   when content fits; grow naturally when typography requires more room. */
-#etnika-review-flow > section#etnika-gift{
-  box-sizing:border-box!important;
-  position:relative!important;
-  isolation:isolate!important;
-  display:block!important;
-  visibility:visible!important;
-  opacity:1!important;
-  height:auto!important;
-  min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
-  max-height:none!important;
-  padding:0!important;
-  margin:0!important;
-  overflow:hidden!important;
-  scroll-margin-top:0!important;
-}
-#etnika-review-flow #etnika-gift .eg-video{
-  position:absolute!important;inset:0!important;z-index:0!important;
-  pointer-events:none!important;
-}
-#etnika-review-flow #etnika-gift .eg-video video{
-  object-fit:cover!important;
-}
-#etnika-review-flow #etnika-gift .eg-shade{
-  z-index:1!important;pointer-events:none!important;
-}
-#etnika-review-flow #etnika-gift .eg-shell{
-  box-sizing:border-box!important;
-  position:relative!important;
-  z-index:2!important;
-  display:grid!important;
-  grid-template-rows:auto auto auto!important;
-  align-content:space-between!important;
-  row-gap:clamp(16px,2.5svh,28px)!important;
-  height:auto!important;
-  min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
-  max-height:none!important;
-  padding:clamp(28px,4.4svh,52px) 0 clamp(26px,3.8svh,44px)!important;
-}
-#etnika-review-flow #etnika-gift .eg-main{
-  align-self:center!important;
-  width:min(710px,58vw)!important;
-  min-height:0!important;
-  padding:0!important;
-}
-#etnika-review-flow > section#etnika-gift h2.eg-title.etnika-section-heading{
-  font-size:clamp(44px,min(5.0vw,8svh),86px)!important;
-  line-height:.93!important;
-  margin:0 0 clamp(12px,1.6svh,18px)!important;
-}
-#etnika-review-flow #etnika-gift .eg-sub{
-  margin:0 0 clamp(11px,1.5svh,17px)!important;
-  font-size:clamp(14px,1.1vw,16px)!important;
-  line-height:1.5!important;
-}
-#etnika-review-flow #etnika-gift .eg-fact{
-  min-height:clamp(40px,5.7svh,52px)!important;
-}
-#etnika-review-flow #etnika-gift .eg-fact strong{
-  font-size:clamp(27px,3.8svh,34px)!important;
-  line-height:1.15!important;
-}
-#etnika-review-flow #etnika-gift .eg-note{
-  margin-bottom:9px!important;
-  line-height:1.45!important;
-}
-#etnika-review-flow #etnika-gift .eg-cta{
-  min-height:clamp(48px,5.9svh,54px)!important;
-}
-@media(max-width:1100px){
-  #etnika-review-flow > section#etnika-gift{
-    min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-shell{
-    min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
-    padding:clamp(35px,5svh,55px) 0!important;
-    row-gap:clamp(18px,3svh,30px)!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-main{width:100%!important;}
-  #etnika-review-flow #etnika-gift .eg-footer{
-    grid-template-columns:1fr!important;gap:12px!important;
-  }
-  #etnika-review-flow #etnika-gift .eg-title-line{white-space:normal!important;}
-}
-@media(max-width:700px){
-  #etnika-review-flow #etnika-gift .eg-shell{padding:36px 0!important;}
-  #etnika-review-flow #etnika-gift .eg-fact{min-height:48px!important;}
-}
-</style>
-
 <style id="etnika-owner-corrections-20261111-1227">
 /* Deliberate per-section exceptions: do not reapply global 100svh caps. */
 /* 01 · HOW IT WORKS: centered separate introduction; five photographic cards
@@ -14709,6 +14616,251 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   #etnika-process-interactive .epi-card[data-step="5"]:focus-within img {
     transform:scale(1.165)!important;
   }
+}
+</style>
+<style id="etnika-gift-viewport-fix-20261111">
+/* 12 Nov owner review: one compact premium certificate composition.
+   Preserve all original copy/video and CTA. The fixed header is outside
+   the section height. Natural height takes priority over any clipping. */
+#etnika-review-flow > section#etnika-gift{
+  display:block!important;
+  position:relative!important;
+  isolation:isolate!important;
+  visibility:visible!important;
+  opacity:1!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  scroll-margin-top:var(--etnika-nav-height,60px)!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-video{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  z-index:0!important;
+  pointer-events:none!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-video video{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-shade{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-shell{
+  --gift-copy-width:min(600px,45vw);
+  box-sizing:border-box!important;
+  display:grid!important;
+  position:relative!important;
+  z-index:2!important;
+  grid-template-rows:auto minmax(0,1fr) auto!important;
+  align-content:stretch!important;
+  row-gap:clamp(12px,1.8svh,22px)!important;
+  height:auto!important;
+  min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+  max-height:none!important;
+  width:auto!important;
+  margin:0 var(--et-u-edge,max(40px,4vw))!important;
+  padding:clamp(22px,3.4svh,38px) 0 clamp(22px,3.2svh,36px)!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-top{
+  align-items:center!important;
+  gap:18px!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-kicker{
+  font-family:'Geologica',Arial,sans-serif!important;
+  font-size:clamp(13px,.8vw,15px)!important;
+  font-weight:300!important;
+  line-height:1.3!important;
+  letter-spacing:.14em!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-main{
+  box-sizing:border-box!important;
+  width:var(--gift-copy-width)!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  align-self:center!important;
+}
+#etnika-review-flow > section#etnika-gift h2.eg-title.etnika-section-heading{
+  font-family:'Forum',Georgia,serif!important;
+  font-style:normal!important;
+  font-weight:400!important;
+  font-size:clamp(48px,min(4.4vw,7.4svh),78px)!important;
+  line-height:.96!important;
+  letter-spacing:-.035em!important;
+  text-transform:uppercase!important;
+  text-wrap:balance!important;
+  white-space:normal!important;
+  margin:0 0 clamp(12px,1.7svh,19px)!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-title-line{
+  display:block!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  hyphens:none!important;
+  text-wrap:balance!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-sub{
+  font-family:'Geologica',Arial,sans-serif!important;
+  font-size:clamp(16px,1.07vw,18px)!important;
+  font-weight:300!important;
+  line-height:1.43!important;
+  letter-spacing:0!important;
+  max-width:520px!important;
+  margin:0 0 clamp(13px,1.65svh,20px)!important;
+  color:rgba(255,255,255,.9)!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-facts{
+  width:min(550px,100%)!important;
+  max-width:100%!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-fact{
+  grid-template-columns:minmax(155px,174px) minmax(0,1fr)!important;
+  gap:clamp(10px,1.4vw,20px)!important;
+  min-height:clamp(48px,5.9svh,60px)!important;
+  align-items:center!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-fact strong{
+  font-family:'Forum',Georgia,serif!important;
+  font-weight:400!important;
+  font-size:clamp(34px,min(2.65vw,4.3svh),43px)!important;
+  line-height:1.13!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-fact span{
+  font-family:'Geologica',Arial,sans-serif!important;
+  font-weight:300!important;
+  font-size:clamp(14px,.92vw,16px)!important;
+  line-height:1.36!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-footer{
+  box-sizing:border-box!important;
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,550px) minmax(0,1fr)!important;
+  align-items:end!important;
+  column-gap:clamp(24px,3vw,48px)!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-footer-left{
+  width:min(520px,100%)!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-note{
+  font-family:'Geologica',Arial,sans-serif!important;
+  font-weight:300!important;
+  font-size:clamp(16px,1vw,18px)!important;
+  line-height:1.42!important;
+  letter-spacing:0!important;
+  margin:0 0 12px!important;
+  max-width:500px!important;
+  color:rgba(255,255,255,.82)!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-cta{
+  display:flex!important;
+  width:100%!important;
+  min-height:56px!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  padding:0 20px!important;
+  gap:16px!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-cta > span:first-child{
+  font-family:'Geologica',Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:.06em!important;
+  text-transform:uppercase!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-arrow{
+  font-size:27px!important;
+  line-height:1!important;
+}
+#etnika-review-flow > section#etnika-gift .eg-signoff{
+  box-sizing:border-box!important;
+  max-width:490px!important;
+  font-family:'Geologica',Arial,sans-serif!important;
+  font-weight:300!important;
+  font-size:clamp(13px,.85vw,15px)!important;
+  line-height:1.42!important;
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+  text-align:right!important;
+  justify-self:end!important;
+  white-space:normal!important;
+}
+@media(min-width:1101px) and (max-height:740px){
+  #etnika-review-flow > section#etnika-gift .eg-shell{
+    row-gap:12px!important;
+    padding-top:20px!important;
+    padding-bottom:20px!important;
+  }
+  #etnika-review-flow > section#etnika-gift h2.eg-title.etnika-section-heading{
+    font-size:clamp(44px,min(4.2vw,7svh),64px)!important;
+    margin-bottom:10px!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-sub{margin-bottom:12px!important;}
+  #etnika-review-flow > section#etnika-gift .eg-fact{min-height:46px!important;}
+  #etnika-review-flow > section#etnika-gift .eg-note{margin-bottom:8px!important;}
+  #etnika-review-flow > section#etnika-gift .eg-cta{min-height:52px!important;}
+}
+@media(max-width:1100px){
+  #etnika-review-flow > section#etnika-gift,
+  #etnika-review-flow > section#etnika-gift .eg-shell{
+    min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
+    max-height:none!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-shell{
+    --gift-copy-width:min(600px,100%);
+    margin:0 var(--et-u-edge,30px)!important;
+    padding:clamp(34px,5svh,52px) 0!important;
+    row-gap:clamp(18px,2.5svh,28px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift h2.eg-title.etnika-section-heading{
+    font-size:clamp(47px,6.4vw,69px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-footer{
+    grid-template-columns:1fr!important;
+    row-gap:18px!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-signoff{
+    justify-self:start!important;
+    text-align:left!important;
+  }
+}
+@media(max-width:700px){
+  #etnika-review-flow > section#etnika-gift .eg-shell{
+    margin:0 20px!important;
+    padding:32px 0!important;
+  }
+  #etnika-review-flow > section#etnika-gift h2.eg-title.etnika-section-heading{
+    font-size:clamp(44px,10.9vw,60px)!important;
+    line-height:.96!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-fact{
+    grid-template-columns:minmax(118px,34%) minmax(0,1fr)!important;
+    gap:12px!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-fact strong{font-size:34px!important;}
+  #etnika-review-flow > section#etnika-gift .eg-fact span{font-size:13px!important;}
+  #etnika-review-flow > section#etnika-gift .eg-cta > span:first-child{font-size:15px!important;}
 }
 </style>
 </body>
