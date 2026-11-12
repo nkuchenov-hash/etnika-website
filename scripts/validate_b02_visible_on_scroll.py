@@ -45,15 +45,17 @@ with sync_playwright() as p:
             assert v['position']=='relative',msg
             assert v['groupPosition']=='static',msg
             assert v['groupTransform']=='none',msg
-            assert abs(v['block']['height']-(height-60))<=3,msg
-            assert abs(v['copy']['height']-v['block']['height'])<=3,msg
-            assert v['media']['height']>height+90,msg
+            assert v['block']['height']>height+60,msg
+            assert abs(v['block']['height']-v['media']['height'])<3,msg
+            assert abs((v['copy']['top']-v['block']['top'])-(v['block']['bottom']-v['copy']['bottom']))<2,msg
+            assert abs(v['copy']['height']-(height-60))<=3,msg
+            assert v['media']['height']>height+60,msg
             assert v['overline']['top']-v['block']['top']>=24,msg
             assert v['title']['top']>=v['overline']['bottom']+16,msg
             assert v['desc']['bottom']<v['features']['top']-10,msg
-            assert v['features']['bottom']<=v['block']['bottom']-35,msg
+            assert v['features']['bottom']<=v['copy']['bottom']-35,msg
             assert abs(v['copy']['center']-v['composition']['center'])<3,msg
-            assert v['composition']['top']-v['block']['top']>=60,msg
+            assert v['composition']['top']-v['copy']['top']>=60,msg
             assert abs((v['composition']['top']-v['copy']['top'])-(v['copy']['bottom']-v['composition']['bottom']))<2,msg
             assert v['controls']['bottom']<=v['block']['bottom']-14,msg
             if depth==180 and width==1660:
