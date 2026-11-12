@@ -24,6 +24,7 @@ MEASURE = """() => {
     pageWidth: document.documentElement.scrollWidth,
     section: rect(section), header: headerRect, overline: rect(overline),
     title: heading, modes:rect(modes), stage:rect(stage), image:rect(image),
+    lineToHeading: heading.top - rect(overline).bottom,
     titleSize: parseFloat(getComputedStyle(title).fontSize),
     sharedTitleSize: parseFloat(getComputedStyle(document.querySelector('#etnika-stories h2.etnika-section-heading')).fontSize),
     beigeBottomGap: (() => {
@@ -71,6 +72,7 @@ with sync_playwright() as pw:
         assert data["pageWidth"] <= width + 2, ("Horizontal overflow", data)
         assert data["photoLoaded"], ("Pricing photo not loaded", data)
         assert data["overlineVisible"] and data["overlineChildren"] == 6, ("Editorial top rule missing", data)
+        assert data["lineToHeading"] >= 48, ("Editorial line is too close to tariff heading", data)
         assert "Forum" in data["titleFont"], ("Incorrect title font", data)
         assert abs(data["titleSize"] - data["sharedTitleSize"]) < 1, ("Tariff H2 differs from shared heading size", data)
         assert abs(data["pricingTopGap"] - data["beigeBottomGap"]) <= 3, ("Pricing upper inset does not match beige FAQ lower inset", data)
