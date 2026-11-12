@@ -14349,26 +14349,29 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
 }
 
-/* B02: the entire text composition is vertically centered in the same
-   extended section as the full-bleed photograph. Keep it in normal document
-   flow with equal upper/lower free space; no sticky, scroll animation, or
-   separate viewport-height copy that leaves an empty lower half. */
+/* User correction 12 Nov: the long scrolling section left a huge blank
+   white tail under the copy. Center the whole copy in the VISIBLE viewport,
+   but keep the actual photographic media taller than the viewport.
+   Photo overscan is clipped by this screen-height SECTION so the extra photo
+   height cannot create a second scroll step / blank text area.
+   No sticky positioning or scroll-driven movement. */
 @media(min-width:1101px){
   #etnika-review-flow > section#etnika-block-02-final{
-    height:calc(100svh + 2 * var(--etnika-section-outer))!important;
+    height:calc(100svh - var(--etnika-nav-height,60px))!important;
     min-height:0!important;
     max-height:none!important;
+    margin:0!important;
     padding:0!important;
-    overflow:hidden!important;
+    overflow:clip!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__grid{
     height:100%!important;
-    align-items:stretch!important;
+    align-items:start!important;
   }
   #etnika-review-flow > section#etnika-block-02-final .etnika-b02__copy{
     position:relative!important;
     top:auto!important;
-    align-self:stretch!important;
+    align-self:start!important;
     height:100%!important;
     min-height:0!important;
     padding:0!important;
@@ -14377,9 +14380,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     justify-content:center!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__media{
-    align-self:stretch!important;
-    height:100%!important;
+    align-self:start!important;
+    height:calc(100svh + 2 * var(--etnika-section-outer))!important;
     min-height:0!important;
+    max-height:none!important;
   }
 }
 </style>
