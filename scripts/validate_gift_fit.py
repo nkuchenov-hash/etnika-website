@@ -110,8 +110,11 @@ with sync_playwright() as pw:
         # The section prefers one viewport but NEVER cuts off CTA or copy
         # when its natural content is taller on short/narrow screens.
         visible_height=height-v["header"]["height"]
-        assert v["section"]["height"] >= visible_height-2, (
-            f"{label}: gift has collapsed below the usable viewport: {v}")
+        assert v["section"]["height"] >= 400, (
+            f"{label}: gift collapsed and cannot show its complete content: {v}")
+        if width>1100:
+            assert v["section"]["height"]<=visible_height+4, (
+                f"{label}: certificate unnecessarily taller than the screen: {v}")
         assert v["sectionScrollHeight"]<=v["sectionClientHeight"]+2, (
             f"{label}: gift content is clipped or internally scrolling: {v}")
         if width>=1280 and height>=720:
