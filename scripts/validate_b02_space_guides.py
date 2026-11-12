@@ -77,7 +77,7 @@ with sync_playwright() as pw:
         assert v['title']['top']>=v['overline']['bottom']+25,err('editorial header collides with title')
         assert v['pictureOk'],err('hero/second-block photograph failed to load')
         assert near(v['media']['height'],v['block']['height'],3),err('photo not filling full section')
-        assert v['block']['height']>h+90,err('B02 section no longer extends beyond viewport with outer breathing fields')
+        assert near(v['block']['height'],h-v['header']['height'],3),err('B02 must fill only the visible viewport below navigation without internal scroll')
         assert near(v['copy']['height'],v['block']['height'],3),err('copy/text frame differs from photo height')
 
         assert v['bodyWidth']<=w+2,err('horizontal overflow')
