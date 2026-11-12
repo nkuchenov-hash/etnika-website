@@ -43,6 +43,13 @@ with sync_playwright() as pw:
               computedShellHeight:getComputedStyle(el('.eg-shell')).height,
               computedShellMinHeight:getComputedStyle(el('.eg-shell')).minHeight,
               computedRootDisplay:getComputedStyle(root).display,
+              headingFont:getComputedStyle(el('h2.eg-title')).fontFamily,
+              headingSize:parseFloat(getComputedStyle(el('h2.eg-title')).fontSize),
+              subtitleSize:parseFloat(getComputedStyle(el('.eg-sub')).fontSize),
+              factLabelSize:parseFloat(getComputedStyle(el('.eg-fact span')).fontSize),
+              noteSize:parseFloat(getComputedStyle(el('.eg-note')).fontSize),
+              buttonSize:parseFloat(getComputedStyle(el('.eg-cta > span:first-child')).fontSize),
+              videoPlaying:!el('.eg-video video').paused,
               viewportHeight:innerHeight,sectionScrollHeight:root.scrollHeight,
               sectionClientHeight:root.clientHeight,
               overflowsX:root.scrollWidth>root.clientWidth+2,
@@ -53,6 +60,16 @@ with sync_playwright() as pw:
         }""")
         label=f"{width}x{height}"
         assert v["content"],f"{label}: original text or CTA missing"
+        assert "Forum" in v["headingFont"],f"{label}: non-Forum headline: {v}"
+        assert v["headingSize"]>=43,f"{label}: headline unreadable: {v}"
+        assert v["subtitleSize"]>=16,f"{label}: explanatory text too small: {v}"
+        assert v["noteSize"]>=16,f"{label}: CTA note too small: {v}"
+        assert v["buttonSize"]>=15,f"{label}: CTA caption too small: {v}"
+        if width>1100:
+            assert v["factLabelSize"]>=14,f"{label}: facts label too small: {v}"
+            assert v["main"]["width"] <= 620,f"{label}: headline spills into photo: {v}"
+        assert v["title"]["right"] <= v["section"]["right"]-20, (
+            f"{label}: title extends beyond the gift composition: {v}")
         assert len(v["facts"])==3,f"{label}: certificate facts missing"
         assert not v["overflowsX"],f"{label}: horizontal clipping of gift: {v}"
         assert v["kicker"]["bottom"]+3 <= v["main"]["top"],f"{label}: kicker overlaps headline: {v}"
@@ -70,6 +87,11 @@ with sync_playwright() as pw:
             f"{label}: gift has collapsed below the usable viewport: {v}")
         assert v["sectionScrollHeight"]<=v["sectionClientHeight"]+2, (
             f"{label}: gift content is clipped or internally scrolling: {v}")
+        if width>=1280 and height>=720:
+            assert v["section"]["height"]<=visible_height+4, (
+                f"{label}: gift section is taller than usable viewport: {v}")
+            assert v["button"]["bottom"]<=height+4, (
+                f"{label}: gift purchase CTA clipped by the bottom of screen: {v}")
         if width > 1100 and v["section"]["height"] <= visible_height+2:
             assert v["kicker"]["top"]>=v["header"]["bottom"]+8, (
                 f"{label}: label hidden under fixed navigation: {v}")
@@ -95,6 +117,7 @@ with sync_playwright() as pw:
               f"button-bottom={v['button']['bottom']:.1f}px "
               f"footer-bottom={v['footer']['bottom']:.1f}px "
               f"min-height={v['computedSectionMinHeight']} "
-              f"shell-min-height={v['computedShellMinHeight']}",flush=True)
+              f"shell-min-height={v['computedShellMinHeight']} "
+              f"title-font={v['headingFont']} CTA-text={v['buttonSize']}",flush=True)
         page.close()
     browser.close()
