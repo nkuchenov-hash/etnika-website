@@ -4246,13 +4246,13 @@ body.etnika-gallery-lock{
 
           <div class="b05-nav">
             <button class="b05-arrow b05-prev" type="button" aria-label="Предыдущее преимущество">
-              <svg viewBox="0 0 32 16" fill="none" aria-hidden="true">
-                <path d="M31 8H2M8.5 1.5 2 8l6.5 6.5" stroke="currentColor" stroke-width="1"/>
+              <svg viewBox="0 0 28 12" fill="none" aria-hidden="true">
+                <path d="M27 6H2M7 1 2 6l5 5" stroke="currentColor" stroke-width="1"/>
               </svg>
             </button>
             <button class="b05-arrow b05-next" type="button" aria-label="Следующее преимущество">
-              <svg viewBox="0 0 32 16" fill="none" aria-hidden="true">
-                <path d="M1 8h29M23.5 1.5 30 8l-6.5 6.5" stroke="currentColor" stroke-width="1"/>
+              <svg viewBox="0 0 28 12" fill="none" aria-hidden="true">
+                <path d="M1 6h25M21 1l5 5-5 5" stroke="currentColor" stroke-width="1"/>
               </svg>
             </button>
           </div>
@@ -13888,17 +13888,20 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     height:100%!important;
     object-fit:cover!important;
     object-position:center center!important;
+    /* Raise the photo framing slightly inside its existing full-bleed frame. */
+    transform:translateY(-12px) scale(1.035)!important;
+    transform-origin:center center!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-stage-top {
-    top:clamp(16px,2svh,28px)!important;
-    left:clamp(20px,2vw,34px)!important;
-    right:clamp(20px,2vw,34px)!important;
+    top:clamp(20px,2.5svh,32px)!important;
+    left:var(--et-u-edge,80px)!important;
+    right:var(--et-u-edge,80px)!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-stage-bottom {
     box-sizing:border-box!important;
-    bottom:clamp(16px,2svh,28px)!important;
-    left:clamp(20px,2vw,34px)!important;
-    right:clamp(20px,2vw,34px)!important;
+    bottom:clamp(42px,5.3svh,72px)!important;
+    left:var(--et-u-edge,80px)!important;
+    right:var(--et-u-edge,80px)!important;
     width:auto!important;
     max-width:none!important;
     display:grid!important;
@@ -13917,9 +13920,39 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     font-size:clamp(13px,.92vw,16px)!important;
     line-height:1.4!important;
   }
+  /* Match block 02 controls: two unboxed arrows on a single bottom hairline. */
+  #etnika-review-flow #etnika-studio-features .b05-nav {
+    width:148px!important;
+    max-width:none!important;
+    display:flex!important;
+    justify-content:space-between!important;
+    align-items:center!important;
+    gap:0!important;
+    padding-bottom:12px!important;
+    border-bottom:1px solid rgba(255,255,255,.65)!important;
+  }
   #etnika-review-flow #etnika-studio-features .b05-arrow {
-    width:clamp(40px,3vw,50px)!important;
-    height:clamp(40px,3vw,50px)!important;
+    width:36px!important;height:28px!important;
+    min-width:36px!important;padding:0!important;
+    border:0!important;border-radius:0!important;
+    background:transparent!important;color:#fff!important;
+    display:grid!important;place-items:center!important;
+    cursor:pointer;
+    transition:transform .2s ease,opacity .2s ease!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-arrow:hover {
+    opacity:.65!important;
+    background:transparent!important;
+    border:0!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-prev:hover {
+    transform:translateX(-3px)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-next:hover {
+    transform:translateX(3px)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-arrow svg {
+    width:25px!important;height:12px!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-copy {
     box-sizing:border-box!important;
@@ -14121,6 +14154,41 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
   #etnika-review-flow #etnika-studio-features .b05-list{
     grid-template-rows:none!important;
+  }
+}
+
+/* Tablet/mobile: preserve matching arrow style and shared page grid inset. */
+@media (max-width:1100px) {
+  #etnika-review-flow #etnika-studio-features .b05-stage-top {
+    top:clamp(18px,2.5svh,30px)!important;
+    left:var(--et-u-edge,30px)!important;right:var(--et-u-edge,30px)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-stage-bottom {
+    left:var(--et-u-edge,30px)!important;right:var(--et-u-edge,30px)!important;
+    bottom:clamp(30px,5svh,55px)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-stage-image {
+    transform:translateY(-8px) scale(1.035)!important;
+    transform-origin:center center!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-nav {
+    width:148px!important;max-width:100%!important;
+    display:flex!important;justify-content:space-between!important;
+    align-items:center!important;gap:0!important;
+    padding-bottom:12px!important;
+    border-bottom:1px solid rgba(255,255,255,.65)!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-arrow {
+    width:36px!important;height:28px!important;
+    min-width:36px!important;padding:0!important;
+    border:0!important;border-radius:0!important;
+    background:transparent!important;color:#fff!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-arrow:hover {
+    opacity:.65!important;background:transparent!important;
+  }
+  #etnika-review-flow #etnika-studio-features .b05-arrow svg {
+    width:25px!important;height:12px!important;
   }
 }
 </style>
