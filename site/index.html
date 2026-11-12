@@ -12859,10 +12859,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     actual top to its actual bottom, INCLUDING the outer fields. The
     written copy stays inset by those fields within its left column. */
  #etnika-review-flow > section#etnika-block-02-final{
-   /* No artificial white tail below the vertically centered composition.
-      The photo and text BOTH occupy precisely the visible screen below nav.
-      The next black space section supplies its separate outer breathing room. */
-   height:calc(100svh + 2 * var(--etnika-section-outer))!important;
+   /* Fill exactly the usable viewport BELOW the fixed navigation.
+      Extra block height caused an internal scroll and visually unbalanced copy. */
+   height:calc(100svh - var(--etnika-nav-height,60px))!important;
    min-height:0!important;max-height:none!important;
    padding:0!important;margin:0!important;overflow:hidden!important;
  }
@@ -13642,7 +13641,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     transform:none!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__media-bottom{
-    bottom:calc(2 * var(--etnika-section-outer) + var(--etnika-nav-height,60px) + clamp(24px,3.4svh,38px))!important;
+    bottom:clamp(24px,3.4svh,38px)!important;
     left:clamp(22px,2.8vw,56px)!important;
     right:var(--et-u-edge)!important;
     width:auto!important;
@@ -14229,6 +14228,23 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media(max-width:1100px){
   #etnika-review-flow #etnika-block-02-final .etnika-b02__composition{
     display:contents!important;
+  }
+}
+
+/* The section itself must fit the visible screen below the fixed navigation.
+   This makes its static content center coincide with the visible center;
+   no sticky movement or animation is involved. */
+@media(min-width:1101px){
+  #etnika-review-flow > section#etnika-block-02-final{
+    height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:0!important;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__grid,
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__copy,
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__media{
+    height:100%!important;
   }
 }
 </style>
