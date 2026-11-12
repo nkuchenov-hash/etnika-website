@@ -18,7 +18,7 @@ PAIRS={
 with sync_playwright() as p:
  chrome=shutil.which('google-chrome') or shutil.which('google-chrome-stable')
  browser=p.chromium.launch(headless=True,executable_path=chrome) if chrome else p.chromium.launch(headless=True)
- for w,h in [(1440,900),(1660,930),(1920,1080)]:
+ for w,h in [(390,844),(768,1024),(1024,768),(1200,800),(1440,900),(1660,930),(1920,1080)]:
   page=browser.new_page(viewport={'width':w,'height':h})
   for attempt in range(18):
    page.goto(URL+f'&sha={os.environ.get("GITHUB_SHA","manual")[:12]}&attempt={attempt}',wait_until='domcontentloaded',timeout=40000)
@@ -45,8 +45,11 @@ with sync_playwright() as p:
    readings[name]=d['gap']
    print('AUDIT',f'{w}x{h}',name,d,flush=True)
   baseline=readings['Пространство ЭТНИКА']
-  for name,gap in readings.items():
-   assert abs(gap-baseline)<=1.25, f'{w}x{h}: {name} gap={gap}px, approved reference={baseline}px'
-  print('PASS ALL EDITORIAL HEADING GAPS',f'{w}x{h}',f'approved={baseline}px',readings,flush=True)
+  if w>=1101:
+   for name,gap in readings.items():
+    assert abs(gap-baseline)<=1.25, f'{w}x{h}: {name} gap={gap}px, approved reference={baseline}px'
+   print('PASS ALL EDITORIAL HEADING GAPS',f'{w}x{h}',f'approved={baseline}px',readings,flush=True)
+  else:
+   print('MOBILE/TABLET GAP DIAGNOSTICS',f'{w}x{h}',f'approved={baseline}px',readings,flush=True)
   page.close()
  browser.close()
