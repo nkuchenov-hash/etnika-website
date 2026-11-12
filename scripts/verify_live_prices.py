@@ -25,6 +25,12 @@ MEASURE = """() => {
     section: rect(section), header: headerRect, overline: rect(overline),
     title: heading, modes:rect(modes), stage:rect(stage), image:rect(image),
     titleSize: parseFloat(getComputedStyle(title).fontSize),
+    sharedTitleSize: parseFloat(getComputedStyle(document.querySelector('#etnika-stories h2.etnika-section-heading')).fontSize),
+    beigeBottomGap: (() => {
+      const beige=document.querySelector('#etnika-faq');
+      return rect(beige).bottom - rect(beige.querySelector('.faq-shell')).bottom;
+    })(),
+    pricingTopGap: rect(overline).top - rect(section).top,
     titleFont: getComputedStyle(title).fontFamily,
     photoLoaded: photo.complete && photo.naturalWidth > 0,
     overlineVisible: getComputedStyle(overline).display !== 'none',
@@ -66,13 +72,14 @@ with sync_playwright() as pw:
         assert data["photoLoaded"], ("Pricing photo not loaded", data)
         assert data["overlineVisible"] and data["overlineChildren"] == 6, ("Editorial top rule missing", data)
         assert "Forum" in data["titleFont"], ("Incorrect title font", data)
+        assert abs(data["titleSize"] - data["sharedTitleSize"]) < 1, ("Tariff H2 differs from shared heading size", data)
+        assert abs(data["pricingTopGap"] - data["beigeBottomGap"]) <= 3, ("Pricing upper inset does not match beige FAQ lower inset", data)
         assert all(x == "1" for x in data["planOpacity"]), ("Faded tariff labels", data)
         assert len(data["rowHeights"]) == 3, ("Missing packages", data)
         assert data["visualEndsInsideSection"], ("Photo extends below pricing section", data)
         if width > 1160:
             assert data["overline"]["top"] >= data["header"]["bottom"] + 6, ("Overline obscured by header", data)
             assert data["title"]["top"] >= data["header"]["bottom"] + 30, ("Title obscured by header", data)
-            assert data["titleSize"] <= 75, ("Global title size overrides tariffs", data)
             assert 380 <= data["stage"]["height"] <= 535, ("Tariff block height is unbalanced", data)
             assert data["section"]["height"] <= height + 40, ("Tariff section has unnecessary full-height padding", data)
             assert max(data["rowHeights"]) <= 180, ("Tariff rows are over-stretched", data)
