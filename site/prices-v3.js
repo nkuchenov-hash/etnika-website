@@ -115,7 +115,10 @@
     sheet.style.setProperty('--ev3-panel-left',panelLeft+'px');
   }
   window.addEventListener('resize',()=>{
-    if(sheetOpen)updatePanelRail();
+    if(sheetOpen){
+      updatePanelRail();
+      document.body.style.overflow=window.innerWidth>=1101?previousBodyOverflow:'hidden';
+    }
   },{passive:true});
   function open(){
     if(sheetOpen) return;
@@ -123,7 +126,8 @@
     sheetOpen=true;
     lastFocus=document.activeElement;
     previousBodyOverflow=document.body.style.overflow;
-    document.body.style.overflow='hidden';
+    /* Desktop is a non-modal side rail: the tariff list must remain scrollable. */
+    if(window.innerWidth<1101)document.body.style.overflow='hidden';
     sheet.inert=false;
     sheet.setAttribute('aria-hidden','false');
     sheet.dataset.open='true';
