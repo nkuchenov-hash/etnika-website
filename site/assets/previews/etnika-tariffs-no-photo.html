@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="color-scheme" content="light"><title>ETNIKA — Типографический / без фото — предпросмотр</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet"><style>
+:root{--ink:#1a1817;--red:#a9151d;--secondary:#615b58;--rule:#dcd7d2;--paper:#f4f1ed;--edge:clamp(24px,4.4vw,82px);--display:'Forum',Georgia,serif;--body:'Geologica',Arial,sans-serif;--h2:clamp(62px,6.25vw,118px)}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;background:#fff}
+body{margin:0;color:var(--ink);font-family:var(--body);font-weight:300;-webkit-font-smoothing:antialiased}
+button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+.preview-nav{height:64px;display:flex;justify-content:space-between;align-items:center;gap:22px;padding:0 var(--edge);border-bottom:1px solid #eee9e5;background:#fff}
+.preview-nav .brand{font:400 31px/.9 var(--display);letter-spacing:.035em}
+.preview-nav .descriptor{font:300 11px var(--body);letter-spacing:.17em;color:#655f5a;text-transform:uppercase}
+.preview-nav .preview-status{font:300 11px var(--body);letter-spacing:.11em;text-transform:uppercase;color:#837c77}
+.main{padding:clamp(42px,5.2vh,66px) var(--edge) clamp(45px,7vh,86px);min-height:calc(100svh - 64px)}
+.overline{display:grid;grid-template-columns:auto minmax(34px,1fr) auto 1px auto minmax(34px,.45fr);align-items:center;gap:clamp(10px,1.3vw,19px);font:300 10px/1.2 var(--body);letter-spacing:.13em;color:#79736f;text-transform:uppercase;white-space:nowrap}
+.overline .line{height:1px;background:var(--rule)}.overline .divider{width:1px;height:27px;background:var(--rule)}.overline .accent{color:var(--red)}
+h1{font:400 var(--h2)/.86 var(--display);letter-spacing:-.04em;text-transform:uppercase;margin:0}
+h1 span{color:var(--red)}
+.heading{display:flex;align-items:flex-end;justify-content:space-between;gap:25px 38px;margin:clamp(42px,5.4vh,62px) 0 clamp(34px,4.1vh,52px)}
+.days{flex:none;display:flex;align-items:center;gap:30px;padding-bottom:3px}
+.days button{font:400 14px var(--body);color:#524d49;background:none;border:0;border-bottom:2px solid transparent;padding:9px 0 13px;white-space:nowrap}
+.days button[aria-pressed=true]{color:var(--red);border-bottom-color:var(--red)}
+.book{display:inline-flex;text-decoration:none;align-items:center;justify-content:space-between;gap:28px;background:var(--red);color:#fff;min-height:59px;padding:16px 21px;font:400 15px var(--body);white-space:nowrap;border:1px solid var(--red)}
+.book:hover{background:#881018;border-color:#881018}.book span{font-size:23px;line-height:1}
+.info-button{align-self:center;border:0;border-bottom:1px solid #847e78;background:none;font:400 14px var(--body);min-height:42px;padding:10px 0;white-space:nowrap}.info-button:hover{color:var(--red);border-color:var(--red)}.info-button em{color:var(--red);font-size:19px;font-style:normal;padding-left:17px}
+.actions{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.tariff-row{border:0;border-top:1px solid var(--rule);border-radius:0;background:transparent;display:grid;align-items:center;text-align:left;grid-template-columns:40px minmax(0,1fr) auto;gap:clamp(12px,1.3vw,24px);width:100%;color:var(--ink);position:relative;transition:background .2s ease}
+.tariff-row:last-child{border-bottom:1px solid var(--rule)}
+.tariff-row:hover{background:#fbf9f6}.tariff-row[aria-pressed=true] .tariff-name{color:var(--red)}
+.tariff-row[aria-pressed=true]::before{content:'';position:absolute;left:0;top:19px;bottom:19px;width:2px;background:var(--red)}
+.tariff-id{font:300 11px var(--body);letter-spacing:.13em;color:#a39c95;align-self:center;padding-left:10px}
+.tariff-row[aria-pressed=true] .tariff-id{color:var(--red)}
+.tariff-name{display:block;font:400 clamp(45px,3.8vw,70px)/.95 var(--display);letter-spacing:-.025em;transition:color .2s ease}
+.tariff-meta{display:block;font:300 15px/1.5 var(--body);color:var(--secondary);margin-top:12px}
+.tariff-meta b{font-weight:400;color:#3f3c39}
+.tariff-price{font:400 clamp(40px,3.35vw,62px)/1 var(--display);letter-spacing:-.02em;white-space:nowrap;padding-right:2px}
+/* The side sheet is an independent, actual-viewport-high rail. It never docks to photo height. */
+.overlay{position:fixed;inset:0;z-index:30;visibility:hidden;pointer-events:none}
+.overlay.open{visibility:visible}
+.overlay-bg{position:absolute;inset:0;pointer-events:none;background:transparent;opacity:0;transition:opacity .35s ease}
+.panel{position:absolute;right:0;top:0;bottom:0;width:var(--rail-width,44vw);height:100dvh;background:#fff;border-left:1px solid #e6e1dc;transform:translateX(102%);transition:transform .42s cubic-bezier(.22,.82,.17,1);pointer-events:auto;display:flex;flex-direction:column;box-shadow:-12px 0 40px #201b1620;min-width:0}
+.overlay.open .panel{transform:translateX(0)}
+.panel-top{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(22px,3.4vh,39px) clamp(23px,2.4vw,44px) 15px;border-bottom:1px solid var(--rule);flex:0 0 auto}
+.panel-kicker{font:400 11px var(--body);letter-spacing:.17em;text-transform:uppercase;color:var(--red)}
+.panel-close{width:42px;height:42px;border:1px solid var(--rule);border-radius:0;background:none;color:var(--ink);font:300 30px var(--body);display:grid;place-items:center;line-height:1}
+.panel-scroll{padding:22px clamp(23px,2.4vw,44px) 20px;min-height:0;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain}
+.panel-title{font:400 clamp(58px,5vw,94px)/.9 var(--display);letter-spacing:-.025em;margin:0 0 15px}
+.panel-sub,.panel-desc{font:300 15px/1.55 var(--body);color:var(--secondary);margin:0 0 11px}
+.panel-desc{margin-bottom:25px}
+.feature-list{display:grid;grid-template-columns:1fr;list-style:none;counter-reset:count;margin:0;padding:0}
+.feature-list li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:11px;padding:13px 0;border-top:1px solid var(--rule);font:300 15px/1.42 var(--body)}
+.feature-list li::before{counter-increment:count;content:counter(count,decimal-leading-zero);font:400 11px/1.9 var(--body);color:var(--red)}
+.panel-bottom{flex:none;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px clamp(23px,2.4vw,44px) 21px;border-top:1px solid var(--rule);background:#fff}
+.panel-bottom .panel-price{font:400 clamp(37px,3.4vw,58px) var(--display);color:var(--red);white-space:nowrap}
+.panel-bottom .book{min-height:50px;font-size:13px;padding:12px 14px;gap:18px}
+.caption{font:300 11px var(--body);color:#827a74;letter-spacing:.04em;padding-top:15px}
+@media(max-width:1280px){.heading{flex-wrap:wrap}.days{margin-left:auto}.tariff-name{font-size:clamp(43px,4vw,62px)}.tariff-price{font-size:clamp(37px,3.6vw,52px)}}
+@media(max-width:900px){.main{padding-top:34px}.heading{margin:35px 0 25px}.overline{grid-template-columns:auto minmax(24px,1fr) auto;gap:11px}.overline .divider,.overline .context,.overline .end{display:none}.heading h1{font-size:clamp(52px,8.9vw,82px)}.days{margin-left:0}.panel{width:min(590px,95vw)}.overlay-bg{background:#19130f66;pointer-events:auto}.overlay.open .overlay-bg{opacity:1}.tariff-row{gap:12px}.tariff-name{font-size:clamp(42px,7vw,59px)}.tariff-price{font-size:clamp(34px,5.2vw,51px)}}
+@media(max-width:640px){.preview-nav{height:56px}.preview-nav .brand{font-size:27px}.preview-nav .preview-status{display:none}.main{min-height:0}.overline{font-size:9px}.heading h1{font-size:clamp(48px,12.3vw,73px)}.days{gap:26px}.tariff-row{grid-template-columns:25px minmax(0,1fr) auto;gap:7px}.tariff-name{font-size:clamp(34px,9.2vw,48px)}.tariff-price{font-size:clamp(30px,8vw,42px)}.tariff-meta{font-size:12px;margin-top:10px}.tariff-id{font-size:10px;padding-left:4px}.actions{align-items:stretch}.info-button{align-self:center}.panel{width:100vw}.panel-top{padding:18px 20px 12px}.panel-scroll{padding:18px 20px}.panel-bottom{padding:16px 20px}.panel-title{font-size:62px}.feature-list li{font-size:14px}.panel-bottom .panel-price{font-size:35px}.panel-bottom .book{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.panel,.overlay-bg{transition:none}}
+
+/* 02 — typographic editorial pricing, with NO photographs. */
+.no-photo .main{padding-top:clamp(28px,3.6vh,55px);padding-bottom:clamp(24px,3vh,45px)}
+.no-photo .heading{margin:clamp(30px,4vh,50px) 0 clamp(33px,4vh,50px)}
+.no-photo .price-content{width:100%;transition:width .42s cubic-bezier(.22,.82,.17,1)}
+.no-photo .tariff-row{min-height:clamp(146px,17.5vh,210px);padding:29px 12px 29px 0;grid-template-columns:58px minmax(0,1fr) auto;gap:26px}
+.no-photo .tariff-name{font-size:clamp(68px,5.9vw,112px);line-height:.86;letter-spacing:-.035em}
+.no-photo .tariff-price{font-size:clamp(58px,4.8vw,94px);white-space:nowrap}
+.no-photo .tariff-meta{margin-top:20px;font-size:17px}
+.no-photo .tariff-row[aria-pressed=true]::before{top:28px;bottom:28px}
+.no-photo .actions{margin-top:22px;justify-content:flex-end;gap:45px}
+.no-photo .caption{margin-top:17px}
+@media(min-width:1021px){body.no-photo.details-open .price-content{width:var(--content-open-width,55vw)}body.no-photo.details-open .tariff-row{grid-template-columns:28px minmax(0,1fr) auto;gap:12px;min-height:148px}body.no-photo.details-open .tariff-id{padding-left:3px}body.no-photo.details-open .tariff-name{font-size:clamp(45px,3.7vw,72px)}body.no-photo.details-open .tariff-price{font-size:clamp(38px,3vw,59px)}body.no-photo.details-open .tariff-meta{margin-top:9px;font-size:13px}body.no-photo.details-open .actions{gap:12px;flex-wrap:wrap}}
+@media(max-width:1000px){.no-photo .tariff-name{font-size:clamp(54px,7vw,82px)}.no-photo .tariff-price{font-size:clamp(45px,5vw,63px)}.no-photo .tariff-row{min-height:157px;grid-template-columns:36px minmax(0,1fr) auto;gap:12px}}
+@media(max-width:640px){.no-photo .heading{margin-bottom:35px}.no-photo .tariff-row{min-height:142px;grid-template-columns:23px minmax(0,1fr) auto;gap:6px;padding:22px 0}.no-photo .tariff-name{font-size:clamp(40px,10.5vw,55px)}.no-photo .tariff-price{font-size:clamp(32px,8.5vw,41px)}.no-photo .tariff-meta{margin-top:12px;font-size:12px}.no-photo .actions{margin-top:30px;gap:20px;justify-content:space-between}}
+</style></head><body class="no-photo"><header class="preview-nav"><div class="brand">ЭТНИКА</div><div class="descriptor">СТУДИЯ АВТОПОРТРЕТА</div><div class="preview-status">ПРЕДПРОСМОТР ДИЗАЙНА</div></header>
+<main class="main" id="preview-main">
+  <div class="overline"><span>ЭТНИКА</span><i class="line"></i><span class="accent">ВРЕМЯ ДЛЯ СЕБЯ</span><i class="divider"></i><span class="context">ЦЕНЫ И ТАРИФЫ</span><i class="line end"></i></div>
+  <div class="heading"><h1>ВЫБЕРИТЕ <span>СВОЙ ФОРМАТ</span></h1><nav class="days" aria-label="Выберите день съёмки"><button type="button" data-day="weekday" aria-pressed="true">Будни</button><button type="button" data-day="weekend" aria-pressed="false">Выходные</button></nav></div>
+  <section class="price-content" aria-label="Выбор тарифа"><div class="rates" aria-label="Тарифы">
+ <button class="tariff-row" type="button" data-plan="express" aria-pressed="false"><span class="tariff-id">01</span><span class="tariff-copy"><span class="tariff-name">Экспресс</span><span class="tariff-meta"><b>30 минут</b> · до 2 человек</span></span><span class="tariff-price">2 900 ₽</span></button>
+ <button class="tariff-row" type="button" data-plan="standard" aria-pressed="true"><span class="tariff-id">02</span><span class="tariff-copy"><span class="tariff-name">Стандарт</span><span class="tariff-meta"><b>60 минут</b> · до 4 человек</span></span><span class="tariff-price">4 500 ₽</span></button>
+ <button class="tariff-row" type="button" data-plan="premium" aria-pressed="false"><span class="tariff-id">03</span><span class="tariff-copy"><span class="tariff-name">Премиум</span><span class="tariff-meta"><b>100 минут</b> · до 6 человек</span></span><span class="tariff-price">7 500 ₽</span></button>
+</div><div class="actions"><button class="info-button" type="button" aria-expanded="false" aria-controls="details">Что входит в тариф <em aria-hidden="true">↗</em></button><a class="book" href="https://n1268189.yclients.com/" target="_blank" rel="noopener noreferrer">Выбрать время <span aria-hidden="true">↗</span></a></div><p class="caption">ЭТНИКА · СТУДИЯ АВТОПОРТРЕТА</p></section>
+</main>
+<div class="overlay" id="details" aria-hidden="true" role="dialog" aria-label="Состав выбранного тарифа">
+  <div class="overlay-bg" data-close></div>
+  <aside class="panel" tabindex="-1">
+    <div class="panel-top"><span class="panel-kicker">СОСТАВ ТАРИФА</span><button class="panel-close" type="button" aria-label="Закрыть информацию">×</button></div>
+    <div class="panel-scroll"><h2 class="panel-title">Стандарт</h2><p class="panel-sub"></p><p class="panel-desc"></p><ol class="feature-list"></ol></div>
+    <div class="panel-bottom"><span class="panel-price">4 500 ₽</span><a class="book" href="https://n1268189.yclients.com/" target="_blank" rel="noopener noreferrer">Выбрать время <span aria-hidden="true">↗</span></a></div>
+  </aside>
+</div><script>window.PREVIEW_WITH_PHOTO=false;</script>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const packages={
+ express:{name:'Экспресс',mins:'30 минут',people:'до 2 человек · больше — по согласованию',weekday:'2 900',weekend:'3 900',photo:'etnika-bw-portrait.jpg',kicker:'Быстрый формат',desc:'Для короткой индивидуальной съёмки, новых портретов или быстрого обновления контента.',features:['Базовый белый фон','Неограниченное число ч/б или цветных фотографий с цветокоррекцией','Портретная съёмка или фотографии в полный рост','Готовые фотографии в течение 24 часов','Гримёрная зона','Кулер с водой']},
+ standard:{name:'Стандарт',mins:'60 минут',people:'до 4 человек · больше — по согласованию',weekday:'4 500',weekend:'5 900',photo:'etnika-portrait-dark.jpg',kicker:'Оптимальный выбор',desc:'Оптимально, если хочется спокойно поснимать несколько образов без спешки.',features:['Базовый белый фон','Неограниченное число ч/б или цветных фотографий с цветокоррекцией','Портретная съёмка или фотографии в полный рост','Готовые фотографии в течение 24 часов','Чай, кофе, вода и сладости','Гримёрная зона и отпариватель для одежды','Музыкальная колонка и Wi-Fi','Реквизит бесплатно']},
+ premium:{name:'Премиум',mins:'100 минут',people:'до 6 человек · больше — по согласованию',weekday:'7 500',weekend:'9 000',photo:'etnika-portrait-beige.jpg',kicker:'Максимум свободы',desc:'Для нескольких образов, большой компании и съёмки, где хочется времени на эксперименты.',features:['Базовый белый фон','Неограниченное число ч/б или цветных фотографий с цветокоррекцией','Портретная съёмка или фотографии в полный рост','Готовые фотографии в течение 24 часов','Чай, кофе, вода и сладости','Гримёрная зона и отпариватель для одежды','Музыкальная колонка и Wi-Fi','Реквизит бесплатно','Онлайн-альбом готовых фотографий','Подарки детям и именинникам']}}
+let plan='standard',day='weekday',open=false,lastFocus=null;
+const overlay=$('.overlay'),panel=$('.panel'),main=$('.main'),closeBtn=$('.panel-close'),infoBtn=$('.info-button');
+function render(){const p=packages[plan];
+ $$('.tariff-row').forEach(b=>{const active=b.dataset.plan===plan;b.setAttribute('aria-pressed',String(active));b.querySelector('.tariff-price').textContent=packages[b.dataset.plan][day]+' ₽';});
+ $$('[data-day]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.day===day)));
+ $('.panel-title').textContent=p.name;$('.panel-sub').textContent=p.mins+' · '+p.people;$('.panel-desc').textContent=p.desc;$('.panel-price').textContent=p[day]+' ₽';
+ $('.feature-list').replaceChildren(...p.features.map(s=>{const li=document.createElement('li');li.textContent=s;return li;}));
+ const photo=$('.portrait');if(photo){photo.src='../'+p.photo;photo.alt=p.name+' — съёмка в студии ЭТНИКА';$('.photo-kicker').textContent=p.kicker;$('.photo-name').textContent=p.name+' · '+p.mins;}
+}
+function layout(){const desktop=innerWidth>1020;overlay.setAttribute('aria-modal',String(!desktop));
+ const priceRight=Math.max(...$$('.tariff-price').map(e=>e.getBoundingClientRect().right));
+ const railStart=window.PREVIEW_WITH_PHOTO ? Math.max($('.photo-frame').getBoundingClientRect().left,priceRight+26) : Math.max(Math.round(innerWidth*.58),innerWidth>1300?Math.round(innerWidth*.56):0);
+ const x=Math.min(innerWidth-370,railStart);document.documentElement.style.setProperty('--rail-width',Math.max(370,innerWidth-x)+'px');document.documentElement.style.setProperty('--rail-left',x+'px');
+ if(desktop && !window.PREVIEW_WITH_PHOTO){document.documentElement.style.setProperty('--content-open-width',Math.max(520,x-parseFloat(getComputedStyle(main).paddingLeft)-30)+'px');}
+}
+function setOpen(yes){if(open===yes)return;open=yes;if(yes){lastFocus=document.activeElement;layout();document.body.classList.add('details-open');overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');infoBtn.setAttribute('aria-expanded','true');if(innerWidth<=1020){document.body.style.overflow='hidden';}closeBtn.focus();}else{document.body.classList.remove('details-open');overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');infoBtn.setAttribute('aria-expanded','false');document.body.style.overflow='';if(lastFocus&&document.contains(lastFocus))lastFocus.focus();}}
+$$('.tariff-row').forEach(b=>b.addEventListener('click',()=>{plan=b.dataset.plan;render();if(open)layout();}));
+$$('[data-day]').forEach(b=>b.addEventListener('click',()=>{day=b.dataset.day;render();if(open)layout();}));
+infoBtn.addEventListener('click',()=>setOpen(!open));closeBtn.addEventListener('click',()=>setOpen(false));$('[data-close]').addEventListener('click',()=>setOpen(false));
+document.addEventListener('keydown',e=>{if(open&&e.key==='Escape')setOpen(false);if(open&&e.key==='Tab'&&innerWidth<=1020){const a=[...panel.querySelectorAll('a[href],button')];if(e.shiftKey&&document.activeElement===a[0]){e.preventDefault();a[a.length-1].focus();}else if(!e.shiftKey&&document.activeElement===a[a.length-1]){e.preventDefault();a[0].focus();}}});
+document.addEventListener('pointerdown',e=>{if(open&&innerWidth>1020&&!panel.contains(e.target)&&!infoBtn.contains(e.target))setOpen(false);});
+window.addEventListener('resize',()=>{if(open)layout();}, {passive:true});
+render();
+})();
+</script></body></html>
