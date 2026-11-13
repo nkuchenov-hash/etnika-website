@@ -1,0 +1,49 @@
+name: Inspect original ETNIKA footer (temporary)
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-footer-source.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch published Tilda homepage and extract footer structure
+        run: |
+          python -m pip install --disable-pip-version-check beautifulsoup4 requests
+          python - <<'PY'
+          import requests, re, json
+          from bs4 import BeautifulSoup, NavigableString
+          u='https://etnika-studio.ru/'
+          r=requests.get(u,timeout=35,headers={'User-Agent':'Mozilla/5.0'})
+          print('HTTP',r.status_code,'BYTES',len(r.content),'URL',r.url,flush=True)
+          r.raise_for_status()
+          html=r.text
+          soup=BeautifulSoup(html,'html.parser')
+          needles=['Политика конфиденциальности','Согласие на обработку персональных','Договор-оферта','ОГРНИП','РАЗДЕЛЫ САЙТА','студия автопортрета']
+          seen=set()
+          for needle in needles:
+            nodes=soup.find_all(string=lambda t:t is not None and needle.casefold() in str(t).casefold())
+            print('NEEDLE',needle,'NODES',len(nodes))
+            for node in nodes[-4:]:
+              rec=node.find_parent('div',id=re.compile(r'^rec\d+'))
+              if not rec: continue
+              rid=rec.get('id')
+              if rid in seen: continue
+              seen.add(rid)
+              print('REC_START',rid,'CLASS',rec.get('class'),'HTML_LENGTH',len(str(rec)))
+              print('REC_TEXT',repr(rec.get_text(' ',strip=True)[:5000]))
+              print('REC_HTML_START')
+              print(str(rec)[:32000])
+              print('REC_HTML_END')
+          print('REC_TOTAL',len(seen),sorted(seen))
+          for rid in sorted(seen):
+            for sty in soup.find_all('style'):
+              css=sty.string or sty.get_text() or ''
+              if '#'+rid in css or 'rec'+rid in css:
+                print('STYLE_START',rid,'LENGTH',len(css))
+                print(css[:22000])
+                print('STYLE_END',rid)
+          PY
