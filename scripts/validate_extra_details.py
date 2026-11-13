@@ -50,6 +50,7 @@ JS = r"""() => {
         overflows:overflowParent, priceFont:style.fontFamily,
         labelFontPx:parseFloat(labelStyle.fontSize),
         labelWeight:labelStyle.fontWeight,
+        labelColor:labelStyle.color,
         labelContrast:contrast(labelStyle.color),
         note:note?.textContent.trim()||null,
         noteFontPx:noteStyle?parseFloat(noteStyle.fontSize):null,
@@ -73,7 +74,7 @@ try:
             assert [x["text"] for x in prices]==["1600 ₽","1200 ₽","600–1000 ₽"]
             assert all(x["fullyInsideContainer"] and x["fullyInsideSection"] for x in prices), "Price box clipped"
             assert all(x["numberBoxHeight"]>x["glyphInkHeight"]+3 for x in prices), "Glyph bounds too tight"
-            assert all(x["labelContrast"]>=7 and float(x["labelWeight"])>=300 for x in prices), "Service text too faint"
+            assert all(x["labelColor"]=="rgb(11, 11, 11)" and float(x["labelWeight"])>=400 for x in prices), "Service names must be solid black and regular weight"
             assert [x["note"] for x in prices]==[None,"до двух за сессию","за одну вещь"]
             assert all(x["noteFontPx"]>=14 and x["noteContrast"]>=6 for x in prices if x["note"]), "Price notes too faint/small"
             assert all(all(v=="visible" for v in x["overflows"]) for x in prices), "A price wrapper clips overflowing glyphs"
