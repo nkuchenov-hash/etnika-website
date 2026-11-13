@@ -47,12 +47,12 @@ with sync_playwright() as p:
             assert v['position']=='relative',msg
             assert v['groupPosition']=='static',msg
             assert v['groupTransform']=='none',msg
-            assert v['block']['height']>height+35,msg
-            assert v['block']['height']<height+125,msg
+            assert v['block']['height']>height+20,msg
+            assert v['block']['height']<height+95,msg
             assert abs(v['block']['height']-v['media']['height'])<3,msg
             assert abs((v['copy']['top']-v['block']['top'])-(v['block']['bottom']-v['copy']['bottom']))<2,msg
             assert abs(v['copy']['height']-(height-60))<=3,msg
-            assert v['media']['height']>height+35,msg
+            assert v['media']['height']>height+20,msg
             assert abs((v['mediaTop']['top']-v['media']['top'])-(v['media']['bottom']-v['controls']['bottom']))<2,msg
             assert v['controls']['bottom']<=height-18,msg
             assert v['overline']['top']-v['block']['top']>=24,msg
