@@ -149,7 +149,25 @@ with sync_playwright() as pw:
             # Clicking a manual selector still works and gets a fresh interval.
             page.locator('#etnika-studio-features .b05-item[data-index="4"]').click()
             assert page.locator('#etnika-studio-features .b05-counter').inner_text().strip()=='05 / 06'
-            print('AUTOPLAY: slides advance after 6s; manual selection remains functional',flush=True)
+
+            # Owner 13 Nov: after clicking an item and leaving the cursor on it,
+            # the carousel must NOT rotate, even if the normal 6s has elapsed.
+            page.wait_for_timeout(6350)
+            assert page.locator('#etnika-studio-features .b05-counter').inner_text().strip()=='05 / 06', 'AUTOPLAY continued while mouse hovered over selected benefit'
+
+            # Press and hold the mouse over that row, then drag out. The clock
+            # must remain stopped until the pointer button is released.
+            page.mouse.down()
+            stage=page.locator('#etnika-studio-features .b05-stage').bounding_box()
+            page.mouse.move(stage['x']+45,stage['y']+100,steps=4)
+            page.wait_for_timeout(6350)
+            assert page.locator('#etnika-studio-features .b05-counter').inner_text().strip()=='05 / 06', 'AUTOPLAY continued during mouse hold'
+
+            # Release off-row; a fresh full six-second countdown should start.
+            page.mouse.up()
+            page.wait_for_timeout(6350)
+            assert page.locator('#etnika-studio-features .b05-counter').inner_text().strip()=='06 / 06', 'AUTOPLAY did not resume after cursor left and mouse released'
+            print('AUTOPLAY: advances in 6s, pauses on selected-item hover and press-hold, resumes after release and leave',flush=True)
         page.close()
     # Responsive safety: the same editorial breathing room must not push
     # the caption or arrows outside the image on tablets and phones.
