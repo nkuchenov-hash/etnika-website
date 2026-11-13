@@ -73,6 +73,25 @@ with sync_playwright() as pw:
               ctaWeight:Number(getComputedStyle(el('.eg-cta > span:first-child')).fontWeight),
               signoffWeight:Number(getComputedStyle(el('.eg-signoff')).fontWeight),
               signoffRuleDisplay:getComputedStyle(el('.eg-signoff'),'::before').display,
+              peerSpacing:(() => {
+                const faq=document.querySelector('#etnika-review-flow > #etnika-faq-tariffs');
+                const top=faq.querySelector('.faq-topline').getBoundingClientRect();
+                const shell=faq.querySelector('.faq-shell').getBoundingClientRect();
+                const sec=faq.getBoundingClientRect();
+                const gtop=el('.eg-top-rule').getBoundingClientRect();
+                const gsign=el('.eg-signoff').getBoundingClientRect();
+                const gift=root.getBoundingClientRect();
+                return {
+                  faqTop:top.top+top.height/2-sec.top,
+                  faqBottom:sec.bottom-shell.bottom+.5,
+                  giftTop:gtop.top+gtop.height/2-gift.top,
+                  giftBottom:gift.bottom-(gsign.top+gsign.height/2),
+                  faqTopBox:faq.querySelector('.faq-top').getBoundingClientRect().top-sec.top,
+                  faqBottomBox:sec.bottom-shell.bottom,
+                  giftTopBox:el('.eg-top').getBoundingClientRect().top-gift.top,
+                  giftBottomBox:gift.bottom-gsign.bottom
+                };
+              })(),
               headingLineScroll:[...root.querySelectorAll('.eg-title-line')].map(x=>({
                 scroll:x.scrollWidth,width:x.clientWidth
               })),
@@ -85,6 +104,7 @@ with sync_playwright() as pw:
             };
         }""")
         label=f"{width}x{height}"
+        print(f"GIFT_SPACING {label}: {v['peerSpacing']}",flush=True)
         assert v["content"],f"{label}: original text or CTA missing"
         assert "Forum" in v["headingFont"],f"{label}: non-Forum headline: {v}"
         assert max(v[w] for w in ("kickerWeight","subWeight","factWeight",
