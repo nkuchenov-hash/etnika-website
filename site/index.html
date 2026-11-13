@@ -13395,7 +13395,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  margin-bottom:clamp(20px,2.5svh,30px)!important;
 }
 
-/* 05 · Contacts: map runs uninterrupted from the section top to bottom. */
+/* 05 · Contacts: size the section to its actual copy rather than 100svh
+   plus outer fields. Its top/bottom air uses the SAME design-system token
+   on both sides. The map stretches with that naturally sized grid row. */
 @media(min-width:1101px){
  #etnika-review-flow > section#etnika-contacts-source{
    height:auto!important;min-height:0!important;max-height:none!important;
@@ -13403,17 +13405,65 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
  #etnika-review-flow #etnika-contacts-source .location{
    display:grid!important;grid-template-columns:1fr 1fr!important;
-   height:calc(100svh + 2 * var(--etnika-section-outer))!important;
+   height:auto!important;
    min-height:0!important;max-height:none!important;align-items:stretch!important;
  }
  #etnika-review-flow #etnika-contacts-source .location-map{
-   align-self:stretch!important;height:100%!important;min-height:0!important;
+   align-self:stretch!important;height:auto!important;min-height:0!important;
    padding:0!important;margin:0!important;
  }
  #etnika-review-flow #etnika-contacts-source .location-copy{
-   height:100%!important;box-sizing:border-box!important;
-   padding:clamp(24px,3svh,48px) clamp(32px,3.3vw,64px)!important;
+   height:auto!important;box-sizing:border-box!important;
+   padding:var(--etnika-section-y,64px) clamp(32px,3.3vw,64px)!important;
    justify-content:center!important;
+ }
+}
+/* Smaller viewports: preserve all content, without forcing a full-height
+   section underneath a separately sized map. Tablet=56px, phone=44px. */
+@media(max-width:1100px){
+ #etnika-review-flow > section#etnika-contacts-source{
+   height:auto!important;min-height:0!important;max-height:none!important;
+   padding:0!important;overflow:visible!important;
+ }
+ #etnika-review-flow #etnika-contacts-source .location{
+   height:auto!important;min-height:0!important;max-height:none!important;
+ }
+ #etnika-review-flow #etnika-contacts-source .location-copy{
+   height:auto!important;
+   padding-top:var(--etnika-section-y,56px)!important;
+   padding-bottom:var(--etnika-section-y,56px)!important;
+ }
+}
+/* The historical map-ad strip must not mask the contact information
+   once the section is content-sized; keep it restricted to the map column.
+   Route and external-map controls remain usable above the strip. */
+#etnika-review-flow > section#etnika-contacts-source::after{
+ display:none!important;
+}
+#etnika-review-flow #etnika-contacts-source .location-map::after{
+ content:"";position:absolute;left:0;right:0;bottom:0;
+ height:var(--bottom-cover,92px);background:#090909;z-index:3;
+ pointer-events:none;
+}
+#etnika-review-flow #etnika-contacts-source .etnika-map-directions{
+ bottom:calc(var(--bottom-cover,92px) + 18px)!important;
+}
+#etnika-review-flow #etnika-contacts-source .location-map .map-fallback{
+ inset:auto 22px calc(var(--bottom-cover,92px) + 18px) 22px!important;
+}
+#etnika-review-flow #etnika-contacts-source .etnika-map-route-note{
+ bottom:calc(var(--bottom-cover,92px) + 72px)!important;
+}
+@media(max-width:1100px){
+ #etnika-review-flow #etnika-contacts-source .location-map::after{display:none!important;}
+ #etnika-review-flow #etnika-contacts-source .etnika-map-directions{
+   bottom:14px!important;
+ }
+ #etnika-review-flow #etnika-contacts-source .location-map .map-fallback{
+   inset:auto 14px 14px 14px!important;
+ }
+ #etnika-review-flow #etnika-contacts-source .etnika-map-route-note{
+   bottom:58px!important;
  }
 }
 #etnika-contacts-source .location-copy p.etnika-route{
