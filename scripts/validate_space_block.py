@@ -35,6 +35,8 @@ def static_checks():
         assert "font-family:var(--etnika-font-display,'Forum',Georgia,serif)!important" in html, f"{path}: photo captions must use Forum"
         assert "text-shadow:none!important" in html, f"{path}: caption text shadows must be off"
         assert "height:min(76%,380px)!important" in html, f"{path}: gradient must remain constrained to caption region"
+        assert "spf-caption-dismissed" in html, f"{path}: clicked thumbnails must collapse stale descriptions"
+        assert "resetThumbOnExit(side1)" in html and "resetThumbOnExit(side2)" in html, f"{path}: thumbnail hover reset handling is missing"
         assert "opacity:.56!important" in html and "opacity:1!important" in html, f"{path}: photo captions require a stronger hover backdrop"
         assert part.count('class="spf-img ') == 3, f"{path}: expected 3 original photos"
         assert part.count('class="spf-tab') == 5, f"{path}: expected 5 selectable categories"
@@ -224,6 +226,42 @@ def render_checks():
                     assert hover["gradientOpacity"]>.98, err("hover must strengthen the bottom-only text gradient")
                     assert float(hover["titleOpacity"])>.98, err("base photo heading disappears on hover")
                     page.screenshot(path=str(output / f"etnika-space-hover-{path.stem}-{w}x{h}.png"))
+                    # Regression: click a thumbnail while hovered. The small
+                    # card now displays a different photo; its former expanded
+                    # description must not remain open under the same cursor.
+                    thumb=page.locator("#etnika-space-photo .spf-side1")
+                    thumb.hover()
+                    page.wait_for_timeout(320)
+                    assert thumb.locator(".spf-label-sub").evaluate("(e)=>parseFloat(getComputedStyle(e).opacity)")>.98, err("thumbnail detail fails to open on first hover")
+                    thumb.click()
+                    page.wait_for_timeout(320)
+                    swapped=page.evaluate("""() => {
+                        const thumb=document.querySelector('#etnika-space-photo .spf-side1');
+                        const sub=thumb.querySelector('.spf-label-sub');
+                        const main=document.querySelector('#etnika-space-photo .spf-main-img');
+                        const bg=getComputedStyle(thumb,'::after');
+                        return {
+                           isDismissed:thumb.classList.contains('spf-caption-dismissed'),
+                           stillHovered:thumb.matches(':hover'),
+                           detailOpacity:parseFloat(getComputedStyle(sub).opacity),
+                           detailVisibility:getComputedStyle(sub).visibility,
+                           gradientOpacity:parseFloat(bg.opacity),
+                           mainSrc:main.getAttribute('src')
+                        };
+                    }""")
+                    assert swapped["isDismissed"] and swapped["stillHovered"], err("the clicked thumbnail did not preserve hover dismissal")
+                    assert swapped["detailOpacity"]<.02 and swapped["detailVisibility"]=="hidden", err("detail remains expanded after thumbnail click")
+                    assert swapped["gradientOpacity"]<.60, err("hover backdrop remains fully expanded after swap")
+                    assert swapped["mainSrc"].endswith("studio-white.webp"), err("thumbnail did not swap into the large image")
+                    page.screenshot(path=str(output / f"etnika-space-thumbnail-after-click-{path.stem}-{w}x{h}.png"))
+                    page.mouse.move(0,0)
+                    page.wait_for_timeout(160)
+                    assert not thumb.evaluate("(e)=>e.classList.contains('spf-caption-dismissed')"), err("thumbnail did not reset after mouse exit")
+                    thumb.hover()
+                    page.wait_for_timeout(320)
+                    assert thumb.locator(".spf-label-sub").evaluate("(e)=>parseFloat(getComputedStyle(e).opacity)")>.98, err("description fails to reopen on deliberate rehover")
+                    page.screenshot(path=str(output / f"etnika-space-thumbnail-rehover-{path.stem}-{w}x{h}.png"))
+
                 print(f"PASS: {path.name} {w}x{h}; gallery {photos['height']:.0f}px; heading {result['titleSize']:.1f}px")
                 page.close()
         browser.close()
