@@ -49,3 +49,12 @@
 
 /* Do not touch the full-resolution modal: all portraits remain uncropped. */
 #etnika-stories-gallery img.gallery-main{object-fit:contain!important;}
+
+/* Photo alternatives in Extra Details use source-specific positioning;
+   physical props with lettering are not treated as technical overlays. */
+#etnika-review-flow #etnika-extra .ee-photo img[src*="bw-mobile-v2.webp"]{
+  object-position:50% 59%!important;
+}
+#etnika-review-flow #etnika-extra .ee-photo img[src*="step-03-remote.webp"]{
+  object-position:50% 30%!important;
+}
