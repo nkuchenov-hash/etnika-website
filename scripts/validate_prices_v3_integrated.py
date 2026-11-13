@@ -39,7 +39,9 @@ with sync_playwright() as pw:
      rowHeights:[...root.querySelectorAll('.ev3-plan')].map(e=>e.getBoundingClientRect().height),
      titleFontSize:parseFloat(getComputedStyle(title).fontSize),
      referenceTitleSize:parseFloat(getComputedStyle(document.querySelector('#etnika-stories h2.etnika-section-heading')).fontSize),
-     stageHeight:r(q('.ev3-stage')).height};
+     stageHeight:r(q('.ev3-stage')).height,
+     headingToTariffs:r(q('.ev3-stage')).top-r(q('.ev3-head')).bottom,
+     tariffsToActions:r(q('.ev3-actions')).top-r(q('.ev3-plans')).bottom};
   }""")
   assert values['pageWidth']<=w+2,(w,'horizontal overflow',values)
   assert values['photoLoaded'],(w,'missing photo',values)
@@ -58,8 +60,10 @@ with sync_playwright() as pw:
     return {background:st.backgroundColor,color:st.color,height:active.getBoundingClientRect().height,
             label:getComputedStyle(root,'::before').content};
   }""")
-  assert day['background']=='rgb(169, 21, 29)' and day['color']=='rgb(255, 255, 255)',(w,'selected day is not prominent',day)
-  assert day['height']>=48 and 'ДЕНЬ СЪЁМКИ' in day['label'],(w,'day selector lacks size or label',day)
+  assert day['background'] in ('rgba(0, 0, 0, 0)','transparent') and day['color']=='rgb(169, 21, 29)',(w,'day switch must be unfilled and editorial',day)
+  assert day['height']>=48 and day['label']=='none',(w,'day control unexpectedly small or cluttered',day)
+  assert values['headingToTariffs']>=39,(w,'heading-to-pricing gap too small',values)
+  assert values['tariffsToActions']>=32,(w,'pricing-to-actions gap too small',values)
   assert values['opacity']=='1',(w,'faded plans',values)
   assert values['rowTop']=='0px',(w,'unwanted rule',values)
   assert values['dark']=='rgb(24, 23, 23)',(w,'muted plan names',values)
@@ -67,8 +71,8 @@ with sync_playwright() as pw:
   assert 'Forum' in values['font'],(w,'heading font',values)
   if w>=1200:
    assert abs(values['titleFontSize']-values['referenceTitleSize'])<1,(w,'pricing heading differs from shared H2',values)
-   assert values['stageHeight']<=675,(w,'oversized editorial stage',values)
-   assert 115<=min(values['rowHeights']) and max(values['rowHeights'])<=215,(w,'editorial tariff rows are out of proportion',values)
+   assert values['stageHeight']<=730,(w,'oversized editorial stage',values)
+   assert 115<=min(values['rowHeights']) and max(values['rowHeights'])<=230,(w,'editorial tariff rows are out of proportion',values)
    assert values['stageHeight']>=430,(w,'stage became too small',values)
   page.locator('.ev3-modes [data-mode=weekend]').click()
   assert page.locator('.ev3-plan[data-plan=premium] .ev3-plan-price').inner_text().strip()=='9 000 ₽'
@@ -121,8 +125,8 @@ with sync_playwright() as pw:
    }""")
    assert anchor['overline']['top']>=anchor['headerBottom']+8,(w,'section top clipped by navigation',anchor)
    assert anchor['title']['top']>=anchor['headerBottom']+35,(w,'title under fixed header',anchor)
-   assert anchor['stageHeight']<=675,(w,'editorial stage exceeds design bounds',anchor)
-   assert anchor['section']['height']<=h+240,(w,'pricing section has excessive scrolling',anchor)
+   assert anchor['stageHeight']<=730,(w,'editorial stage exceeds design bounds',anchor)
+   assert anchor['section']['height']<=h+280,(w,'pricing section has excessive scrolling',anchor)
    page.screenshot(path=str(OUT/f'etnika-v3-anchor-{w}x{h}.png'))
 
   print(f'PASS full site {w}x{h}: no fade, correct prices, header spacing and readable drawer',flush=True)
