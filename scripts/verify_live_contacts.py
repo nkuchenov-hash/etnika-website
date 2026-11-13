@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import Error as PlaywrightError, sync_playwright
 
 BASE = "https://nkuchenov-hash.github.io/etnika-website/site/"
 SHA = os.environ.get("GITHUB_SHA", "manual")[:12]
@@ -40,12 +40,24 @@ with sync_playwright() as pw:
     browser = pw.chromium.launch(headless=True)
     for width, height in SIZES:
         page = browser.new_page(viewport={"width": width, "height": height})
-        page.goto(BASE + f"?contacts-check={SHA}", wait_until="domcontentloaded", timeout=50000)
+        page.goto(BASE + f"?contacts-check={SHA}", wait_until="load", timeout=50000)
         page.locator("#etnika-contacts-source h2").wait_for(timeout=20000)
-        page.evaluate("() => document.fonts.ready")
-        page.locator("#etnika-contacts-source").scroll_into_view_if_needed()
-        page.wait_for_timeout(350)
-        data = page.evaluate(MEASURE)
+        # Some on-page navigation/redirect scripts can replace the document
+        # just after DOMContentLoaded. Retry the *read-only* measurements.
+        data = None
+        for navigation_retry in range(8):
+            try:
+                page.evaluate("() => document.fonts.ready")
+                page.locator("#etnika-contacts-source").scroll_into_view_if_needed()
+                page.wait_for_timeout(500)
+                data = page.evaluate(MEASURE)
+                break
+            except PlaywrightError as exc:
+                if "Execution context was destroyed" not in str(exc):
+                    raise
+                page.wait_for_load_state("load", timeout=15000)
+                page.wait_for_timeout(750)
+        assert data is not None, "Published contacts geometry unavailable after page navigation retries"
         print("CONTACTS_GEOMETRY " + json.dumps(data, ensure_ascii=False), flush=True)
         assert not data["captionVisible"], ("Unrequested caption still present", data)
         assert data["directionsVisible"], ("Walking route link missing", data)
