@@ -151,4 +151,37 @@ with sync_playwright() as pw:
             assert page.locator('#etnika-studio-features .b05-counter').inner_text().strip()=='05 / 06'
             print('AUTOPLAY: slides advance after 6s; manual selection remains functional',flush=True)
         page.close()
+    # Responsive safety: the same editorial breathing room must not push
+    # the caption or arrows outside the image on tablets and phones.
+    for w,h in [(1024,768),(390,844)]:
+        page=browser.new_page(viewport={"width":w,"height":h},is_mobile=False)
+        page.goto((ROOT/"site/index.html").as_uri(),wait_until="load",timeout=45000)
+        page.evaluate("() => document.fonts.ready")
+        page.evaluate("""() =>
+          document.getElementById('etnika-studio-features')
+            .scrollIntoView({block:'start',behavior:'instant'})""")
+        page.wait_for_timeout(200)
+        v=page.evaluate("""() => {
+          const q=x=>document.querySelector('#etnika-studio-features '+x);
+          const r=e=>e.getBoundingClientRect().toJSON();
+          return {
+            stage:r(q('.b05-stage')),top:r(q('.b05-stage-top')),
+            bottom:r(q('.b05-stage-bottom')),caption:r(q('.b05-caption')),
+            nav:r(q('.b05-nav')),counter:r(q('.b05-counter')),
+            image: q('.b05-stage-image').naturalWidth
+          };
+        }""")
+        x=(20 if w<=700 else 30)+max(8,min(w*.012,14))
+        y=max(36,min(h*.06,60))
+        err=lambda m:f"Responsive {w}x{h}: {m} {v}"
+        assert abs(v['counter']['left']-v['stage']['left']-x)<2,err("counter horizontal inset")
+        assert abs(v['caption']['left']-v['stage']['left']-x)<2,err("caption horizontal inset")
+        assert abs(v['counter']['top']-v['stage']['top']-y)<2,err("counter editorial top inset")
+        assert abs(v['stage']['bottom']-v['bottom']['bottom']-y)<2,err("caption editorial bottom inset")
+        assert v['bottom']['top']>v['top']['bottom']+8,err("top and bottom overlays overlap")
+        assert v['nav']['right']<v['stage']['right']-x+2,err("arrows exceed photo inset")
+        assert v['image']>0,err("photo missing")
+        page.screenshot(path=str(OUT/f'etnika-why-responsive-{w}x{h}.png'),full_page=False)
+        print(f"RESPONSIVE PHOTO-GRID {w}x{h}: left/right {x:.1f}px, top/bottom {y:.1f}px; captions and arrows fit",flush=True)
+        page.close()
     browser.close()
