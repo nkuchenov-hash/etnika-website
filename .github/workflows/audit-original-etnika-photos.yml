@@ -1,0 +1,16 @@
+name: Inventory original ETNIKA photography
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-original-etnika-photos.yml'
+      - 'scripts/audit_original_etnika_photos.py'
+  workflow_dispatch:
+jobs:
+  list-original-photo-sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect original site photo inventory
+        run: python3 scripts/audit_original_etnika_photos.py
