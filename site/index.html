@@ -1123,9 +1123,15 @@ window.addEventListener('pageshow',function(event){
       <div class="epi-gallery">
         <div class="epi-main">
           <button class="epi-back" type="button">← Назад</button>
-          <button class="epi-arrow prev" type="button" aria-label="Предыдущее фото">‹</button>
           <img alt="">
-          <button class="epi-arrow next" type="button" aria-label="Следующее фото">›</button>
+          <div class="epi-gallery-nav" aria-label="Навигация по фотографиям">
+            <button class="epi-arrow prev" type="button" aria-label="Предыдущее фото">
+              <svg viewBox="0 0 28 12" fill="none" aria-hidden="true"><path d="M27 6H2M7 1 2 6l5 5" stroke="currentColor" stroke-width="1"/></svg>
+            </button>
+            <button class="epi-arrow next" type="button" aria-label="Следующее фото">
+              <svg viewBox="0 0 28 12" fill="none" aria-hidden="true"><path d="M1 6h25M21 1l5 5-5 5" stroke="currentColor" stroke-width="1"/></svg>
+            </button>
+          </div>
         </div>
         <div class="epi-thumbs"></div>
       </div>
@@ -1167,9 +1173,16 @@ window.addEventListener('pageshow',function(event){
   STEPS.forEach(step=>{
     const card=document.createElement('article');
     card.className='epi-card'; card.dataset.step=step.id;
-    card.innerHTML=`<img alt="${esc(step.title)}"><div class="epi-base"><div class="epi-num">${String(step.id).padStart(2,'0')}</div><div class="epi-rule"></div><h3 class="epi-title">${esc(keepPrepositions(step.title))}</h3></div><div class="epi-reveal"><p class="epi-desc">${esc(keepPrepositions(step.desc))}</p><button class="epi-more" type="button">Подробнее <span>→</span></button></div>`;
+    card.innerHTML=`<img alt="${esc(step.title)}"><button class="epi-card-open" type="button" aria-label="Подробнее: ${esc(step.title)}"></button><div class="epi-base"><div class="epi-num">${String(step.id).padStart(2,'0')}</div><div class="epi-rule"></div><h3 class="epi-title">${esc(keepPrepositions(step.title))}</h3></div><div class="epi-reveal"><p class="epi-desc">${esc(keepPrepositions(step.desc))}</p><button class="epi-more" type="button">Подробнее <span>→</span></button></div>`;
     card.querySelector('img').src=ASSETS['s'+step.id];
+    const cardOpen=card.querySelector('.epi-card-open');
+    cardOpen.addEventListener('click',e=>{e.stopPropagation();openStep(step,cardOpen)});
     card.querySelector('.epi-more').addEventListener('click',e=>{e.stopPropagation();openStep(step,e.currentTarget)});
+    // Detail reveal occupies the lower card; clicks outside its CTA also open the step.
+    card.addEventListener('click',e=>{
+      if(e.target.closest('.epi-card-open,.epi-more'))return;
+      openStep(step,cardOpen);
+    });
     grid.appendChild(card);
   });
 
@@ -15110,5 +15123,126 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
 }
 </style>
+
+<!-- ETNIKA process interaction and detail control refinements, 2026-11-13. -->
+<style id="etnika-process-controls-20261113">
+/* The entire photographic card is a real, keyboard-accessible click target. */
+#etnika-process-interactive .epi-card { cursor:pointer!important; }
+#etnika-process-interactive .epi-card-open {
+  position:absolute;inset:0;z-index:2;display:block;width:100%;height:100%;
+  margin:0;padding:0;border:0;border-radius:0;background:transparent;
+  cursor:pointer;color:transparent;
+}
+#etnika-process-interactive .epi-card-open:focus-visible {
+  outline:2px solid #fff;outline-offset:-5px;
+}
+@media(hover:hover) and (pointer:fine) {
+  #etnika-process-interactive .epi-more{
+    transition:background-color .22s ease,border-color .22s ease,color .22s ease,transform .22s ease!important;
+  }
+  #etnika-process-interactive .epi-card:hover .epi-more:hover,
+  #etnika-process-interactive .epi-card:focus-within .epi-more:hover{
+    background:rgba(255,255,255,.08)!important;
+    border-color:#fff!important;
+    transform:translateY(-2px);
+  }
+  #etnika-process-interactive .epi-more:hover span {transform:translateX(4px);}
+}
+#etnika-process-interactive .epi-more span{display:inline-block;transition:transform .22s ease;}
+#etnika-process-interactive .epi-more:focus-visible{
+  outline:2px solid #fff!important;outline-offset:3px!important;
+  border-color:#fff!important;
+}
+/* "Назад": simple editorial text control without outline or filled box. */
+#etnika-process-interactive .epi-back {
+  border:0!important;background:transparent!important;color:#fff!important;
+  font-size:16px!important;font-weight:300!important;letter-spacing:0!important;
+  padding:10px 0!important;text-transform:none!important;
+  transition:opacity .22s ease, transform .22s ease!important;
+}
+#etnika-process-interactive .epi-back:hover,
+#etnika-process-interactive .epi-back:focus-visible{
+  background:transparent!important;border:0!important;
+  opacity:.7!important;transform:translateX(-3px);
+}
+/* Same two thin SVG arrows, common underline, and directional hover as B05. */
+#etnika-process-interactive .epi-gallery-nav{
+  position:absolute;z-index:4;bottom:clamp(18px,2.2vw,32px);
+  left:clamp(20px,3vw,48px);width:148px;max-width:calc(100% - 40px);
+  display:flex;align-items:center;justify-content:space-between;gap:0;
+  padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.65);
+}
+#etnika-process-interactive .epi-gallery-nav .epi-arrow{
+  position:static!important;top:auto!important;left:auto!important;right:auto!important;
+  display:grid!important;place-items:center!important;
+  width:44px!important;height:32px!important;min-width:44px!important;
+  padding:0!important;border:0!important;border-radius:0!important;
+  background:transparent!important;color:#fff!important;
+  transform:none!important;opacity:1!important;cursor:pointer;
+  transition:transform .2s ease, opacity .2s ease!important;
+}
+#etnika-process-interactive .epi-gallery-nav .epi-arrow svg{
+  display:block;width:25px;height:12px;overflow:visible;pointer-events:none;
+}
+#etnika-process-interactive .epi-gallery-nav .epi-arrow.prev:hover,
+#etnika-process-interactive .epi-gallery-nav .epi-arrow.prev:focus-visible {
+  opacity:.65!important;transform:translateX(-3px)!important;
+}
+#etnika-process-interactive .epi-gallery-nav .epi-arrow.next:hover,
+#etnika-process-interactive .epi-gallery-nav .epi-arrow.next:focus-visible {
+  opacity:.65!important;transform:translateX(3px)!important;
+}
+/* One Geologica weight and leading for both explanatory paragraphs and lists. */
+#etnika-process-interactive .epi-detail .epi-body,
+#etnika-process-interactive .epi-detail .epi-section li{
+  font-family:'Geologica',Arial,sans-serif!important;
+  font-size:17px!important;font-weight:200!important;line-height:1.65!important;
+  letter-spacing:-.006em!important;color:#4b4743!important;
+}
+/* Booking CTA is the only filled action. Larger, consistent type. */
+#etnika-process-interactive .epi-cta a{
+  font-family:'Geologica',Arial,sans-serif!important;
+  font-size:clamp(16px,1.1vw,18px)!important;
+  line-height:1.25!important;font-weight:300!important;
+  letter-spacing:0!important;transition:background-color .2s ease,transform .2s ease!important;
+}
+#etnika-process-interactive .epi-cta a:hover,
+#etnika-process-interactive .epi-cta a:focus-visible{
+  background:#781016!important;transform:translateY(-2px);
+}
+#etnika-process-interactive .epi-cta a span{display:inline-block;transition:transform .2s ease;}
+#etnika-process-interactive .epi-cta a:hover span{transform:translate(2px,-2px);}
+#etnika-process-interactive .epi-thumb{
+  transition:opacity .2s ease,border-color .2s ease,transform .2s ease!important;
+}
+#etnika-process-interactive .epi-thumb:hover,
+#etnika-process-interactive .epi-thumb:focus-visible{
+  opacity:1!important;border-color:#fff!important;transform:translateY(-2px);
+}
+#etnika-process-interactive .epi-thumb:focus-visible,
+#etnika-process-interactive .epi-gallery-nav .epi-arrow:focus-visible,
+#etnika-process-interactive .epi-back:focus-visible,
+#etnika-process-interactive .epi-close:focus-visible{
+  outline:2px solid #a9151d!important;outline-offset:3px!important;
+}
+#etnika-process-interactive .epi-close{
+  transition:color .22s ease,transform .22s ease,opacity .22s ease!important;
+}
+#etnika-process-interactive .epi-close:hover,
+#etnika-process-interactive .epi-close:focus-visible{
+  color:#a9151d!important;transform:rotate(90deg) scale(1.08)!important;opacity:1!important;
+}
+@media(hover:none){
+  #etnika-process-interactive .epi-more:hover,
+  #etnika-process-interactive .epi-gallery-nav .epi-arrow:hover,
+  #etnika-process-interactive .epi-back:hover{transform:none!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #etnika-process-interactive :is(.epi-more,.epi-more span,.epi-back,.epi-gallery-nav .epi-arrow,.epi-close,.epi-cta a,.epi-cta a span,.epi-thumb){
+    transition:none!important;
+  }
+}
+</style>
+
 </body>
 </html>
