@@ -34,10 +34,11 @@
 #etnika-review-flow #etnika-block-02-final .etnika-b02__slide:nth-of-type(4){object-position:50% 26%!important;}
 #etnika-review-flow #etnika-block-02-final .etnika-b02__slide:nth-of-type(5){object-position:50% 68%!important;}
 
-/* New, distinct portrait in pricing: keep both the face and the remote. */
+/* Distinct, approved editorial portrait in pricing: the person is on
+   the right side of the wide source; keep her face fully inside the crop. */
 #etnika-review-flow #etnika-prices-clear.ev3 .ev3-photo{
   object-fit:cover!important;
-  object-position:68% 34%!important;
+  object-position:81% 36%!important;
 }
 
 /* Booking image in WHY ETNIKA: portrait is on the right, laptop below. */
