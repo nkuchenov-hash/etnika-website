@@ -788,27 +788,27 @@ window.addEventListener('pageshow',function(event){
     <div class="etnika-b02__media">
       <img
         class="etnika-b02__slide is-active"
-        src="https://static.tildacdn.com/tild3739-6635-4138-b038-356661306337/310503651.jpg"
+        src="assets/etnika-portrait-beige.jpg"
         alt="Фотосессия в студии автопортрета ЭТНИКА"
       >
       <img
         class="etnika-b02__slide"
-        src="https://static.tildacdn.com/tild3639-3437-4665-a333-376130373439/310503671.jpg"
+        src="assets/etnika-portrait-dark.jpg"
         alt="Автопортрет в студии ЭТНИКА"
       >
       <img
         class="etnika-b02__slide"
-        src="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg"
+        src="assets/etnika-bw-portrait.jpg"
         alt="Съёмка на красном фоне в ЭТНИКА"
       >
       <img
         class="etnika-b02__slide"
-        src="https://static.tildacdn.com/tild6434-3663-4531-b961-633566393134/bw2.jpg"
+        src="assets/etnika-portrait-etnika.jpg"
         alt="Чёрно-белая съёмка в ЭТНИКА"
       >
       <img
         class="etnika-b02__slide"
-        src="https://static.tildacdn.com/tild3734-3731-4335-b865-373337626535/_photo_2025-12-04_15.jpg"
+        src="assets/etnika-bw-guest.jpg"
         alt="Фэшн-портрет в студии ЭТНИКА"
       >
 
@@ -1993,7 +1993,7 @@ body.etnika-gallery-lock{
     <div class="stories-grid">
 
       <a class="story-card s1" href="#" data-format="individual" aria-label="Индивидуальная фотосессия">
-        <img src="assets/etnika-portrait-dark.jpg" alt="Индивидуальная фотосессия в ЭТНИКА" loading="lazy">
+        <img src="assets/portfolio/guests-fashion-blue.jpg" alt="Индивидуальная фотосессия в ЭТНИКА" loading="lazy">
         <div class="story-copy">
           <h3 class="story-name">Индивидуальная<br>фотосессия</h3>
           <span class="story-arrow">→</span>
@@ -2115,7 +2115,7 @@ body.etnika-gallery-lock{
   /* Category-matched galleries from the ETNIKA owner photo archive. */
   var galleries = {
   "individual": [
-    "assets/etnika-portrait-dark.jpg",
+    "assets/portfolio/guests-fashion-blue.jpg",
     "assets/etnika-portrait-beige.jpg"
   ],
   "pregnancy": [
@@ -2835,11 +2835,6 @@ body.etnika-gallery-lock{
         "title": "Зона отдыха",
         "sub": "Мебель студии позволяет спокойно подготовиться и сменить образ перед съёмкой.",
         "image": "assets/studio/lounge-seats.webp"
-      },
-      {
-        "title": "Мебель для гостей",
-        "sub": "В пространстве есть кресла, стулья и предметы, которые можно использовать для отдыха или кадра.",
-        "image": "assets/studio/lounge-chairs.webp"
       }
     ]
   },
@@ -2870,11 +2865,6 @@ body.etnika-gallery-lock{
         "title": "Зеркало и съёмочная зона",
         "sub": "Зеркало находится непосредственно рядом с оборудованной зоной съёмки.",
         "image": "assets/studio/mirror-studio.webp"
-      },
-      {
-        "title": "Оборудование у зеркала",
-        "sub": "Подготовленное пространство позволяет контролировать позу и ракурс без фотографа в зале.",
-        "image": "assets/studio/studio-white.webp"
       },
       {
         "title": "Пульт для съёмки",
@@ -2908,10 +2898,22 @@ body.etnika-gallery-lock{
 
     setPhoto(mainImg, mainTitle, mainSub, mainPhoto);
     setPhoto(side1Img, side1Title, side1Sub, mini1Photo);
-    setPhoto(side2Img, side2Title, side2Sub, mini2Photo);
-
     side1.setAttribute('aria-label','Открыть «' + mini1Photo.title + '» вместо большого фото');
-    side2.setAttribute('aria-label','Открыть «' + mini2Photo.title + '» вместо большого фото');
+
+    /* Some gallery tabs have only two distinct photographs.
+       Do not fill the third slot with a repeated image. */
+    side2.parentElement.classList.toggle('spf-two-photo-mode', !mini2Photo);
+    if(mini2Photo){
+      setPhoto(side2Img, side2Title, side2Sub, mini2Photo);
+      side2.setAttribute('aria-label','Открыть «' + mini2Photo.title + '» вместо большого фото');
+      side2.style.removeProperty('display');
+      side2.removeAttribute('aria-hidden');
+      side2.tabIndex=0;
+    }else{
+      side2.style.setProperty('display','none','important');
+      side2.setAttribute('aria-hidden','true');
+      side2.tabIndex=-1;
+    }
 
     counter.textContent =
       String(sectionIndex + 1).padStart(2,'0') + ' / ' +
@@ -4479,7 +4481,7 @@ body.etnika-gallery-lock{
       tag:'записаться просто',
       title:'Лёгкое бронирование',
       text:'Забронировать съёмку можно прямо на сайте, написать в Telegram / Max или позвонить по номеру +7 925 94 94 497. Гайд по позированию для подготовки к съёмке — в подарок.',
-      image:'https://static.tildacdn.com/tild3739-6635-4138-b038-356661306337/310503651.jpg'
+      image:'assets/process-20261111/step-05-laptop.webp'
     },
     {
       tag:'можно всей семьёй',
@@ -5531,7 +5533,7 @@ body.etnika-gallery-lock{
         </div>
       </div>
       <div class="ev3-visual">
-        <img class="ev3-photo" src="assets/etnika-portrait-dark.jpg" alt="Фотосессия в ЭТНИКА">
+        <img class="ev3-photo" src="assets/process-20261106/step-3-red-large.webp" alt="Портрет в студии ЭТНИКА">
         <div class="ev3-photo-label">
           <span>Оптимальный выбор</span>
           <strong>Стандарт · 60 минут</strong>
