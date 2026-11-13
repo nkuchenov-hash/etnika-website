@@ -24,6 +24,7 @@ with sync_playwright() as pw:
      titleLineSame:!!titleTextRects.length && Math.abs(titleTextRects[0].top-span.getBoundingClientRect().top)<9,
      titleSpanDisplay:getComputedStyle(span).display,
      modeLeft:r(q('.ev3-modes')).left,
+     modes:r(q('.ev3-modes')),
      titleRight:r(title).right,
      overlineCount:overline.children.length,
      overlineGrid:getComputedStyle(overline).display,
