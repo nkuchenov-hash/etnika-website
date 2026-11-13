@@ -14246,8 +14246,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media(min-width:1101px){
   #etnika-review-flow > section#etnika-block-02-final {
     --b02-content-height:calc(100svh - var(--etnika-nav-height,60px));
-    --b02-outer:clamp(50px,6.6svh,78px);
-    --b02-overlay-inset:calc(var(--b02-outer) + clamp(80px,9.2svh,110px));
+    --b02-outer:clamp(42px,5svh,66px);
+    /* Balanced top/bottom photo lettering, moved toward the middle. */
+    --b02-overlay-inset:calc(var(--b02-outer) + clamp(100px,12svh,132px));
     height:calc(var(--b02-content-height) + 2 * var(--b02-outer))!important;
     min-height:0!important;
     max-height:none!important;
