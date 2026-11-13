@@ -109,7 +109,7 @@ with sync_playwright() as pw:
         assert v['stamp']['top']>=v['header']['bottom']+8,err('Moscow photo stamp hidden under menu')
         assert v['stamp']['bottom']<=h-50,err('photo stamp extends below screen')
         assert near(v['overlayTop']['top']-v['media']['top'],v['spaceOverline']['top']-v['spaceSection']['top'],2),err('Photo captions must use the same upper offset as editorial lines on the SPACE ETNIKA block')
-        assert near(v['media']['bottom']-v['overlayBottom']['bottom'],v['spacingToken'],2),err('Photo bottom insets must match the shared outer-section spacing')
+        assert near(v['media']['bottom']-v['overlayBottom']['bottom'],v['spaceOverline']['top']-v['spaceSection']['top'],2),err('Photo lower caption and arrows must match the shared SPACE ETNIKA section inset')
         assert near(v['overlayTop']['top']-v['media']['top'],v['media']['bottom']-v['overlayBottom']['bottom'],2),err('PHOTO OVERLAY TOP AND BOTTOM SPACING MUST BE EQUAL')
         assert v['prev']['bottom']<=v['media']['bottom']-40 and v['next']['bottom']<=v['media']['bottom']-40,err('carousel arrows outside photo inset')
         assert v['overlayBottom']['top']>v['header']['bottom']+60,err('photo caption collides with top overlays')
