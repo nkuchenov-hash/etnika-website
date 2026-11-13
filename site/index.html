@@ -13626,12 +13626,12 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 </style>
 
 <style id="etnika-b02-overlay-screen-fit-20261111">
-/* B02 image deliberately remains taller than the viewport (full-bleed).
-   Position its OVERLAYS in the visible 100svh area, not relative to the
-   much lower section bottom. Text content and photographs are unchanged. */
+/* Photo caption frame is centered within the taller photo. The upper
+   annotations and lower caption/arrows have exactly the SAME outside inset.
+   Keeps the photo oversized without drifting typography to its upper half. */
 @media(min-width:1101px){
   #etnika-review-flow #etnika-block-02-final .etnika-b02__media-top{
-    top:clamp(28px,3.8svh,52px)!important;
+    top:var(--b02-overlay-inset)!important;
     left:clamp(22px,2.8vw,56px)!important;
     right:var(--et-u-edge)!important;
     align-items:flex-start!important;
@@ -13640,7 +13640,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     transform:none!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__media-bottom{
-    bottom:calc(2 * var(--etnika-section-outer) + var(--etnika-nav-height,60px) + clamp(24px,3.4svh,38px))!important;
+    bottom:var(--b02-overlay-inset)!important;
     left:clamp(22px,2.8vw,56px)!important;
     right:var(--et-u-edge)!important;
     width:auto!important;
@@ -14232,7 +14232,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media(min-width:1101px){
   #etnika-review-flow > section#etnika-block-02-final {
     --b02-content-height:calc(100svh - var(--etnika-nav-height,60px));
-    --b02-outer:var(--etnika-section-outer,clamp(72px,9svh,112px));
+    --b02-outer:clamp(50px,6.6svh,78px);
+    --b02-overlay-inset:calc(var(--b02-outer) + clamp(80px,9.2svh,110px));
     height:calc(var(--b02-content-height) + 2 * var(--b02-outer))!important;
     min-height:0!important;
     max-height:none!important;
