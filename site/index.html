@@ -359,9 +359,19 @@ window.addEventListener('pageshow',function(event){
   content:"";
   position:absolute;
   inset:0;
+  z-index:2;
   pointer-events:none;
+  /* Barely perceptible gradients only at top and bottom where the
+     white labels and controls sit; clear center and faces. */
   background:
-    linear-gradient(180deg,rgba(0,0,0,.04) 0%,transparent 32%,rgba(0,0,0,.14) 100%);
+    linear-gradient(180deg,
+      rgba(0,0,0,.21) 0%,
+      rgba(0,0,0,.075) 14%,
+      transparent 32%),
+    linear-gradient(0deg,
+      rgba(0,0,0,.19) 0%,
+      rgba(0,0,0,.065) 14%,
+      transparent 30%);
 }
 
 /* Equal inset from the media edges */
@@ -13799,7 +13809,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     align-items:flex-start!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__stamp{
-    transform:none!important;
+    /* Owner's red arrow: move Moscow/stamp higher, keep counter unchanged. */
+    transform:translateY(calc(-1 * clamp(22px,3.4svh,36px)))!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__media-bottom{
     bottom:var(--b02-overlay-inset)!important;
@@ -13826,10 +13837,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     visibility:visible!important;opacity:1!important;
     filter:none!important;
   }
-  /* Preserve the source photo, without vignette or dark overlay. */
-  #etnika-review-flow #etnika-block-02-final .etnika-b02__media::after{
-    content:none!important;background:none!important;display:none!important;
-  }
+  /* The existing ::after provides a mild top/bottom photo-only gradient.
+     Do not cover the text UI or alter the source photograph pixels. */
 }
 </style>
 
@@ -14459,9 +14468,11 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     gap:var(--etnika-overline-content-gap,clamp(34px,4svh,52px))!important;
   }
   #etnika-review-flow #etnika-block-02-final .etnika-b02__top{
-    position:static!important;
+    position:relative!important;
     inset:auto!important;
-    top:auto!important;
+    /* Owner's red arrow: raise only the editorial overline, leaving
+       centered headline, body copy and four benefits untouched. */
+    top:calc(-1 * clamp(38px,6.2svh,66px))!important;
     left:auto!important;
     right:auto!important;
     transform:none!important;
