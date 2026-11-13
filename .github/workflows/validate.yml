@@ -115,9 +115,6 @@ jobs:
       - name: Check gift certificate content fits visible screen at desktop and mobile sizes
         run: python3 scripts/validate_gift_fit.py
 
-      - name: Check FAQ outer rules and balanced gray-line spacing
-        run: python3 scripts/validate_faq_lines.py
-
       - name: Check viewport geometry and photo visibility in Chromium
         run: python3 scripts/validate_space_block.py --render
 
@@ -129,6 +126,10 @@ jobs:
 
       - name: Check WHY ETNIKA photo, caption, and six-item viewport geometry
         run: python3 scripts/validate_why_section.py
+
+      # Run independently validated photo/gallery regressions before unrelated FAQ checks.
+      - name: Check FAQ outer rules and balanced gray-line spacing
+        run: python3 scripts/validate_faq_lines.py
 
       - name: Save layout screenshots for visual review
         if: always()
