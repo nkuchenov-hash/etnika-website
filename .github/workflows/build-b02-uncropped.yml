@@ -1,0 +1,34 @@
+name: Build uncropped ETNIKA B02 photographs
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_b02_uncropped.py'
+      - '.github/workflows/build-b02-uncropped.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install image encoder
+        run: python3 -m pip install --disable-pip-version-check pillow==11.3.0
+      - name: Render full-frame photo derivatives
+        run: python3 scripts/build_b02_uncropped.py
+      - name: Commit processed photo assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/assets/b02/framed/
+          if git diff --cached --quiet; then
+            echo "Photos already up to date"
+          else
+            git commit -m "Preserve complete B02 portraits with side-only background extensions"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
