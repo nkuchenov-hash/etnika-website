@@ -78,6 +78,28 @@ try:
             assert [x["note"] for x in prices]==[None,"до двух за сессию","за одну вещь"]
             assert all(x["noteFontPx"]>=14 and x["noteContrast"]>=6 for x in prices if x["note"]), "Price notes too faint/small"
             assert all(all(v=="visible" for v in x["overflows"]) for x in prices), "A price wrapper clips overflowing glyphs"
+            # Photo controls must switch among four real assets. Never surface the
+            # old studio-sofa photograph in the light-schemes tile.
+            block=page.locator("#etnika-extra")
+            light=block.locator(".ee-photo").nth(1)
+            assert light.get_attribute("data-images")=="assets/curated/light-editorial.jpg", "Sofa remains in light gallery"
+            assert light.locator("img").get_attribute("src")=="assets/curated/light-editorial.jpg"
+            switch=block.locator(".ee-background-switch")
+            image=block.locator(".ee-photo").first.locator("img")
+            assert switch.is_visible(), "Background switch is not visible on the active photo"
+            for key,part in [
+              ("beige","assets/etnika-portrait-beige.jpg"),
+              ("white","assets/curated/look-editorial.jpg"),
+              ("red","tild3934-6330-4131-b863-653438613836/red.jpg"),
+              ("black","assets/etnika-portrait-dark.jpg")
+            ]:
+                switch.click()
+                assert block.locator(".ee-photo").first.get_attribute("data-background")==key
+                assert part in image.get_attribute("src"), (key,image.get_attribute("src"))
+                page.wait_for_function("""() => {
+                  const i=document.querySelector('#etnika-extra .ee-photo img');
+                  return i.complete && i.naturalWidth>0 && i.naturalHeight>0;
+                }""",timeout=20000)
             page.locator("#etnika-extra").screenshot(path=str(REPORTS/f"extra-details-{width}x{height}.png"),animations="disabled")
             page.close()
         browser.close()
