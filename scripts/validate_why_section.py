@@ -79,18 +79,25 @@ with sync_playwright() as pw:
         assert v['caption']['left']>=v['stage']['left']+8,err("photo caption clipped on left")
         assert v['caption']['right']<=v['stage']['right']-8,err("photo caption clipped on right")
         # The image and all photo-overlay elements obey the global site grid.
-        edge=max(180,(w-2600)/2) if w>=1920 else (max(40,(w-1320)/2) if w<=1440 else max(80,(w-1760)/2))
-        assert abs(v['caption']['left']-v['stage']['left']-edge)<2,err("caption not on site grid")
+        # Shared ETNIKA layout: site content grid + a small extra horizontal
+        # inset, and the SAME outer vertical field used for editorial
+        # overlines/line-and-text in neighboring sections.
+        shared_edge=max(180,(w-2600)/2) if w>=1920 else (max(40,(w-1320)/2) if w<=1440 else max(80,(w-1760)/2))
+        edge=shared_edge+max(12,min(w*.01,20))
+        vertical=max(72,min(h*.09,112))
+        assert abs(v['caption']['left']-v['stage']['left']-edge)<2,err("caption not on expanded site grid")
         assert abs(v['counter']['left']-v['caption']['left'])<2,err("photo counter and caption misaligned")
-        assert abs(v['nav']['right']-(v['stage']['right']-edge))<2,err("arrows not aligned to right grid")
-        assert v['stage']['bottom']-v['bottom']['bottom']>=40,err("photo overlay too close to bottom")
+        assert abs(v['nav']['right']-(v['stage']['right']-edge))<2,err("arrows not aligned to right photo inset")
+        assert abs(v['counter']['top']-v['stage']['top']-vertical)<2,err("counter top inset differs from editorial field")
+        assert abs(v['stage']['bottom']-v['bottom']['bottom']-vertical)<2,err("caption bottom inset differs from editorial field")
+        assert edge>shared_edge and vertical>40,err("overlay inset has not increased")
         assert v['imageTransform']!='none',err("photo has not been raised within its frame")
         # Use precisely the same visible arrow vocabulary as the photo slider
         # in the 'ФОТОСТУДИЯ БЕЗ ФОТОГРАФА' block.
         for prop in ('width','height','border','background','svgWidth','svgBox'):
             assert v['arrowCSS'][prop]==v['otherArrowCSS'][prop],err(f"arrow differs from block 02: {prop}")
         assert v['arrowCSS']['navBorder']=='1px',err("photo arrows missing shared underline")
-        print(f"PHOTO-GRID {w}x{h}: caption left {v['caption']['left']:.1f}, bottom inset {v['stage']['bottom']-v['bottom']['bottom']:.1f}, arrows match block 02",flush=True)
+        print(f"PHOTO-GRID {w}x{h}: left/right inset {edge:.1f}, top/bottom inset {vertical:.1f}; arrows match block 02",flush=True)
         for key in ('bottom','caption','prev','next'):
             assert v[key]['bottom']<=v['stage']['bottom']-8,err(f"{key} clipped below photo")
         assert v['counter']['top']>=v['stage']['top']+6,err("counter hidden behind menu")
