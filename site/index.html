@@ -6134,17 +6134,17 @@ body.etnika-gallery-lock{
       <div class="ee-list">
         <div class="ee-item">
           <p class="ee-item-title">Аренда чёрного или красного фона в полный рост</p>
-          <div class="ee-item-price">1600 ₽</div>
+          <div class="ee-item-price"><span class="ee-price-number">1600 ₽</span></div>
         </div>
 
         <div class="ee-item">
           <p class="ee-item-title">Цветные световые схемы</p>
-          <div class="ee-item-price">1200 ₽<small>до двух за сессию</small></div>
+          <div class="ee-item-price"><span class="ee-price-number">1200 ₽</span><small>до двух за сессию</small></div>
         </div>
 
         <div class="ee-item">
           <p class="ee-item-title">Аренда гардероба</p>
-          <div class="ee-item-price">600–1000 ₽<small>за одну вещь</small></div>
+          <div class="ee-item-price"><span class="ee-price-number">600–1000 ₽</span><small>за одну вещь</small></div>
         </div>
       </div>
     </div>
@@ -14760,9 +14760,56 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   padding:.08em 0 .12em!important;
   font-variant-numeric:lining-nums;
 }
+/* Make each numeric price a separate, unclipped line box instead of
+   relying on the Forum text baseline within the price + note container. */
+#etnika-review-flow #etnika-extra .ee-list,
+#etnika-review-flow #etnika-extra .ee-item,
+#etnika-review-flow #etnika-extra .ee-item-price,
+#etnika-review-flow #etnika-extra .ee-price-number{
+  overflow:visible!important;
+}
+#etnika-review-flow #etnika-extra .ee-item-price{
+  line-height:normal!important;
+  padding:0!important;
+  text-align:right!important;
+}
+#etnika-review-flow #etnika-extra .ee-price-number{
+  display:block!important;
+  width:max-content;
+  max-width:100%;
+  margin-left:auto;
+  padding:.08em 0 .18em!important;
+  box-sizing:content-box!important;
+  font-family:'Forum',Georgia,serif!important;
+  font-size:inherit!important;
+  font-weight:400!important;
+  line-height:1.45!important;
+  white-space:nowrap;
+  color:#0b0b0b!important;
+}
+#etnika-review-flow #etnika-extra .ee-item-title{
+  color:#302d2b!important;
+  font-weight:300!important;
+}
 #etnika-review-flow #etnika-extra .ee-item-price small{
-  line-height:1.4!important;
-  margin-top:6px!important;
+  display:block!important;
+  margin-top:3px!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  color:#57524f!important;
+  letter-spacing:0!important;
+}
+@media(max-width:700px){
+  #etnika-review-flow #etnika-extra .ee-item-price{
+    text-align:left!important;
+  }
+  #etnika-review-flow #etnika-extra .ee-price-number{
+    margin-left:0;
+  }
+  #etnika-review-flow #etnika-extra .ee-item-price small{
+    text-align:left!important;
+  }
 }
 #etnika-review-flow #etnika-extra .ee-photo-num{
   font-size:clamp(14px,1vw,17px)!important;
