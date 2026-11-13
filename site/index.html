@@ -8390,6 +8390,33 @@ body.etnika-gallery-lock{
 #etnika-reviews .urw-title,
 #etnika-reviews .urw-kicker{display:none!important}
 #etnika-reviews .urw-head{align-items:center}
+/* Reviews controls: editorial, square-corner hover feedback. */
+#etnika-reviews .urw-btn,
+#etnika-reviews .urw-arrow{
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease;
+}
+@media (hover:hover) and (pointer:fine){
+  #etnika-reviews .urw-btn:hover{
+    background:#0a0a0a;
+    border-color:#0a0a0a;
+    color:#fff;
+    transform:translateY(-2px);
+  }
+  #etnika-reviews .urw-arrow:hover{
+    background:#981018;
+    border-color:#981018;
+    color:#fff;
+    transform:translateY(-2px);
+  }
+}
+#etnika-reviews :is(.urw-btn,.urw-arrow):focus-visible{
+  outline:2px solid #981018;
+  outline-offset:3px;
+}
+@media (prefers-reduced-motion:reduce){
+  #etnika-reviews :is(.urw-btn,.urw-arrow){transition:none;}
+  #etnika-reviews :is(.urw-btn,.urw-arrow):hover{transform:none;}
+}
 /* Decorative rule shares the editorial overline's 1px grey stroke.
    Its end is aligned with the lower edge of the two carousel arrows. */
 #etnika-reviews .urw-controls::before{
