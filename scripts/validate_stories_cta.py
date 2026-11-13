@@ -30,9 +30,14 @@ with sync_playwright() as pw:
                sectionStyle:{height:getComputedStyle(section).height,maxHeight:getComputedStyle(section).maxHeight,
                  overflow:getComputedStyle(section).overflow},
                gridStyle:{height:getComputedStyle(grid).height,flex:getComputedStyle(grid).flex}};
+            // The site has a dynamic no-overlap min-height guard.
+            // Remove its inline value only for the hypothetical "no CTA" baseline.
+            const enforced=section.style.getPropertyValue('min-height');
             cta.style.setProperty('display','none','important');
+            section.style.removeProperty('min-height');
             r1.withoutCTA=section.getBoundingClientRect().height;
             cta.style.removeProperty('display');
+            if(enforced) section.style.setProperty('min-height',enforced,'important');
             r1.withCTA=section.getBoundingClientRect().height;
             r1.delta=r1.withCTA-r1.withoutCTA;
             return r1;
