@@ -1,0 +1,86 @@
+name: Verify curated ETNIKA photos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - '.github/workflows/verify-curated-photos.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  curate-photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+      - name: Verify actual photos on desktop and mobile
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          root=Path.cwd()
+          out=root/'reports'/'photo-audit'
+          out.mkdir(parents=True,exist_ok=True)
+          with sync_playwright() as pw:
+              browser=pw.chromium.launch(headless=True)
+              for width,height in [(1366,768),(390,844)]:
+                  page=browser.new_page(viewport={'width':width,'height':height},device_scale_factor=1)
+                  page.goto((root/'site/index.html').as_uri(),wait_until='domcontentloaded',timeout=60000)
+                  page.locator('#etnika-review-flow').wait_for(timeout=30000)
+                  page.wait_for_timeout(500)
+                  card=page.locator('#etnika-stories .story-card.s5')
+                  card.scroll_into_view_if_needed()
+                  cardimg=card.locator('img')
+                  assert cardimg.evaluate('(img) => img.complete && img.naturalWidth>0'), 'children card image missing'
+                  assert 'kids-happy-family.jpg' in cardimg.get_attribute('src')
+                  card.screenshot(path=str(out/f'kids-card-{width}.png'))
+                  card.click()
+                  gallery=page.locator('#etnika-stories-gallery')
+                  gallery.locator('.gallery-main').wait_for(state='visible',timeout=10000)
+                  assert gallery.get_attribute('aria-hidden')=='false'
+                  page.wait_for_function('document.querySelector("#etnika-stories-gallery .gallery-main").naturalWidth>0')
+                  assert gallery.locator('.gallery-counter').inner_text().strip()=='01 / 04'
+                  assert 'kids-happy-family' in gallery.locator('.gallery-main').get_attribute('src')
+                  page.screenshot(path=str(out/f'kids-modal-{width}.png'))
+                  page.keyboard.press('ArrowRight')
+                  page.wait_for_function('document.querySelector("#etnika-stories-gallery .gallery-main").naturalWidth>0')
+                  assert 'kids-mom.jpg' in gallery.locator('.gallery-main').get_attribute('src')
+                  assert gallery.locator('.gallery-counter').inner_text().strip()=='02 / 04'
+                  page.screenshot(path=str(out/f'kids-modal-second-{width}.png'))
+                  page.keyboard.press('Escape')
+                  assert gallery.get_attribute('aria-hidden')=='true'
+                  row=page.locator('#etnika-studio-features .b05-item[data-index="5"]')
+                  row.scroll_into_view_if_needed()
+                  row.click()
+                  why=page.locator('#etnika-studio-features .b05-stage-image')
+                  page.wait_for_function('document.querySelector("#etnika-studio-features .b05-stage-image").naturalWidth>0')
+                  assert 'why-kids.jpg' in why.get_attribute('src')
+                  photo=why.evaluate('(img) => ({width:img.naturalWidth,height:img.naturalHeight,fit:getComputedStyle(img).objectFit,position:getComputedStyle(img).objectPosition})')
+                  assert photo['width']>400 and photo['height']>600 and photo['fit']=='cover'
+                  page.locator('#etnika-studio-features').screenshot(path=str(out/f'why-kids-{width}.png'))
+                  ex=page.locator('#etnika-extra .ee-photo').nth(2)
+                  ex.scroll_into_view_if_needed()
+                  ex.click()
+                  look=ex.locator('img')
+                  page.wait_for_function('document.querySelectorAll("#etnika-extra .ee-photo")[2].querySelector("img").naturalWidth>0')
+                  assert 'look-editorial.jpg' in (look.get_attribute('src') or ''),'wrong last photo'
+                  page.locator('#etnika-extra').screenshot(path=str(out/f'extra-look-{width}.png'))
+                  page.close()
+              browser.close()
+          print('Photo curation QA passed: children cards, 4-photo modal, kids WHY slide, look 3 on desktop and mobile')
+          PY
+      - name: Upload photographic QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-photo-curation-check
+          path: reports/photo-audit/*.png
+          if-no-files-found: ignore
