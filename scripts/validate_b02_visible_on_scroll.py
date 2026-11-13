@@ -36,8 +36,11 @@ with sync_playwright() as p:
                 media:box(q('.etnika-b02__media')),
                 controls:box(q('.etnika-b02__media-bottom')),
                 mediaTop:box(q('.etnika-b02__media-top')),
-                outerGuide:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--etnika-section-outer')) ||
-                  parseFloat(getComputedStyle(block).getPropertyValue('--b02-overlay-inset')),
+                outerGuide:(()=>{
+                  const sp=document.getElementById('etnika-space-photo').getBoundingClientRect();
+                  const guide=document.querySelector('#etnika-space-photo .spf-top').getBoundingClientRect();
+                  return guide.top-sp.top;
+                })(),
                 overlayInset:getComputedStyle(block).getPropertyValue('--b02-overlay-inset').trim(),
                 position:getComputedStyle(q('.etnika-b02__copy')).position,
                 groupPosition:getComputedStyle(q('.etnika-b02__composition')).position,
