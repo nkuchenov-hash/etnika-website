@@ -69,3 +69,28 @@
 #etnika-review-flow #etnika-studio-features .b05-stage-image{
   image-rendering:auto;
 }
+
+/* Gallery display correction: intrinsic image sizing in the former CSS grid
+   allowed square/portrait source images to overflow under the thumbnail rail.
+   The stage is a true bounded flex viewport and the image uses 'contain'
+   *inside its box* — no head, body or bottom portion is clipped. */
+#etnika-stories-gallery .gallery-stage{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#etnika-stories-gallery .gallery-main{
+  display:block!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
