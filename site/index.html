@@ -15063,6 +15063,19 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     padding-bottom:calc(var(--etnika-section-outer,72px) + 4px)!important;
   }
 }
+/* Large desktop shared 118px Forum headline needs modest internal
+   compression to preserve the same outer rule positions in 100svh. */
+@media(min-width:1700px) and (min-height:850px){
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    row-gap:clamp(16px,1.9svh,22px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-title{
+    margin-bottom:clamp(15px,1.8svh,21px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-sub{
+    margin-bottom:clamp(12px,1.45svh,17px)!important;
+  }
+}
 /* The mobile FAQ's editorial row is half height; set the original
    two caption groups exactly on the same outer guide as its rules.
    Space-between prevents extra free height moving both away from edges. */
