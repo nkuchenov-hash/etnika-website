@@ -87,11 +87,13 @@ try:
             switch=block.locator(".ee-background-switch")
             image=block.locator(".ee-photo").first.locator("img")
             assert switch.is_visible(), "Background switch is not visible on the active photo"
+            assert block.locator(".ee-photo").first.get_attribute("data-background")=="red"
+            assert "bg-model-red.webp" in image.get_attribute("src")
+            assert "бежев" not in block.locator(".ee-photo").first.get_attribute("aria-label").lower()
             for key,part in [
-              ("beige","assets/extra/bg-model-beige.webp"),
+              ("black","assets/extra/bg-model-black.webp"),
               ("white","assets/extra/bg-model-white.webp"),
-              ("red","assets/extra/bg-model-red.webp"),
-              ("black","assets/extra/bg-model-black.webp")
+              ("red","assets/extra/bg-model-red.webp")
             ]:
                 switch.click()
                 assert block.locator(".ee-photo").first.get_attribute("data-background")==key
