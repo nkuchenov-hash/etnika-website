@@ -39,7 +39,7 @@ jobs:
                   card=page.locator('#etnika-stories .story-card.s5')
                   card.scroll_into_view_if_needed()
                   cardimg=card.locator('img')
-                  assert cardimg.evaluate('(img) => img.complete && img.naturalWidth>0'), 'children card image missing'
+                  page.wait_for_function('() => { const img=document.querySelector("#etnika-stories .story-card.s5 img"); return img && img.complete && img.naturalWidth>0; }',timeout=20000)
                   assert 'kids-happy-family.jpg' in cardimg.get_attribute('src')
                   card.screenshot(path=str(out/f'kids-card-{width}.png'))
                   card.click()
@@ -48,6 +48,7 @@ jobs:
                   assert gallery.get_attribute('aria-hidden')=='false'
                   page.wait_for_function('document.querySelector("#etnika-stories-gallery .gallery-main").naturalWidth>0')
                   assert gallery.locator('.gallery-counter').inner_text().strip()=='01 / 04'
+                  assert gallery.locator('.gallery-main').evaluate('(img) => getComputedStyle(img).objectFit==="contain"'), 'modal image must be fully contained'
                   assert 'kids-happy-family' in gallery.locator('.gallery-main').get_attribute('src')
                   page.screenshot(path=str(out/f'kids-modal-{width}.png'))
                   page.keyboard.press('ArrowRight')
