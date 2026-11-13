@@ -294,25 +294,7 @@
   color:#fff;
   font:500 14px/1 'Geologica',Arial,sans-serif;
 }
-#etnika-contacts-source .etnika-map-route-note {
-  display:none;
-  position:absolute;
-  bottom:72px;
-  left:22px;
-  z-index:5;
-  max-width:175px;
-  padding:5px 9px;
-  background:rgba(14,14,14,.9);
-  color:#e6e6e6;
-  border:1px solid rgba(255,255,255,.18);
-  font:300 12px/1.35 'Geologica',Arial,sans-serif;
-  pointer-events:none;
-}
-#etnika-contacts-source .location-map[data-map-state="ready"][data-route-state="schematic"] .etnika-map-route-note {
-  display:block;
-}
 @media(max-width:700px){
   #etnika-contacts-source .etnika-map-exit {padding:4px 7px 4px 4px;font-size:12px;gap:5px}
   #etnika-contacts-source .etnika-map-exit__number {width:22px;height:22px;font-size:13px}
-  #etnika-contacts-source .etnika-map-route-note {bottom:58px;left:12px;font-size:11px}
 }
