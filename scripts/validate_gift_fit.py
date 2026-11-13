@@ -43,7 +43,22 @@ with sync_playwright() as pw:
               computedShellHeight:getComputedStyle(el('.eg-shell')).height,
               computedShellMinHeight:getComputedStyle(el('.eg-shell')).minHeight,
               computedRootDisplay:getComputedStyle(root).display,
-              headingFont:getComputedStyle(el('h2.eg-title')).fontFamily,
+              sharedHeading:(() => {
+                const ref=document.querySelector('#etnika-faq-tariffs h2.etnika-section-heading');
+                const cs=getComputedStyle(ref);
+                return {font:cs.fontFamily,size:parseFloat(cs.fontSize),
+                    weight:cs.fontWeight,lineHeight:cs.lineHeight,
+                    spacing:cs.letterSpacing};
+              })(),
+              actualHeading:(() => {
+                const cs=getComputedStyle(el('h2.eg-title'));
+                return {font:cs.fontFamily,size:parseFloat(cs.fontSize),
+                    weight:cs.fontWeight,lineHeight:cs.lineHeight,
+                    spacing:cs.letterSpacing};
+              })(),
+              topLineLength:el('.eg-top-rule').getBoundingClientRect().width,
+              signoffLineLength:parseFloat(getComputedStyle(el('.eg-signoff'),'::before').width),
+              topRuleDisplay:getComputedStyle(el('.eg-top-rule')).display,
               headingSize:parseFloat(getComputedStyle(el('h2.eg-title')).fontSize),
               subtitleSize:parseFloat(getComputedStyle(el('.eg-sub')).fontSize),
               factLabelSize:parseFloat(getComputedStyle(el('.eg-fact span')).fontSize),
@@ -56,7 +71,6 @@ with sync_playwright() as pw:
               noteWeight:Number(getComputedStyle(el('.eg-note')).fontWeight),
               ctaWeight:Number(getComputedStyle(el('.eg-cta > span:first-child')).fontWeight),
               signoffWeight:Number(getComputedStyle(el('.eg-signoff')).fontWeight),
-              topRuleDisplay:getComputedStyle(el('.eg-top-rule')).display,
               signoffRuleDisplay:getComputedStyle(el('.eg-signoff'),'::before').display,
               headingLineScroll:[...root.querySelectorAll('.eg-title-line')].map(x=>({
                 scroll:x.scrollWidth,width:x.clientWidth
@@ -75,8 +89,12 @@ with sync_playwright() as pw:
         assert max(v[w] for w in ("kickerWeight","subWeight","factWeight",
                   "noteWeight","ctaWeight","signoffWeight"))<=200, (
             f"{label}: Geologica became heavier than approved thin type: {v}")
-        assert v["topRuleDisplay"]=="none" and v["signoffRuleDisplay"]=="none", (
-            f"{label}: detached label-divider line returned: {v}")
+        assert v["topRuleDisplay"]=="block" and v["signoffRuleDisplay"]=="block", (
+            f"{label}: one of the original editorial hairlines is missing: {v}")
+        assert v["topLineLength"]>=40 and v["signoffLineLength"]>=35, (
+            f"{label}: the signature label hairlines are too short: {v}")
+        assert v["actualHeading"]==v["sharedHeading"], (
+            f"{label}: certificate heading typography differs from sitewide heading: {v}")
         if width>1100:
             assert all(x["scroll"]<=x["width"]+3 for x in v["headingLineScroll"]), (
                 f"{label}: heading runs outside the left column: {v}")
@@ -86,15 +104,19 @@ with sync_playwright() as pw:
                 f"{label}: caption is pressed against video top edge: {v}")
             assert v["footer"]["bottom"]<=v["section"]["bottom"]-20, (
                 f"{label}: CTA/signoff are pressed against video bottom edge: {v}")
-            assert 0<=v["footer"]["top"]-v["main"]["bottom"]<=40, (
-                f"{label}: content detached from CTA by oversized blank field: {v}")
+            assert 0<=v["footer"]["top"]-v["main"]["bottom"]<=max(280, .29*height), (
+                f"{label}: headline and CTA are detached by excessive space: {v}")
+            top_margin=v["kicker"]["top"]-v["section"]["top"]
+            bottom_margin=v["section"]["bottom"]-v["footer"]["bottom"]
+            assert abs(top_margin-bottom_margin)<5, (
+                f"{label}: unlike other full-screen blocks, outer margins are not balanced: {v}")
         assert v["headingSize"]>=43,f"{label}: headline unreadable: {v}"
         assert v["subtitleSize"]>=16,f"{label}: explanatory text too small: {v}"
         assert v["noteSize"]>=16,f"{label}: CTA note too small: {v}"
         assert v["buttonSize"]>=15,f"{label}: CTA caption too small: {v}"
         if width>1100:
             assert v["factLabelSize"]>=14,f"{label}: facts label too small: {v}"
-            assert v["main"]["width"] <= 650,f"{label}: headline spills into photo: {v}"
+            assert v["main"]["width"] <= 810,f"{label}: headline takes over the entire photo: {v}"
         assert v["title"]["right"] <= v["section"]["right"]-20, (
             f"{label}: title extends beyond the gift composition: {v}")
         assert len(v["facts"])==3,f"{label}: certificate facts missing"
@@ -113,8 +135,11 @@ with sync_playwright() as pw:
         assert v["section"]["height"] >= 400, (
             f"{label}: gift collapsed and cannot show its complete content: {v}")
         if width>1100:
-            assert v["section"]["height"]<=visible_height+4, (
-                f"{label}: certificate unnecessarily taller than the screen: {v}")
+            assert v["section"]["height"]>=visible_height-2, (
+                f"{label}: gift video no longer fills the entire screen: {v}")
+            if width>=1280 and height>=720:
+                assert v["section"]["height"]<=visible_height+8, (
+                    f"{label}: gift exceeds viewport although there is room: {v}")
         assert v["sectionScrollHeight"]<=v["sectionClientHeight"]+2, (
             f"{label}: gift content is clipped or internally scrolling: {v}")
         if width>=1280 and height>=720:
