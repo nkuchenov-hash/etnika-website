@@ -14,14 +14,27 @@ window.addEventListener('pageshow',function(event){
   if(event.persisted && !location.hash) window.scrollTo(0,0);
 });
 </script>
-<meta name="robots" content="noindex,nofollow,noarchive"><link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet"><title>ETNIKA — полный редизайн · предпросмотр 4 ноября</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+<meta name="robots" content="noindex,nofollow,noarchive"><title>ETNIKA — полный редизайн · предпросмотр 4 ноября</title>
 <link rel="preconnect" href="https://api-maps.yandex.ru" crossorigin>
 <link rel="dns-prefetch" href="//api-maps.yandex.ru">
 <link rel="stylesheet" href="etnika-map.css?v=20261113-exit3-route">
+<!-- ETNIKA design system: locally hosted typefaces; independent of Google Fonts connectivity. -->
+<link rel="preload" href="assets/fonts/Forum-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="assets/fonts/Geologica-VF.ttf" as="font" type="font/ttf" crossorigin>
+<style id="etnika-local-fonts-20261113">
+@font-face {
+ font-family:'Forum';src:url('assets/fonts/Forum-Regular.ttf') format('truetype');
+ font-style:normal;font-weight:400;font-display:swap;
+}
+@font-face {
+ font-family:'Geologica';src:url('assets/fonts/Geologica-VF.ttf') format('truetype');
+ font-style:normal;font-weight:100 900;font-display:swap;
+}
+@font-face {
+ font-family:'Caveat';src:url('assets/fonts/Caveat-VF.ttf') format('truetype');
+ font-style:normal;font-weight:400 700;font-display:swap;
+}
+</style>
 </head>
 <body>
 
@@ -128,8 +141,6 @@ window.addEventListener('pageshow',function(event){
 
 <!-- ETNIKA · Block 02 · editorial split / final composition -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
-
 #etnika-block-02-final{
   --paper:#f3f0eb;
   --ink:#141414;
@@ -957,7 +968,6 @@ window.addEventListener('pageshow',function(event){
 
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
 #etnika-process-interactive{
   --black:#090909;--ink:#0a0a0a;--paper:#f5f3f2;--blush:#f5f3f2;--coral:#a9151d;--wine:#981018;--action:#a9151d;--muted:#d8d8d8;
   /* Same global content guides as HERO / blocks 02–04 */
@@ -1387,8 +1397,6 @@ window.addEventListener('pageshow',function(event){
 
 <!-- ETNIKA · Block 03 · Guest stories / editorial contact sheet -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
-
 #etnika-stories{
   --paper:#f3f0eb;
   --ink:#090909;
@@ -2257,8 +2265,6 @@ body.etnika-gallery-lock{
 
 <!-- ETNIKA · Block 05 · Studio space / photo-first editorial -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
-
 #etnika-space-photo{
   --paper:#080809;
   --ink:#ffffff;
@@ -3026,8 +3032,6 @@ body.etnika-gallery-lock{
 
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
-
 #etnika-studio-features{
   --paper:#f3f0eb;
   --ink:#0b0b0b;
@@ -4581,8 +4585,6 @@ body.etnika-gallery-lock{
 
 <!-- ETNIKA · Block 07 · Prices · Clear interactive premium -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
-
 #etnika-prices-clear{
   --paper:#f3f0eb;
   --ink:#0b0b0b;
@@ -6657,8 +6659,6 @@ body.etnika-gallery-lock{
 
 <!-- ETNIKA · Block 04 · FAQ / Перед визитом -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
-
 #etnika-faq{
   --paper:#f3f0eb;
   --ink:#090909;
@@ -7069,8 +7069,6 @@ body.etnika-gallery-lock{
 
 <!-- ETNIKA · Block 08 · FAQ / Тарифы -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
-
 #etnika-faq-tariffs{
   --paper:#f3f0eb;
   --ink:#090909;
@@ -7521,8 +7519,6 @@ body.etnika-gallery-lock{
 
 <!-- ETNIKA · Contacts · extracted from ETNIKA_MAIN_REDESIGN -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@100;200;300;400&display=swap');
-
 #etnika-contacts-source{
   --black:#090909;
   --white:#ffffff;
@@ -11610,7 +11606,6 @@ body{font-family:'Geologica',Arial,sans-serif;background:#f3f0eb}
 
 /* ETNIKA NOV 2026 REVIEW: visual response to Telegram comments, no edits to original site */
 
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geologica:wght@300;400;500;600&display=swap');
 html{scroll-behavior:smooth}
 #etnika-hero.etnika-new-hero{--hero-edge:max(80px,calc((100vw - 1760px)/2));position:relative;min-height:100svh;height:auto;max-height:none;isolation:isolate;background:#171313;color:#fff;overflow:hidden;font-family:'Geologica',Arial,sans-serif;font-weight:300;}
 #etnika-hero.etnika-new-hero, #etnika-hero.etnika-new-hero *{box-sizing:border-box}
