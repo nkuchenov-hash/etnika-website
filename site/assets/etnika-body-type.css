@@ -1,0 +1,69 @@
+/* ETNIKA | Canonical body typography | 2026-11-13
+   Single source for editorial body copy across all homepage sections.
+   Intentionally excludes headlines (Forum), overlines, controls, prices,
+   counters and short UI labels, which have their own typographic roles.
+   Loaded after section CSS so late local !important rules cannot shrink
+   ordinary paragraphs independently.
+*/
+:root {
+  --etnika-body-font:'Geologica',Arial,sans-serif;
+  --etnika-body-size:16px;
+  --etnika-body-weight:100;
+  --etnika-body-line-height:1.55;
+  --etnika-body-letter-spacing:-.006em;
+
+  /* Backward-compatible aliases: existing blocks use both systems. */
+  --et-u-body:var(--etnika-body-size);
+  --et-u-body-line:var(--etnika-body-line-height);
+  --etnika-text-size:var(--etnika-body-size);
+}
+
+/* A single shared step for large displays, applied to every body block. */
+@media (min-width:1920px) {
+  :root { --etnika-body-size:18px; }
+}
+
+/* All long-form descriptions and informational copy, including the
+   «Не только съёмка без фотографа…» intro and image captions. */
+#etnika-review-flow :is(
+  #etnika-block-02-final .etnika-b02__description,
+  #etnika-process-interactive .epi-sub,
+  #etnika-process-interactive .epi-desc,
+  #etnika-process-interactive .epi-body,
+  #etnika-process-interactive .epi-detail .epi-section li,
+  #etnika-faq .faq-answer p,
+  #etnika-space-photo .spf-intro,
+  #etnika-space-photo .spf-label-sub,
+  #etnika-studio-features .b05-intro,
+  #etnika-studio-features .b05-caption-text,
+  #etnika-studio-features .b05-item-text,
+  #etnika-prices-clear .pc-people,
+  #etnika-prices-clear .pc-features li,
+  #etnika-prices-clear .pc-photo-caption span,
+  #etnika-prices-clear.ev3 .ev3-plan-meta,
+  #etnika-prices-clear.ev3 .ev3-sheet-sub,
+  #etnika-prices-clear.ev3 .ev3-sheet-description,
+  #etnika-prices-clear.ev3 .ev3-feature-list li,
+  #etnika-extra .ee-subtitle,
+  #etnika-extra .ee-item-title,
+  #etnika-faq-tariffs .faq-answer p,
+  #etnika-gift .eg-sub,
+  #etnika-gift .eg-note,
+  #etnika-contacts-source .location-copy p,
+  #etnika-reviews .urw-text,
+  #etnika-reviews .urw-response-text
+) {
+  font-family:var(--etnika-body-font)!important;
+  font-size:var(--etnika-body-size)!important;
+  font-weight:var(--etnika-body-weight)!important;
+  line-height:var(--etnika-body-line-height)!important;
+  letter-spacing:var(--etnika-body-letter-spacing)!important;
+}
+
+/* The embedded review widget receives its own project config; this CSS
+   also keeps reviews consistent with the page at ultrawide breakpoints. */
+#etnika-review-flow #etnika-reviews .urw {
+  --u-body-size:var(--etnika-body-size)!important;
+  --u-response-size:var(--etnika-body-size)!important;
+  --u-body-weight:var(--etnika-body-weight)!important;
+}
