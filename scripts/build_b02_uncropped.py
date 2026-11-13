@@ -4,7 +4,7 @@ Only background pixels on the extreme LEFT and RIGHT edges are continued.
 The original photo is pasted untouched at full native resolution and centered.
 """
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageFilter
 import math, hashlib
 import re
 
@@ -39,8 +39,13 @@ for name in FILES:
         left_col=img.crop((0,0,1,h)).resize((left,h),Image.Resampling.NEAREST) if left else None
         right_w=intended_w-left-w
         right_col=img.crop((w-1,0,w,h)).resize((right_w,h),Image.Resampling.NEAREST) if right_w else None
-        if left_col:out.paste(left_col,(0,top))
-        if right_col:out.paste(right_col,(left+w,top))
+        # Only the ADDED backdrop strips are smoothed: suppress edge-column
+        # compression noise that becomes horizontal streaks when stretched.
+        # The real photograph and people remain pixel-perfect, untouched.
+        if left_col:
+            out.paste(left_col.filter(ImageFilter.GaussianBlur(radius=10)),(0,top))
+        if right_col:
+            out.paste(right_col.filter(ImageFilter.GaussianBlur(radius=10)),(left+w,top))
     if intended_h>h:
         # Rare landscape source: extend outer background vertically, no
         # crop. Subject at outer edge should be checked in the photo review.
