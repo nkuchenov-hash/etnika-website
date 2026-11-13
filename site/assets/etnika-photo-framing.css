@@ -1,0 +1,49 @@
+/* ETNIKA photographic framing / 13 Nov 2026
+   Per-photo focal points for editorial tiles. Do not crop source files,
+   add overlays or alter accepted HERO images. Real props (including the
+   clapboard) and signage physically present in the studio stay untouched.
+*/
+
+/* The lounge and mirror galleries each have two distinct scenes rather
+   than padding the three-slot carousel with a repeated photograph. */
+#etnika-review-flow #etnika-space-photo .spf-side.spf-two-photo-mode{
+  grid-template-rows:minmax(0,1fr)!important;
+  min-height:0!important;
+}
+#etnika-review-flow #etnika-space-photo .spf-side.spf-two-photo-mode .spf-side1{
+  height:100%!important;
+  min-height:0!important;
+}
+
+/* Each guest's position is tuned independently. Especially the child and
+   seated-family portraits: their subjects are in the lower source half. */
+#etnika-review-flow #etnika-stories .s1.story-card img{object-position:50% 27%!important;}
+#etnika-review-flow #etnika-stories .s2.story-card img{object-position:50% 14%!important;}
+#etnika-review-flow #etnika-stories .s3.story-card img{object-position:50% 34%!important;}
+#etnika-review-flow #etnika-stories .s4.story-card img{object-position:50% 24%!important;}
+#etnika-review-flow #etnika-stories .s5.story-card img{object-position:50% 78%!important;}
+#etnika-review-flow #etnika-stories .s6.story-card img{object-position:50% 40%!important;}
+#etnika-review-flow #etnika-stories .s7.story-card img{object-position:50% 30%!important;}
+#etnika-review-flow #etnika-stories .s8.story-card img{object-position:50% 76%!important;}
+
+/* Slide-specific crops prevent the generic center-38% rule from showing
+   excessive empty ceilings above people, or cutting off high hairlines. */
+#etnika-review-flow #etnika-block-02-final .etnika-b02__slide:nth-of-type(1){object-position:50% 24%!important;}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__slide:nth-of-type(2){object-position:50% 27%!important;}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__slide:nth-of-type(3){object-position:50% 17%!important;}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__slide:nth-of-type(4){object-position:50% 26%!important;}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__slide:nth-of-type(5){object-position:50% 68%!important;}
+
+/* New, distinct portrait in pricing: keep both the face and the remote. */
+#etnika-review-flow #etnika-prices-clear.ev3 .ev3-photo{
+  object-fit:cover!important;
+  object-position:68% 34%!important;
+}
+
+/* Booking image in WHY ETNIKA: portrait is on the right, laptop below. */
+#etnika-review-flow #etnika-studio-features img.b05-stage-image[src*="step-05-laptop"]{
+  object-position:73% 45%!important;
+}
+
+/* Do not touch the full-resolution modal: all portraits remain uncropped. */
+#etnika-stories-gallery img.gallery-main{object-fit:contain!important;}
