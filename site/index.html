@@ -6160,15 +6160,19 @@ body.etnika-gallery-lock{
   <div class="ee-shell">
 
     <div class="ee-gallery" aria-label="Дополнительные возможности">
-      <button class="ee-photo is-active" type="button" aria-label="Красный и чёрный фон" data-images="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg|https://static.tildacdn.com/tild6434-3663-4531-b961-633566393134/bw2.jpg">
-        <img src="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg" alt="Красный фон в студии ЭТНИКА">
+      <div class="ee-photo is-active" role="group" tabindex="0" aria-label="Варианты фотофона: бежевый, белый, красный, чёрный" data-images="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg" data-background="red">
+        <img src="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg" alt="Красный фон для фотосессии в ЭТНИКА" loading="lazy">
+        <button class="ee-background-switch" type="button" aria-label="Сменить фон. Сейчас красный" title="Сменить фон">
+          <span>СМЕНИТЬ<br>ФОН</span>
+          <span class="ee-background-color" aria-live="polite">КРАСНЫЙ</span>
+        </button>
         <span class="ee-photo-caption">
           <span class="ee-photo-num">01</span>
           <span class="ee-photo-name">Фон</span>
         </span>
-      </button>
+      </div>
 
-      <button class="ee-photo" type="button" aria-label="Цветные световые схемы" data-images="assets/curated/light-editorial.jpg|https://static.tildacdn.com/tild3734-3731-4335-b865-373337626535/_photo_2025-12-04_15.jpg">
+      <button class="ee-photo" type="button" aria-label="Цветные световые схемы" data-images="assets/curated/light-editorial.jpg">
         <img src="assets/curated/light-editorial.jpg" alt="Световая схема в студии ЭТНИКА">
         <span class="ee-photo-caption">
           <span class="ee-photo-num">02</span>
@@ -6224,9 +6228,82 @@ body.etnika-gallery-lock{
       photos.forEach(function(x){x.classList.remove('is-active')});
       photo.classList.add('is-active');
     });
+    if(photo.tagName !== 'BUTTON'){
+      photo.addEventListener('keydown',function(e){
+        if(e.target===photo && (e.key==='Enter'||e.key===' ')){
+          e.preventDefault();photo.click();
+        }
+      });
+    }
+  });
+
+  // Real studio/portrait photos: change the IMAGE in the "Фон" card,
+  // not the colour of the whole website section.
+  var photo=block.querySelector('.ee-photo[data-background]');
+  var control=photo&&photo.querySelector('.ee-background-switch');
+  if(!photo||!control) return;
+  var picture=photo.querySelector('img');
+  var text=control.querySelector('.ee-background-color');
+  var variants=[
+    {name:'БЕЖЕВЫЙ',key:'beige',src:'assets/etnika-portrait-beige.jpg'},
+    {name:'БЕЛЫЙ',key:'white',src:'assets/curated/look-editorial.jpg'},
+    {name:'КРАСНЫЙ',key:'red',src:'https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg'},
+    {name:'ЧЁРНЫЙ',key:'black',src:'assets/etnika-portrait-dark.jpg'}
+  ];
+  var index=-1; // Keep the original red image until the first press.
+  control.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    index=(index+1)%variants.length;
+    var variant=variants[index];
+    picture.src=variant.src;
+    picture.alt=variant.name.charAt(0)+variant.name.slice(1).toLowerCase()+' фон в студии ЭТНИКА';
+    photo.dataset.background=variant.key;
+    photo.dataset.images=variant.src;
+    text.textContent=variant.name;
+    control.setAttribute('aria-label','Сменить фон. Сейчас '+variant.name.toLowerCase());
+    photos.forEach(function(x){x.classList.remove('is-active')});
+    photo.classList.add('is-active');
   });
 })();
 </script>
+
+<style id="etnika-extra-background-switch-20261113">
+/* A real four-photo background-preview switch, independent of the gallery's active tile. */
+#etnika-extra .ee-background-switch{
+  position:absolute;z-index:5;
+  top:clamp(20px,11%,76px);left:clamp(12px,1.8vw,22px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:clamp(100px,7.6vw,144px);height:clamp(100px,7.6vw,144px);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:50%;
+  background:#130f14;color:#fff;
+  padding:14px 10px;
+  cursor:pointer;
+  font:400 clamp(11px,.73vw,14px)/1.22 'Geologica',Arial,sans-serif;
+  text-align:center;letter-spacing:.06em;
+  box-shadow:0 4px 16px rgba(0,0,0,.12);
+  transition:background .2s ease,transform .2s ease,opacity .2s ease;
+}
+#etnika-extra .ee-background-switch:hover{background:#a9151d;transform:scale(1.03)}
+#etnika-extra .ee-background-switch:focus-visible{
+  outline:2px solid #fff;outline-offset:3px;
+}
+#etnika-extra .ee-background-switch .ee-background-color{
+  display:block;margin-top:9px;
+  font-size:clamp(10px,.62vw,12px);
+  letter-spacing:.12em;color:rgba(255,255,255,.76);
+}
+#etnika-extra .ee-photo:not(.is-active) .ee-background-switch{
+  opacity:0;visibility:hidden;pointer-events:none;
+}
+@media(max-width:700px){
+  #etnika-extra .ee-background-switch{
+    width:94px;height:94px;top:17px;left:10px;
+    font-size:11px;padding:12px 8px;
+  }
+  #etnika-extra .ee-background-switch .ee-background-color{font-size:10px;margin-top:6px}
+}
+</style>
 
 <section id="etnika-faq-tariffs" aria-label="Частые вопросы о тарифах">
   <div class="faq-shell">
