@@ -15312,6 +15312,50 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     padding-bottom:calc(var(--etnika-section-outer,36px) - 9px)!important;
   }
 }
+/* etnika-gift-airiness-20261113 */
+/* Owner 13 Nov 12:59: add breathing room INSIDE the existing preserved
+   overline-to-edge geometry. DO NOT touch eg-shell padding values above.
+   The video grows, not its sacred top/bottom caption insets. */
+@media(min-width:1101px){
+  #etnika-review-flow > section#etnika-gift,
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    min-height:calc(100svh - var(--etnika-nav-height,60px) + clamp(160px,19svh,220px))!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    row-gap:clamp(34px,4.4svh,48px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-title{
+    margin-bottom:clamp(23px,3.1svh,35px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-sub{
+    margin-bottom:clamp(22px,2.9svh,34px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-fact{
+    min-height:clamp(52px,6.8svh,68px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-note{
+    margin-bottom:clamp(16px,2.1svh,22px)!important;
+  }
+}
+@media(max-width:1100px){
+  #etnika-review-flow > section#etnika-gift,
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    min-height:calc(100svh - var(--etnika-nav-height,56px) + clamp(100px,13svh,150px))!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    gap:clamp(28px,4svh,42px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-title{
+    margin-bottom:clamp(21px,2.6svh,31px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-sub{
+    margin-bottom:clamp(20px,2.4svh,29px)!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-note{
+    margin-bottom:16px!important;
+  }
+}
+
 </style>
 <style id="etnika-unified-editorial-heading-gaps-20261112">
 /* Sitewide editorial rhythm audited 12 Nov 2026.
