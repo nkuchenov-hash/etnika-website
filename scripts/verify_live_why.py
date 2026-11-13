@@ -54,10 +54,19 @@ with sync_playwright() as pw:
         assert v['title']['top']>=v['header']['bottom']+35, f"PUBLIC SITE IS OLD: heading glued to menu: {v}"
         assert len(v['rowHeights'])==6 and max(v['rowHeights'])<=82, f"PUBLIC SITE IS OLD: stretched list: {v}"
         assert max(v['rowHeights'])-min(v['rowHeights'])<=2, f"Uneven row heights: {v}"
-        assert v['last']['bottom']<=height-16, f"Last selector clipped: {v}"
-        assert v['caption']['bottom']<=height-10, f"Photo caption clipped: {v}"
+        assert v['last']['bottom']<=v['section']['bottom']-16, f"Last selector clipped: {v}"
+        assert v['caption']['bottom']<=v['stage']['bottom']-35, f"Photo caption bottom gap lost: {v}"
         assert abs(v['stage']['top']-v['header']['bottom'])<4, f"Photo starts under nav: {v}"
-        assert abs(v['stage']['bottom']-height)<4, f"Photo does not fill screen: {v}"
+        assert abs(v['stage']['bottom']-height*1.10)<4, f"Photo not increased to 110svh: {v}"
         assert v['photoLoaded'] or "etnika-hero-red-wide.jpg" in v['photoFallback'], "Photo and fallback unavailable"
+        # Verify the last portion becomes visible when scrolling the additional 10svh.
+        page.evaluate("() => window.scrollBy({top:innerHeight*.10,behavior:'instant'})")
+        page.wait_for_timeout(120)
+        reveal=page.evaluate("""() => ({
+          photo:document.querySelector('#etnika-studio-features .b05-stage').getBoundingClientRect().bottom,
+          caption:document.querySelector('#etnika-studio-features .b05-stage-bottom').getBoundingClientRect().bottom
+        })""")
+        assert abs(reveal['photo']-height)<4 and reveal['caption']<height-35, f"Bottom of taller section is not viewable: {reveal}"
+        page.screenshot(path=str(OUT/f"etnika-why-LIVE-bottom-{width}x{height}.png"),full_page=False)
         page.close()
     browser.close()

@@ -13775,9 +13775,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     box-sizing:border-box!important;
     display:block!important;
     /* Full-bleed photo starts at the section edge, directly under fixed nav. */
-    height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    /* 13 Nov: taller composition without changing photos, typography or controls. */
+    height:calc(110svh - var(--etnika-nav-height,60px))!important;
     min-height:0!important;
-    max-height:calc(100svh - var(--etnika-nav-height,60px))!important;
+    max-height:calc(110svh - var(--etnika-nav-height,60px))!important;
     width:100%!important;
     padding:0!important;
     margin:0!important;
@@ -14043,7 +14044,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 @media (min-width:861px) and (max-width:1100px){
   #etnika-review-flow > section#etnika-studio-features{
     height:auto!important;
-    min-height:100svh!important;max-height:none!important;
+    min-height:110svh!important;max-height:none!important;
     padding:0!important;
     overflow:visible!important;
     scroll-margin-top:0!important;
@@ -14059,12 +14060,12 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
   #etnika-review-flow #etnika-studio-features .b05-stage{
     grid-column:1!important;grid-row:1!important;
-    height:100%!important;min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
+    height:100%!important;min-height:calc(110svh - var(--etnika-nav-height,56px))!important;
     background:#801018 url('assets/etnika-hero-red-wide.jpg') center/cover no-repeat!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-copy{
     grid-column:2!important;grid-row:1!important;width:100%!important;height:auto!important;
-    min-height:calc(100svh - var(--etnika-nav-height,56px))!important;
+    min-height:calc(110svh - var(--etnika-nav-height,56px))!important;
     padding:26px!important;overflow:visible!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-meta {
@@ -14090,7 +14091,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   }
   #etnika-review-flow #etnika-studio-features .b05-stage{
     grid-column:1!important;grid-row:1!important;
-    height:clamp(420px,65svh,740px)!important;min-height:0!important;
+    height:clamp(450px,72svh,820px)!important;min-height:0!important;
     background:#801018 url('assets/etnika-hero-red-wide.jpg') center/cover no-repeat!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-copy{

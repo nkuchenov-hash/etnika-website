@@ -96,8 +96,12 @@ with sync_playwright() as pw:
         assert v['counter']['top']>=v['stage']['top']+6,err("counter hidden behind menu")
         assert v['bodyWidth']<=w+3,err("horizontal overflow")
         assert v['imageOK'] or 'etnika-hero-red-wide.jpg' in v['background'],err("photo failed to load and fallback absent")
-        if h>=900:
-            assert v['section']['bottom']<=h+12,err("one-screen desktop composition too tall")
+        # Owner 2026-11-13: the section is intentionally 10svh taller
+        # than the former one-screen version, while its top remains below nav.
+        assert abs(v['section']['bottom']-h*1.10)<=4,err("taller section height not applied")
+        assert abs(v['stage']['height']-(h*1.10-v['header']['height']))<=4,err("photo not stretched with taller section")
+        assert v['bottom']['bottom']<=v['stage']['bottom']-40,err("caption missing bottom breathing room")
+        assert v['last']['bottom']<=v['section']['bottom']-8,err("last advantage exceeds section")
         print(f"WHY ETNIKA OK {w}x{h}: photo ({v['stage']['top']:.1f}..{v['stage']['bottom']:.1f}), title {v['title']['top']:.1f}, last {v['last']['bottom']:.1f}, caption {v['caption']['bottom']:.1f}",flush=True)
         # Exercise the REAL fragment navigation, which is affected by the global
         # html scroll-padding and this section's own scroll-margin.
@@ -113,7 +117,19 @@ with sync_playwright() as pw:
         print(f"ANCHOR {w}x{h}: {anchor}",flush=True)
         assert abs(anchor['photo']-anchor['header'])<=4,err("fragment scroll overlays photo with menu")
         assert anchor['heading']>=anchor['header']+6,err("fragment scroll hides heading under menu")
-        assert anchor['bottom']<=h-8 and anchor['last']<=h-8,err("fragment scroll clips caption or final selector")
+        assert anchor['bottom']<=h*1.10-8 and anchor['last']<=h*1.10-8,err("fragment scroll clips caption or final selector")
+        # Show the bottom of the deliberately taller block as well, not only
+        # its initial viewport; this catches hidden arrows/captions.
+        page.evaluate("() => window.scrollBy({top:innerHeight*.10,behavior:'instant'})")
+        page.wait_for_timeout(130)
+        atBottom=page.evaluate("""() => ({
+          stage:document.querySelector('#etnika-studio-features .b05-stage').getBoundingClientRect().bottom,
+          caption:document.querySelector('#etnika-studio-features .b05-stage-bottom').getBoundingClientRect().bottom,
+          last:document.querySelector('#etnika-studio-features .b05-item:last-child').getBoundingClientRect().bottom
+        })""")
+        assert abs(atBottom['stage']-h)<=4,err("taller block cannot scroll to photo bottom")
+        assert atBottom['caption']<=h-35 and atBottom['last']<=h-7,err("overlay or text clipped after scrolling")
+        page.screenshot(path=str(OUT/f'etnika-why-bottom-{w}x{h}.png'),full_page=False)
         if w==1366:
             # The old carousel had NO timer. Ensure slide 02 appears by itself
             # after six seconds without pressing any controls.
