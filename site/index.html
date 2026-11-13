@@ -2912,20 +2912,46 @@ body.etnika-gallery-lock{
     render();
   }
 
-  function swapWithMain(miniSlot){
+  function swapWithMain(miniSlot, clickedThumb){
     var temp = slotOrder[0];
     slotOrder[0] = slotOrder[miniSlot];
     slotOrder[miniSlot] = temp;
     render();
+
+    // Mouse/touch click swaps the photograph but does not count as a NEW
+    // hover over the replacement content. Keep its expanded text closed
+    // until the pointer exits and deliberately re-enters this thumbnail.
+    if(clickedThumb){
+      clickedThumb.classList.add('spf-caption-dismissed');
+      if(document.activeElement === clickedThumb &&
+         !clickedThumb.matches(':focus-visible')){
+        clickedThumb.blur();
+      }
+    }
     restartAuto();
   }
 
-  side1.addEventListener('click', function(){ swapWithMain(1); });
-  side2.addEventListener('click', function(){ swapWithMain(2); });
+  function resetThumbOnExit(thumb){
+    thumb.addEventListener('pointerleave',function(){
+      thumb.classList.remove('spf-caption-dismissed');
+    });
+    thumb.addEventListener('focus',function(){
+      // Keyboard navigation must still reveal the description.
+      if(thumb.matches(':focus-visible')){
+        thumb.classList.remove('spf-caption-dismissed');
+      }
+    });
+  }
+  resetThumbOnExit(side1);
+  resetThumbOnExit(side2);
+
+  side1.addEventListener('click', function(){ swapWithMain(1,side1); });
+  side2.addEventListener('click', function(){ swapWithMain(2,side2); });
 
   side1.addEventListener('keydown', function(e){
     if(e.key === 'Enter' || e.key === ' '){
       e.preventDefault();
+      side1.classList.remove('spf-caption-dismissed');
       swapWithMain(1);
     }
   });
@@ -2933,6 +2959,7 @@ body.etnika-gallery-lock{
   side2.addEventListener('keydown', function(e){
     if(e.key === 'Enter' || e.key === ' '){
       e.preventDefault();
+      side2.classList.remove('spf-caption-dismissed');
       swapWithMain(2);
     }
   });
@@ -13689,6 +13716,20 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   max-height:none!important;margin-top:8px!important;
   transform:none!important;
  }
+}
+/* The thumbnail just clicked now contains different content.
+   Suppress stale :hover and click focus until pointerleave. The base Forum
+   title stays visible; only the expanded description is collapsed. */
+#etnika-review-flow #etnika-space-photo .spf-small.spf-caption-dismissed .spf-label-sub{
+  visibility:hidden!important;
+  opacity:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+  margin-top:0!important;
+  transform:translateY(7px)!important;
+}
+#etnika-review-flow #etnika-space-photo .spf-small.spf-caption-dismissed::after{
+  opacity:.56!important;
 }
 /* Captions, photo counter, overline and tabs have NO text shadows.
    Increase contrast only via the localized bottom image gradient above. */
