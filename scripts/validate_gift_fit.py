@@ -38,6 +38,16 @@ with sync_playwright() as pw:
               title:b(el('h2.eg-title')),sub:b(el('.eg-sub')),
               facts:facts,footer:b(el('.eg-footer')),note:b(el('.eg-note')),
               button:b(el('.eg-cta')),signoff:b(el('.eg-signoff')),
+              innerGaps:(() => {
+                const box=s=>el(s).getBoundingClientRect();
+                return {
+                  kickerToTitle:box('h2.eg-title').top-box('.eg-top').bottom,
+                  titleToSub:box('.eg-sub').top-box('h2.eg-title').bottom,
+                  subToFacts:box('.eg-facts').top-box('.eg-sub').bottom,
+                  factsToFooter:box('.eg-footer').top-box('.eg-fact:last-child').bottom,
+                  noteToButton:box('.eg-cta').top-box('.eg-note').bottom
+                };
+              })(),
               computedSectionHeight:getComputedStyle(root).height,
               computedSectionMinHeight:getComputedStyle(root).minHeight,
               computedShellHeight:getComputedStyle(el('.eg-shell')).height,
@@ -114,6 +124,15 @@ with sync_playwright() as pw:
             assert abs(gaps["giftBottom"]-gaps["faqBottom"])<=7, (
                 f"{label}: certificate bottom line is not aligned to tariff FAQ: {gaps}")
         assert v["content"],f"{label}: original text or CTA missing"
+        # Owner-approved changes to the inner composition must not move
+        # the hairline/text-to-section-edge gaps validated above.
+        for gap_name,minimum in (
+            ("kickerToTitle",26),("titleToSub",18),
+            ("subToFacts",18),("factsToFooter",24),
+            ("noteToButton",14)
+        ):
+            assert v["innerGaps"][gap_name]>=minimum-2, (
+                f"{label}: certificate elements are still crowded at {gap_name}: {v['innerGaps']}")
         assert "Forum" in v["headingFont"],f"{label}: non-Forum headline: {v}"
         assert max(v[w] for w in ("kickerWeight","subWeight","factWeight",
                   "noteWeight","ctaWeight","signoffWeight"))<=200, (
@@ -133,8 +152,8 @@ with sync_playwright() as pw:
                 f"{label}: caption is pressed against video top edge: {v}")
             assert v["footer"]["bottom"]<=v["section"]["bottom"]-20, (
                 f"{label}: CTA/signoff are pressed against video bottom edge: {v}")
-            assert 0<=v["footer"]["top"]-v["main"]["bottom"]<=max(280, .29*height), (
-                f"{label}: headline and CTA are detached by excessive space: {v}")
+            assert 24<=v["footer"]["top"]-v["main"]["bottom"]<=max(420, .42*height), (
+                f"{label}: facts-to-CTA spacing outside readable range: {v}")
             top_margin=v["kicker"]["top"]-v["section"]["top"]
             bottom_margin=v["section"]["bottom"]-v["footer"]["bottom"]
             assert abs(top_margin-bottom_margin)<5, (
@@ -164,25 +183,20 @@ with sync_playwright() as pw:
         assert v["section"]["height"] >= 400, (
             f"{label}: gift collapsed and cannot show its complete content: {v}")
         if width>1100:
-            assert v["section"]["height"]>=visible_height-2, (
-                f"{label}: gift video no longer fills the entire screen: {v}")
-            if width>=1280 and height>=720:
-                assert v["section"]["height"]<=visible_height+8, (
-                    f"{label}: gift exceeds viewport although there is room: {v}")
+            assert v["section"]["height"]>=visible_height+140, (
+                f"{label}: gift did not grow enough to create breathing room: {v}")
+            assert v["section"]["height"]<=visible_height+330, (
+                f"{label}: gift became excessively tall: {v}")
+        else:
+            assert v["section"]["height"]>=visible_height+90, (
+                f"{label}: small-screen composition did not grow: {v}")
         assert v["sectionScrollHeight"]<=v["sectionClientHeight"]+2, (
             f"{label}: gift content is clipped or internally scrolling: {v}")
-        if width>=1280 and height>=720:
-            assert v["section"]["height"]<=visible_height+4, (
-                f"{label}: gift section is taller than usable viewport: {v}")
-            assert v["button"]["bottom"]<=height+4, (
-                f"{label}: gift purchase CTA clipped by the bottom of screen: {v}")
-        if width > 1100 and v["section"]["height"] <= visible_height+2:
-            assert v["kicker"]["top"]>=v["header"]["bottom"]+8, (
-                f"{label}: label hidden under fixed navigation: {v}")
-            assert v["button"]["bottom"]<=height-10, (
-                f"{label}: certificate button not visible within fitted section: {v}")
-            assert v["signoff"]["bottom"]<=height-8, (
-                f"{label}: certificate signoff below viewport: {v}")
+        # Section deliberately exceeds one viewport now. The CTA may be
+        # below the initial viewport, but must remain fully inside the video
+        # with the same approved bottom hairline inset.
+        assert v["button"]["bottom"]<=v["section"]["bottom"]-18, (
+            f"{label}: CTA clipped by the section boundary: {v}")
         # Key regression from 12 Nov: FAQ must be followed by a real,
         # visible certificate section before reviews; never skip it.
         sequence=page.evaluate("""() => Array.from(
@@ -200,6 +214,7 @@ with sync_playwright() as pw:
               f"title={v['title']['height']:.1f}px "
               f"button-bottom={v['button']['bottom']:.1f}px "
               f"footer-bottom={v['footer']['bottom']:.1f}px "
+              f"inner-gaps={v['innerGaps']} "
               f"min-height={v['computedSectionMinHeight']} "
               f"shell-min-height={v['computedShellMinHeight']} "
               f"title-font={v['headingFont']} CTA-text={v['buttonSize']}",flush=True)
