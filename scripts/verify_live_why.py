@@ -33,6 +33,8 @@ with sync_playwright() as pw:
             header:rect(document.getElementById('etnika-site-header')),
             section:rect(document.getElementById('etnika-studio-features')),
             stage:rect(q('.b05-stage')),copy:rect(q('.b05-copy')),
+            counter:rect(q('.b05-counter')),overlay:rect(q('.b05-stage-bottom')),
+            nav:rect(q('.b05-nav')),
             title:rect(head),intro:rect(q('.b05-intro')),
             facts:rect(q('.b05-meta')),list:rect(q('.b05-list')),
             last:rect(rows[rows.length-1]),caption:rect(q('.b05-stage-bottom')),
@@ -56,6 +58,13 @@ with sync_playwright() as pw:
         assert max(v['rowHeights'])-min(v['rowHeights'])<=2, f"Uneven row heights: {v}"
         assert v['last']['bottom']<=v['section']['bottom']-16, f"Last selector clipped: {v}"
         assert v['caption']['bottom']<=v['stage']['bottom']-35, f"Photo caption bottom gap lost: {v}"
+        shared_edge=max(180,(width-2600)/2) if width>=1920 else (max(40,(width-1320)/2) if width<=1440 else max(80,(width-1760)/2))
+        inset_x=shared_edge+max(12,min(width*.01,20))
+        inset_y=max(72,min(height*.09,112))
+        assert abs(v['counter']['top']-v['stage']['top']-inset_y)<2, f"PUBLIC: photo counter inset wrong: {v}"
+        assert abs(v['stage']['bottom']-v['overlay']['bottom']-inset_y)<2, f"PUBLIC: photo bottom not aligned to editorial overline margin: {v}"
+        assert abs(v['caption']['left']-v['stage']['left']-inset_x)<2, f"PUBLIC: photo caption left inset wrong: {v}"
+        assert abs(v['nav']['right']-v['stage']['right']+inset_x)<2, f"PUBLIC: arrows right inset wrong: {v}"
         assert abs(v['stage']['top']-v['header']['bottom'])<4, f"Photo starts under nav: {v}"
         assert abs(v['stage']['bottom']-height*1.10)<4, f"Photo not increased to 110svh: {v}"
         assert v['photoLoaded'] or "etnika-hero-red-wide.jpg" in v['photoFallback'], "Photo and fallback unavailable"
