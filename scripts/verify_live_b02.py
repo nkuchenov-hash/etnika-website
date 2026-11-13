@@ -40,7 +40,7 @@ with sync_playwright() as p:
           const b=document.getElementById('etnika-block-02-final');
           const nav=document.getElementById('etnika-site-header');
           const q=s=>b.querySelector(s);
-          const r=e=>{const x=e.getBoundingClientRect();return {top:x.top,bottom:x.bottom,height:x.height,mid:(x.top+x.bottom)/2}};
+          const r=e=>{const x=e.getBoundingClientRect();return {top:x.top,bottom:x.bottom,left:x.left,right:x.right,width:x.width,height:x.height,mid:(x.top+x.bottom)/2}};
           const copy=q('.etnika-b02__copy'),comp=q('.etnika-b02__composition'),stack=q('.etnika-b02__stack');
           const media=q('.etnika-b02__media');
           return {block:r(b),header:r(nav),copy:r(copy),comp:r(comp),stack:r(stack),
