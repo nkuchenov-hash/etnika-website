@@ -8489,7 +8489,6 @@ body.etnika-gallery-lock{
         loading="lazy"></iframe>
       <div id="etnika-contacts-map-live" class="etnika-map-live"
            role="region" aria-label="Интерактивная карта: метро Автозаводская, ближайший выход №3 и дорога до студии"></div>
-      <span class="etnika-map-route-note" aria-hidden="true">Схема пути. Точный маршрут — по кнопке</span>
       <a class="etnika-map-directions"
          href="https://yandex.ru/maps/?rtext=55.708650%2C37.657319~55.710130%2C37.654610&amp;rtt=pd"
          target="_blank" rel="noopener noreferrer"
@@ -13465,9 +13464,9 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  margin-bottom:clamp(20px,2.5svh,30px)!important;
 }
 
-/* 05 · Contacts: size the section to its actual copy rather than 100svh
-   plus outer fields. Its top/bottom air uses the SAME design-system token
-   on both sides. The map stretches with that naturally sized grid row. */
+/* 05 · Contacts: match the SAME outer-edge air as the surrounding editorial
+   sections, using --etnika-section-outer at both ends. The section remains
+   content-sized; its map follows the grid row without arbitrary whitespace. */
 @media(min-width:1101px){
  #etnika-review-flow > section#etnika-contacts-source{
    height:auto!important;min-height:0!important;max-height:none!important;
@@ -13484,7 +13483,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
  #etnika-review-flow #etnika-contacts-source .location-copy{
    height:auto!important;box-sizing:border-box!important;
-   padding:var(--etnika-section-y,64px) clamp(32px,3.3vw,64px)!important;
+   padding:var(--etnika-section-outer,96px) clamp(32px,3.3vw,64px)!important;
    justify-content:center!important;
  }
 }
@@ -13500,8 +13499,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
  #etnika-review-flow #etnika-contacts-source .location-copy{
    height:auto!important;
-   padding-top:var(--etnika-section-y,56px)!important;
-   padding-bottom:var(--etnika-section-y,56px)!important;
+   padding-top:var(--etnika-section-outer,56px)!important;
+   padding-bottom:var(--etnika-section-outer,56px)!important;
  }
 }
 /* The historical map-ad strip must not mask the contact information
@@ -13521,9 +13520,6 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-review-flow #etnika-contacts-source .location-map .map-fallback{
  inset:auto 22px calc(var(--bottom-cover,92px) + 18px) 22px!important;
 }
-#etnika-review-flow #etnika-contacts-source .etnika-map-route-note{
- bottom:calc(var(--bottom-cover,92px) + 72px)!important;
-}
 @media(max-width:1100px){
  #etnika-review-flow #etnika-contacts-source .location-map::after{display:none!important;}
  #etnika-review-flow #etnika-contacts-source .etnika-map-directions{
@@ -13531,9 +13527,6 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  }
  #etnika-review-flow #etnika-contacts-source .location-map .map-fallback{
    inset:auto 14px 14px 14px!important;
- }
- #etnika-review-flow #etnika-contacts-source .etnika-map-route-note{
-   bottom:58px!important;
  }
 }
 #etnika-contacts-source .location-copy p.etnika-route{
