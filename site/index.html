@@ -15049,6 +15049,36 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     width:45px!important;
   }
 }
+
+/* etnika-gift-edge-alignment-20261113 */
+/* Align caption+hairline center gaps to the adjacent tariff FAQ.
+   Desktop FAQ: upper rule = section-outer + 14px.
+   The gift label line sits ~8px below shell top; lower rule line is
+   ~9-18px above shell bottom depending on wrapped signoff.
+   Short desktop windows retain tighter fields so the large shared H2
+   and purchase CTA fit without clipping. */
+@media(min-width:1101px) and (min-height:850px){
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    padding-top:calc(var(--etnika-section-outer,72px) + 6px)!important;
+    padding-bottom:var(--etnika-section-outer,72px)!important;
+  }
+}
+/* The mobile FAQ's editorial row is half height; set the original
+   two caption groups exactly on the same outer guide as its rules.
+   Space-between prevents extra free height moving both away from edges. */
+@media(max-width:1100px){
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    justify-content:space-between!important;
+    padding-top:calc(var(--etnika-section-outer,40px) - 3px)!important;
+    padding-bottom:calc(var(--etnika-section-outer,40px) - 2px)!important;
+  }
+}
+@media(max-width:700px){
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    padding-top:calc(var(--etnika-section-outer,36px) - 3px)!important;
+    padding-bottom:calc(var(--etnika-section-outer,36px) - 9px)!important;
+  }
+}
 </style>
 <style id="etnika-unified-editorial-heading-gaps-20261112">
 /* Sitewide editorial rhythm audited 12 Nov 2026.
