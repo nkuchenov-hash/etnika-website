@@ -46,6 +46,9 @@ with sync_playwright() as p:
           return {block:r(b),header:r(nav),copy:r(copy),comp:r(comp),stack:r(stack),
             overline:r(q('.etnika-b02__top')),title:r(q('.etnika-b02__title')),
             topOverlay:r(q('.etnika-b02__media-top')),
+            sharedGuide:r(document.querySelector('#etnika-space-photo .spf-shell')),
+            caption:r(q('.etnika-b02__caption')),
+            controls:r(q('.etnika-b02__controls')),
             sectionSpacing:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--etnika-section-outer')),
             spaceSection:r(document.getElementById('etnika-space-photo')),
             spaceGuide:r(document.querySelector('#etnika-space-photo .spf-top')),
@@ -74,6 +77,11 @@ with sync_playwright() as p:
         assert result['features']['bottom']<result['copy']['bottom']-35,'features outside centered content area'
         assert abs((result['topOverlay']['top']-result['media']['top'])-(result['spaceGuide']['top']-result['spaceSection']['top']))<2, 'PHOTO COUNTER/MOSCOW MUST ALIGN TO APPROVED SPACE ETNIKA SECTION GRID'
         assert abs((result['topOverlay']['top']-result['media']['top'])-(result['spaceGuide']['top']-result['spaceSection']['top']))<2, 'PHOTO TEXT INSET MUST MATCH SPACE ETNIKA EDITORIAL GUIDE'
+        assert abs((result['topOverlay']['left']-result['media']['left'])-result['sharedGuide']['left'])<2, 'PHOTO COUNTER LEFT INSET MUST MATCH ETNIKA SHARED HORIZONTAL GRID'
+        assert abs((result['bottomOverlay']['left']-result['media']['left'])-result['sharedGuide']['left'])<2, 'PHOTO CAPTION LEFT INSET MUST MATCH ETNIKA SHARED HORIZONTAL GRID'
+        assert abs((result['media']['right']-result['topOverlay']['right'])-result['sharedGuide']['left'])<2, 'PHOTO MOSCOW RIGHT INSET MUST MATCH SHARED GRID'
+        assert abs((result['media']['right']-result['bottomOverlay']['right'])-result['sharedGuide']['left'])<2, 'PHOTO ARROWS RIGHT INSET MUST MATCH SHARED GRID'
+        assert result['caption']['right']<=result['controls']['left']+4, 'PHOTO CAPTION OVERLAPS CAROUSEL ARROWS'
         assert result['bodyFeatureGap']>=30, 'B02 LEFT COPY STILL TOO COMPRESSED'
         assert result['bodyParaGap']>=19, 'B02 BODY PARAGRAPHS STILL TOO COMPRESSED'
         assert abs((result['topOverlay']['top']-result['media']['top'])-(result['media']['bottom']-result['bottomOverlay']['bottom']))<2, 'PHOTO TYPE MUST HAVE EQUAL TOP AND BOTTOM INSETS'
