@@ -235,9 +235,9 @@ with sync_playwright() as playwright:
                     assert abs(guide["mediaHeight"]-guide["sectionHeight"])<=3, f"Live B02 photo shrunk again: {guide}"
                     assert guide["stampTop"]>=guide["headerBottom"]+8, f"Live photo 'Moscow' title hidden behind menu: {guide}"
                     assert guide["counterTop"]>=guide["headerBottom"]+8, f"Live photo count hidden behind menu: {guide}"
-                    assert guide["overlayBottom"]<=height-18, f"Live photo overlays positioned below visible screen: {guide}"
-                    assert guide["captionBottom"]<=height-18, f"Live B02 caption hidden below screen: {guide}"
-                    assert guide["controlsBottom"]<=height-18 and guide["arrowBottom"]<=height-18, f"Live carousel navigation hidden below screen: {guide}"
+                    assert guide["overlayBottom"]<=guide["blockTop"]+guide["sectionHeight"]-48, f"Live photo overlays not inset from photo bottom: {guide}"
+                    assert guide["captionBottom"]<=guide["blockTop"]+guide["sectionHeight"]-48, f"Live B02 caption outside expected photo edge: {guide}"
+                    assert guide["controlsBottom"]<=guide["blockTop"]+guide["sectionHeight"]-48 and guide["arrowBottom"]<=guide["blockTop"]+guide["sectionHeight"]-48, f"Live carousel navigation outside photographic outer inset: {guide}"
                     page.screenshot(path=str(REPORTS / "etnika-live-b02-fit.png"),full_page=False)
                     page.locator('#etnika-space-photo').scroll_into_view_if_needed()
                     page.mouse.move(0,0)
