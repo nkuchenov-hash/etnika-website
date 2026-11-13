@@ -36,6 +36,9 @@ with sync_playwright() as p:
                 media:box(q('.etnika-b02__media')),
                 controls:box(q('.etnika-b02__media-bottom')),
                 mediaTop:box(q('.etnika-b02__media-top')),
+                outerGuide:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--etnika-section-outer')) ||
+                  parseFloat(getComputedStyle(block).getPropertyValue('--b02-overlay-inset')),
+                overlayInset:getComputedStyle(block).getPropertyValue('--b02-overlay-inset').trim(),
                 position:getComputedStyle(q('.etnika-b02__copy')).position,
                 groupPosition:getComputedStyle(q('.etnika-b02__composition')).position,
                 groupTransform:getComputedStyle(q('.etnika-b02__composition')).transform,
@@ -54,7 +57,8 @@ with sync_playwright() as p:
             assert abs(v['copy']['height']-(height-60))<=3,msg
             assert v['media']['height']>height+20,msg
             assert abs((v['mediaTop']['top']-v['media']['top'])-(v['media']['bottom']-v['controls']['bottom']))<2,msg
-            assert v['controls']['bottom']<=height-18,msg
+            assert v['media']['bottom']-v['controls']['bottom']>50,msg
+            assert abs((v['mediaTop']['top']-v['media']['top'])-v['outerGuide'])<2,msg
             assert v['overline']['top']-v['block']['top']>=24,msg
             assert v['title']['top']>=v['overline']['bottom']+25,msg
             assert abs(v['stack']['top']-v['overline']['top'])<2,msg
