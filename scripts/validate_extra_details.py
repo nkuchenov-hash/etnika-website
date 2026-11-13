@@ -88,10 +88,10 @@ try:
             image=block.locator(".ee-photo").first.locator("img")
             assert switch.is_visible(), "Background switch is not visible on the active photo"
             for key,part in [
-              ("beige","assets/etnika-portrait-beige.jpg"),
-              ("white","assets/curated/look-editorial.jpg"),
-              ("red","tild3934-6330-4131-b863-653438613836/red.jpg"),
-              ("black","assets/etnika-portrait-dark.jpg")
+              ("beige","assets/extra/bg-model-beige.webp"),
+              ("white","assets/extra/bg-model-white.webp"),
+              ("red","assets/extra/bg-model-red.webp"),
+              ("black","assets/extra/bg-model-black.webp")
             ]:
                 switch.click()
                 assert block.locator(".ee-photo").first.get_attribute("data-background")==key
