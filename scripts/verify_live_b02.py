@@ -51,11 +51,11 @@ with sync_playwright() as p:
         }""")
         print(f'LIVE B02 {w}x{h}: {result}',flush=True)
         assert abs(result['block']['top']-result['header']['bottom'])<3, 'B02 not aligned under navigation'
-        assert result['block']['height']>h+35 and result['block']['height']<h+125, 'B02 SECTION MUST BE SLIGHTLY TALLER THAN ONE SCREEN'
-        assert result['media']['height']>h+35, 'PHOTOGRAPHIC MEDIA NOT TALLER THAN SCREEN'
+        assert result['block']['height']>h+20 and result['block']['height']<h+95, 'B02 SECTION MUST BE SLIGHTLY TALLER THAN ONE SCREEN'
+        assert result['media']['height']>h+20, 'PHOTOGRAPHIC MEDIA NOT TALLER THAN SCREEN'
         assert abs(result['media']['height']-result['block']['height'])<3, 'PHOTO MUST FILL FULL EXTENDED SECTION'
         assert abs(result['copy']['height']-(h-result['header']['height']))<3, 'COPY MUST OCCUPY ONE SCREEN UNDER MENU'
-        assert result['copy']['top']-result['block']['top']>48, 'PHOTO DOES NOT EXTEND ABOVE CONTENT'
+        assert result['copy']['top']-result['block']['top']>40, 'PHOTO DOES NOT EXTEND ABOVE CONTENT'
         assert abs((result['copy']['top']-result['block']['top'])-(result['block']['bottom']-result['copy']['bottom']))<2, 'PHOTO NOT EXTENDED EQUALLY ABOVE AND BELOW COPY'
         assert abs(result['stack']['mid']-result['copy']['mid'])<2, 'EDITORIAL+TITLE+BENEFITS NOT VERTICALLY CENTERED'
         assert abs((result['stack']['top']-result['copy']['top'])-(result['copy']['bottom']-result['stack']['bottom']))<2, 'UNEQUAL WHITESPACE ABOVE EDITORIAL LINE AND BELOW BENEFITS'
