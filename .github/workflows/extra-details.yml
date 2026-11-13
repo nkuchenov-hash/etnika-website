@@ -1,0 +1,36 @@
+name: Check Extra Details price glyphs and readability
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/index.html"
+      - "scripts/validate_extra_details.py"
+      - ".github/workflows/extra-details.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: etnika-extra-details-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium and Playwright
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+      - name: Check complete price glyphs and contrast across screen sizes
+        run: python3 scripts/validate_extra_details.py
+      - name: Save actual browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-extra-details-browser
+          path: reports/extra-details-*.png
+          if-no-files-found: ignore
