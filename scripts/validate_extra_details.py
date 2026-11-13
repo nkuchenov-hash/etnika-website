@@ -34,7 +34,7 @@ JS = r"""() => {
       const style=getComputedStyle(box);
       const canvas=document.createElement('canvas');
       const ctx=canvas.getContext('2d');
-      ctx.font=style.font;
+      ctx.font=`${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
       const metric=ctx.measureText(box.textContent.trim());
       const note=price.querySelector('small');
       const label=item.querySelector('.ee-item-title');
