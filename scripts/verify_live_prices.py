@@ -41,7 +41,22 @@ MEASURE = """() => {
     planPrices:plans.map(p => p.querySelector('.ev3-plan-price').innerText.trim()),
     footer:rect(query('.ev3-actions')),
     visualEndsInsideSection:rect(image).bottom <= rect(section).bottom - 20,
-    navVisible: getComputedStyle(header.querySelector('.esh__nav')).display !== 'none'
+    navVisible: getComputedStyle(header.querySelector('.esh__nav')).display !== 'none',
+    selector: (() => {
+      const active=modes.querySelector('[aria-pressed="true"]');
+      const idle=modes.querySelector('[aria-pressed="false"]');
+      return {
+        activeBackground:getComputedStyle(active).backgroundColor,
+        activeColor:getComputedStyle(active).color,
+        inactiveBackground:getComputedStyle(idle).backgroundColor,
+        textTransform:getComputedStyle(active).textTransform,
+        fontSize:parseFloat(getComputedStyle(active).fontSize),
+        activeHeight:rect(active).height,
+        label:getComputedStyle(modes,'::before').content
+      };
+    })(),
+    planNameSizes:plans.map(p => parseFloat(getComputedStyle(p.querySelector('.ev3-plan-name')).fontSize)),
+    planPriceSizes:plans.map(p => parseFloat(getComputedStyle(p.querySelector('.ev3-plan-price')).fontSize))
   };
 }"""
 
@@ -78,13 +93,19 @@ with sync_playwright() as pw:
         assert abs(data["pricingTopGap"] - data["beigeBottomGap"]) <= 3, ("Pricing upper inset does not match beige FAQ lower inset", data)
         assert all(x == "1" for x in data["planOpacity"]), ("Faded tariff labels", data)
         assert len(data["rowHeights"]) == 3, ("Missing packages", data)
+        assert data["selector"]["activeBackground"] == "rgb(169, 21, 29)", ("Weekday/weekend selected day lacks brand-red emphasis", data)
+        assert data["selector"]["activeColor"] == "rgb(255, 255, 255)", ("Selected day must have white text", data)
+        assert data["selector"]["textTransform"] == "uppercase", ("Day labels should read as a distinct uppercase control", data)
+        assert data["selector"]["activeHeight"] >= 48, ("Day switch hit target too small", data)
+        assert "ДЕНЬ СЪЁМКИ" in data["selector"]["label"], ("Day selector lacks a clear label", data)
         assert data["visualEndsInsideSection"], ("Photo extends below pricing section", data)
         if width > 1160:
             assert data["overline"]["top"] >= data["header"]["bottom"] + 6, ("Overline obscured by header", data)
             assert data["title"]["top"] >= data["header"]["bottom"] + 30, ("Title obscured by header", data)
-            assert 380 <= data["stage"]["height"] <= 535, ("Tariff block height is unbalanced", data)
-            assert data["section"]["height"] <= height + 40, ("Tariff section has unnecessary full-height padding", data)
-            assert max(data["rowHeights"]) <= 180, ("Tariff rows are over-stretched", data)
+            assert 445 <= data["stage"]["height"] <= 675, ("Editorial tariff block has incorrect height", data)
+            assert data["section"]["height"] <= height + 240, ("Editorial pricing block has excessive scrolling", data)
+            assert 115 <= min(data["rowHeights"]) and max(data["rowHeights"]) <= 215, ("Tariff rows have unbalanced spacing", data)
+            assert min(data["planNameSizes"]) >= 41 and min(data["planPriceSizes"]) >= 37, ("Tariff names or prices are visually insignificant", data)
             assert data["title"]["right"] + 10 < data["modes"]["left"] or (
                 data["title"]["bottom"] <= data["modes"]["top"] - 4
             ), ("Heading overlaps weekday/weekend buttons", data)
