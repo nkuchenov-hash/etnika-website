@@ -91,7 +91,9 @@ with sync_playwright() as pw:
         assert abs(v['counter']['top']-v['stage']['top']-vertical)<2,err("counter top inset differs from editorial field")
         assert abs(v['stage']['bottom']-v['bottom']['bottom']-vertical)<2,err("caption bottom inset differs from editorial field")
         assert edge>shared_edge and vertical>40,err("overlay inset has not increased")
-        assert v['imageTransform']!='none',err("photo has not been raised within its frame")
+        # Archive-photo correction (13 Nov): the old scale(1.035) cut off heads.
+        # Keep the image unzoomed and use the approved slide focal point instead.
+        assert v['imageTransform']=='none',err("portrait is zoomed and may crop its head")
         # Use precisely the same visible arrow vocabulary as the photo slider
         # in the 'ФОТОСТУДИЯ БЕЗ ФОТОГРАФА' block.
         for prop in ('width','height','border','background','svgWidth','svgBox'):
