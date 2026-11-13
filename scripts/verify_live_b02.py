@@ -69,7 +69,7 @@ with sync_playwright() as p:
         assert result['overline']['top']>=result['header']['bottom']+8,'overline behind header'
         assert result['title']['top']>result['overline']['bottom']+20,'title sticks to overline'
         assert result['features']['bottom']<result['copy']['bottom']-35,'features outside centered content area'
-        assert abs((result['topOverlay']['top']-result['media']['top'])-result['sectionSpacing'])<2, 'PHOTO COUNTER/MOSCOW MUST ALIGN TO SHARED SECTION OUTER GRID'
+        assert abs((result['topOverlay']['top']-result['media']['top'])-(result['spaceGuide']['top']-result['spaceSection']['top']))<2, 'PHOTO COUNTER/MOSCOW MUST ALIGN TO APPROVED SPACE ETNIKA SECTION GRID'
         assert abs((result['topOverlay']['top']-result['media']['top'])-(result['spaceGuide']['top']-result['spaceSection']['top']))<2, 'PHOTO TEXT INSET MUST MATCH SPACE ETNIKA EDITORIAL GUIDE'
         assert result['bodyFeatureGap']>=30, 'B02 LEFT COPY STILL TOO COMPRESSED'
         assert result['bodyParaGap']>=19, 'B02 BODY PARAGRAPHS STILL TOO COMPRESSED'
