@@ -25,6 +25,8 @@ MEASURE = """() => {
     section: rect(section), header: headerRect, overline: rect(overline),
     title: heading, modes:rect(modes), stage:rect(stage), image:rect(image),
     lineToHeading: heading.top - rect(overline).bottom,
+    headingToTariffs: rect(stage).top - rect(query('.ev3-head')).bottom,
+    tariffsToActions: rect(query('.ev3-actions')).top - rect(query('.ev3-plans')).bottom,
     titleSize: parseFloat(getComputedStyle(title).fontSize),
     sharedTitleSize: parseFloat(getComputedStyle(document.querySelector('#etnika-stories h2.etnika-section-heading')).fontSize),
     beigeBottomGap: (() => {
@@ -93,18 +95,20 @@ with sync_playwright() as pw:
         assert abs(data["pricingTopGap"] - data["beigeBottomGap"]) <= 3, ("Pricing upper inset does not match beige FAQ lower inset", data)
         assert all(x == "1" for x in data["planOpacity"]), ("Faded tariff labels", data)
         assert len(data["rowHeights"]) == 3, ("Missing packages", data)
-        assert data["selector"]["activeBackground"] == "rgb(169, 21, 29)", ("Weekday/weekend selected day lacks brand-red emphasis", data)
-        assert data["selector"]["activeColor"] == "rgb(255, 255, 255)", ("Selected day must have white text", data)
-        assert data["selector"]["textTransform"] == "uppercase", ("Day labels should read as a distinct uppercase control", data)
+        assert data["selector"]["activeBackground"] in ("rgba(0, 0, 0, 0)", "transparent"), ("Day switch must not use filled tabs", data)
+        assert data["selector"]["activeColor"] == "rgb(169, 21, 29)", ("Selected day must use a restrained red editorial accent", data)
+        assert data["selector"]["textTransform"] == "none", ("Weekday labels should use normal case", data)
         assert data["selector"]["activeHeight"] >= 48, ("Day switch hit target too small", data)
-        assert "ДЕНЬ СЪЁМКИ" in data["selector"]["label"], ("Day selector lacks a clear label", data)
+        assert data["selector"]["label"] == "none", ("Day switch must not have an extra floating label", data)
+        assert data["headingToTariffs"] >= 39, ("Insufficient space between title and tariff list", data)
+        assert data["tariffsToActions"] >= 32, ("Insufficient space between tariff list and actions", data)
         assert data["visualEndsInsideSection"], ("Photo extends below pricing section", data)
         if width > 1160:
             assert data["overline"]["top"] >= data["header"]["bottom"] + 6, ("Overline obscured by header", data)
             assert data["title"]["top"] >= data["header"]["bottom"] + 30, ("Title obscured by header", data)
-            assert 445 <= data["stage"]["height"] <= 675, ("Editorial tariff block has incorrect height", data)
-            assert data["section"]["height"] <= height + 240, ("Editorial pricing block has excessive scrolling", data)
-            assert 115 <= min(data["rowHeights"]) and max(data["rowHeights"]) <= 215, ("Tariff rows have unbalanced spacing", data)
+            assert 530 <= data["stage"]["height"] <= 730, ("Editorial tariff block has incorrect height", data)
+            assert data["section"]["height"] <= height + 280, ("Editorial pricing block has excessive scrolling", data)
+            assert 115 <= min(data["rowHeights"]) and max(data["rowHeights"]) <= 230, ("Tariff rows have unbalanced spacing", data)
             assert min(data["planNameSizes"]) >= 41 and min(data["planPriceSizes"]) >= 37, ("Tariff names or prices are visually insignificant", data)
             assert data["title"]["right"] + 10 < data["modes"]["left"] or (
                 data["title"]["bottom"] <= data["modes"]["top"] - 4
