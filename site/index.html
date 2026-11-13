@@ -8390,6 +8390,22 @@ body.etnika-gallery-lock{
 #etnika-reviews .urw-title,
 #etnika-reviews .urw-kicker{display:none!important}
 #etnika-reviews .urw-head{align-items:center}
+/* The carousel and bottom rule must fill the SAME editorial grid as
+   the upper overline and H2. The widget default maxWidth=1440px is narrower
+   than ETNIKA's responsive --et-u-edge content field on larger viewports. */
+#etnika-reviews .etnika-reviews-mount,
+#etnika-reviews .urw-shell,
+#etnika-reviews .urw-viewport,
+#etnika-reviews .urw-controls{
+  box-sizing:border-box;
+  width:100%;
+  min-width:0;
+  max-width:none;
+}
+#etnika-reviews .urw-shell{
+  margin-left:0;
+  margin-right:0;
+}
 /* Reviews controls: editorial, square-corner hover feedback. */
 #etnika-reviews .urw-btn,
 #etnika-reviews .urw-arrow{
