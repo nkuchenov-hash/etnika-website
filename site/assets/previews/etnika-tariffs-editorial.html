@@ -14,9 +14,11 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible
 h1{font:400 var(--h2)/.86 var(--display);letter-spacing:-.04em;text-transform:uppercase;margin:0}
 h1 span{color:var(--red)}
 .heading{display:flex;align-items:flex-end;justify-content:space-between;gap:25px 38px;margin:clamp(42px,5.4vh,62px) 0 clamp(34px,4.1vh,52px)}
-.days{flex:none;display:flex;align-items:center;gap:30px;padding-bottom:3px}
-.days button{font:400 14px var(--body);color:#524d49;background:none;border:0;border-bottom:2px solid transparent;padding:9px 0 13px;white-space:nowrap}
-.days button[aria-pressed=true]{color:var(--red);border-bottom-color:var(--red)}
+.days{flex:none;display:flex;align-items:center;gap:0;position:relative;border:1px solid #d7d0ca;background:#f5f1ed;padding:4px;margin-top:17px}
+.days::before{content:'ДЕНЬ СЪЁМКИ';position:absolute;right:0;top:-28px;white-space:nowrap;font:400 11px/1.3 var(--body);letter-spacing:.13em;color:#716b67}
+.days button{font:500 clamp(14px,1.05vw,16px)/1.2 var(--body);text-transform:uppercase;letter-spacing:.05em;color:var(--ink);background:transparent;border:0;padding:17px 22px;min-width:117px;min-height:53px;white-space:nowrap;transition:background .2s,color .2s}
+.days button[aria-pressed=true]{color:#fff;background:var(--red)}
+.days button:not([aria-pressed=true]):hover{background:#eae1db;color:var(--red)}
 .book{display:inline-flex;text-decoration:none;align-items:center;justify-content:space-between;gap:28px;background:var(--red);color:#fff;min-height:59px;padding:16px 21px;font:400 15px var(--body);white-space:nowrap;border:1px solid var(--red)}
 .book:hover{background:#881018;border-color:#881018}.book span{font-size:23px;line-height:1}
 .info-button{align-self:center;border:0;border-bottom:1px solid #847e78;background:none;font:400 14px var(--body);min-height:42px;padding:10px 0;white-space:nowrap}.info-button:hover{color:var(--red);border-color:var(--red)}.info-button em{color:var(--red);font-size:19px;font-style:normal;padding-left:17px}
@@ -54,7 +56,7 @@ h1 span{color:var(--red)}
 @media(max-width:1280px){.heading{flex-wrap:wrap}.days{margin-left:auto}.tariff-name{font-size:clamp(43px,4vw,62px)}.tariff-price{font-size:clamp(37px,3.6vw,52px)}}
 @media(max-width:1100px){:root{--edge:clamp(20px,4.3vw,46px)}}
 @media(max-width:900px){.main{padding-top:34px}.heading{margin:35px 0 25px}.overline{grid-template-columns:auto minmax(24px,1fr) auto;gap:11px}.overline .divider,.overline .context,.overline .end{display:none}.heading h1{font-size:clamp(52px,8.9vw,82px)}.days{margin-left:0}.panel{width:min(590px,95vw)}.overlay-bg{background:#19130f66;pointer-events:auto}.overlay.open .overlay-bg{opacity:1}.tariff-row{gap:12px}.tariff-name{font-size:clamp(42px,7vw,59px)}.tariff-price{font-size:clamp(34px,5.2vw,51px)}}
-@media(max-width:640px){.preview-nav{height:56px}.preview-nav .brand{font-size:27px}.preview-nav .preview-status{display:none}.main{min-height:0}.overline{font-size:9px}.heading h1{font-size:clamp(48px,12.3vw,73px)}.days{gap:26px}.tariff-row{grid-template-columns:25px minmax(0,1fr) auto;gap:7px}.tariff-name{font-size:clamp(34px,9.2vw,48px)}.tariff-price{font-size:clamp(30px,8vw,42px)}.tariff-meta{font-size:12px;margin-top:10px}.tariff-id{font-size:10px;padding-left:4px}.actions{align-items:stretch}.info-button{align-self:center}.panel{width:100vw}.panel-top{padding:18px 20px 12px}.panel-scroll{padding:18px 20px}.panel-bottom{padding:16px 20px}.panel-title{font-size:62px}.feature-list li{font-size:14px}.panel-bottom .panel-price{font-size:35px}.panel-bottom .book{font-size:12px}}
+@media(max-width:640px){.preview-nav{height:56px}.preview-nav .brand{font-size:27px}.preview-nav .preview-status{display:none}.main{min-height:0}.overline{font-size:9px}.heading h1{font-size:clamp(48px,12.3vw,73px)}.days{gap:0;margin-top:19px}.days button{min-width:0;padding:15px 17px;min-height:50px}.tariff-row{grid-template-columns:25px minmax(0,1fr) auto;gap:7px}.tariff-name{font-size:clamp(34px,9.2vw,48px)}.tariff-price{font-size:clamp(30px,8vw,42px)}.tariff-meta{font-size:12px;margin-top:10px}.tariff-id{font-size:10px;padding-left:4px}.actions{align-items:stretch}.info-button{align-self:center}.panel{width:100vw}.panel-top{padding:18px 20px 12px}.panel-scroll{padding:18px 20px}.panel-bottom{padding:16px 20px}.panel-title{font-size:62px}.feature-list li{font-size:14px}.panel-bottom .panel-price{font-size:35px}.panel-bottom .book{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.panel,.overlay-bg{transition:none}}
 
 /* 01 — improved editorial pricing, photography retained. */
