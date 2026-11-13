@@ -40,7 +40,7 @@ with sync_playwright() as pw:
           return {
             urls:photos.map(i=>new URL(i.src).pathname),
             widths:photos.map(i=>i.naturalWidth),
-            elsewhere:other.map(i=>new URL(i.src).pathname),
+            elsewhere:other.map(i=>{try{return new URL(i.getAttribute('src')||i.src||'',document.baseURI).pathname}catch(e){return ''}}).filter(Boolean),
             count:document.querySelector('#etnika-block-02-final .etnika-b02__counter')?.textContent.trim(),
             active:photos.filter(i=>i.classList.contains('is-active')).length
           };
