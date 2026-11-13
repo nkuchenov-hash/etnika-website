@@ -4541,6 +4541,10 @@ body.etnika-gallery-lock{
   var autoplayDelay = 6000;
   var autoplayTimer = null;
   var carouselVisible = false;
+  // Keep the selected photo visible while the pointer is over a benefit row,
+  // including after a click, and throughout a press-and-hold interaction.
+  var hoveredItem = null;
+  var pressedItem = null;
   var reducedMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -4553,6 +4557,7 @@ body.etnika-gallery-lock{
   function scheduleAutoplay(){
     stopAutoplay();
     if(!carouselVisible || document.hidden || reducedMotion) return;
+    if(hoveredItem || pressedItem) return;
     if(section.querySelector(':focus-visible')) return;
     autoplayTimer = window.setTimeout(function(){
       autoplayTimer = null;
@@ -4562,8 +4567,43 @@ body.etnika-gallery-lock{
   }
 
   items.forEach(function(item){
+    item.addEventListener('pointerenter', function(event){
+      // Touch taps must not leave the autoplay permanently paused.
+      if(event.pointerType === 'mouse' || event.pointerType === 'pen'){
+        hoveredItem = item;
+        stopAutoplay();
+      }
+    });
+    item.addEventListener('pointerleave', function(){
+      if(hoveredItem === item) hoveredItem = null;
+      // Still pressed? Keep paused until the user releases the button.
+      scheduleAutoplay();
+    });
+    item.addEventListener('pointerdown', function(){
+      pressedItem = item;
+      stopAutoplay();
+    });
+    item.addEventListener('pointerup', function(){
+      if(pressedItem === item) pressedItem = null;
+      scheduleAutoplay();
+    });
+    item.addEventListener('pointercancel', function(){
+      if(pressedItem === item) pressedItem = null;
+      scheduleAutoplay();
+    });
     item.addEventListener('click', scheduleAutoplay);
   });
+  // Covers releasing the button after dragging off the pressed benefit row.
+  document.addEventListener('pointerup', function(){
+    if(!pressedItem) return;
+    pressedItem = null;
+    scheduleAutoplay();
+  });
+  window.addEventListener('blur', function(){
+    pressedItem = null;
+    stopAutoplay();
+  });
+  window.addEventListener('focus',scheduleAutoplay);
   prev.addEventListener('click', function(){
     render(current - 1);
     scheduleAutoplay();
