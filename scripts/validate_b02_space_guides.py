@@ -50,6 +50,7 @@ with sync_playwright() as pw:
               main:box(q('#etnika-block-02-final .etnika-b02__main')),
               photoOverlayContent:getComputedStyle(media,'::after').content,
               photoOverlayDisplay:getComputedStyle(media,'::after').display,
+              photoOverlayBackground:getComputedStyle(media,'::after').backgroundImage,
               photoTextShadows:[
                 '#etnika-block-02-final .etnika-b02__counter',
                 '#etnika-block-02-final .etnika-b02__stamp',
@@ -84,7 +85,8 @@ with sync_playwright() as pw:
         assert near(v['copy']['height'],h-v['header']['height'],3),err('B02 content frame must be one visible screen')
 
         assert v['bodyWidth']<=w+2,err('horizontal overflow')
-        assert v['photoOverlayContent']=='none' and v['photoOverlayDisplay']=='none',err('unrequested darkening of B02 photo')
+        assert v['photoOverlayContent']!='none' and v['photoOverlayDisplay']!='none',err('subtle photo backdrop missing')
+        assert v['photoOverlayBackground'].count('linear-gradient')>=2,err('photo must have gentle top and bottom text gradients')
         assert all(shadow=='none' for shadow in v['photoTextShadows']),err('unrequested text shadow over B02 photo')
         assert v['arrowFilter']=='none',err('unrequested carousel drop shadow')
         assert v['media']['height']>v['copy']['height']+80,err('Photo is not taller than text frame')
@@ -99,14 +101,15 @@ with sync_playwright() as pw:
         section_center=v['copy']['top']+v['copy']['height']/2
         assert v['compositionPosition']=='static',err('B02 text group must be static, never sticky or absolutely moved')
         assert abs(actual_center-section_center)<=2,err(f'B02 TEXT NOT CENTERED: composition midpoint {actual_center:.1f}, section midpoint {section_center:.1f}')
-        assert abs(v['stack']['top']-v['overline']['top'])<=2,err('Editorial overline separated from centered group')
+        assert 37<=v['stack']['top']-v['overline']['top']<=67,err('editorial overline should rise independently as marked by owner')
         assert abs(v['stack']['bottom']-v['features']['bottom'])<=2,err('Features detached from centered group')
-        assert near(v['stack']['top']-v['copy']['top'],v['copy']['bottom']-v['stack']['bottom'],2),err('Unequal real whitespace above overline vs below features')
+        assert near(v['stack']['top']-v['copy']['top'],v['copy']['bottom']-v['stack']['bottom'],2),err('B02 core group must remain balanced, excluding independently raised overline')
         assert abs(v['main']['top']-v['composition']['top'])<=2,err('B02 headline is not at the top of the composition')
         assert abs(v['features']['bottom']-v['composition']['bottom'])<=2,err('B02 benefits detached from centered composition')
         assert v['main']['top']>v['overline']['bottom']+28,err('main text starts too high, close to overline')
         assert v['counter']['top']>=v['header']['bottom']+8,err('photo counter hidden under sticky navigation')
-        assert v['stamp']['top']>=v['header']['bottom']+8,err('Moscow photo stamp hidden under menu')
+        assert v['stamp']['top']>=v['header']['bottom']+2,err('Moscow photo stamp hidden under menu')
+        assert v['stamp']['top']<v['overlayTop']['top']-15,err('Moscow label should rise independently of counter')
         assert v['stamp']['bottom']<=h-50,err('photo stamp extends below screen')
         assert near(v['overlayTop']['top']-v['media']['top'],v['spaceOverline']['top']-v['spaceSection']['top'],2),err('Photo captions must use the same upper offset as editorial lines on the SPACE ETNIKA block')
         assert near(v['media']['bottom']-v['overlayBottom']['bottom'],v['spaceOverline']['top']-v['spaceSection']['top'],2),err('Photo lower caption and arrows must match the shared SPACE ETNIKA section inset')
