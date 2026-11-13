@@ -59,6 +59,7 @@ with sync_playwright() as pw:
               topLineLength:el('.eg-top-rule').getBoundingClientRect().width,
               signoffLineLength:parseFloat(getComputedStyle(el('.eg-signoff'),'::before').width),
               topRuleDisplay:getComputedStyle(el('.eg-top-rule')).display,
+              headingFont:getComputedStyle(el('h2.eg-title')).fontFamily,
               headingSize:parseFloat(getComputedStyle(el('h2.eg-title')).fontSize),
               subtitleSize:parseFloat(getComputedStyle(el('.eg-sub')).fontSize),
               factLabelSize:parseFloat(getComputedStyle(el('.eg-fact span')).fontSize),
