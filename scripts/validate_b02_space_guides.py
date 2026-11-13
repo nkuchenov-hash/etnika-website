@@ -35,6 +35,8 @@ with sync_playwright() as pw:
             const box=(el)=>rect(el);
             return {
               header:box(q('#etnika-site-header')),
+              spaceSection:box(space),
+              spacingToken:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--etnika-section-outer')),
               block:box(b),media:box(media),
               overline:box(top),topLabel:box(top.children[0]),topAccent:box(top.children[2]),
               spaceOverline:box(stop),spaceLabel:box(stop.children[0]),spaceAccent:box(stop.children[2]),
@@ -106,10 +108,10 @@ with sync_playwright() as pw:
         assert v['counter']['top']>=v['header']['bottom']+8,err('photo counter hidden under sticky navigation')
         assert v['stamp']['top']>=v['header']['bottom']+8,err('Moscow photo stamp hidden under menu')
         assert v['stamp']['bottom']<=h-50,err('photo stamp extends below screen')
-        assert v['overlayBottom']['bottom']<=h-18,err('PHOTO CAPTION/ARROWS BELOW THE SCREEN')
-        assert v['caption']['bottom']<=h-18,err('photo description below screen')
+        assert near(v['overlayTop']['top']-v['media']['top'],v['spaceOverline']['top']-v['spaceSection']['top'],2),err('Photo captions must use the same upper offset as editorial lines on the SPACE ETNIKA block')
+        assert near(v['media']['bottom']-v['overlayBottom']['bottom'],v['spacingToken'],2),err('Photo bottom insets must match the shared outer-section spacing')
         assert near(v['overlayTop']['top']-v['media']['top'],v['media']['bottom']-v['overlayBottom']['bottom'],2),err('PHOTO OVERLAY TOP AND BOTTOM SPACING MUST BE EQUAL')
-        assert v['prev']['bottom']<=h-18 and v['next']['bottom']<=h-18,err('carousel arrows below screen')
+        assert v['prev']['bottom']<=v['media']['bottom']-40 and v['next']['bottom']<=v['media']['bottom']-40,err('carousel arrows outside photo inset')
         assert v['overlayBottom']['top']>v['header']['bottom']+60,err('photo caption collides with top overlays')
         path=OUT/f'etnika-b02-space-guides-{w}x{h}.png'
         page.screenshot(path=str(path),full_page=False)
