@@ -788,49 +788,49 @@ window.addEventListener('pageshow',function(event){
     <div class="etnika-b02__media" data-etnika-photo-set="b02-unique-20261113">
       <img
         class="etnika-b02__slide is-active"
-        src="assets/b02/b02-02-dark.webp"
+        src="assets/b02/framed/b02-02-dark.webp"
         alt="Автопортрет на тёмном фоне — белый образ"
         decoding="async"
       >
       <img
         class="etnika-b02__slide"
-        src="assets/b02/b02-06-red-blonde.webp"
+        src="assets/b02/framed/b02-06-red-blonde.webp"
         alt="Фэшн-портрет на ярком красном фоне"
         decoding="async"
       >
       <img
         class="etnika-b02__slide"
-        src="assets/b02/b02-03-cool.webp"
+        src="assets/b02/framed/b02-03-cool.webp"
         alt="Портрет на холодном голубоватом фоне"
         decoding="async"
       >
       <img
         class="etnika-b02__slide"
-        src="assets/b02/b02-05-ivory.webp"
+        src="assets/b02/framed/b02-05-ivory.webp"
         alt="Студийный портрет в светлом платье на кремовом фоне"
         decoding="async"
       >
       <img
         class="etnika-b02__slide"
-        src="assets/b02/b02-04-purple.webp"
+        src="assets/b02/framed/b02-04-purple.webp"
         alt="Портрет с фиолетовой световой схемой"
         decoding="async"
       >
       <img
         class="etnika-b02__slide"
-        src="assets/b02/b02-07-bw.webp"
+        src="assets/b02/framed/b02-07-bw.webp"
         alt="Чёрно-белый автопортрет на тёмно-сером фоне"
         decoding="async"
       >
       <img
         class="etnika-b02__slide"
-        src="assets/b02/b02-08-taupe.webp"
+        src="assets/b02/framed/b02-08-taupe.webp"
         alt="Ростовой портрет в коричневом платье на тёплом фоне"
         decoding="async"
       >
       <img
         class="etnika-b02__slide"
-        src="assets/b02/b02-10-red-seated.webp"
+        src="assets/b02/framed/b02-10-red-seated.webp"
         alt="Съёмка сидя на красном фотофоне"
         decoding="async"
       >
@@ -16118,5 +16118,31 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 <link rel="stylesheet" href="assets/etnika-body-type.css?v=20261113-unified-copy">
 <link rel="stylesheet" href="assets/etnika-photo-framing.css?v=20261113-portrait-check">
 
+<style id="etnika-b02-uncropped-photos-20261113">
+/* All eight B02 photos have a dedicated wide background-extended master,
+   derived WITHOUT cropping, zooming, or stretching the actual portrait.
+   At desktop sizes the background extension absorbs any 0-2% object-fit
+   difference between an image and the photo section. */
+#etnika-review-flow #etnika-block-02-final .etnika-b02__slide{
+  object-fit:cover!important;
+  object-position:50% 50%!important;
+  transform:none!important;
+}
+/* Tall/narrow mobile media: never cut a head, shoes or whole figure.
+   The letterbox uses a matching studio-backdrop color, not a blurred photo. */
+@media(max-width:1100px){
+  #etnika-review-flow #etnika-block-02-final .etnika-b02__slide{
+    object-fit:contain!important;
+  }
+  #etnika-block-02-final .etnika-b02__slide[src$="b02-02-dark.webp"]{background:#17151a;}
+  #etnika-block-02-final .etnika-b02__slide[src$="b02-03-cool.webp"]{background:#d3d4d8;}
+  #etnika-block-02-final .etnika-b02__slide[src$="b02-04-purple.webp"]{background:#1d1729;}
+  #etnika-block-02-final .etnika-b02__slide[src$="b02-05-ivory.webp"]{background:#ddd8d3;}
+  #etnika-block-02-final .etnika-b02__slide[src$="b02-06-red-blonde.webp"]{background:#741019;}
+  #etnika-block-02-final .etnika-b02__slide[src$="b02-07-bw.webp"]{background:#555555;}
+  #etnika-block-02-final .etnika-b02__slide[src$="b02-08-taupe.webp"]{background:#d4d1cf;}
+  #etnika-block-02-final .etnika-b02__slide[src$="b02-10-red-seated.webp"]{background:#a30f19;}
+}
+</style>
 </body>
 </html>
