@@ -44,6 +44,7 @@
 /* Booking image in WHY ETNIKA: portrait is on the right, laptop below. */
 #etnika-review-flow #etnika-studio-features img.b05-stage-image[src*="step-05-laptop"]{
   object-position:73% 45%!important;
+  transform:none!important; /* the source hairline is already near its top */
 }
 
 /* Do not touch the full-resolution modal: all portraits remain uncropped. */
