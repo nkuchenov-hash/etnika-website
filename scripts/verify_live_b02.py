@@ -43,6 +43,11 @@ with sync_playwright() as p:
           return {block:r(b),header:r(nav),copy:r(copy),comp:r(comp),stack:r(stack),
             overline:r(q('.etnika-b02__top')),title:r(q('.etnika-b02__title')),
             topOverlay:r(q('.etnika-b02__media-top')),
+            sectionSpacing:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--etnika-section-outer')),
+            spaceSection:r(document.getElementById('etnika-space-photo')),
+            spaceGuide:r(document.querySelector('#etnika-space-photo .spf-top')),
+            bodyParaGap:(()=>{const paras=[...q('.etnika-b02__description').querySelectorAll('p')];return paras[1].getBoundingClientRect().top-paras[0].getBoundingClientRect().bottom;})(),
+            bodyFeatureGap:r(q('.etnika-b02__features')).top-r(q('.etnika-b02__main')).bottom,
             features:r(q('.etnika-b02__features')),media:r(media),
             bottomOverlay:r(q('.etnika-b02__media-bottom')),
             imageLoaded:[...media.querySelectorAll('img')].some(i=>i.complete&&i.naturalWidth>0),
@@ -64,7 +69,10 @@ with sync_playwright() as p:
         assert result['overline']['top']>=result['header']['bottom']+8,'overline behind header'
         assert result['title']['top']>result['overline']['bottom']+20,'title sticks to overline'
         assert result['features']['bottom']<result['copy']['bottom']-35,'features outside centered content area'
-        assert result['bottomOverlay']['bottom']<h-18,'image controls below screen fold'
+        assert abs((result['topOverlay']['top']-result['media']['top'])-result['sectionSpacing'])<2, 'PHOTO COUNTER/MOSCOW MUST ALIGN TO SHARED SECTION OUTER GRID'
+        assert abs((result['topOverlay']['top']-result['media']['top'])-(result['spaceGuide']['top']-result['spaceSection']['top']))<2, 'PHOTO TEXT INSET MUST MATCH SPACE ETNIKA EDITORIAL GUIDE'
+        assert result['bodyFeatureGap']>=30, 'B02 LEFT COPY STILL TOO COMPRESSED'
+        assert result['bodyParaGap']>=19, 'B02 BODY PARAGRAPHS STILL TOO COMPRESSED'
         assert abs((result['topOverlay']['top']-result['media']['top'])-(result['media']['bottom']-result['bottomOverlay']['bottom']))<2, 'PHOTO TYPE MUST HAVE EQUAL TOP AND BOTTOM INSETS'
         assert result['copyPosition']=='relative' and result['compPosition']=='static' and result['compTransform']=='none', 'scroll-bound content repositioning'
         assert result['imageLoaded'],'photo not loaded'
