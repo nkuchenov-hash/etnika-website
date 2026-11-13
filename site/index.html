@@ -6183,8 +6183,8 @@ body.etnika-gallery-lock{
   <div class="ee-shell">
 
     <div class="ee-gallery" aria-label="Дополнительные возможности">
-      <div class="ee-photo is-active" role="group" tabindex="0" aria-label="Варианты фотофона: бежевый, белый, красный, чёрный" data-images="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg" data-background="red">
-        <img src="https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg" alt="Красный фон для фотосессии в ЭТНИКА" loading="lazy">
+      <div class="ee-photo is-active" role="group" tabindex="0" aria-label="Варианты фотофона: бежевый, белый, красный, чёрный" data-images="assets/extra/bg-model-red.webp" data-background="red">
+        <img src="assets/extra/bg-model-red.webp" alt="Фотосессия одной модели на красном фоне в студии ЭТНИКА" loading="lazy">
         <button class="ee-background-switch" type="button" aria-label="Сменить фон. Сейчас красный" title="Сменить фон">
           <span>СМЕНИТЬ<br>ФОН</span>
           <span class="ee-background-color" aria-live="polite">КРАСНЫЙ</span>
@@ -6268,10 +6268,12 @@ body.etnika-gallery-lock{
   var picture=photo.querySelector('img');
   var text=control.querySelector('.ee-background-color');
   var variants=[
-    {name:'БЕЖЕВЫЙ',key:'beige',src:'assets/etnika-portrait-beige.jpg'},
-    {name:'БЕЛЫЙ',key:'white',src:'assets/curated/look-editorial.jpg'},
-    {name:'КРАСНЫЙ',key:'red',src:'https://static.tildacdn.com/tild3934-6330-4131-b863-653438613836/red.jpg'},
-    {name:'ЧЁРНЫЙ',key:'black',src:'assets/etnika-portrait-dark.jpg'}
+    // Real unretouched photos from one ETNIKA studio photoshoot,
+    // not synthetic recolours or unrelated portraits.
+    {name:'БЕЖЕВЫЙ',key:'beige',src:'assets/extra/bg-model-beige.webp'},
+    {name:'БЕЛЫЙ',key:'white',src:'assets/extra/bg-model-white.webp'},
+    {name:'КРАСНЫЙ',key:'red',src:'assets/extra/bg-model-red.webp'},
+    {name:'ЧЁРНЫЙ',key:'black',src:'assets/extra/bg-model-black.webp'}
   ];
   var index=-1; // Keep the original red image until the first press.
   control.addEventListener('click',function(e){
