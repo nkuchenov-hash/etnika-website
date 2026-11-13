@@ -1,0 +1,29 @@
+name: Fast ETNIKA guest-stories CTA geometry
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/index.html'
+      - 'scripts/validate_stories_cta.py'
+      - '.github/workflows/stories-fast.yml'
+  workflow_dispatch:
+concurrency:
+  group: etnika-qa-stories-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  stories-geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Playwright
+        run: python3 -m pip install --disable-pip-version-check playwright==1.56.0
+      - name: Validate gallery grows for CTA and never overlaps next section
+        run: python3 scripts/validate_stories_cta.py
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-stories-cta-geometry
+          path: reports/etnika-stories-cta-*.png
+          if-no-files-found: ignore
