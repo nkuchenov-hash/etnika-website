@@ -6,8 +6,10 @@ req=urllib.request.Request(URL,headers={"User-Agent":"Mozilla/5.0 (compatible; E
 with urllib.request.urlopen(req,timeout=35) as r:
     source=r.read().decode("utf-8","replace")
 print("ORIGINAL_PAGE_BYTES",len(source),flush=True)
+print("TILDA_OCCURRENCES",source.lower().count("tildacdn"),flush=True)
+print("SAMPLE_TILDA_PATHS",re.findall(r".{0,70}tildacdn.{0,110}",source,re.I)[:5],flush=True)
 # HTML contains both raw 20px thumbnails and full-size, lazy-loaded Tilda media.
-pattern=re.compile(r'(?:https?:)?(?:\\/\\/|//)(?:[a-z0-9-]+\\.)?tildacdn\\.com/[A-Za-z0-9_\\/.,%-]+',re.I)
+pattern=re.compile(r'(?:https?:)?//(?:[a-z0-9-]+\.)*tildacdn\.com/[^\s"<>\\)]+',re.I)
 found=[]
 for match in pattern.finditer(source):
     value=html.unescape(match.group(0).replace("\\/","/")).rstrip(".,")
