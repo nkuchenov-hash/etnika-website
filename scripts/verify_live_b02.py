@@ -19,13 +19,16 @@ with sync_playwright() as p:
     for w,h in [(1660,930),(1366,768),(1920,1080)]:
         page=browser.new_page(viewport={'width':w,'height':h},device_scale_factor=1)
         result=None
-        for attempt in range(6):
+        for attempt in range(18):
             page.goto(URL+f'&size={w}&attempt={attempt}',wait_until='domcontentloaded',timeout=45000)
             page.evaluate('() => document.fonts.ready')
             page.wait_for_timeout(500)
             build=page.locator('meta[name="etnika-build"]').get_attribute('content')
-            if build==BUILD: break
-            if attempt==5:raise AssertionError(f'Old live HTML at {w}x{h}: {build!r}, expected {BUILD!r}')
+            css=page.locator('#etnika-b02-centered-composition-20261111').text_content() or ''
+            latest_style='gap:clamp(30px,4svh,39px)!important;' in css
+            if build==BUILD and latest_style: break
+            if attempt==17:
+                raise AssertionError(f'Old live HTML at {w}x{h}: build {build!r} expected {BUILD!r}, current B02 compact-height CSS={latest_style}')
             time.sleep(2)
         page.evaluate("""() => {
           const b=document.getElementById('etnika-block-02-final');
