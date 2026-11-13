@@ -6183,7 +6183,7 @@ body.etnika-gallery-lock{
   <div class="ee-shell">
 
     <div class="ee-gallery" aria-label="Дополнительные возможности">
-      <div class="ee-photo is-active" role="group" tabindex="0" aria-label="Варианты фотофона: бежевый, белый, красный, чёрный" data-images="assets/extra/bg-model-red.webp" data-background="red">
+      <div class="ee-photo is-active" role="group" tabindex="0" aria-label="Варианты фотофона: красный, чёрный, белый" data-images="assets/extra/bg-model-red.webp" data-background="red">
         <img src="assets/extra/bg-model-red.webp" alt="Фотосессия одной модели на красном фоне в студии ЭТНИКА" loading="lazy">
         <button class="ee-background-switch" type="button" aria-label="Сменить фон. Сейчас красный" title="Сменить фон">
           <span>СМЕНИТЬ<br>ФОН</span>
@@ -6268,14 +6268,12 @@ body.etnika-gallery-lock{
   var picture=photo.querySelector('img');
   var text=control.querySelector('.ee-background-color');
   var variants=[
-    // Real unretouched photos from one ETNIKA studio photoshoot,
-    // not synthetic recolours or unrelated portraits.
-    {name:'БЕЖЕВЫЙ',key:'beige',src:'assets/extra/bg-model-beige.webp'},
-    {name:'БЕЛЫЙ',key:'white',src:'assets/extra/bg-model-white.webp'},
+    // Authentic photographs from the same ETNIKA studio shoot.
     {name:'КРАСНЫЙ',key:'red',src:'assets/extra/bg-model-red.webp'},
-    {name:'ЧЁРНЫЙ',key:'black',src:'assets/extra/bg-model-black.webp'}
+    {name:'ЧЁРНЫЙ',key:'black',src:'assets/extra/bg-model-black.webp'},
+    {name:'БЕЛЫЙ',key:'white',src:'assets/extra/bg-model-white.webp'}
   ];
-  var index=-1; // Keep the original red image until the first press.
+  var index=0; // The first visible image is already red; next click goes to black.
   control.addEventListener('click',function(e){
     e.preventDefault();e.stopPropagation();
     index=(index+1)%variants.length;
@@ -6293,7 +6291,7 @@ body.etnika-gallery-lock{
 </script>
 
 <style id="etnika-extra-background-switch-20261113">
-/* A real four-photo background-preview switch, independent of the gallery's active tile. */
+/* A three-photo background-preview switch, independent of the gallery's active tile. */
 #etnika-extra .ee-background-switch{
   position:absolute;z-index:5;
   top:clamp(20px,11%,76px);left:clamp(12px,1.8vw,22px);
