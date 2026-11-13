@@ -2025,7 +2025,7 @@ body.etnika-gallery-lock{
       </a>
 
       <a class="story-card s5" href="#" data-format="kids" aria-label="Детская фотосессия">
-        <img src="assets/portfolio/guests-child.jpg" alt="Детская фотосессия в ЭТНИКА" loading="lazy">
+        <img src="assets/curated/kids-happy-family.jpg" alt="Детская фотосессия в ЭТНИКА" loading="lazy">
         <div class="story-copy">
           <h3 class="story-name">Детская<br>фотосессия</h3>
           <span class="story-arrow">→</span>
@@ -2049,7 +2049,7 @@ body.etnika-gallery-lock{
       </a>
 
       <a class="story-card s8" href="#" data-format="family" aria-label="Семейная фотосессия">
-        <img src="assets/portfolio/guests-friends-two.jpg" alt="Семейная фотосессия в ЭТНИКА" loading="lazy">
+        <img src="assets/curated/family-group.jpg" alt="Семейная фотосессия в ЭТНИКА" loading="lazy">
         <div class="story-copy">
           <h3 class="story-name">Семейная<br>фотосессия</h3>
           <span class="story-arrow">→</span>
@@ -2130,7 +2130,10 @@ body.etnika-gallery-lock{
     "assets/portfolio/guests-fashion-blue.jpg"
   ],
   "kids": [
-    "assets/portfolio/guests-child.jpg"
+    "assets/curated/kids-happy-family.jpg",
+    "assets/curated/kids-mom.jpg",
+    "assets/curated/kids-family.jpg",
+    "assets/curated/kids-studio.jpg"
   ],
   "business": [
     "assets/portfolio/guests-business.jpg",
@@ -2140,7 +2143,7 @@ body.etnika-gallery-lock{
     "assets/portfolio/guests-date.jpg"
   ],
   "family": [
-    "assets/portfolio/guests-friends-two.jpg"
+    "assets/curated/family-group.jpg"
   ]
 };
 
@@ -4463,7 +4466,7 @@ body.etnika-gallery-lock{
       tag:'формат под ваш повод',
       title:'Подстраиваем студию под вас',
       text:'Студию можно арендовать для собственной съёмки, устроить фотосвидание, день рождения или другое памятное событие. Автопортретный зал 46 м² вмещает до 8 человек.',
-      image:'https://static.tildacdn.com/tild6664-3633-4163-a662-633533663830/a4de290b-3ccd-4855-a.png'
+      image:'assets/curated/friends-together.jpg'
     },
     {
       tag:'комфорт во время визита',
@@ -4487,7 +4490,7 @@ body.etnika-gallery-lock{
       tag:'можно всей семьёй',
       title:'Забота о клиентах с детьми',
       text:'Комфортная обстановка для съёмки с грудничками и во время беременности. Дети до трёх лет — бесплатно. В студии есть детский стульчик, шары и игрушки.',
-      image:'https://static.tildacdn.com/tild6431-6264-4165-a631-393734636366/111IMG_7305.jpg'
+      image:'assets/curated/why-kids.jpg'
     }
   ];
 
@@ -4518,6 +4521,11 @@ body.etnika-gallery-lock{
     var slide = slides[current];
 
     stageImage.src = slide.image;
+    /* The original scale(1.035) was cutting off heads. Use a safe per-slide
+       focal point and reset the destructive zoom on every transition. */
+    var portraitPositions = ['50% 0%','50% 12%','50% 50%','50% 50%','73% 45%','50% 42%'];
+    stageImage.style.setProperty('object-position',portraitPositions[current],'important');
+    stageImage.style.setProperty('transform','none','important');
     stageImage.alt = slide.title;
     counter.textContent =
       String(current + 1).padStart(2,'0') + ' / ' +
@@ -6160,16 +6168,16 @@ body.etnika-gallery-lock{
         </span>
       </button>
 
-      <button class="ee-photo" type="button" aria-label="Цветные световые схемы" data-images="https://static.tildacdn.com/tild3734-3731-4335-b865-373337626535/_photo_2025-12-04_15.jpg|assets/process-20261111/step-03-remote.webp">
-        <img src="https://static.tildacdn.com/tild3734-3731-4335-b865-373337626535/_photo_2025-12-04_15.jpg" alt="Цветной свет в ЭТНИКА">
+      <button class="ee-photo" type="button" aria-label="Цветные световые схемы" data-images="assets/curated/light-editorial.jpg|https://static.tildacdn.com/tild3734-3731-4335-b865-373337626535/_photo_2025-12-04_15.jpg">
+        <img src="assets/curated/light-editorial.jpg" alt="Световая схема в студии ЭТНИКА">
         <span class="ee-photo-caption">
           <span class="ee-photo-num">02</span>
           <span class="ee-photo-name">Свет</span>
         </span>
       </button>
 
-      <button class="ee-photo" type="button" aria-label="Гардероб для съёмки" data-images="https://static.tildacdn.com/tild3739-6635-4138-b038-356661306337/310503651.jpg|assets/hero-carousel/bw-mobile-v2.webp">
-        <img src="https://static.tildacdn.com/tild3739-6635-4138-b038-356661306337/310503651.jpg" alt="Образ для фотосессии в ЭТНИКА">
+      <button class="ee-photo" type="button" aria-label="Гардероб для съёмки" data-images="assets/curated/look-editorial.jpg|assets/curated/look-editorial-alt.jpg">
+        <img src="assets/curated/look-editorial.jpg" alt="Образ для фотосессии в ЭТНИКА">
         <span class="ee-photo-caption">
           <span class="ee-photo-num">03</span>
           <span class="ee-photo-name">Образ</span>

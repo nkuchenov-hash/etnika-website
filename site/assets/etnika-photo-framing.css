@@ -21,10 +21,10 @@
 #etnika-review-flow #etnika-stories .s2.story-card img{object-position:50% 5%!important;}
 #etnika-review-flow #etnika-stories .s3.story-card img{object-position:50% 34%!important;}
 #etnika-review-flow #etnika-stories .s4.story-card img{object-position:50% 15%!important;}
-#etnika-review-flow #etnika-stories .s5.story-card img{object-position:50% 58%!important;}
+#etnika-review-flow #etnika-stories .s5.story-card img{object-position:50% 32%!important;}
 #etnika-review-flow #etnika-stories .s6.story-card img{object-position:50% 40%!important;}
 #etnika-review-flow #etnika-stories .s7.story-card img{object-position:50% 30%!important;}
-#etnika-review-flow #etnika-stories .s8.story-card img{object-position:50% 76%!important;}
+#etnika-review-flow #etnika-stories .s8.story-card img{object-position:50% 36%!important;}
 
 /* Slide-specific crops prevent the generic center-38% rule from showing
    excessive empty ceilings above people, or cutting off high hairlines. */
@@ -57,4 +57,15 @@
 }
 #etnika-review-flow #etnika-extra .ee-photo img[src*="step-03-remote.webp"]{
   object-position:50% 30%!important;
+}
+
+/* 13 Nov source-archive curation: preserve complete heads and children. */
+#etnika-review-flow #etnika-extra .ee-photo img[src*="/curated/look-editorial"]{
+  object-position:50% 20%!important;
+}
+#etnika-review-flow #etnika-extra .ee-photo img[src*="/curated/light-editorial"]{
+  object-position:50% 27%!important;
+}
+#etnika-review-flow #etnika-studio-features .b05-stage-image{
+  image-rendering:auto;
 }
