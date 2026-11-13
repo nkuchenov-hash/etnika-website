@@ -14703,9 +14703,15 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     // Reset a previous viewport's guard before calculating the current layout.
     section.style.removeProperty("min-height");
     const box=section.getBoundingClientRect();
-    const bottom=grid.getBoundingClientRect().bottom;
+    const booking=section.querySelector("#etnika-stories-booking-cta");
+    // Content was extended after this guard was originally written.
+    // Include the booking row as well as every photo when sizing the section.
+    const lastBottom=Math.max(
+      grid.getBoundingClientRect().bottom,
+      booking ? booking.getBoundingClientRect().bottom : -Infinity
+    );
     const padding=parseFloat(getComputedStyle(section).paddingBottom)||0;
-    const required=Math.ceil(bottom-box.top+padding);
+    const required=Math.ceil(lastBottom-box.top+padding);
     if(required>box.height+1){
       section.style.setProperty("min-height",required+"px","important");
     }
