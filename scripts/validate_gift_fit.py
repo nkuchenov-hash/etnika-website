@@ -105,6 +105,14 @@ with sync_playwright() as pw:
         }""")
         label=f"{width}x{height}"
         print(f"GIFT_SPACING {label}: {v['peerSpacing']}",flush=True)
+        # Compare the actual painted rule midpoints with the neighboring
+        # "О тарифах" FAQ lines, not arbitrary padding tokens.
+        if width<=1100 or height>=850:
+            gaps=v["peerSpacing"]
+            assert abs(gaps["giftTop"]-gaps["faqTop"])<=7, (
+                f"{label}: certificate top line is not aligned to tariff FAQ: {gaps}")
+            assert abs(gaps["giftBottom"]-gaps["faqBottom"])<=7, (
+                f"{label}: certificate bottom line is not aligned to tariff FAQ: {gaps}")
         assert v["content"],f"{label}: original text or CTA missing"
         assert "Forum" in v["headingFont"],f"{label}: non-Forum headline: {v}"
         assert max(v[w] for w in ("kickerWeight","subWeight","factWeight",
