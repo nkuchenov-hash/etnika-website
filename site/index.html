@@ -13838,6 +13838,11 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     gap:0!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-stage {
+    /* Reuse the editorial block's outer vertical spacing for text on photos.
+       The horizontal guide stays tied to the shared content grid, with
+       a little extra breathing room requested on 13 Nov 2026. */
+    --why-photo-inset-y:var(--etnika-section-outer,clamp(72px,9svh,112px));
+    --why-photo-inset-x:calc(var(--et-u-edge,80px) + clamp(12px,1vw,20px));
     position:relative!important;
     box-sizing:border-box!important;
     grid-column:1!important;
@@ -13866,15 +13871,15 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     transform-origin:center center!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-stage-top {
-    top:clamp(20px,2.5svh,32px)!important;
-    left:var(--et-u-edge,80px)!important;
-    right:var(--et-u-edge,80px)!important;
+    top:var(--why-photo-inset-y)!important;
+    left:var(--why-photo-inset-x)!important;
+    right:var(--why-photo-inset-x)!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-stage-bottom {
     box-sizing:border-box!important;
-    bottom:clamp(42px,5.3svh,72px)!important;
-    left:var(--et-u-edge,80px)!important;
-    right:var(--et-u-edge,80px)!important;
+    bottom:var(--why-photo-inset-y)!important;
+    left:var(--why-photo-inset-x)!important;
+    right:var(--why-photo-inset-x)!important;
     width:auto!important;
     max-width:none!important;
     display:grid!important;
@@ -14132,13 +14137,19 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 
 /* Tablet/mobile: preserve matching arrow style and shared page grid inset. */
 @media (max-width:1100px) {
+  #etnika-review-flow #etnika-studio-features .b05-stage {
+    --why-photo-inset-x:calc(var(--et-u-edge,30px) + clamp(8px,1.2vw,14px));
+    --why-photo-inset-y:var(--etnika-section-outer,clamp(36px,6svh,60px));
+  }
   #etnika-review-flow #etnika-studio-features .b05-stage-top {
-    top:clamp(18px,2.5svh,30px)!important;
-    left:var(--et-u-edge,30px)!important;right:var(--et-u-edge,30px)!important;
+    top:var(--why-photo-inset-y)!important;
+    left:var(--why-photo-inset-x)!important;
+    right:var(--why-photo-inset-x)!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-stage-bottom {
-    left:var(--et-u-edge,30px)!important;right:var(--et-u-edge,30px)!important;
-    bottom:clamp(30px,5svh,55px)!important;
+    left:var(--why-photo-inset-x)!important;
+    right:var(--why-photo-inset-x)!important;
+    bottom:var(--why-photo-inset-y)!important;
   }
   #etnika-review-flow #etnika-studio-features .b05-stage-image {
     transform:translateY(-8px) scale(1.035)!important;
