@@ -22,6 +22,7 @@ jobs:
           r.raise_for_status()
           html=r.text
           soup=BeautifulSoup(html,'html.parser')
+          print('HEAD',repr(html[:2500]),'SOUP_TEXT',repr(soup.get_text(' ',strip=True)[:900]),'TITLE',str(soup.title),'RECS',len(soup.select('[id^=rec]')),'HOST',r.headers.get('server'))
           needles=['Политика конфиденциальности','Согласие на обработку персональных','Договор-оферта','ОГРНИП','РАЗДЕЛЫ САЙТА','студия автопортрета']
           seen=set()
           for needle in needles:
