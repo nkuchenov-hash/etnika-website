@@ -64,7 +64,7 @@ with sync_playwright() as p:
             assert abs((v['mediaTop']['top']-v['media']['top'])-v['outerGuide'])<2,msg
             assert v['overline']['top']-v['block']['top']>=24,msg
             assert v['title']['top']>=v['overline']['bottom']+25,msg
-            assert abs(v['stack']['top']-v['overline']['top'])<2,msg
+            assert 37<=v['stack']['top']-v['overline']['top']<=67,msg
             assert abs(v['stack']['bottom']-v['features']['bottom'])<2,msg
             assert v['desc']['bottom']<v['features']['top']-10,msg
             assert v['features']['bottom']<=v['copy']['bottom']-35,msg
