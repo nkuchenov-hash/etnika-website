@@ -48,3 +48,27 @@ jobs:
                 print(css[:22000])
                 print('STYLE_END',rid)
           PY
+      - name: Inspect browser-rendered public page
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.56.0
+          python -m playwright install chromium
+          python - <<'PY'
+          from playwright.sync_api import sync_playwright
+          with sync_playwright() as p:
+              browser=p.chromium.launch(headless=True,args=['--no-sandbox'])
+              page=browser.new_page(viewport={'width':1440,'height':900},locale='ru-RU')
+              try:
+                  res=page.goto('https://etnika-studio.ru/',wait_until='domcontentloaded',timeout=30000)
+                  page.wait_for_timeout(9000)
+                  print('BROWSER_HTTP',res.status if res else '-','TITLE',page.title(),'URL',page.url,'BODYLEN',len(page.locator('body').inner_text()))
+                  print('BROWSER_TEXT_END',repr(page.locator('body').inner_text()[-2300:]))
+                  print('BROWSER_REC_COUNT',page.locator('[id^="rec"]').count())
+                  for needle in ['Политика конфиденциальности','РАЗДЕЛЫ САЙТА','ОГРНИП','Контакты','ЭТНИКА']:
+                      el=page.get_by_text(needle,exact=False).last
+                      if el.count():
+                          print('METRIC',needle,el.evaluate("""el=>({text:el.innerText?.slice(0,100),rect:(()=>{let r=el.getBoundingClientRect();return [r.x,r.y,r.width,r.height]})(),tag:el.tagName,class:el.className,style:(()=>{let s=getComputedStyle(el);return {color:s.color,fontFamily:s.fontFamily,fontSize:s.fontSize,fontWeight:s.fontWeight,lineHeight:s.lineHeight,background:s.backgroundColor,textAlign:s.textAlign}})(),parent:el.parentElement?.outerHTML.slice(0,300)})"""))
+                  print('BOTTOM_SECTION',page.evaluate("""() => {let b=document.body;return [...b.children].slice(-9).map(x=>({tag:x.tagName,id:x.id,class:x.className,html:x.outerHTML.slice(0,250)}))}"""))
+              except Exception as e:
+                  print('BROWSER_ERROR',repr(e))
+              browser.close()
+          PY
