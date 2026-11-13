@@ -57,6 +57,9 @@ with sync_playwright() as p:
             features:r(q('.etnika-b02__features')),media:r(media),
             bottomOverlay:r(q('.etnika-b02__media-bottom')),
             imageLoaded:[...media.querySelectorAll('img')].some(i=>i.complete&&i.naturalWidth>0),
+            photoUrls:[...media.querySelectorAll('img.etnika-b02__slide')].map(i=>new URL(i.getAttribute('src'),document.baseURI).pathname),
+            otherPhotoUrls:[...document.querySelectorAll('img')].filter(i=>!media.contains(i)).map(i=>new URL(i.getAttribute('src')||i.src,document.baseURI).pathname),
+            slideCounter:q('.etnika-b02__counter').textContent.trim(),
             copyPosition:getComputedStyle(copy).position,compPosition:getComputedStyle(comp).position,
             compTransform:getComputedStyle(comp).transform};
         }""")
@@ -87,6 +90,14 @@ with sync_playwright() as p:
         assert abs((result['topOverlay']['top']-result['media']['top'])-(result['media']['bottom']-result['bottomOverlay']['bottom']))<2, 'PHOTO TYPE MUST HAVE EQUAL TOP AND BOTTOM INSETS'
         assert result['copyPosition']=='relative' and result['compPosition']=='static' and result['compTransform']=='none', 'scroll-bound content repositioning'
         assert result['imageLoaded'],'photo not loaded'
+        assert len(result['photoUrls'])==8,f'Expected 8 exclusive guest photos: {result["photoUrls"]}'
+        assert len(set(result['photoUrls']))==8,'DUPLICATE PHOTOS WITHIN B02'
+        assert all('/assets/b02/' in u for u in result['photoUrls']),f'Old reused portfolio photos remain in B02: {result["photoUrls"]}'
+        assert not set(result['photoUrls'])&set(result['otherPhotoUrls']),f'B02 PHOTOS REUSED IN OTHER SECTIONS: {result["photoUrls"]}'
+        assert result['slideCounter']=='01 / 08',f'B02 slide count did not update: {result["slideCounter"]}'
+        if w==1660:
+            page.wait_for_function("""() => [...document.querySelectorAll('#etnika-block-02-final .etnika-b02__slide')].every(x=>x.complete&&x.naturalWidth>0)""",timeout=25000)
+            print('PASS 8 REAL B02 PHOTOS: all fetched and decoded, unique within B02 and no duplicate DOM uses elsewhere',flush=True)
         if w==1660:
             media=page.locator('#etnika-block-02-final .etnika-b02__media')
             assert media.evaluate("(e)=>getComputedStyle(e).backgroundColor")=='rgb(232, 229, 226)', 'RED SLIDER BACKGROUND MUST BE REMOVED'
@@ -106,7 +117,7 @@ with sync_playwright() as p:
             }""")
             assert middle['outgoingActive'] and middle['incoming'] and middle['outgoingOpacity']=='1',f'RED FLASH: outgoing image faded prematurely: {middle}'
             assert 0<middle['incomingOpacity']<1, f'Incoming slide should fade over previous photo: {middle}'
-            assert middle['counter']=='02 / 05',middle
+            assert middle['counter']=='02 / 08',middle
             page.wait_for_timeout(1450)
             done=page.evaluate("""() => {
               const b=document.getElementById('etnika-block-02-final');
