@@ -20,16 +20,29 @@
   // and placed our badge to the RIGHT of the native station label.
   // Station coordinate: https://en.wikipedia.org/wiki/List_of_Moscow_Metro_stations
   const METRO = [37.6576, 55.7074];
+  // Moscow open-data entrance №3 via russianmetro.ru -> Yandex Maps:
+  // https://yandex.ru/maps/?l=map&pt=37.657319%2C55.70865&z=18
+  // Closer to Omega-2 than exit №2 [37.658257, 55.708399].
+  const METRO_EXIT_3 = [37.657319, 55.708650];
+  // Visual orientation only if routing service is unavailable. The route
+  // service's real walking geometry replaces this dotted guide on success.
+  const APPROXIMATE_WALK_GUIDE = [
+    METRO_EXIT_3,
+    [37.65706, 55.70896],
+    [37.65668, 55.70919],
+    [37.65552, 55.70972],
+    [37.654610, 55.710130]
+  ];
   // Business center Omega-2, Leninskaya Sloboda 26/26A:
   // Yandex building location yandex.com/maps/213/moscow/house/ulitsa_leninskaya_sloboda_26/.
   // The marker denotes the building, not an individual office entrance.
   const STUDIO = [37.654610, 55.710130];
-  const MAP_CENTER = [37.6573, 55.70865];
+  const MAP_CENTER = [37.65615, 55.70913];
   const MAPS_URL = 'https://yandex.ru/maps/?text=' +
     encodeURIComponent('Москва, улица Ленинская Слобода, 26А, БЦ Омега-2');
   // Official Yandex Maps walking route if the browser router API is unavailable.
   const WALK_ROUTE_URL = 'https://yandex.ru/maps/?rtext=' +
-    '55.7074%2C37.6576~55.710130%2C37.654610&rtt=pd';
+    '55.708650%2C37.657319~55.710130%2C37.654610&rtt=pd';
   const walkingLink = shell.querySelector('.etnika-map-directions');
   if (walkingLink) walkingLink.href = WALK_ROUTE_URL;
   let started = false;
@@ -79,6 +92,21 @@
     return mark;
   }
 
+  function createExitMark() {
+    const mark = document.createElement('div');
+    mark.className = 'etnika-map-exit';
+    mark.setAttribute('role', 'img');
+    mark.setAttribute('aria-label', 'Ближайший выход №3 из метро Автозаводская');
+    const number = document.createElement('span');
+    number.className = 'etnika-map-exit__number';
+    number.textContent = '3';
+    const label = document.createElement('span');
+    label.className = 'etnika-map-exit__label';
+    label.textContent = 'Выход №3';
+    mark.append(number, label);
+    return mark;
+  }
+
   function createStudioMark() {
     const mark = document.createElement('div');
     mark.className = 'etnika-map-studio';
@@ -125,34 +153,48 @@
   }
 
   async function drawPedestrianRoute(map, api) {
-    if (typeof api.route !== 'function' || typeof api.YMapFeature !== 'function') return;
+    if (typeof api.YMapFeature !== 'function') return;
+
+    // Show a minimal dotted orientation guide immediately. It is explicitly
+    // marked schematic until Yandex returns real pedestrian street geometry.
+    const routeStyle = {
+      simplificationRate: 0,
+      stroke: [{width: 4, color: '#f04456', opacity: 0.96, dash: [5, 7]}]
+    };
+    const guide = new api.YMapFeature({
+      geometry: {type: 'LineString', coordinates: APPROXIMATE_WALK_GUIDE},
+      style: routeStyle
+    });
+    map.addChild(guide);
+    shell.dataset.routeState = 'schematic';
+
+    if (typeof api.route !== 'function') return;
     try {
-      // Routing is a separate Yandex service; this API key might not have its
-      // routing entitlement. Never display a fabricated straight line.
       if (typeof api.getDefaultConfig === 'function') {
         const config = api.getDefaultConfig();
         if (config && typeof config.setApikeys === 'function') {
           config.setApikeys({router: API_KEY});
         }
       }
-      const routes = await api.route({points: [METRO, STUDIO], type: 'walking'});
-      const walking = routes && routes[0] && routes[0].toRoute();
-      if (!walking || !walking.geometry || !Array.isArray(walking.geometry.coordinates) ||
-          walking.geometry.coordinates.length < 2) return;
-      const route = new api.YMapFeature({
-        geometry: walking.geometry,
-        style: {
-          simplificationRate: 0,
-          stroke: [{width: 5, color: '#f32c43'}]
-        }
+      const results = await api.route({
+        points: [METRO_EXIT_3, STUDIO],
+        type: 'walking'
       });
-      map.addChild(route);
-      shell.dataset.routeState = 'ready';
-    } catch (e) {
-      // The visible "Маршрут пешком" link opens an actual walking route.
-      shell.dataset.routeState = 'external';
+      const walking = results && results[0] && results[0].toRoute();
+      const coordinates = walking && walking.geometry && walking.geometry.coordinates;
+      if (!Array.isArray(coordinates) || coordinates.length < 2) return;
+      // Replaces the guide, never draws two competing routes.
+      guide.update({
+        geometry: {type: 'LineString', coordinates: coordinates},
+        style: routeStyle
+      });
+      shell.dataset.routeState = 'verified';
+    } catch (error) {
+      // Keep the explicitly labeled schematic guide, but never invent a
+      // precise route. The Yandex Maps link gives walking directions.
+      shell.dataset.routeState = 'schematic';
       if (window.console && console.warn) {
-        console.warn('ETNIKA map: router unavailable, external walking route remains available', e);
+        console.warn('ETNIKA: walking directions available via Yandex link; embedded guide is schematic', error);
       }
     }
   }
@@ -162,7 +204,7 @@
     await window.ymaps3.ready;
     const api = window.ymaps3;
     const map = new api.YMap(root, {
-      location: {center: MAP_CENTER, zoom: 15.6},
+      location: {center: MAP_CENTER, zoom: 16.2},
       mode: 'vector',
       showScaleInCopyrights: true
     });
@@ -185,7 +227,10 @@
     // Ask Yandex's pedestrian router for the real street-following geometry.
     // Keep the two accurate geo-markers even when routing is unavailable.
     drawPedestrianRoute(map, api);
-    // Both marks are anchored to geographic points and move with the map.
+    // Station center, actual nearest entrance, and studio are geo-anchored.
+    map.addChild(new api.YMapMarker(
+      {coordinates: METRO_EXIT_3, draggable: false}, createExitMark()
+    ));
     map.addChild(new api.YMapMarker(
       {coordinates: STUDIO, draggable: false}, createStudioMark()
     ));
