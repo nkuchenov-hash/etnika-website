@@ -5,7 +5,7 @@ import shutil,sys
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"reports"; OUT.mkdir(exist_ok=True)
-URL="https://nkuchenov-hash.github.io/etnika-website/site/?v=c911bd94" if "--live" in sys.argv else (ROOT/"site/index.html").as_uri()
+URL="https://nkuchenov-hash.github.io/etnika-website/site/?v=354ec9f" if "--live" in sys.argv else (ROOT/"site/index.html").as_uri()
 chrome=shutil.which("google-chrome") or shutil.which("google-chrome-stable") or shutil.which("chromium")
 with sync_playwright() as pw:
     browser=pw.chromium.launch(headless=True,executable_path=chrome)
@@ -29,8 +29,8 @@ with sync_playwright() as pw:
                 const a=document.querySelector('#etnika-block-02-final');
                 const box=e=>e.getBoundingClientRect().toJSON();
                 const copy=a.querySelector('.etnika-about-intro'),why=a.querySelector('#etnika-studio-features');
-                const d=getComputedStyle(a.querySelector('.etnika-b02__description'));
-                return {section:box(a),copy:box(copy),why:box(why),kicker:box(a.querySelector('.etnika-about-kicker')),heading:box(a.querySelector('.etnika-b02__title')),mosaic:box(a.querySelector('.etnika-about-mosaic')),tableCount:a.querySelectorAll('.etnika-b02__features').length,
+                const d=getComputedStyle(a.querySelector('.etnika-b02__description')); const title=getComputedStyle(a.querySelector('.etnika-b02__title')); const probe=document.createElement('span');probe.style.fontSize='var(--etnika-section-title)';a.appendChild(probe);const token=parseFloat(getComputedStyle(probe).fontSize);probe.remove();
+                return {section:box(a),copy:box(copy),why:box(why),kicker:box(a.querySelector('.etnika-about-kicker')),heading:box(a.querySelector('.etnika-b02__title')),mosaic:box(a.querySelector('.etnika-about-mosaic')),tableCount:a.querySelectorAll('.etnika-b02__features').length,featureCount:a.querySelectorAll('.etnika-b02__features .etnika-b02__feature').length,tableVisible:getComputedStyle(a.querySelector('.etnika-b02__features')).display==='grid',titleSize:parseFloat(title.fontSize),token,
                   bodySize:parseFloat(d.fontSize),bodyWeight:d.fontWeight,font:d.fontFamily,
                   lines:[...a.querySelectorAll('.etnika-title-line')].map(e=>{const r=document.createRange();r.selectNodeContents(e);return {box:r.getBoundingClientRect().toJSON(),count:r.getClientRects().length}}),
                   images:[...a.querySelectorAll('.etnika-spread-photo img')].map(i=>({src:i.getAttribute('src'),width:i.naturalWidth,height:i.naturalHeight,box:box(i)})),
@@ -47,10 +47,11 @@ with sync_playwright() as pw:
             assert facts["background"]=="rgb(255, 255, 255)"
             assert facts["pageWidth"]<=w+2
             assert facts["why"]["top"]>facts["copy"]["bottom"]+40
-            assert facts["tableCount"]==0
+            assert facts["tableCount"]==1 and facts["featureCount"]==4 and facts["tableVisible"]
+            assert abs(facts["titleSize"]-facts["token"])<.1
             assert facts["heading"]["top"]-facts["kicker"]["bottom"]>=29
             if w>1100:
-                assert all(line["count"]==1 and line["box"]["right"]<=facts["copy"]["right"]+2 for line in facts["lines"]),facts["lines"]
+                assert all(line["box"]["right"]<=facts["copy"]["right"]+2 for line in facts["lines"]),facts["lines"]
                 assert facts["images"][0]["box"]["width"]>facts["images"][1]["box"]["width"]*1.4
                 assert facts["images"][3]["box"]["width"]>facts["images"][2]["box"]["width"]*1.4
                 assert facts["mosaic"]["left"]>facts["copy"]["right"]
