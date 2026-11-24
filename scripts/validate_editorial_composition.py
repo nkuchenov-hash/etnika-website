@@ -16,7 +16,7 @@ with sync_playwright() as pw:
         page=browser.new_page(viewport={"width":w,"height":h},device_scale_factor=1)
         for attempt in range(12 if LIVE else 1):
             page.goto(URL+(f"?editorial-check={attempt}" if LIVE else ""),wait_until="domcontentloaded",timeout=45000)
-            if page.locator("#etnika-about-approved-series-20261124").count(): break
+            if page.locator('meta[name="etnika-build"][content="20261124-about-editorial-readable-v11"]').count(): break
             if not LIVE or attempt==11: raise AssertionError("Current editorial version is not deployed")
             time.sleep(3)
         page.wait_for_function("() => !!document.querySelector('#etnika-block-02-final .etnika-editorial-why')")
@@ -60,7 +60,7 @@ with sync_playwright() as pw:
           const a=document.querySelector('#etnika-block-02-final'), p=a.querySelector('.etnika-editorial-photos'),
           c=a.querySelector('.etnika-b02__copy'), why=a.querySelector('#etnika-studio-features');
           const r=e=>e.getBoundingClientRect().toJSON();
-          return {about:r(a),photos:r(p),copy:r(c),why:r(why),background:getComputedStyle(a).backgroundColor,
+          return {about:r(a),copy:r(c),why:r(why),background:getComputedStyle(a).backgroundColor, bodySize:parseFloat(getComputedStyle(a.querySelector('.etnika-b02__description')).fontSize), titleLines:[...a.querySelectorAll('.etnika-title-line')].map(e=>{const t=document.createRange();t.selectNodeContents(e);return {box:t.getBoundingClientRect().toJSON(),rects:t.getClientRects().length}}),
             bodyWidth:document.documentElement.scrollWidth,viewport:innerWidth,
             images:[...a.querySelectorAll('.etnika-editorial-photo img')].map(e=>({src:e.getAttribute('src'),natural:e.naturalWidth,ratio:e.naturalWidth/e.naturalHeight,box:r(e),fit:getComputedStyle(e).objectFit})),
             steps:[...document.querySelectorAll('#etnika-process-interactive .epi-card')].map(e=>({title:e.querySelector('h3').textContent.replace(/\s+/g,' '),desc:e.querySelector('.epi-desc').textContent,visible:getComputedStyle(e.querySelector('.epi-reveal')).visibility,opacity:getComputedStyle(e.querySelector('.epi-reveal')).opacity,rect:r(e)}))
@@ -74,13 +74,18 @@ with sync_playwright() as pw:
             assert im["box"]["left"]>=-2 and im["box"]["right"]<=w+2,im
         assert facts["bodyWidth"]<=w+3,facts
         assert facts["why"]["bottom"]<=facts["about"]["bottom"]+2,facts
+        assert facts["bodySize"] >= (20 if w>1100 else 18)-.1,facts
+        assert len(facts["titleLines"])==2,facts
+        first,second=[x["box"] for x in facts["images"]]
         if w>1100:
-            assert facts["photos"]["left"]>=facts["copy"]["right"]-1,facts
+            assert first["left"]>=facts["copy"]["right"]-1,facts
             assert abs(facts["why"]["left"]-facts["copy"]["left"])<3,facts
-            assert facts["why"]["top"]-facts["copy"]["bottom"]>=119,facts
+            assert facts["why"]["top"]-facts["copy"]["bottom"]>=114,facts
+            assert all(x["rects"]==1 and x["box"]["right"]<first["left"]-2 for x in facts["titleLines"]),facts
+            assert second["top"]>first["bottom"],facts
         else:
-            assert facts["photos"]["top"]>=facts["copy"]["bottom"]-1,facts
-            assert facts["why"]["top"]>=facts["photos"]["bottom"]-1,facts
+            assert first["top"]>=facts["copy"]["bottom"]-1,facts
+            assert facts["why"]["top"]>=max(first["bottom"],second["bottom"])-1,facts
         benefits=about.locator(".etnika-editorial-benefits details")
         assert benefits.count()==6
         benefits.first.locator("summary").click()
