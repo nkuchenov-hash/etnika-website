@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-b02-variant="1">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261124-about-shared-guides-v22">
+<meta name="etnika-build" content="20261124-about-connected-static-v23">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14013,6 +14013,52 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  #etnika-review-flow #etnika-block-02-final .etnika-about-intro > .etnika-b02__features{grid-template-columns:1fr}
 }
 </style>
+<style id="etnika-b02-connected-approved">
+/* One continuous asymmetric composition. The transition row is occupied by
+   photographs, not an empty horizontal gutter. Original content stays intact. */
+#etnika-review-flow > #etnika-block-02-final .etnika-about-layout{
+ display:grid;grid-template-columns:repeat(24,minmax(0,1fr));
+ grid-template-rows:auto clamp(100px,9vw,174px) auto;gap:0;
+ align-items:start;margin:0 var(--et-u-edge);padding:0;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-about-left,
+#etnika-review-flow #etnika-block-02-final .etnika-about-mosaic,
+#etnika-review-flow #etnika-block-02-final .bp-band{display:contents;container-type:normal}
+#etnika-review-flow #etnika-block-02-final .etnika-about-intro{grid-column:1/13;grid-row:1;min-width:0}
+#etnika-review-flow #etnika-block-02-final .etnika-about-left > #etnika-studio-features{grid-column:1/12!important;grid-row:3!important;min-width:0}
+#etnika-review-flow #etnika-block-02-final .bp-frame{display:grid;position:relative;min-width:0;align-self:start;align-items:start}
+#etnika-review-flow #etnika-block-02-final .bp-frame figure{grid-area:1/1;margin:0!important;min-width:0;width:100%;overflow:hidden;align-self:start}
+#etnika-review-flow #etnika-block-02-final .bp-frame img{display:block;width:100%;height:auto;object-fit:contain}
+
+
+
+
+
+
+#etnika-review-flow #etnika-block-02-final .bp-upper .bp-main{grid-column:14/21;grid-row:1;margin-top:clamp(8px,1.5vw,24px)}
+#etnika-review-flow #etnika-block-02-final .bp-upper .bp-side{grid-column:22/25;grid-row:1;margin-top:clamp(64px,7vw,130px)}
+#etnika-review-flow #etnika-block-02-final .bp-lower .bp-side{grid-column:13/17;grid-row:2/4;margin-top:clamp(22px,2vw,36px)}
+#etnika-review-flow #etnika-block-02-final .bp-lower .bp-main{grid-column:18/25;grid-row:2/4;margin-top:clamp(40px,4vw,74px)}
+/* A: the reference's staggered large / small / small / large silhouette. */
+html[data-b02-variant="1"] #etnika-block-02-final .bp-lower .bp-side{grid-column:12/17}
+html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-studio-features{grid-column:1/11!important}
+@media(max-width:1100px){
+ html[data-b02-variant] #etnika-review-flow > #etnika-block-02-final .etnika-about-layout{grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:auto auto auto auto;gap:clamp(24px,5vw,54px) 0}
+ html[data-b02-variant] #etnika-review-flow #etnika-block-02-final .etnika-about-intro{grid-column:1/-1;grid-row:1}
+ html[data-b02-variant] #etnika-review-flow #etnika-block-02-final .bp-upper .bp-main{grid-column:1/8;grid-row:2;margin-top:0}
+ html[data-b02-variant] #etnika-review-flow #etnika-block-02-final .bp-upper .bp-side{grid-column:9/13;grid-row:2;margin-top:34px}
+ html[data-b02-variant] #etnika-review-flow #etnika-block-02-final .etnika-about-left > #etnika-studio-features{grid-column:1/-1!important;grid-row:3!important;margin-top:35px!important}
+ html[data-b02-variant] #etnika-review-flow #etnika-block-02-final .bp-lower .bp-side{grid-column:1/5;grid-row:4;margin-top:0}
+ html[data-b02-variant] #etnika-review-flow #etnika-block-02-final .bp-lower .bp-main{grid-column:6/13;grid-row:4;margin-top:24px}
+
+}
+#etnika-review-flow #etnika-block-02-final .etnika-about-intro .etnika-b02__title,
+#etnika-review-flow #etnika-block-02-final #etnika-studio-features #etnika-why-title {
+ font-family:Forum,Georgia,serif!important;font-size:var(--etnika-section-title)!important;font-weight:400!important;
+ line-height:.80!important;letter-spacing:-.04em!important;text-transform:uppercase!important;transform:none!important;
+}
+#etnika-review-flow #etnika-block-02-final #etnika-studio-features #etnika-why-title{margin:0 0 32px!important;overflow-wrap:normal;white-space:normal}
+</style>
 </head>
 <body>
 
@@ -14197,16 +14243,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   </div>
 </section>
     </div>
-    <div class="etnika-about-mosaic" aria-label="Фотосерия ЭТНИКА">
-      <div class="etnika-about-pair pair-upper"><figure class="etnika-spread-photo main-red"><img src="assets/b02/series/about-181.webp" width="1100" height="1467" alt="Портрет с помадой на красном фоне" loading="lazy" decoding="async"></figure><figure class="etnika-spread-photo side-blue"><img src="assets/b02/series/about-758.webp" width="1100" height="1467" alt="Портрет на голубом фоне" loading="lazy" decoding="async"></figure></div>
-      <div class="etnika-about-pair pair-lower"><figure class="etnika-spread-photo side-blue"><img src="assets/b02/series/about-188.webp" width="1100" height="1467" alt="Крупный план на голубом фоне" loading="lazy" decoding="async"></figure><figure class="etnika-spread-photo main-red"><img src="assets/b02/series/about-549.webp" width="1100" height="1467" alt="Портрет на стуле на красном фоне" loading="lazy" decoding="async"></figure></div>
-    </div>
-    <div class="etnika-about-continuation" aria-label="Продолжение той же фотосерии">
-      <figure class="etnika-spread-photo continuation-small"><img src="assets/b02/series/about-199.webp" width="1100" height="1467" alt="Портрет на светлом фоне" loading="lazy" decoding="async"></figure>
-      <figure class="etnika-spread-photo continuation-red"><img src="assets/b02/series/about-373.webp" width="1100" height="1467" alt="Портрет в полный рост на красном фоне" loading="lazy" decoding="async"></figure>
-      <figure class="etnika-spread-photo continuation-medium"><img src="assets/b02/series/about-662.webp" width="1100" height="1467" alt="Портрет в белой рубашке" loading="lazy" decoding="async"></figure>
-      <figure class="etnika-spread-photo continuation-small"><img src="assets/b02/series/about-805.webp" width="1100" height="1467" alt="Портрет на голубом фоне" loading="lazy" decoding="async"></figure>
-    </div>
+    <div class="etnika-about-mosaic" aria-label="Фотосерия ЭТНИКА"><div class="bp-band bp-upper"><div class="bp-frame bp-main"><figure class="etnika-spread-photo main-red"><img src="assets/b02/series/about-181.webp" width="1100" height="1467" alt="Портрет с помадой на красном фоне" loading="lazy" decoding="async"></figure></div><div class="bp-frame bp-side"><figure class="etnika-spread-photo side-blue"><img src="assets/b02/series/about-758.webp" width="1100" height="1467" alt="Портрет на голубом фоне" loading="lazy" decoding="async"></figure></div></div><div class="bp-band bp-lower"><div class="bp-frame bp-side"><figure class="etnika-spread-photo side-blue"><img src="assets/b02/series/about-188.webp" width="1100" height="1467" alt="Крупный план на голубом фоне" loading="lazy" decoding="async"></figure></div><div class="bp-frame bp-main"><figure class="etnika-spread-photo main-red"><img src="assets/b02/series/about-549.webp" width="1100" height="1467" alt="Портрет на стуле на красном фоне" loading="lazy" decoding="async"></figure></div></div></div>
   </div>
 </section>
 

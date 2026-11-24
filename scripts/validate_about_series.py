@@ -31,7 +31,8 @@ with sync_playwright() as pw:
             assert about.locator(".etnika-b02__feature").count()==4
             assert about.locator(".etnika-editorial-benefits details").count()==6
             assert about.locator(".etnika-editorial-metrics strong").count()==3
-            assert about.locator(".etnika-spread-photo img").count()==8
+            assert about.locator(".etnika-spread-photo img").count()==4
+            assert about.locator(".bp-photo-toggle").count()==0
             facts=page.evaluate("""() => {
                 const q=s=>document.querySelector(s), r=e=>e.getBoundingClientRect();
                 const layout=r(q('#etnika-block-02-final .etnika-about-layout'));
@@ -41,8 +42,10 @@ with sync_playwright() as pw:
                 const probe=document.createElement('div');
                 probe.style.cssText='position:absolute;height:var(--etnika-editorial-heading-gap);width:0';
                 document.body.append(probe);const target=r(probe).height;probe.remove();
+                const why=q('#etnika-why-title'), a=getComputedStyle(title), b=getComputedStyle(why);
+                const sameTypography=['fontFamily','fontSize','fontWeight','lineHeight','letterSpacing','textTransform'].every(k=>a[k]===b[k]);
                 const spaceTop=q('#etnika-space-photo .spf-top'), spaceTitle=q('#etnika-space-photo .spf-title');
-                return {left:layout.left,right:layout.right,refLeft:ref.left,refRight:ref.right,
+                return {sameTypography,left:layout.left,right:layout.right,refLeft:ref.left,refRight:ref.right,
                   headingGap:r(title).top-r(kicker).bottom,referenceHeadingGap:r(spaceTitle).top-r(spaceTop).bottom,
                   sharedGap:target,kickerMargin:parseFloat(getComputedStyle(kicker).marginBottom),
                   body:[...document.querySelectorAll('#etnika-block-02-final .etnika-b02__description p,#etnika-block-02-final .etnika-editorial-benefits p,#etnika-block-02-final .etnika-editorial-benefits summary,#etnika-block-02-final .etnika-b02__feature')].map(e=>({size:parseFloat(getComputedStyle(e).fontSize),weight:getComputedStyle(e).fontWeight})),
@@ -59,7 +62,8 @@ with sync_playwright() as pw:
             assert abs(facts["left"]-facts["refLeft"])<=2 and abs(facts["right"]-facts["refRight"])<=2, facts
             assert abs(facts["headingGap"]-facts["sharedGap"])<=2, facts
             assert abs(facts["kickerMargin"]-facts["sharedGap"])<=2, facts
-            assert len(set(facts["images"]))==8
+            assert len(set(facts["images"]))==4
+            assert facts["sameTypography"], facts
             assert all(x["size"]==(18 if w>=761 else 16) for x in facts["body"]), facts["body"]
             print(f"PASS shared B02 width and heading gap {w}x{h}",flush=True)
         except Exception as e:
