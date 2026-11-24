@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261124-editorial-readable-v5">
+<meta name="etnika-build" content="20261124-hero-right-safe-v6">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -16114,21 +16114,53 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 #etnika-review-flow #etnika-block-02-final #etnika-studio-features.etnika-editorial-why{
  align-self:start!important;padding-bottom:0!important;
 }
-#etnika-hero.etnika-carousel .ec-slide--red{
- background:linear-gradient(180deg,#68121b 0%,#821922 64%,#a62632 100%)!important;
-}
-@media(min-width:761px) and (min-aspect-ratio:43/24){
- #etnika-hero.etnika-carousel .ec-slide--red .ec-photo{
-  width:auto!important;height:100%!important;left:50%!important;right:auto!important;
-  transform:translateX(-50%)!important;object-fit:contain!important;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 6%,#000 94%,transparent 100%)!important;
-  mask-image:linear-gradient(90deg,transparent 0%,#000 6%,#000 94%,transparent 100%)!important;
- }
-}
+
 @media(max-width:1100px){
  #etnika-review-flow > section#etnika-block-02-final .etnika-b02__grid{grid-template-rows:auto auto auto!important}
  #etnika-review-flow .etnika-editorial-photos{grid-row:2!important}
 }
+</style>
+<style id="etnika-hero-safe-right-20261124">
+/* The source portrait is centered within its original landscape photograph.
+   On desktop place that center in the RIGHT composition column, not at viewport center.
+   Keep the entire original photograph above the lower navigation line. */
+#etnika-hero.etnika-carousel .ec-slide--red{
+ background:linear-gradient(180deg,#72141d 0%,#831b24 62%,#aa2b38 100%)!important;
+}
+@media(min-width:761px){
+ #etnika-hero.etnika-carousel .ec-slide--red::before{
+  content:"";position:absolute;inset:0;
+  background:url("assets/hero-carousel/hero-paper-wide.jpg") left top/300% 100% no-repeat;
+  /* Only the empty left third of the original paper backdrop is sampled. */
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 24%,transparent 85%);
+  mask-image:linear-gradient(90deg,#000 0%,#000 24%,transparent 85%);
+ }
+ #etnika-hero.etnika-carousel .ec-slide--red .ec-photo{
+  position:absolute!important;inset:auto!important;top:0!important;left:74%!important;
+  width:auto!important;height:86%!important;max-width:none!important;max-height:none!important;
+  object-fit:contain!important;object-position:center!important;
+  transform:translateX(-50%)!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 25%,#000 85%,transparent 100%),linear-gradient(180deg,#000 0%,#000 97%,transparent 100%)!important;
+  -webkit-mask-composite:source-in!important;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 25%,#000 85%,transparent 100%),linear-gradient(180deg,#000 0%,#000 97%,transparent 100%)!important;
+  mask-composite:intersect!important;
+ }
+ #etnika-hero.etnika-carousel .ec-slide--red::after{
+  background:linear-gradient(90deg,rgba(31,0,4,.20),transparent 48%)!important;
+ }
+}
+@media(min-width:761px) and (max-width:1100px){
+ #etnika-hero.etnika-carousel .ec-slide--red .ec-photo{left:78%!important;height:82%!important}
+}
+@media(max-width:760px){
+ #etnika-hero.etnika-carousel .ec-slide--red .ec-photo{
+  inset:auto 0 11% 0!important;width:100%!important;height:62%!important;
+  object-fit:contain!important;object-position:center bottom!important;transform:none!important;
+  -webkit-mask-image:none!important;mask-image:none!important;
+ }
+}
+/* No alteration of the original heart artwork. */
+#etnika-hero.etnika-carousel.is-red .ec-love{filter:brightness(0) invert(1)!important}
 </style>
 </body>
 </html>
