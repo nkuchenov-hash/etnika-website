@@ -34,6 +34,11 @@ with sync_playwright() as pw:
         assert abs(hero_metrics["title"]-hero_metrics["token"])<1,hero_metrics
         if w/h>2752/1536 and w>760: assert hero_metrics["fit"]=="contain",hero_metrics
         hero.screenshot(path=str(OUT/f"etnika-hero-{'LIVE-' if LIVE else ''}{w}x{h}.png"))
+        minimum=18 if w>=1920 else 16
+        typography=page.evaluate("""() => [...document.querySelectorAll(
+          '#etnika-process-interactive .epi-desc, #etnika-process-interactive .epi-more, #etnika-process-interactive .epi-sub, #etnika-block-02-final .etnika-b02__description, #etnika-block-02-final .etnika-b02__feature, .etnika-editorial-benefits summary, .etnika-editorial-benefits p, .etnika-editorial-metrics span'
+        )].map(e=>({label:e.textContent.trim().slice(0,90),size:parseFloat(getComputedStyle(e).fontSize)}))""")
+        assert typography and all(t["size"]>=minimum-.1 for t in typography), f"Forbidden small text at {w}px: {typography}"
         about=page.locator("#etnika-block-02-final")
         about.scroll_into_view_if_needed()
         page.evaluate("() => document.fonts.ready")
