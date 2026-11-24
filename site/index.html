@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261124-hero-large-transparent-nav-v8">
+<meta name="etnika-build" content="20261124-header-forum-v9">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -13768,13 +13768,13 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 /* Header: elegant studio identity (Forum), not bold interface uppercase. */
 #etnika-site-header .esh__descriptor{
   font-family:'Forum',Georgia,serif!important;
-  font-size:clamp(21px,1.5vw,25px)!important;
+  font-size:clamp(26px,1.9vw,34px)!important;
   font-weight:400!important;
   line-height:1.05!important;
-  letter-spacing:.04em!important;
+  letter-spacing:-.015em!important;
 }
 @media(min-width:1341px){
-  #etnika-site-header .esh__identity{min-width:clamp(225px,16vw,265px);}
+  #etnika-site-header .esh__identity{min-width:0;}
 }
 /* Keep Geologica Thin and the approved text color, but restore the
    navigation to its original letter spacing. */
@@ -13839,17 +13839,17 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 
 /* Keep header links clear of the larger studio descriptor at narrow desktop widths. */
 @media (min-width:1161px) and (max-width:1340px){
-  #etnika-site-header .esh__descriptor{font-size:21px!important;}
-  #etnika-site-header .esh__identity{min-width:205px!important;}
+  #etnika-site-header .esh__descriptor{font-size:25px!important;}
+  #etnika-site-header .esh__identity{min-width:0!important;}
   #etnika-site-header .esh__nav{gap:clamp(12px,1.1vw,18px);}
-  #etnika-site-header .esh__nav a{font-size:15px!important;}
+  #etnika-site-header .esh__nav a{font-size:16px!important;}
 }
 @media(max-width:1160px){
   #etnika-site-header .esh__identity{min-width:0!important;}
-  #etnika-site-header .esh__descriptor{font-size:clamp(20px,4.2vw,24px)!important;}
+  #etnika-site-header .esh__descriptor{font-size:clamp(22px,3.5vw,28px)!important;}
 }
 @media(max-width:365px){
-  #etnika-site-header .esh__descriptor{font-size:19px!important;}
+  #etnika-site-header .esh__descriptor{font-size:20px!important;}
 }
 </style>
 
@@ -16240,5 +16240,25 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  update();
 })();
 </script>
+<style id="etnika-header-identity-20261124">
+/* Both identity states use the same display typeface and weight. Reserve
+   the actual descriptor width rather than allowing it to overlap navigation. */
+#etnika-site-header .esh__identity{min-width:0!important}
+#etnika-site-header :is(.esh__descriptor,.esh__logo){
+ font-family:Forum,Georgia,serif!important;font-weight:400!important;
+}
+#etnika-site-header .esh__descriptor{position:relative!important;left:auto!important}
+#etnika-site-header .esh__logo{font-size:clamp(28px,2.15vw,36px)!important;letter-spacing:-.015em!important;line-height:1.05!important}
+@media(min-width:1161px) and (max-width:1490px){
+ #etnika-site-header .esh__inner{gap:clamp(9px,.9vw,15px)!important}
+ #etnika-site-header .esh__nav{gap:clamp(12px,1.15vw,19px)!important}
+}
+@media(min-width:1161px) and (max-width:1300px){
+ #etnika-site-header .esh__phone{display:none!important}
+}
+@media(max-width:700px){
+ #etnika-site-header .esh__descriptor{white-space:normal!important;max-width:100%;line-height:.96!important}
+}
+</style>
 </body>
 </html>
