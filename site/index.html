@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261124-owner-hero-about-flow">
+<meta name="etnika-build" content="20261124-editorial-about-process-v2">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -790,7 +790,7 @@ window.addEventListener('pageshow',function(event){
       <figure class="etnika-editorial-photo photo-2"><img src="assets/b02/b02-03-cool.webp" alt="Портрет на голубом фоне" decoding="async" loading="lazy"></figure>
       <figure class="etnika-editorial-photo photo-3"><img src="assets/b02/b02-05-ivory.webp" alt="Портрет на светлом фоне" decoding="async" loading="lazy"></figure>
       <figure class="etnika-editorial-photo photo-4"><img src="assets/b02/b02-10-red-seated.webp" alt="Портрет сидя на красном фоне" decoding="async" loading="lazy"></figure>
-      <p class="etnika-editorial-note">Разные образы. Один человек — вы.</p>
+      <p class="etnika-editorial-note">Автопортреты гостей ЭТНИКИ</p>
     </div>
 
   </div>
@@ -1081,7 +1081,7 @@ window.addEventListener('pageshow',function(event){
 <section id="etnika-process-interactive" aria-label="Как проходит весь процесс">
   <div class="epi-head">
     <h2 class="etnika-section-heading">Как проходит <span>весь процесс</span></h2>
-    <p class="epi-sub">Пять шагов — от&nbsp;знакомства со студией до&nbsp;готовых фотографий.<span class="epi-sub-hint">Наведите на карточку, чтобы увидеть детали.</span></p>
+    <p class="epi-sub">Пять шагов — от&nbsp;знакомства со студией до&nbsp;готовых фотографий.</p>
   </div>
   <div class="epi-grid"></div>
 
@@ -15915,5 +15915,97 @@ function merge(){var grid=document.querySelector('#etnika-block-02-final .etnika
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',merge);else merge();
 })();
 </script>
+<style id="etnika-process-editorial-20261124">
+/* Editorial rhythm, not five viewport-sized panels. Keep the original assets
+   until the reference-matched portrait sequence has been approved. */
+#etnika-review-flow > section#etnika-process-interactive{
+ display:block!important;height:auto!important;min-height:0!important;max-height:none!important;
+ padding:clamp(60px,7vw,112px) 0!important;background:#fff!important;color:#171514!important;
+ overflow:visible!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-head{
+ padding:0 var(--et-u-edge,5vw) clamp(30px,4vw,54px)!important;background:transparent!important;
+ text-align:left!important;width:100%!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-head h2{
+ text-align:left!important;white-space:normal!important;margin:0!important;color:#171514!important;
+ line-height:1!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-head h2 span{color:#a9151d!important}
+#etnika-review-flow #etnika-process-interactive .epi-sub{
+ margin:20px 0 0!important;text-align:left!important;color:#514c49!important;
+ max-width:700px!important;font-size:16px!important;line-height:1.55!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid{
+ box-sizing:border-box!important;width:auto!important;height:auto!important;min-height:0!important;max-height:none!important;
+ margin:0 var(--et-u-edge,5vw)!important;padding:0!important;background:transparent!important;
+ display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;
+ grid-template-rows:none!important;grid-auto-rows:auto!important;
+ gap:clamp(14px,1.6vw,26px)!important;align-items:start!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card:nth-child(n){
+ grid-column:auto!important;grid-row:auto!important;position:relative!important;display:flex!important;
+ flex-direction:column!important;height:auto!important;min-height:0!important;max-height:none!important;
+ background:transparent!important;color:#191717!important;padding:0!important;overflow:visible!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card img{
+ position:static!important;display:block!important;width:100%!important;height:auto!important;
+ aspect-ratio:3/4!important;object-fit:contain!important;object-position:center!important;
+ background:#efedeb!important;transform:none!important;filter:none!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card:after{display:none!important}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card:nth-child(n) .epi-base{
+ position:static!important;inset:auto!important;display:block!important;padding:17px 0 0!important;
+ pointer-events:auto!important;color:#191717!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card .epi-num{
+ font-family:Forum,Georgia,serif!important;font-size:26px!important;line-height:1!important;
+ color:#a9151d!important;margin:0 0 12px!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card .epi-rule{display:none!important}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card .epi-title{
+ font-family:Forum,Georgia,serif!important;font-size:clamp(23px,2.05vw,35px)!important;
+ line-height:1.03!important;color:#191717!important;text-transform:none!important;
+ text-shadow:none!important;max-width:none!important;margin:0!important;overflow-wrap:normal!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card:nth-child(n) .epi-reveal{
+ position:static!important;inset:auto!important;padding:12px 0 0!important;
+ opacity:1!important;visibility:visible!important;transform:none!important;
+ pointer-events:auto!important;display:block!important;background:none!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card .epi-desc{
+ font-size:14px!important;line-height:1.55!important;font-weight:300!important;
+ text-shadow:none!important;color:#514c49!important;margin:0 0 14px!important;max-width:none!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card .epi-more{
+ position:relative!important;display:inline-flex!important;gap:14px!important;
+ padding:8px 0!important;min-height:36px!important;font-size:12px!important;
+ color:#a9151d!important;border:0!important;background:none!important;
+ text-transform:none!important;letter-spacing:0!important;z-index:5!important;
+}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card .epi-more:hover{text-decoration:underline}
+#etnika-review-flow #etnika-process-interactive .epi-grid .epi-card .epi-card-open{
+ position:absolute!important;inset:0 0 auto 0!important;width:100%!important;height:auto!important;
+ aspect-ratio:3/4!important;z-index:4!important;cursor:pointer!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__grid{
+ grid-template-rows:min-content minmax(0,1fr)!important;
+}
+#etnika-review-flow #etnika-block-02-final #etnika-studio-features{scroll-margin-top:calc(var(--etnika-nav-height,60px) + 24px)}
+@media(max-width:1100px){
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__grid{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto auto!important}
+ #etnika-review-flow .etnika-editorial-photos{grid-column:1!important;grid-row:2!important}
+ #etnika-review-flow #etnika-block-02-final #etnika-studio-features.etnika-editorial-why{grid-column:1!important;grid-row:3!important}
+ #etnika-review-flow #etnika-process-interactive .epi-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;row-gap:36px!important}
+}
+@media(max-width:700px){
+ #etnika-review-flow #etnika-process-interactive .epi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:30px 16px!important}
+ #etnika-review-flow #etnika-process-interactive .epi-grid .epi-card .epi-title{font-size:24px!important}
+ #etnika-review-flow #etnika-process-interactive .epi-grid .epi-card .epi-desc{font-size:14px!important}
+}
+@media(max-width:360px){
+ #etnika-review-flow #etnika-process-interactive .epi-grid{grid-template-columns:1fr!important}
+}
+</style>
 </body>
 </html>
