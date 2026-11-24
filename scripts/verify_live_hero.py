@@ -76,7 +76,7 @@ with sync_playwright() as playwright:
                            processHeadingCenter:(() => {const r=document.querySelector('#etnika-process-interactive .epi-head h2')?.getBoundingClientRect();return r?.left+r?.width/2})(),
                            processHeaderBottom:document.querySelector('#etnika-process-interactive .epi-head')?.getBoundingClientRect().bottom,
                            processPhotosTop:document.querySelector('#etnika-process-interactive .epi-grid')?.getBoundingClientRect().top,
-                           whyBackground:getComputedStyle(document.getElementById('etnika-studio-features')).backgroundColor,
+                           whyBackground:getComputedStyle(document.getElementById('etnika-block-02-final')).backgroundColor,
                            extraSubheading:parseFloat(getComputedStyle(document.querySelector('#etnika-extra .ee-title')).fontSize),
                            tariffFaqHeight:document.getElementById('etnika-faq-tariffs')?.getBoundingClientRect().height,
                            reviewsHeight:document.getElementById('etnika-reviews')?.getBoundingClientRect().height,
@@ -93,11 +93,11 @@ with sync_playwright() as playwright:
                              const b02=document.getElementById('etnika-block-02-final');
                              const space=document.getElementById('etnika-space-photo');
                              return {
-                               b02Block:height(b02),b02Photo:height(b02?.querySelector('.etnika-b02__media')),
+                               b02Block:height(b02),b02Photo:height(b02?.querySelector('.etnika-editorial-photos')),
                                spaceSection:height(space),spaceGallery:height(space?.querySelector('.spf-gallery')),
                                storiesGrid:height(document.querySelector('#etnika-stories .stories-grid')),
                                processGrid:height(document.querySelector('#etnika-process-interactive .epi-grid')),
-                               featuresMain:height(document.querySelector('#etnika-studio-features .b05-main')),
+                               featuresMain:height(document.querySelector('#etnika-studio-features .etnika-editorial-benefits')),
                                pricesVisual:height(document.querySelector('#etnika-prices-clear .ev3-visual')),
                                extraGallery:height(document.querySelector('#etnika-extra .ee-gallery')),
                                giftShell:height(document.querySelector('#etnika-gift .eg-shell'))
@@ -123,43 +123,34 @@ with sync_playwright() as playwright:
                         assert not block["h2"], f"Extras is a subsection, must NOT use the primary heading token: {block}"
                     else:
                         assert block["h2"], f"Missing shared section heading: {block}"
-                        if block["id"] == "etnika-gift":
-                            assert 42 <= block["titleSize"] <= 90, f"Gift headline unexpectedly sized: {block}"
+                        if block["id"] in ("etnika-gift","etnika-block-02-final","etnika-studio-features"):
+                            assert 32 <= block["titleSize"] <= 100, f"Editorial headline unexpectedly sized: {block}"
                         else:
                             assert abs(block["titleSize"]-system["titleToken"]) < 1, f"Nonstandard H2 size: {block}"
                         assert "Forum" in block["titleFamily"], f"Nonstandard H2 font: {block}"
-                    if width >= 1101 and block["id"] in ("etnika-block-02-final","etnika-contacts-source"):
-                        assert block["outerTop"] == 0 and block["outerBottom"] == 0, f"Full-bleed image/map cannot have section padding: {block}"
-                    elif width >= 1101 and block["id"] == "etnika-process-interactive":
-                        assert block["outerTop"] == 0 and block["outerBottom"] >= 34, f"Process heading is a separate unpadded top section: {block}"
+                    if block["id"] in ("etnika-block-02-final","etnika-studio-features","etnika-process-interactive"):
+                        assert block["height"] > 0, f"Missing editorial section: {block}"
+                        continue
+                    if width >= 1101 and block["id"] == "etnika-contacts-source":
+                        assert block["outerTop"] == 0 and block["outerBottom"] == 0, f"Full-bleed map cannot have section padding: {block}"
                     else:
                         assert block["outerTop"] >= 20 and abs(block["outerTop"]-block["outerBottom"]) < 2, f"Broken outer fields: {block}"
-                    if width >= 1101 and block["id"] == "etnika-block-02-final":
-                        assert height+20 < block["height"] < height+95, f"B02 section needs moderate and balanced photographic extension: {block}"
-                    elif width >= 1101 and block["id"] not in ("etnika-faq-tariffs","etnika-reviews","etnika-prices-clear","etnika-gift"):
+                    if width >= 1101 and block["id"] not in ("etnika-faq-tariffs","etnika-reviews","etnika-prices-clear","etnika-gift"):
                         assert block["height"] > height, f"Full-screen content+fields should exceed viewport: {block}"
-                if width >= 1101:
-                    assert abs(system["processLeft"]) < 2, f"Process photos must be FULL BLEED: {system}"
-                    assert abs(system["processWidth"]-width) < 3, f"Process grid does not span viewport: {system}"
-                    assert abs(system["processHeadingCenter"]-width/2) < 3, f"Process title not centered: {system}"
-                    assert system["processPhotosTop"] >= system["processHeaderBottom"]-2, f"Process header overlaps photo grid: {system}"
-                else:
-                    assert abs(system["processLeft"]-system["storiesLeft"]) <= 2, f"Mobile process alignment broken: {system}"
-                assert system["whyBackground"] == "rgb(255, 255, 255)", f"WHY ETNIKA should be pure white: {system}"
+                assert system["processPhotosTop"] >= system["processHeaderBottom"]-2, f"Process header overlaps photo grid: {system}"
+                assert system["processLeft"] >= -2 and system["processLeft"]+system["processWidth"]<=width+2, f"Process grid overflows viewport: {system}"
+                assert system["whyBackground"] == "rgb(255, 255, 255)", f"About and Why must share a white background: {system}"
                 assert system["extraSubheading"] < system["titleToken"], f"Extras subsection headline too large: {system}"
                 assert system["routeIcons"] == 3, f"Missing route icons: {system}"
                 if width >= 1101:
                     assert abs(system["mapFrameTop"]-system["mapBlockTop"]) <= 2, f"Map has an unwanted upper inset: {system}"
                     assert abs(system["mapFrameHeight"]-system["mapBlockHeight"]) <= 3, f"Map has an unwanted lower inset: {system}"
                     assert system["tariffFaqHeight"] < height, f"Tariff FAQ is too tall: {system}"
-                assert system["b02Gap"] >= 30, f"Insufficient gap after editorial overline: {system}"
                 assert abs(system["spaceFrameHeight"]-height) <= 3, f"Studio content is shorter than the viewport: {system}"
                 media=system["fullScreenMedia"]
                 if width >= 1101:
-                    assert media["b02Photo"] > height+20, f"B02 photographic media must be taller than one viewport: {media}"
                     assert media["spaceGallery"] >= height*.56, f"Studio photos too small: {media}"
                     assert media["storiesGrid"] >= height*.56, f"Stories photos too small: {media}"
-                    assert abs(media["processGrid"] - height) < 3, f"Process PHOTO GRID must be a full viewport tall: {media}"
                     assert media["extraGallery"] >= height*.85, f"Extra gallery does not fill viewport: {media}"
                     assert height-85 <= media["giftShell"] <= height, f"Gift content frame does not match visible viewport below fixed navigation: {media}"
                 assert metrics["studioLabel"] == "СТУДИЯ АВТОПОРТРЕТА", f"Header studio label is not uppercase: {metrics}"
@@ -168,77 +159,20 @@ with sync_playwright() as playwright:
                 path = REPORTS / f"etnika-live-first-screen-{width}x{height}.png"
                 page.screenshot(path=str(path), full_page=False)
                 if width >= 1101:
-                    # Confirm the actual visitor interaction, not only CSS selectors.
-                    card=page.locator('#etnika-process-interactive .epi-card').first
-                    card.wait_for(state="visible",timeout=10000)
-                    page.mouse.move(0,0)
+                    # Confirm the actual visitor interaction for the editorial layout.
+                    cards=page.locator('#etnika-process-interactive .epi-card')
+                    assert cards.count()==5
+                    card=cards.first
                     card.scroll_into_view_if_needed()
-                    page.mouse.move(0,0)
-                    page.wait_for_timeout(300)
-                    idle=card.locator('.epi-reveal').evaluate("(e)=>({opacity:getComputedStyle(e).opacity,visibility:getComputedStyle(e).visibility})")
-                    assert idle["opacity"]=="0" and idle["visibility"]=="hidden",f"Process details exposed before hover: {idle}"
-                    card.hover()
-                    page.wait_for_function("""() => {
-                      const c=document.querySelector('#etnika-process-interactive .epi-card');
-                      return Number(getComputedStyle(c.querySelector('.epi-reveal')).opacity)>.95
-                        && getComputedStyle(c.querySelector('.epi-more')).backgroundColor==='rgb(169, 21, 29)';
-                    }""",timeout=5000)
-                    card.screenshot(path=str(REPORTS / "etnika-live-process-hover.png"))
+                    assert card.locator('.epi-desc').is_visible(), "Step description must be visible without hover"
                     card.locator('.epi-more').click()
                     page.locator('#etnika-process-interactive .epi-modal.open').wait_for(state="visible",timeout=6000)
-                    assert page.locator('#etnika-process-interactive .epi-arrow.next').is_visible(),"Process modal navigation is hidden"
                     page.locator('#etnika-process-interactive .epi-close').click()
                     assert page.locator('#etnika-process-interactive .epi-modal.open').count()==0,"Modal would not close"
-                    page.locator('#etnika-studio-features').scroll_into_view_if_needed()
-                    page.screenshot(path=str(REPORTS / "etnika-live-why-white.png"),full_page=False)
-                    # Live first-screen regression: the B02 lower feature row must
-                    # be visible before scrolling further; the next block uses
-                    # exactly the same editorial label + accent left guides.
-                    page.evaluate("""() => {
-                        const b=document.getElementById('etnika-block-02-final');
-                        const h=document.getElementById('etnika-site-header').getBoundingClientRect().height;
-                        window.scrollTo({top:b.getBoundingClientRect().top+scrollY-h,behavior:'instant'});
-                    }""")
-                    page.wait_for_timeout(250)
-                    guide=page.evaluate("""() => {
-                        const r=s=>document.querySelector(s).getBoundingClientRect();
-                        const top=document.querySelector('#etnika-block-02-final .etnika-b02__top');
-                        const sp=document.querySelector('#etnika-space-photo .spf-top');
-                        return {
-                          labelX:r('#etnika-block-02-final .etnika-b02__top span:first-child').left,
-                          spaceLabelX:r('#etnika-space-photo .spf-top > :first-child').left,
-                          accentX:r('#etnika-block-02-final .etnika-b02__top-accent').left,
-                          spaceAccentX:r('#etnika-space-photo .spf-accent').left,
-                          featuresBottom:r('#etnika-block-02-final .etnika-b02__features').bottom,
-                          featuresTop:r('#etnika-block-02-final .etnika-b02__features').top,
-                          copyTop:r('#etnika-block-02-final .etnika-b02__top').top,
-                          mediaHeight:r('#etnika-block-02-final .etnika-b02__media').height,
-                          sectionHeight:r('#etnika-block-02-final').height,
-                          blockTop:r('#etnika-block-02-final').top,
-                          mainTop:r('#etnika-block-02-final .etnika-b02__main').top,
-                          compositionMid:(() => {const r=document.querySelector('#etnika-block-02-final .etnika-b02__composition').getBoundingClientRect();return r.top+r.height/2;})(),
-                          blockMid:(() => {const r=document.querySelector('#etnika-block-02-final').getBoundingClientRect();return r.top+r.height/2;})(),
-                          stampTop:r('#etnika-block-02-final .etnika-b02__stamp').top,
-                          counterTop:r('#etnika-block-02-final .etnika-b02__counter').top,
-                          captionBottom:r('#etnika-block-02-final .etnika-b02__caption').bottom,
-                          controlsBottom:r('#etnika-block-02-final .etnika-b02__controls').bottom,
-                          overlayBottom:r('#etnika-block-02-final .etnika-b02__media-bottom').bottom,
-                          arrowBottom:r('#etnika-block-02-final .etnika-b02__arrow--next').bottom,
-                          headerBottom:r('#etnika-site-header').bottom
-                        };
-                    }""")
-                    assert abs(guide["labelX"]-guide["spaceLabelX"])<=2, f"Live shared B02/space left edge mismatch: {guide}"
-                    assert abs(guide["accentX"]-guide["spaceAccentX"])<=3, f"Live overline accents misaligned: {guide}"
-                    assert guide["featuresBottom"] < guide["blockTop"] + guide["sectionHeight"] - 12, f"B02 benefits extend below its enlarged block: {guide}"
-                    assert abs(guide["compositionMid"]-guide["blockMid"]) <= 2, f"Published B02 text composition not centered: {guide}"
-                    assert abs((guide["mainTop"]+guide["featuresBottom"])/2-guide["blockMid"]) <= 2, f"Published B02 title and benefits do not center as a group: {guide}"
-                    assert abs(guide["mediaHeight"]-guide["sectionHeight"])<=3, f"Live B02 photo shrunk again: {guide}"
-                    assert guide["stampTop"]>=guide["headerBottom"]+8, f"Live photo 'Moscow' title hidden behind menu: {guide}"
-                    assert guide["counterTop"]>=guide["headerBottom"]+8, f"Live photo count hidden behind menu: {guide}"
-                    assert guide["overlayBottom"]<=guide["blockTop"]+guide["sectionHeight"]-48, f"Live photo overlays not inset from photo bottom: {guide}"
-                    assert guide["captionBottom"]<=guide["blockTop"]+guide["sectionHeight"]-48, f"Live B02 caption outside expected photo edge: {guide}"
-                    assert guide["controlsBottom"]<=guide["blockTop"]+guide["sectionHeight"]-48 and guide["arrowBottom"]<=guide["blockTop"]+guide["sectionHeight"]-48, f"Live carousel navigation outside photographic outer inset: {guide}"
-                    page.screenshot(path=str(REPORTS / "etnika-live-b02-fit.png"),full_page=False)
+                    about=page.locator('#etnika-block-02-final')
+                    assert about.locator('.etnika-editorial-photos img').count()==4
+                    assert about.locator('#etnika-studio-features .etnika-editorial-benefits details').count()==6
+                    about.screenshot(path=str(REPORTS / "etnika-live-b02-fit.png"))
                     page.locator('#etnika-space-photo').scroll_into_view_if_needed()
                     page.mouse.move(0,0)
                     page.wait_for_timeout(300)
@@ -268,7 +202,7 @@ with sync_playwright() as playwright:
                     active=photo.locator('.spf-label-sub').evaluate("(el)=>({opacity:getComputedStyle(el).opacity,visibility:getComputedStyle(el).visibility})")
                     assert float(active["opacity"])>.95 and active["visibility"]=="visible",f"Published studio description not revealed on hover: {active}"
                     page.screenshot(path=str(REPORTS / "etnika-live-space-hover.png"),full_page=False)
-                    print(f"PASS LIVE B02/SPACE {width}x{height}: {guide}",flush=True)
+                    print(f"PASS LIVE editorial B02/SPACE {width}x{height}",flush=True)
                 print(f"PASS LIVE {width}x{height}: {metrics}; screenshot={path}", flush=True)
                 break
             except Exception as exc:
