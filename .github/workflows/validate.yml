@@ -53,8 +53,9 @@ jobs:
           assert pathlib.Path('site/index.html').is_file(), 'Site source missing'
           from html.parser import HTMLParser
           site_paths=list(pathlib.Path('site').glob('*.html'))
-          assert [p.name for p in site_paths]==['index.html'], 'Only site/index.html may define the site'
-          canonical=site_paths[0].read_text(encoding='utf-8')
+          assert {p.name for p in site_paths}=={'index.html','tariffs-draft.html'}, 'Only canonical site and explicitly scoped tariff draft are allowed'
+          assert 'noindex,nofollow' in pathlib.Path('site/tariffs-draft.html').read_text(encoding='utf-8'), 'Tariff draft must not be indexed'
+          canonical=pathlib.Path('site/index.html').read_text(encoding='utf-8')
           assert canonical.count('id="etnika-hero"')==1, 'Canonical site must have one HERO'
           assert 'const ids=[' in canonical, 'Page section ordering is missing'
           section_order=canonical.split('const ids=[',1)[1].split(']',1)[0]
