@@ -12,14 +12,28 @@ URL="https://nkuchenov-hash.github.io/etnika-website/site/" if LIVE else (ROOT/"
 CHROME=shutil.which("google-chrome") or shutil.which("google-chrome-stable")
 with sync_playwright() as pw:
     browser=pw.chromium.launch(headless=True,executable_path=CHROME) if CHROME else pw.chromium.launch(headless=True)
-    for w,h in [(1440,900),(1366,768),(1024,768),(390,844)]:
+    for w,h in [(1440,900),(1366,768),(2560,1080),(3440,1440),(1024,768),(390,844)]:
         page=browser.new_page(viewport={"width":w,"height":h},device_scale_factor=1)
         for attempt in range(12 if LIVE else 1):
             page.goto(URL+(f"?editorial-check={attempt}" if LIVE else ""),wait_until="domcontentloaded",timeout=45000)
-            if page.locator("#etnika-process-editorial-20261124").count(): break
+            if page.locator("#etnika-owner-composition-20261124-v3").count(): break
             if not LIVE or attempt==11: raise AssertionError("Current editorial version is not deployed")
             time.sleep(3)
         page.wait_for_function("() => !!document.querySelector('#etnika-block-02-final .etnika-editorial-why')")
+        hero=page.locator("#etnika-hero")
+        hero_metrics=page.evaluate("""() => {
+          const p=document.querySelector('#etnika-hero .ec-slide--red .ec-photo'), h=document.querySelector('#etnika-hero .ec-love');
+          const title=document.querySelector('#etnika-block-02-final .etnika-b02__title'), token=document.createElement('i');
+          token.style.fontSize='var(--etnika-section-title)';document.body.append(token);
+          const result={fit:getComputedStyle(p).objectFit,position:getComputedStyle(p).objectPosition,
+            heart:getComputedStyle(h).filter, title:parseFloat(getComputedStyle(title).fontSize),
+            token:parseFloat(getComputedStyle(token).fontSize)};
+          token.remove();return result;
+        }""")
+        assert 'url(' not in hero_metrics["heart"],hero_metrics
+        assert abs(hero_metrics["title"]-hero_metrics["token"])<1,hero_metrics
+        if w/h>2752/1536 and w>760: assert hero_metrics["fit"]=="contain",hero_metrics
+        hero.screenshot(path=str(OUT/f"etnika-hero-{'LIVE-' if LIVE else ''}{w}x{h}.png"))
         about=page.locator("#etnika-block-02-final")
         about.scroll_into_view_if_needed()
         page.evaluate("() => document.fonts.ready")
@@ -34,12 +48,12 @@ with sync_playwright() as pw:
           const r=e=>e.getBoundingClientRect().toJSON();
           return {about:r(a),photos:r(p),copy:r(c),why:r(why),background:getComputedStyle(a).backgroundColor,
             bodyWidth:document.documentElement.scrollWidth,viewport:innerWidth,
-            images:[...p.querySelectorAll('img')].map(e=>({src:e.getAttribute('src'),natural:e.naturalWidth,ratio:e.naturalWidth/e.naturalHeight,box:r(e),fit:getComputedStyle(e).objectFit})),
+            images:[...a.querySelectorAll('.etnika-editorial-photo img')].map(e=>({src:e.getAttribute('src'),natural:e.naturalWidth,ratio:e.naturalWidth/e.naturalHeight,box:r(e),fit:getComputedStyle(e).objectFit})),
             steps:[...document.querySelectorAll('#etnika-process-interactive .epi-card')].map(e=>({title:e.querySelector('h3').textContent.replace(/\s+/g,' '),desc:e.querySelector('.epi-desc').textContent,visible:getComputedStyle(e.querySelector('.epi-reveal')).visibility,opacity:getComputedStyle(e.querySelector('.epi-reveal')).opacity,rect:r(e)}))
           };
         }""")
         assert facts["background"]=="rgb(255, 255, 255)",facts
-        assert len(facts["images"])==4 and len({x["src"] for x in facts["images"]})==4,facts
+        assert len(facts["images"])==8 and len({x["src"] for x in facts["images"]})==8,facts
         for im in facts["images"]:
             assert im["natural"]>0 and im["box"]["width"]>0 and im["box"]["height"]>0,im
             assert abs(im["box"]["width"]/im["box"]["height"]-im["ratio"])<.025,im

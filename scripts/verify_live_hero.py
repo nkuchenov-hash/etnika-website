@@ -123,7 +123,7 @@ with sync_playwright() as playwright:
                         assert not block["h2"], f"Extras is a subsection, must NOT use the primary heading token: {block}"
                     else:
                         assert block["h2"], f"Missing shared section heading: {block}"
-                        if block["id"] in ("etnika-gift","etnika-block-02-final","etnika-studio-features"):
+                        if block["id"] in ("etnika-gift","etnika-studio-features"):
                             assert 32 <= block["titleSize"] <= 100, f"Editorial headline unexpectedly sized: {block}"
                         else:
                             assert abs(block["titleSize"]-system["titleToken"]) < 1, f"Nonstandard H2 size: {block}"
@@ -170,7 +170,7 @@ with sync_playwright() as playwright:
                     page.locator('#etnika-process-interactive .epi-close').click()
                     assert page.locator('#etnika-process-interactive .epi-modal.open').count()==0,"Modal would not close"
                     about=page.locator('#etnika-block-02-final')
-                    assert about.locator('.etnika-editorial-photos img').count()==4
+                    assert about.locator('.etnika-editorial-photo img').count()==8
                     assert about.locator('#etnika-studio-features .etnika-editorial-benefits details').count()==6
                     about.screenshot(path=str(REPORTS / "etnika-live-b02-fit.png"))
                     page.locator('#etnika-space-photo').scroll_into_view_if_needed()
