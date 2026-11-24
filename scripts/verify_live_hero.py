@@ -170,7 +170,7 @@ with sync_playwright() as playwright:
                     page.locator('#etnika-process-interactive .epi-close').click()
                     assert page.locator('#etnika-process-interactive .epi-modal.open').count()==0,"Modal would not close"
                     about=page.locator('#etnika-block-02-final')
-                    assert about.locator('.etnika-editorial-photo img').count()==8
+                    assert about.locator('.etnika-editorial-photo img').count()==2
                     assert about.locator('#etnika-studio-features .etnika-editorial-benefits details').count()==6
                     about.screenshot(path=str(REPORTS / "etnika-live-b02-fit.png"))
                     page.locator('#etnika-space-photo').scroll_into_view_if_needed()

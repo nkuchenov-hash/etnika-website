@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261124-hero-right-safe-v6">
+<meta name="etnika-build" content="20261124-about-approved-series-v7">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -785,17 +785,10 @@ window.addEventListener('pageshow',function(event){
       </div><!-- /.etnika-b02__stack -->
     </div>
 
-    <div class="etnika-editorial-photos" aria-label="Примеры автопортретов ЭТНИКА">
-      <div class="etnika-editorial-photo-column"><figure class="etnika-editorial-photo photo-1"><img src="assets/b02/b02-06-red-blonde.webp" alt="Фэшн-портрет на красном фоне" decoding="async" loading="lazy"></figure>
-<figure class="etnika-editorial-photo photo-3"><img src="assets/b02/b02-05-ivory.webp" alt="Портрет на светлом фоне" decoding="async" loading="lazy"></figure>
-<figure class="etnika-editorial-photo photo-5"><img src="assets/b02/b02-02-dark.webp" alt="Портрет на тёмном фоне" decoding="async" loading="lazy"></figure>
-      <figure class="etnika-editorial-photo photo-7"><img src="assets/b02/b02-07-bw.webp" alt="Чёрно-белый портрет" decoding="async" loading="lazy"></figure></div>
-      <div class="etnika-editorial-photo-column"><figure class="etnika-editorial-photo photo-2"><img src="assets/b02/b02-03-cool.webp" alt="Портрет на голубом фоне" decoding="async" loading="lazy"></figure>
-<figure class="etnika-editorial-photo photo-4"><img src="assets/b02/b02-10-red-seated.webp" alt="Портрет сидя на красном фоне" decoding="async" loading="lazy"></figure>
-<figure class="etnika-editorial-photo photo-6"><img src="assets/b02/b02-04-purple.webp" alt="Портрет с фиолетовым светом" decoding="async" loading="lazy"></figure>
-      <figure class="etnika-editorial-photo photo-8"><img src="assets/b02/b02-08-taupe.webp" alt="Портрет в коричневом платье" decoding="async" loading="lazy"></figure></div>
+    <div class="etnika-editorial-photos" aria-label="Фотосерия из референса Анны">
+      <figure class="etnika-editorial-photo photo-1"><img src="assets/b02/b02-06-red-blonde.webp" alt="Портрет на красном фоне" decoding="async" loading="lazy"></figure>
+      <figure class="etnika-editorial-photo photo-2"><img src="assets/b02/b02-03-cool.webp" alt="Портрет на голубом фоне" decoding="async" loading="lazy"></figure>
     </div>
-    
 
   </div>
 </section>
@@ -16161,6 +16154,41 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 }
 /* No alteration of the original heart artwork. */
 #etnika-hero.etnika-carousel.is-red .ec-love{filter:brightness(0) invert(1)!important}
+</style>
+<style id="etnika-about-approved-series-20261124">
+/* The owner's chosen single-model series only. No unrelated stock/guest portraits. */
+#etnika-review-flow > section#etnika-block-02-final .etnika-b02__grid{
+ grid-template-columns:minmax(0,1fr) minmax(0,1.08fr)!important;
+ grid-template-rows:auto 1fr!important;
+ column-gap:clamp(48px,5vw,100px)!important;
+ row-gap:clamp(120px,11vw,205px)!important;
+ align-items:start!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-photos{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+ grid-row:1/3!important;grid-column:2!important;
+ gap:clamp(44px,5vw,86px)!important;align-items:start!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-photos .photo-1{
+ width:83%!important;justify-self:start!important;margin:0!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-photos .photo-2{
+ width:58%!important;justify-self:end!important;margin:0!important;
+}
+#etnika-review-flow #etnika-block-02-final #etnika-studio-features.etnika-editorial-why{
+ grid-row:2!important;grid-column:1!important;margin:0!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{
+ font-size:var(--etnika-body-size,16px)!important;min-height:64px!important;
+}
+@media(max-width:1100px){
+ #etnika-review-flow > section#etnika-block-02-final .etnika-b02__grid{
+  grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto auto!important;
+  row-gap:clamp(72px,12vw,120px)!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-photos{grid-column:1!important;grid-row:2!important;gap:28px!important}
+ #etnika-review-flow #etnika-block-02-final #etnika-studio-features.etnika-editorial-why{grid-column:1!important;grid-row:3!important}
+}
 </style>
 </body>
 </html>

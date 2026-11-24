@@ -16,7 +16,7 @@ with sync_playwright() as pw:
         page=browser.new_page(viewport={"width":w,"height":h},device_scale_factor=1)
         for attempt in range(12 if LIVE else 1):
             page.goto(URL+(f"?editorial-check={attempt}" if LIVE else ""),wait_until="domcontentloaded",timeout=45000)
-            if page.locator("#etnika-hero-safe-right-20261124").count(): break
+            if page.locator("#etnika-about-approved-series-20261124").count(): break
             if not LIVE or attempt==11: raise AssertionError("Current editorial version is not deployed")
             time.sleep(3)
         page.wait_for_function("() => !!document.querySelector('#etnika-block-02-final .etnika-editorial-why')")
@@ -67,7 +67,7 @@ with sync_playwright() as pw:
           };
         }""")
         assert facts["background"]=="rgb(255, 255, 255)",facts
-        assert len(facts["images"])==8 and len({x["src"] for x in facts["images"]})==8,facts
+        assert {x["src"] for x in facts["images"]}=={"assets/b02/b02-06-red-blonde.webp","assets/b02/b02-03-cool.webp"},facts
         for im in facts["images"]:
             assert im["natural"]>0 and im["box"]["width"]>0 and im["box"]["height"]>0,im
             assert abs(im["box"]["width"]/im["box"]["height"]-im["ratio"])<.025,im
@@ -77,6 +77,7 @@ with sync_playwright() as pw:
         if w>1100:
             assert facts["photos"]["left"]>=facts["copy"]["right"]-1,facts
             assert abs(facts["why"]["left"]-facts["copy"]["left"])<3,facts
+            assert facts["why"]["top"]-facts["copy"]["bottom"]>=119,facts
         else:
             assert facts["photos"]["top"]>=facts["copy"]["bottom"]-1,facts
             assert facts["why"]["top"]>=facts["photos"]["bottom"]-1,facts
