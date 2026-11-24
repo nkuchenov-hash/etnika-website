@@ -19,6 +19,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: etnika-about-eight-originals
-          path: reports/etnika-why-series-*.png
+          name: etnika-about-reference-screenshots
+          path: |
+            reports/etnika-about-reference-*.png
+            reports/etnika-about-reference-*.json
           if-no-files-found: error
