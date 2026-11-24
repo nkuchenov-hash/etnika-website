@@ -12,20 +12,25 @@ URL="https://nkuchenov-hash.github.io/etnika-website/site/" if LIVE else (ROOT/"
 CHROME=shutil.which("google-chrome") or shutil.which("google-chrome-stable")
 with sync_playwright() as pw:
     browser=pw.chromium.launch(headless=True,executable_path=CHROME) if CHROME else pw.chromium.launch(headless=True)
-    for w,h in [(1440,900),(1366,768),(2560,1080),(3440,1440),(1024,768),(390,844)]:
+    for w,h in [(1600,900),(1440,900),(1366,768),(1920,1080),(2560,1080),(3440,1440),(1024,768),(390,844)]:
         page=browser.new_page(viewport={"width":w,"height":h},device_scale_factor=1)
         for attempt in range(12 if LIVE else 1):
             page.goto(URL+(f"?editorial-check={attempt}" if LIVE else ""),wait_until="domcontentloaded",timeout=45000)
-            if page.locator("#etnika-owner-composition-20261124-v3").count(): break
+            if page.locator("#etnika-hero-safe-right-20261124").count(): break
             if not LIVE or attempt==11: raise AssertionError("Current editorial version is not deployed")
             time.sleep(3)
         page.wait_for_function("() => !!document.querySelector('#etnika-block-02-final .etnika-editorial-why')")
         hero=page.locator("#etnika-hero")
+        page.evaluate("() => document.fonts.ready")
+        page.locator("#etnika-hero .ec-slide--red .ec-photo").evaluate("(e)=>e.decode()")
         hero_metrics=page.evaluate("""() => {
           const p=document.querySelector('#etnika-hero .ec-slide--red .ec-photo'), h=document.querySelector('#etnika-hero .ec-love');
           const title=document.querySelector('#etnika-block-02-final .etnika-b02__title'), token=document.createElement('i');
           token.style.fontSize='var(--etnika-section-title)';document.body.append(token);
-          const result={fit:getComputedStyle(p).objectFit,position:getComputedStyle(p).objectPosition,
+          const pr=p.getBoundingClientRect(), hr=h.getBoundingClientRect(), logo=document.querySelector('#etnika-hero .ec-brand').getBoundingClientRect(), bottom=document.querySelector('#etnika-hero .ec-bottom').getBoundingClientRect();
+          // The original uncropped HERO source has figure+chair bounds x=.415..595, y=.36..96.
+          const subject={left:pr.left+.415*pr.width,right:pr.left+.595*pr.width,top:pr.top+.36*pr.height,bottom:pr.top+.96*pr.height};
+          const result={subject,heartRight:hr.right,logoRight:logo.right,bottomTop:bottom.top,fit:getComputedStyle(p).objectFit,position:getComputedStyle(p).objectPosition,
             heart:getComputedStyle(h).filter, title:parseFloat(getComputedStyle(title).fontSize),
             token:parseFloat(getComputedStyle(token).fontSize)};
           token.remove();return result;
@@ -33,6 +38,10 @@ with sync_playwright() as pw:
         assert 'url(' not in hero_metrics["heart"],hero_metrics
         assert abs(hero_metrics["title"]-hero_metrics["token"])<1,hero_metrics
         if w/h>2752/1536 and w>760: assert hero_metrics["fit"]=="contain",hero_metrics
+        if w>760:
+            assert hero_metrics["subject"]["left"]>max(hero_metrics["heartRight"],hero_metrics["logoRight"])+12, f"Portrait touches logo or heart: {hero_metrics}"
+            assert hero_metrics["subject"]["right"]<w-12, f"Portrait clipped at right edge: {hero_metrics}"
+            assert hero_metrics["subject"]["bottom"]<hero_metrics["bottomTop"]-12, f"Portrait overlaps bottom navigation: {hero_metrics}"
         hero.screenshot(path=str(OUT/f"etnika-hero-{'LIVE-' if LIVE else ''}{w}x{h}.png"))
         minimum=18 if w>=1920 else 16
         typography=page.evaluate("""() => [...document.querySelectorAll(
