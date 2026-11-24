@@ -27,7 +27,7 @@ jobs:
     concurrency:
       group: etnika-github-pages-deploy-stable-v3
       cancel-in-progress: false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -74,7 +74,7 @@ jobs:
   verify-live:
     name: Verify published site (non-blocking)
     needs: deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - name: Checkout
