@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261124-header-hover-v10">
+<meta name="etnika-build" content="20261124-about-editorial-readable-v11">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -720,8 +720,7 @@ window.addEventListener('pageshow',function(event){
       <div class="etnika-b02__composition" aria-label="О студии и преимуществах">
       <div class="etnika-b02__main">
         <h2 class="etnika-b02__title etnika-section-heading">
-          <span class="red">ФОТОСТУДИЯ</span><br>
-          БЕЗ ФОТОГРАФА
+          <span class="red etnika-title-line">ФОТОСТУДИЯ</span><span class="etnika-title-line">БЕЗ ФОТОГРАФА</span>
         </h2>
 
         <div class="etnika-b02__description">
@@ -4271,7 +4270,7 @@ body.etnika-gallery-lock{
   <h2 id="etnika-why-title" class="etnika-section-heading">Почему <span>ЭТНИКА</span></h2>
   <div class="etnika-editorial-metrics"><div><strong>3000+</strong><span>px разрешение фото</span></div><div><strong>2×600</strong><span>Дж импульсного света</span></div><div><strong>46 м²</strong><span>зал до 8 человек</span></div></div>
   <div class="etnika-editorial-benefits">
-    <details><summary><span class="etnika-benefit-number">01</span><span>Качественные фотографии</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Цветные и чёрно-белые кадры за один сет, портретная и ростовая съёмка, бесплатная цветокоррекция, неограниченное число фотографий, исходники по запросу и разрешение от 3000 px.</p></details>
+    <details><summary><span class="etnika-benefit-number">01</span><span>Качественные фотографии</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Цветные и чёрно-белые кадры за один сет, цветные фоны и световые схемы, портреты и фото в полный рост, бесплатная автоматическая цветокоррекция, неограниченное число фотографий, исходники по запросу и разрешение от 3000 px.</p></details>
     <details><summary><span class="etnika-benefit-number">02</span><span>Подстраиваем студию под вас</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Студию можно арендовать для собственной съёмки, устроить фотосвидание, день рождения или другое памятное событие. Автопортретный зал 46 м² вмещает до 8 человек.</p></details>
     <details><summary><span class="etnika-benefit-number">03</span><span>Комфортное пространство</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Лаунж-зона с диваном, чай, кофе, вода, конфеты и печенье, Crocs для гостей, гримёрная зона с зеркалом в полный рост, барным стулом и ширмой. Более 20 предметов реквизита и аксессуаров — бесплатно.</p></details>
     <details><summary><span class="etnika-benefit-number">04</span><span>Топовое оборудование</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Техника настроена профессиональным фотографом, снимающим для Vogue. В студии есть огромное зеркало 2×2 м, фотоаппарат ведущего мирового производителя, два источника импульсного света мощностью 600 Дж и большой монитор предпросмотра.</p></details>
@@ -16156,38 +16155,86 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 #etnika-hero.etnika-carousel.is-red .ec-love{filter:brightness(0) invert(1)!important}
 </style>
 <style id="etnika-about-approved-series-20261124">
-/* The owner's chosen single-model series only. No unrelated stock/guest portraits. */
+/* Editorial composition based on the approved reference, with the original
+   title scale and an enlarged editorial body text token. The gallery is
+   ready for the remaining originals from Anna's album; never use fillers. */
+#etnika-review-flow > section#etnika-block-02-final{
+ --etnika-body-size:clamp(20px,1.15vw,22px);
+ padding:clamp(84px,7vw,140px) 0 clamp(88px,8vw,154px)!important;
+}
 #etnika-review-flow > section#etnika-block-02-final .etnika-b02__grid{
- grid-template-columns:minmax(0,1fr) minmax(0,1.08fr)!important;
- grid-template-rows:auto 1fr!important;
- column-gap:clamp(48px,5vw,100px)!important;
- row-gap:clamp(120px,11vw,205px)!important;
+ display:grid!important;
+ grid-template-columns:repeat(16,minmax(0,1fr))!important;
+ grid-template-rows:auto auto!important;
+ column-gap:clamp(12px,1.25vw,24px)!important;
+ row-gap:clamp(115px,9vw,175px)!important;
  align-items:start!important;
 }
-#etnika-review-flow #etnika-block-02-final .etnika-editorial-photos{
- display:grid!important;grid-template-columns:minmax(0,1fr)!important;
- grid-row:1/3!important;grid-column:2!important;
- gap:clamp(44px,5vw,86px)!important;align-items:start!important;
+#etnika-review-flow > section#etnika-block-02-final .etnika-b02__copy{
+ grid-column:1/10!important;grid-row:1!important;align-self:start!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__title{
+ font-size:var(--etnika-section-title)!important;line-height:.94!important;
+ font-family:Forum,Georgia,serif!important;font-weight:400!important;
+ letter-spacing:-.025em!important;max-width:none!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__main{min-width:0!important;max-width:none!important}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__description{
+ font-size:var(--etnika-body-size)!important;line-height:1.58!important;
+ max-width:95%!important;margin-top:clamp(30px,3vw,52px)!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__description p+p{margin-top:24px!important}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__composition{gap:0!important}
+#etnika-review-flow #etnika-block-02-final .etnika-b02__features{display:none!important}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-photos{display:contents!important}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-photo{margin:0!important;min-width:0!important}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-photo img{
+ width:100%!important;height:auto!important;display:block!important;object-fit:contain!important;
 }
 #etnika-review-flow #etnika-block-02-final .etnika-editorial-photos .photo-1{
- width:83%!important;justify-self:start!important;margin:0!important;
+ grid-column:10/16!important;grid-row:1!important;
+ width:100%!important;align-self:start!important;justify-self:start!important;
 }
 #etnika-review-flow #etnika-block-02-final .etnika-editorial-photos .photo-2{
- width:58%!important;justify-self:end!important;margin:0!important;
+ grid-column:12/17!important;grid-row:2!important;width:100%!important;
+ align-self:start!important;justify-self:end!important;margin-top:clamp(30px,5vw,88px)!important;
 }
 #etnika-review-flow #etnika-block-02-final #etnika-studio-features.etnika-editorial-why{
- grid-row:2!important;grid-column:1!important;margin:0!important;
+ grid-column:1/10!important;grid-row:2!important;align-self:start!important;
+ padding:0!important;margin:0!important;
 }
+#etnika-review-flow #etnika-block-02-final #etnika-why-title{
+ font-size:clamp(44px,3.8vw,70px)!important;line-height:1.02!important;margin:0 0 32px!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-metrics{display:none!important}
 #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{
- font-size:var(--etnika-body-size,16px)!important;min-height:64px!important;
+ font-size:var(--etnika-body-size)!important;min-height:68px!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details p{
+ font-size:var(--etnika-body-size)!important;line-height:1.58!important;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-benefit-number{font-size:16px!important}
+@media(min-width:1101px){
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__title .etnika-title-line{display:block;white-space:nowrap}
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__top{max-width:95%!important}
 }
 @media(max-width:1100px){
+ #etnika-review-flow > section#etnika-block-02-final{--etnika-body-size:18px}
  #etnika-review-flow > section#etnika-block-02-final .etnika-b02__grid{
-  grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto auto!important;
-  row-gap:clamp(72px,12vw,120px)!important;
+  grid-template-columns:repeat(8,minmax(0,1fr))!important;
+  grid-template-rows:auto auto auto!important;row-gap:clamp(56px,9vw,105px)!important;
  }
- #etnika-review-flow #etnika-block-02-final .etnika-editorial-photos{grid-column:1!important;grid-row:2!important;gap:28px!important}
- #etnika-review-flow #etnika-block-02-final #etnika-studio-features.etnika-editorial-why{grid-column:1!important;grid-row:3!important}
+ #etnika-review-flow > section#etnika-block-02-final .etnika-b02__copy{grid-column:1/-1!important;grid-row:1!important}
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-photos .photo-1{grid-column:1/6!important;grid-row:2!important}
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-photos .photo-2{grid-column:6/9!important;grid-row:2!important;margin-top:clamp(32px,8vw,80px)!important}
+ #etnika-review-flow #etnika-block-02-final #etnika-studio-features.etnika-editorial-why{grid-column:1/-1!important;grid-row:3!important}
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__description{max-width:none!important}
+}
+@media(max-width:700px){
+ #etnika-review-flow > section#etnika-block-02-final{padding:64px 0 76px!important}
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__title .etnika-title-line{display:block}
+ #etnika-review-flow #etnika-block-02-final .etnika-b02__title{white-space:normal!important}
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{min-height:64px!important}
 }
 </style>
 <style id="etnika-header-transparent-20261124">
