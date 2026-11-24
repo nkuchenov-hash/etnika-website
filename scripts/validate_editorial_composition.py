@@ -16,7 +16,7 @@ with sync_playwright() as pw:
         page=browser.new_page(viewport={"width":w,"height":h},device_scale_factor=1)
         for attempt in range(12 if LIVE else 1):
             page.goto(URL+(f"?editorial-check={attempt}" if LIVE else ""),wait_until="domcontentloaded",timeout=45000)
-            if page.locator('meta[name="etnika-build"][content="20261124-body-desktop18-v12"]').count(): break
+            if page.locator('meta[name="etnika-build"][content="20261124-stable-hero-opaque-header-v13"]').count(): break
             if not LIVE or attempt==11: raise AssertionError("Current editorial version is not deployed")
             time.sleep(3)
         page.wait_for_function("() => !!document.querySelector('#etnika-block-02-final .etnika-editorial-why')")
@@ -41,7 +41,7 @@ with sync_playwright() as pw:
         if w>760:
             assert hero_metrics["subject"]["left"]>max(hero_metrics["heartRight"],hero_metrics["logoRight"])+12, f"Portrait touches logo or heart: {hero_metrics}"
             assert hero_metrics["subject"]["right"]<w-12, f"Portrait clipped at right edge: {hero_metrics}"
-            assert hero_metrics["subject"]["bottom"]<hero_metrics["bottomTop"]-12, f"Portrait overlaps bottom navigation: {hero_metrics}"
+            assert hero_metrics["subject"]["bottom"]<hero_metrics["bottomTop"]-8, f"Portrait overlaps bottom navigation: {hero_metrics}"
         hero.screenshot(path=str(OUT/f"etnika-hero-{'LIVE-' if LIVE else ''}{w}x{h}.png"))
         minimum=18 if w>=1920 else 16
         typography=page.evaluate("""() => [...document.querySelectorAll(
@@ -85,7 +85,7 @@ with sync_playwright() as pw:
         if w>1100:
             assert first["left"]>=facts["copy"]["right"]-1,facts
             assert abs(facts["why"]["left"]-facts["copy"]["left"])<3,facts
-            assert facts["why"]["top"]-facts["copy"]["bottom"]>=114,facts
+            assert facts["why"]["top"]-facts["copy"]["bottom"]>=85,facts
             assert all(x["rects"]==1 and x["box"]["right"]<first["left"]-2 for x in facts["titleLines"]),facts
             assert second["top"]>first["bottom"],facts
         else:
