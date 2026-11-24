@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261124-about-editorial-six-v19">
+<meta name="etnika-build" content="20261124-about-editorial-six-v20">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -13930,10 +13930,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 </style>
 
 <style id="etnika-about-reference-grid-v19">
-/* B02: one editorial canvas; reference coordinate system 766 × 623.
-   Grid lines: x = 0,27,351,376,426,516,537,628,647,739,766.
-   Photos share grid rows with copy; open accordion content expands naturally.
-   No legacy B02 grid, split-screen or carousel classes in the live markup. */
+/* B02: two editorial rows on one white canvas; nested advantages must never be reordered as a top-level section. */
 #etnika-review-flow > section#etnika-block-02-final {
   display:block!important; width:100%!important; max-width:none!important;
   height:auto!important;min-height:0!important;max-height:none!important;
@@ -13949,7 +13946,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   padding:4.178cqw 5.5cqw 6.92cqw;align-items:start;box-sizing:border-box;
 }
 #etnika-review-flow #etnika-block-02-final .b02r-intro {
-  grid-column:1;grid-row:1;min-width:0;align-self:start;
+  grid-column:1;grid-row:1;min-width:0;align-self:center;
 }
 #etnika-review-flow #etnika-block-02-final .b02r-kicker {
   display:block;margin:0 0 3.13cqw;line-height:1.25;
@@ -13991,7 +13988,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-review-flow #etnika-block-02-final .b02r-benefits details {border:0;border-top:1px solid #d4cfca;margin:0}
 #etnika-review-flow #etnika-block-02-final .b02r-benefits summary {
   display:grid;grid-template-columns:minmax(0,1fr) 20px;gap:8px;align-items:center;
-  min-height:max(45px,5.95cqw);padding:8px 7px 8px 0;box-sizing:border-box;
+  min-height:clamp(48px,3.8cqw,70px);padding:8px 7px 8px 0;box-sizing:border-box;
   font-family:var(--etnika-body-font,Geologica,Arial,sans-serif)!important;
   font-size:var(--etnika-body-size,18px)!important;font-weight:var(--etnika-body-weight,100)!important;
   line-height:1.35;letter-spacing:var(--etnika-body-letter-spacing,-.006em);
@@ -15861,17 +15858,17 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     var prices=document.getElementById('etnika-prices-clear');
     var tariffs=document.getElementById('etnika-faq-tariffs');
     var extra=document.getElementById('etnika-extra');
-    var advantages=document.getElementById('etnika-studio-features');
+
     var gift=document.getElementById('etnika-gift');
     var contacts=document.getElementById('etnika-contacts-source');
 
-    /* Published-site logic: process → before-visit FAQ; prices → tariff FAQ → extras → advantages. */
+    /* Published-site logic: process → before-visit FAQ; prices → tariff FAQ → extras → gift. */
     if(process && visit) process.after(visit);
     if(visit && stories) visit.after(stories);
     if(prices && tariffs) prices.after(tariffs);
     if(tariffs && extra) tariffs.after(extra);
-    if(extra && advantages) extra.after(advantages);
-    if(advantages && gift) advantages.after(gift);
+
+    if(extra && gift) extra.after(gift);
     if(gift && contacts) gift.after(contacts);
   }
   move();
@@ -15906,7 +15903,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   var visit=document.getElementById('etnika-faq');
   var stories=document.getElementById('etnika-stories');
   var space=document.getElementById('etnika-space-photo');
-  var advantages=document.getElementById('etnika-studio-features');
+
   var prices=document.getElementById('etnika-prices-clear');
   var extra=document.getElementById('etnika-extra');
   var tariffs=document.getElementById('etnika-faq-tariffs');
@@ -15916,8 +15913,8 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
   if(process && visit) process.after(visit);
   if(visit && stories) visit.after(stories);
   if(stories && space) stories.after(space);
-  if(space && advantages) space.after(advantages);
-  if(advantages && prices) advantages.after(prices);
+
+  if(space && prices) space.after(prices);
   /* User-requested order: PRICES -> DETAILS -> TARIFF FAQ */
   if(prices && extra) prices.after(extra);
   if(extra && tariffs) extra.after(tariffs);
@@ -16052,7 +16049,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  document.querySelectorAll('#etnika-block-02-final .etnika-b02__slide').forEach(img=>{
    img.loading='eager';img.decoding='async';img.style.objectPosition='center 38%';
  });
- const ids=['etnika-hero','etnika-block-02-final','etnika-studio-features','etnika-space-photo','etnika-stories','etnika-process-interactive','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-reviews','etnika-contacts-source'];
+ const ids=['etnika-hero','etnika-block-02-final','etnika-space-photo','etnika-stories','etnika-process-interactive','etnika-faq','etnika-prices-clear','etnika-extra','etnika-faq-tariffs','etnika-gift','etnika-reviews','etnika-contacts-source'];
  const flow=document.getElementById('etnika-review-flow');
  for(const id of ids){const item=document.getElementById(id);if(item&&!flow.contains(item))flow.appendChild(item);}
  // Keep the site-wide footer outside <main>, after the last content block.
