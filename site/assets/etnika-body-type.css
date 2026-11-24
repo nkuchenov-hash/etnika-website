@@ -18,8 +18,8 @@
   --etnika-text-size:var(--etnika-body-size);
 }
 
-/* A single shared step for large displays, applied to every body block. */
-@media (min-width:1920px) {
+/* Owner-approved desktop body text: 18px at every desktop width. Mobile sizing is unchanged. */
+@media (min-width:761px) {
   :root { --etnika-body-size:18px; }
 }
 
@@ -37,6 +37,7 @@
   #etnika-studio-features .b05-intro,
   #etnika-studio-features .b05-caption-text,
   #etnika-studio-features .b05-item-text,
+  #etnika-studio-features .etnika-editorial-benefits details p,
   #etnika-prices-clear .pc-people,
   #etnika-prices-clear .pc-features li,
   #etnika-prices-clear .pc-photo-caption span,

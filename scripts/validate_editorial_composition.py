@@ -16,7 +16,7 @@ with sync_playwright() as pw:
         page=browser.new_page(viewport={"width":w,"height":h},device_scale_factor=1)
         for attempt in range(12 if LIVE else 1):
             page.goto(URL+(f"?editorial-check={attempt}" if LIVE else ""),wait_until="domcontentloaded",timeout=45000)
-            if page.locator('meta[name="etnika-build"][content="20261124-about-editorial-readable-v11"]').count(): break
+            if page.locator('meta[name="etnika-build"][content="20261124-body-desktop18-v12"]').count(): break
             if not LIVE or attempt==11: raise AssertionError("Current editorial version is not deployed")
             time.sleep(3)
         page.wait_for_function("() => !!document.querySelector('#etnika-block-02-final .etnika-editorial-why')")
@@ -48,6 +48,11 @@ with sync_playwright() as pw:
           '#etnika-process-interactive .epi-desc, #etnika-process-interactive .epi-more, #etnika-process-interactive .epi-sub, #etnika-block-02-final .etnika-b02__description, #etnika-block-02-final .etnika-b02__feature, .etnika-editorial-benefits summary, .etnika-editorial-benefits p, .etnika-editorial-metrics span'
         )].map(e=>({label:e.textContent.trim().slice(0,90),size:parseFloat(getComputedStyle(e).fontSize)}))""")
         assert typography and all(t["size"]>=minimum-.1 for t in typography), f"Forbidden small text at {w}px: {typography}"
+        if w>=761:
+            body_roles=page.evaluate("""() => [...document.querySelectorAll(
+              '#etnika-block-02-final .etnika-b02__description, #etnika-process-interactive .epi-sub, #etnika-process-interactive .epi-desc, #etnika-faq .faq-answer p, #etnika-space-photo .spf-intro, #etnika-studio-features .etnika-editorial-benefits details p, #etnika-gift .eg-sub, #etnika-faq-tariffs .faq-answer p, #etnika-contacts-source .location-copy p, #etnika-reviews .urw-text'
+            )].map(e=>({text:e.textContent.trim().slice(0,80),size:parseFloat(getComputedStyle(e).fontSize),family:getComputedStyle(e).fontFamily,weight:getComputedStyle(e).fontWeight}))""")
+            assert body_roles and all(abs(t["size"]-18)<.1 and "Geologica" in t["family"] and t["weight"]=="100" for t in body_roles),f"Body typography mismatch at {w}: {body_roles}"
         about=page.locator("#etnika-block-02-final")
         about.scroll_into_view_if_needed()
         page.evaluate("() => document.fonts.ready")
@@ -74,7 +79,7 @@ with sync_playwright() as pw:
             assert im["box"]["left"]>=-2 and im["box"]["right"]<=w+2,im
         assert facts["bodyWidth"]<=w+3,facts
         assert facts["why"]["bottom"]<=facts["about"]["bottom"]+2,facts
-        assert facts["bodySize"] >= (20 if w>1100 else 18)-.1,facts
+        assert abs(facts["bodySize"]-18)<.1,facts
         assert len(facts["titleLines"])==2,facts
         first,second=[x["box"] for x in facts["images"]]
         if w>1100:
