@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261124-about-editorial-six-v20">
+<meta name="etnika-build" content="20261124-about-full-content-v21">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14034,6 +14034,26 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  #etnika-review-flow #etnika-block-02-final .b02r-why #etnika-why-title.b02r-title {margin-bottom:22px!important}
  #etnika-review-flow #etnika-block-02-final .b02r-benefits summary {min-height:54px}
 }
+
+/* Restored editorial content from 354ec9f: copy, visible feature table, metrics and six benefits. */
+#etnika-review-flow #etnika-block-02-final .b02r-description p+p {margin-top:14px!important}
+#etnika-review-flow #etnika-block-02-final .b02r-features {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px;margin-top:clamp(20px,2.2cqw,38px)}
+#etnika-review-flow #etnika-block-02-final .b02r-feature {display:flex;align-items:center;gap:12px;border-top:1px solid #d4cfca;padding:14px 0;font:var(--etnika-body-weight,100) var(--etnika-body-size,18px)/1.4 var(--etnika-body-font,Geologica,Arial,sans-serif);min-width:0}
+#etnika-review-flow #etnika-block-02-final .b02r-feature-icon {width:30px;height:30px;flex:0 0 30px;display:block}
+#etnika-review-flow #etnika-block-02-final .b02r-feature-icon svg {display:block;width:100%;height:100%}
+#etnika-review-flow #etnika-block-02-final .b02r-signature {margin:20px 0 0;font:var(--etnika-body-weight,100) var(--etnika-body-size,18px)/1.55 var(--etnika-body-font,Geologica,Arial,sans-serif);color:#861d29}
+#etnika-review-flow #etnika-block-02-final .b02r-metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 25px}
+#etnika-review-flow #etnika-block-02-final .b02r-metrics strong {display:block;font:400 clamp(29px,3.1cqw,54px)/1 Forum,Georgia,serif;color:#861d29}
+#etnika-review-flow #etnika-block-02-final .b02r-metrics span {display:block;margin-top:8px;font:var(--etnika-body-weight,100) var(--etnika-body-size,18px)/1.4 var(--etnika-body-font,Geologica,Arial,sans-serif)}
+#etnika-review-flow #etnika-block-02-final .b02r-photo-pair {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(9px,1.1cqw,18px)}
+#etnika-review-flow #etnika-block-02-final .b02r-photo-pair .b02r-photo {width:100%;aspect-ratio:3/4}
+#etnika-review-flow #etnika-block-02-final .b02r-gallery .b02r-photo img {object-fit:cover!important;object-position:center top}
+#etnika-review-flow #etnika-block-02-final .b02r-gallery-upper .b02r-photo-stack {padding-top:1.8cqw}
+#etnika-review-flow #etnika-block-02-final .b02r-gallery-lower .b02r-photo-stack {padding-top:1.8cqw}
+#etnika-review-flow #etnika-block-02-final .b02r-gallery {align-self:center}
+#etnika-review-flow #etnika-block-02-final .b02r-intro {align-self:start}
+@media(max-width:1100px) and (min-width:901px){#etnika-review-flow #etnika-block-02-final .b02r-features {grid-template-columns:1fr}}
+@media(max-width:500px){#etnika-review-flow #etnika-block-02-final .b02r-features {grid-template-columns:1fr}#etnika-review-flow #etnika-block-02-final .b02r-metrics {gap:10px}}
 </style>
 </head>
 <body>
@@ -14150,20 +14170,66 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
       <div class="b02r-intro">
         <div class="b02r-kicker">02 / О СТУДИИ</div>
         <h2 class="b02r-title etnika-section-heading"><span>ФОТОСТУДИЯ</span><span>БЕЗ ФОТОГРАФА</span></h2>
-        <div class="b02r-description"><p>Вы сами управляете съёмкой с&nbsp;помощью пульта. Профессиональный свет, большое зеркало и&nbsp;готовые световые схемы помогают получить красивые кадры без фотографа.</p></div>
+        <div class="b02r-description">
+          <p>
+            Вы сами управляете съёмкой с&nbsp;помощью пульта и&nbsp;остаётесь
+            наедине с&nbsp;собой, парой, друзьями или&nbsp;семьёй. Профессиональный
+            свет, большое зеркало и&nbsp;готовые световые схемы помогают
+            получить красивые кадры, чувствуя себя свободно перед камерой.
+          </p>
+          <p>
+            Формат подходит для&nbsp;личной съёмки, фотосвидания, семьи,
+            друзей, бизнес-портрета, беременности и&nbsp;контента для&nbsp;соцсетей.
+          </p>
+        </div><div class="b02r-features" aria-label="Возможности съёмки"><div class="b02r-feature">
+          <span class="b02r-feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <rect x="5" y="4" width="22" height="24" stroke="currentColor" stroke-width="1"/>
+              <path d="M16 9.5c-3 0-5 2-5 4.8 0 2 1.3 3.4 2.8 4.7.8.7 1.4 1.5 1.5 2.5h1.4c.1-1 .7-1.8 1.5-2.5 1.5-1.3 2.8-2.7 2.8-4.7 0-2.8-2-4.8-5-4.8Z" stroke="#A9151D" stroke-width="1.2"/>
+              <path d="M14 23h4M14.5 25h3" stroke="#A9151D" stroke-width="1.2"/>
+            </svg>
+          </span>
+          <span>Цветные фоны и световые схемы</span>
+        </div><div class="b02r-feature">
+          <span class="b02r-feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 2v28M2 16h28M6 6l20 20M26 6 6 26" stroke="currentColor" stroke-width="1"/>
+              <circle cx="16" cy="16" r="4.5" fill="#f3f0eb" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </span>
+          <span>Автоматическая цветокоррекция</span>
+        </div><div class="b02r-feature">
+          <span class="b02r-feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <circle cx="13" cy="16" r="8" stroke="#A9151D" stroke-width="1.1"/>
+              <circle cx="19" cy="16" r="8" stroke="currentColor" stroke-width="1.1"/>
+            </svg>
+          </span>
+          <span>Цветные и чёрно-белые кадры</span>
+        </div><div class="b02r-feature">
+          <span class="b02r-feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M4 11V4h7M21 4h7v7M28 21v7h-7M11 28H4v-7" stroke="currentColor" stroke-width="1.1"/>
+              <circle cx="16" cy="12" r="3.2" stroke="#A9151D" stroke-width="1.1"/>
+              <path d="M10.5 23c.7-4 2.6-6 5.5-6s4.8 2 5.5 6" stroke="#A9151D" stroke-width="1.1"/>
+            </svg>
+          </span>
+          <span>Портреты и фото в полный рост</span>
+        </div></div><p class="b02r-signature">Искусство быть собой</p>
       </div>
-      <div class="b02r-gallery b02r-gallery-upper"><figure class="b02r-photo b02r-photo-a"><img src="assets/b02/series/about-181.webp" width="1100" height="1467" alt="Портрет с помадой на красном фоне" loading="lazy" decoding="async"></figure><div class="b02r-photo-stack"><figure class="b02r-photo b02r-photo-b"><img src="assets/b02/series/about-758.webp" width="1100" height="1467" alt="Портрет на голубом фоне" loading="lazy" decoding="async"></figure><figure class="b02r-photo b02r-photo-e"><img src="assets/b02/series/about-199.webp" alt="Портрет из фотосерии ЭТНИКА" loading="lazy" decoding="async"></figure></div></div>
+      <div class="b02r-gallery b02r-gallery-upper"><figure class="b02r-photo b02r-photo-a"><img src="assets/b02/series/about-181.webp" width="1100" height="1467" alt="Портрет с помадой на красном фоне" loading="lazy" decoding="async"></figure><div class="b02r-photo-stack"><figure class="b02r-photo b02r-photo-b"><img src="assets/b02/series/about-758.webp" width="1100" height="1467" alt="Портрет на голубом фоне" loading="lazy" decoding="async"></figure><div class="b02r-photo-pair"><figure class="b02r-photo b02r-photo-e"><img src="assets/b02/series/about-199.webp" alt="Портрет из фотосерии ЭТНИКА" loading="lazy" decoding="async"></figure><figure class="b02r-photo b02r-photo-g"><img src="assets/b02/series/about-373.webp" alt="Портрет из фотосерии ЭТНИКА" loading="lazy" decoding="async"></figure></div></div></div>
       <section id="etnika-studio-features" class="b02r-why" aria-labelledby="etnika-why-title">
         <div class="b02r-kicker">Преимущества</div>
         <h2 id="etnika-why-title" class="b02r-title etnika-section-heading">Почему ЭТНИКА</h2>
-        <div class="b02r-benefits">
-          <details><summary><span>Качество фотографий</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Цветные и чёрно-белые кадры за один сет, цветные фоны и световые схемы, портреты и фото в полный рост, бесплатная автоматическая цветокоррекция, неограниченное число фотографий, исходники по запросу и разрешение от 3000 px.</p></details>
-          <details><summary><span>Свобода самовыражения</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Вы остаётесь наедине с собой, парой, друзьями или семьёй. Формат подходит для личной съёмки, фотосвидания, семейных кадров, бизнес-портрета, беременности и контента для соцсетей. Студию можно арендовать для собственной съёмки или памятного события. Забронировать можно на сайте, в Telegram, MAX или по телефону; гайд по позированию — в подарок.</p></details>
-          <details><summary><span>Комфортное пространство</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Лаунж-зона с диваном, чай, кофе, вода, конфеты и печенье, Crocs для гостей, гримёрная зона с зеркалом в полный рост, барным стулом и ширмой. Более 20 предметов реквизита и аксессуаров — бесплатно. Зал 46 м² вмещает до 8 человек. Дети до трёх лет — бесплатно; есть детский стульчик, шары и игрушки.</p></details>
-          <details><summary><span>Профессиональное оборудование</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Техника настроена профессиональным фотографом, снимающим для Vogue. В студии есть огромное зеркало 2×2 м, фотоаппарат ведущего мирового производителя, два источника импульсного света мощностью 600 Дж и большой монитор предпросмотра.</p></details>
-        </div>
+        <div class="b02r-metrics"><div><strong>3000+</strong><span>px разрешение фото</span></div><div><strong>2×600</strong><span>Дж импульсного света</span></div><div><strong>46 м²</strong><span>зал до 8 человек</span></div></div>
+<div class="b02r-benefits"><details><summary><span>Качественные фотографии</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Цветные и чёрно-белые кадры за один сет, цветные фоны и световые схемы, портреты и фото в полный рост, бесплатная автоматическая цветокоррекция, неограниченное число фотографий, исходники по запросу и разрешение от 3000 px.</p></details>
+<details><summary><span>Подстраиваем студию под вас</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Студию можно арендовать для собственной съёмки, устроить фотосвидание, день рождения или другое памятное событие. Автопортретный зал 46 м² вмещает до 8 человек.</p></details>
+<details><summary><span>Комфортное пространство</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Лаунж-зона с диваном, чай, кофе, вода, конфеты и печенье, Crocs для гостей, гримёрная зона с зеркалом в полный рост, барным стулом и ширмой. Более 20 предметов реквизита и аксессуаров — бесплатно.</p></details>
+<details><summary><span>Топовое оборудование</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Техника настроена профессиональным фотографом, снимающим для Vogue. В студии есть огромное зеркало 2×2 м, фотоаппарат ведущего мирового производителя, два источника импульсного света мощностью 600 Дж и большой монитор предпросмотра.</p></details>
+<details><summary><span>Лёгкое бронирование</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Забронировать съёмку можно прямо на сайте, написать в Telegram / Max или позвонить по номеру +7 925 94 94 497. Гайд по позированию для подготовки к съёмке — в подарок.</p></details>
+<details><summary><span>Забота о клиентах с детьми</span><span class="b02r-plus" aria-hidden="true"></span></summary><p>Комфортная обстановка для съёмки с грудничками и во время беременности. Дети до трёх лет — бесплатно. В студии есть детский стульчик, шары и игрушки.</p></details></div>
       </section>
-      <div class="b02r-gallery b02r-gallery-lower"><div class="b02r-photo-stack"><figure class="b02r-photo b02r-photo-c"><img src="assets/b02/series/about-188.webp" width="1100" height="1467" alt="Крупный план на голубом фоне" loading="lazy" decoding="async"></figure><figure class="b02r-photo b02r-photo-f"><img src="assets/b02/series/about-805.webp" alt="Портрет из фотосерии ЭТНИКА" loading="lazy" decoding="async"></figure></div><figure class="b02r-photo b02r-photo-d"><img src="assets/b02/series/about-549.webp" width="1100" height="1467" alt="Портрет на стуле на красном фоне" loading="lazy" decoding="async"></figure></div>
+      <div class="b02r-gallery b02r-gallery-lower"><div class="b02r-photo-stack"><figure class="b02r-photo b02r-photo-c"><img src="assets/b02/series/about-188.webp" width="1100" height="1467" alt="Крупный план на голубом фоне" loading="lazy" decoding="async"></figure><div class="b02r-photo-pair"><figure class="b02r-photo b02r-photo-f"><img src="assets/b02/series/about-805.webp" alt="Портрет из фотосерии ЭТНИКА" loading="lazy" decoding="async"></figure><figure class="b02r-photo b02r-photo-h"><img src="assets/b02/series/about-662.webp" alt="Портрет из фотосерии ЭТНИКА" loading="lazy" decoding="async"></figure></div></div><figure class="b02r-photo b02r-photo-d"><img src="assets/b02/series/about-549.webp" width="1100" height="1467" alt="Портрет на стуле на красном фоне" loading="lazy" decoding="async"></figure></div>
     </div>
   </div>
 </section>
