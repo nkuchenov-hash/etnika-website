@@ -84,6 +84,17 @@ jobs:
           python3 -m pip install --disable-pip-version-check playwright==1.56.0
           python3 -m playwright install --with-deps chromium
 
+      - name: Verify exact published About build and complete content
+        run: python3 scripts/validate_about_series.py --live
+
+      - name: Upload published About screenshots and geometry
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: etnika-live-about
+          path: reports/etnika-about-reference-*
+          if-no-files-found: ignore
+
       - name: Verify live contacts spacing and removed schematic caption
         run: python3 scripts/verify_live_contacts.py
 

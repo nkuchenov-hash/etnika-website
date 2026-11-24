@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Regression: B02 remains a single editorial spread after all page scripts run."""
 from pathlib import Path
-import shutil, sys, json
+import shutil, sys, json, re, time, os
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"reports"; OUT.mkdir(exist_ok=True)
-URL="https://nkuchenov-hash.github.io/etnika-website/site/?v=about-full-content-v21" if "--live" in sys.argv else (ROOT/"site/index.html").as_uri()
+LIVE="--live" in sys.argv
+EXPECTED=re.search(r'<meta name="etnika-build" content="([^"]+)"', (ROOT/"site/index.html").read_text()).group(1)
+URL="https://nkuchenov-hash.github.io/etnika-website/site/" if LIVE else (ROOT/"site/index.html").as_uri()
 chrome=shutil.which("google-chrome") or shutil.which("google-chrome-stable") or shutil.which("chromium")
 with sync_playwright() as pw:
     browser=pw.chromium.launch(headless=True,executable_path=chrome)
@@ -13,7 +15,14 @@ with sync_playwright() as pw:
     for w,h in [(766,685),(1366,768),(1600,900),(1920,1080),(2560,1080),(390,844),(375,667)]:
         page=browser.new_page(viewport={"width":w,"height":h},device_scale_factor=1)
         try:
-            page.goto(URL,wait_until="load",timeout=45000)
+            for attempt in range(12 if LIVE else 1):
+                target=URL+f"?build={EXPECTED}&run={os.getenv('GITHUB_RUN_ID','local')}&attempt={attempt}" if LIVE else URL
+                page.goto(target,wait_until="load",timeout=45000)
+                actual=page.locator('meta[name="etnika-build"]').get_attribute("content")
+                print(f"Expected build {EXPECTED}; received {actual}",flush=True)
+                if actual==EXPECTED: break
+                if not LIVE or attempt==11: raise AssertionError(f"Wrong deployed build: {actual}, expected {EXPECTED}")
+                time.sleep(3)
             page.evaluate("() => document.fonts.ready")
             about=page.locator("#etnika-block-02-final")
             assert about.locator(":scope .b02r-layout > #etnika-studio-features.b02r-why").count()==1, "Advantages moved outside B02"
