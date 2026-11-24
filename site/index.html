@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261124-about-approved-series-v7">
+<meta name="etnika-build" content="20261124-hero-large-transparent-nav-v8">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -16129,8 +16129,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   mask-image:linear-gradient(90deg,#000 0%,#000 24%,transparent 85%);
  }
  #etnika-hero.etnika-carousel .ec-slide--red .ec-photo{
-  position:absolute!important;inset:auto!important;top:0!important;left:74%!important;
-  width:auto!important;height:86%!important;max-width:none!important;max-height:none!important;
+  position:absolute!important;inset:auto!important;top:-19%!important;left:75%!important;
+  width:auto!important;height:110%!important;max-width:none!important;max-height:none!important;
   object-fit:contain!important;object-position:center!important;
   transform:translateX(-50%)!important;
   -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 25%,#000 85%,transparent 100%),linear-gradient(180deg,#000 0%,#000 97%,transparent 100%)!important;
@@ -16143,7 +16143,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  }
 }
 @media(min-width:761px) and (max-width:1100px){
- #etnika-hero.etnika-carousel .ec-slide--red .ec-photo{left:78%!important;height:82%!important}
+ #etnika-hero.etnika-carousel .ec-slide--red .ec-photo{left:79%!important;top:-15%!important;height:104%!important}
 }
 @media(max-width:760px){
  #etnika-hero.etnika-carousel .ec-slide--red .ec-photo{
@@ -16190,5 +16190,55 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  #etnika-review-flow #etnika-block-02-final #etnika-studio-features.etnika-editorial-why{grid-column:1!important;grid-row:3!important}
 }
 </style>
+<style id="etnika-header-transparent-20261124">
+#etnika-site-header:not(.is-open){
+ background:transparent!important;
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+ box-shadow:none!important;
+}
+#etnika-site-header{--esh-ink:#fff;--esh-muted:rgba(255,255,255,.9);color:var(--esh-ink)!important}
+#etnika-site-header[data-tone="light"]:not(.is-open){
+ --esh-ink:#171514;--esh-muted:rgba(23,21,20,.9);
+}
+#etnika-site-header :is(.esh__descriptor,.esh__logo,.esh__nav a,.esh__phone,.esh__social-link){
+ color:var(--esh-ink)!important;
+}
+#etnika-site-header :is(.esh__nav a,.esh__phone){color:var(--esh-muted)!important}
+#etnika-site-header .esh__social-link{opacity:.9!important}
+#etnika-site-header .esh__social-link img{filter:brightness(0) invert(1)!important}
+#etnika-site-header[data-tone="light"]:not(.is-open) .esh__social-link img{filter:brightness(0)!important}
+#etnika-site-header .esh__toggle{border-color:var(--esh-muted)!important}
+#etnika-site-header .esh__toggle span{background:var(--esh-ink)!important}
+#etnika-site-header .esh__booking{color:#fff!important}
+#etnika-site-header.is-open{--esh-ink:#fff;--esh-muted:rgba(255,255,255,.9)}
+/* Retain the red booking CTA and an opaque mobile dropdown only while opened. */
+</style>
+<script id="etnika-header-adaptive-tone-20261124">
+(function(){
+ const header=document.getElementById('etnika-site-header'),hero=document.getElementById('etnika-hero');
+ if(!header||!hero)return;
+ let queued=false;
+ const luminance=c=>{
+  const n=c.match(/[\d.]+/g);if(!n||n.length<3||(+n[3]===0))return null;
+  const rgb=n.slice(0,3).map(x=>{const v=+x/255;return v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)});
+  return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];
+ };
+ function update(){
+  queued=false;
+  const y=Math.max(1,header.getBoundingClientRect().height/2),x=innerWidth/2;
+  const hr=hero.getBoundingClientRect();
+  if(hr.top<=y&&hr.bottom>y){header.dataset.tone=hero.classList.contains('is-light')?'light':'dark';return}
+  const section=document.elementsFromPoint(x,y).map(e=>e.closest('section')).find(e=>e&&e!==hero);
+  let node=section,light=null;
+  while(node&&light===null){light=luminance(getComputedStyle(node).backgroundColor);node=node.parentElement}
+  header.dataset.tone=light===null||light>.28?'light':'dark';
+ }
+ function schedule(){if(!queued){queued=true;requestAnimationFrame(update)}}
+ new MutationObserver(schedule).observe(hero,{attributes:true,attributeFilter:['class']});
+ window.addEventListener('scroll',schedule,{passive:true});
+ window.addEventListener('resize',schedule,{passive:true});
+ update();
+})();
+</script>
 </body>
 </html>
