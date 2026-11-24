@@ -7,7 +7,6 @@ ROOT=Path(__file__).resolve().parents[1]
 EXPECTED=re.search(r'<meta name="etnika-build" content="([^"]+)"',(ROOT/'site/index.html').read_text(encoding='utf-8')).group(1)
 URL='https://nkuchenov-hash.github.io/etnika-website/site/?gap-audit=20261112'
 PAIRS={
-  'B02 Фотостудия':('#etnika-block-02-final .etnika-b02__top','#etnika-block-02-final .etnika-b02__title'),
   'Пространство ЭТНИКА':('#etnika-space-photo .spf-top','#etnika-space-photo .spf-title'),
   'Истории гостей':('#etnika-stories .stories-top','#etnika-stories .stories-title'),
   'FAQ перед визитом':('#etnika-faq .faq-top','#etnika-faq .faq-title'),

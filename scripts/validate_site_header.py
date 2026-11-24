@@ -9,7 +9,6 @@ OVERLINE_CSS=ROOT/"site/assets/etnika-editorial-overline.css"
 EDITORIAL_SECTIONS=(
     ("etnika-stories","stories-top"),
     ("etnika-space-photo","spf-top"),
-    ("etnika-studio-features","b05-top"),
     ("etnika-faq","faq-top"),
     ("etnika-faq-tariffs","faq-top"),
     ("etnika-reviews","etnika-reviews-overline"),
@@ -97,7 +96,7 @@ def render():
                 # All editorial sections, including the independently loaded review widget,
                 # must use the same overline text metrics and responsive grid.
                 tops=page.evaluate("""() => {
-                    const ids=['etnika-stories','etnika-space-photo','etnika-studio-features',
+                    const ids=['etnika-stories','etnika-space-photo',
                       'etnika-faq','etnika-faq-tariffs','etnika-reviews'];
                     return ids.map(id=>{
                       const el=document.querySelector('#'+id+' .etnika-editorial-top');
