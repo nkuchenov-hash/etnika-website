@@ -45,7 +45,8 @@ with sync_playwright() as pw:
                 const why=q('#etnika-why-title'), a=getComputedStyle(title), b=getComputedStyle(why);
                 const sameTypography=['fontFamily','fontSize','fontWeight','lineHeight','letterSpacing','textTransform'].every(k=>a[k]===b[k]);
                 const spaceTop=q('#etnika-space-photo .spf-top'), spaceTitle=q('#etnika-space-photo .spf-title');
-                return {sameTypography,left:layout.left,right:layout.right,refLeft:ref.left,refRight:ref.right,
+                const line=r(q("#etnika-block-02-final .etnika-about-kicker i")); const photo=r(q("#etnika-block-02-final .bp-upper .bp-main img"));
+                return {linePhotoDelta:photo.top-(line.top+line.height/2),sameTypography,left:layout.left,right:layout.right,refLeft:ref.left,refRight:ref.right,
                   headingGap:r(title).top-r(kicker).bottom,referenceHeadingGap:r(spaceTitle).top-r(spaceTop).bottom,
                   sharedGap:target,kickerMargin:parseFloat(getComputedStyle(kicker).marginBottom),
                   body:[...document.querySelectorAll('#etnika-block-02-final .etnika-b02__description p,#etnika-block-02-final .etnika-editorial-benefits p,#etnika-block-02-final .etnika-editorial-benefits summary,#etnika-block-02-final .etnika-b02__feature')].map(e=>({size:parseFloat(getComputedStyle(e).fontSize),weight:getComputedStyle(e).fontWeight})),
@@ -64,6 +65,14 @@ with sync_playwright() as pw:
             assert abs(facts["kickerMargin"]-facts["sharedGap"])<=2, facts
             assert len(set(facts["images"]))==4
             assert facts["sameTypography"], facts
+            if w>1100: assert abs(facts["linePhotoDelta"])<=1, facts
+            rows=about.locator(".etnika-editorial-benefits details")
+            for i in range(6):
+                rows.nth(i).locator("summary").click()
+                assert rows.nth(i).get_attribute("open") is not None
+                assert about.locator(".etnika-editorial-benefits details[open]").count()==1
+            rows.nth(5).locator("summary").click()
+            assert about.locator(".etnika-editorial-benefits details[open]").count()==0
             assert all(x["size"]==(18 if w>=761 else 16) for x in facts["body"]), facts["body"]
             print(f"PASS shared B02 width and heading gap {w}x{h}",flush=True)
         except Exception as e:
