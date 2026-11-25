@@ -1,0 +1,25 @@
+name: Check gift certificate viewport
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/index.html'
+      - 'site/assets/etnika-body-type.css'
+      - 'scripts/validate_gift_fit.py'
+      - '.github/workflows/validate-gift.yml'
+  workflow_dispatch:
+jobs:
+  gift:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install --disable-pip-version-check playwright==1.56.0
+      - run: python3 -m playwright install --with-deps chromium
+      - name: Verify gift viewport including fixed navigation
+        run: python3 scripts/validate_gift_fit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gift-viewport-screenshots
+          path: reports/etnika-gift-*.png
+          if-no-files-found: ignore
