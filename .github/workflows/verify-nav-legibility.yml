@@ -1,0 +1,54 @@
+name: Verify menu text legibility
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/index.html'
+      - '.github/workflows/verify-nav-legibility.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.56.0
+          python -m playwright install chromium
+      - name: Check actual navigation text and geometry
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          with sync_playwright() as p:
+              b=p.chromium.launch(headless=True)
+              for width,height in [(1440,900),(1161,800),(390,844)]:
+                  page=b.new_page(viewport={'width':width,'height':height},reduced_motion='reduce')
+                  page.goto(Path('site/index.html').resolve().as_uri(),wait_until='domcontentloaded')
+                  page.evaluate('document.fonts.ready')
+                  h=page.locator('#etnika-site-header')
+                  mobile=width<1161
+                  if mobile:
+                      h.locator('.esh__toggle').click()
+                  a=h.locator('.esh__mobile > a:not(.esh__mobile-book)' if mobile else '.esh__nav a').first
+                  a.wait_for(state='visible')
+                  for tone in (['dark'] if mobile else ['dark','light']):
+                      page.mouse.move(0,400)
+                      h.evaluate("(h,t)=>{h.dataset.tone=t;h.dataset.hero=t==='dark'?'true':'false'}",tone)
+                      measure="""a=>{let c=getComputedStyle(a),r=a.getBoundingClientRect();return {color:c.color,opacity:c.opacity,weight:c.fontWeight,stroke:c.webkitTextStrokeWidth,rect:[r.x,r.y,r.width,r.height],decoration:c.textDecorationLine}}"""
+                      before=a.evaluate(measure)
+                      a.hover()
+                      page.wait_for_timeout(220)
+                      after=a.evaluate(measure)
+                      print(width,tone,before,after,flush=True)
+                      assert before['opacity']=='1' and before['weight']=='300',before
+                      assert before['color']==('rgb(23, 21, 20)' if tone=='light' else 'rgb(255, 255, 255)'),before
+                      assert after['color']!=before['color'] and float(after['stroke'].removesuffix('px'))>=.6,after
+                      assert all(abs(x-y)<.5 for x,y in zip(before['rect'],after['rect'])),(before,after)
+                      assert after['decoration']=='none',after
+                  page.close()
+              b.close()
+          PY
