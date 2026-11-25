@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ETNIKA gift-certificate regression: no clipped content within one screen."""
+"""ETNIKA gift-certificate regression: fit all desktop content beneath fixed menu; preserve mobile natural flow."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -8,7 +8,7 @@ REPORTS = ROOT / "reports"
 REPORTS.mkdir(exist_ok=True)
 
 SIZES = [(1102, 600), (1280, 720), (1366, 768), (1440, 900),
-         (1920, 1080), (390, 844), (375, 667), (768, 1024)]
+         (1671, 896), (1920, 1080), (390, 844), (375, 667), (768, 1024)]
 
 with sync_playwright() as pw:
     browser = pw.chromium.launch(headless=True)
@@ -126,10 +126,11 @@ with sync_playwright() as pw:
         assert v["content"],f"{label}: original text or CTA missing"
         # Owner-approved changes to the inner composition must not move
         # the hairline/text-to-section-edge gaps validated above.
-        for gap_name,minimum in (
-            ("kickerToTitle",26),("titleToSub",18),
-            ("subToFacts",18),("factsToFooter",24),
-            ("noteToButton",14)
+        minimum_gaps = (10,10,9,10,8) if width>1100 and height<=760 else (
+            (14,14,13,14,9) if width>1100 else (26,18,18,24,14))
+        for gap_name,minimum in zip(
+            ("kickerToTitle","titleToSub","subToFacts","factsToFooter","noteToButton"),
+            minimum_gaps
         ):
             assert v["innerGaps"][gap_name]>=minimum-2, (
                 f"{label}: certificate elements are still crowded at {gap_name}: {v['innerGaps']}")
@@ -152,7 +153,7 @@ with sync_playwright() as pw:
                 f"{label}: caption is pressed against video top edge: {v}")
             assert v["footer"]["bottom"]<=v["section"]["bottom"]-20, (
                 f"{label}: CTA/signoff are pressed against video bottom edge: {v}")
-            assert 24<=v["footer"]["top"]-v["main"]["bottom"]<=max(420, .42*height), (
+            assert 9<=v["footer"]["top"]-v["main"]["bottom"]<=max(280, .32*height), (
                 f"{label}: facts-to-CTA spacing outside readable range: {v}")
             top_margin=v["kicker"]["top"]-v["section"]["top"]
             bottom_margin=v["section"]["bottom"]-v["footer"]["bottom"]
@@ -164,7 +165,7 @@ with sync_playwright() as pw:
         assert v["buttonSize"]>=15,f"{label}: CTA caption too small: {v}"
         if width>1100:
             assert v["factLabelSize"]>=14,f"{label}: facts label too small: {v}"
-            assert v["main"]["width"] <= 810,f"{label}: headline takes over the entire photo: {v}"
+            assert v["main"]["width"] <= (945 if width>=1600 else 810),f"{label}: headline takes over the entire photo: {v}"
         assert v["title"]["right"] <= v["section"]["right"]-20, (
             f"{label}: title extends beyond the gift composition: {v}")
         assert len(v["facts"])==3,f"{label}: certificate facts missing"
@@ -183,18 +184,18 @@ with sync_playwright() as pw:
         assert v["section"]["height"] >= 400, (
             f"{label}: gift collapsed and cannot show its complete content: {v}")
         if width>1100:
-            assert v["section"]["height"]>=visible_height+140, (
-                f"{label}: gift did not grow enough to create breathing room: {v}")
-            assert v["section"]["height"]<=visible_height+330, (
-                f"{label}: gift became excessively tall: {v}")
+            assert abs(v["section"]["height"]-visible_height)<=4, (
+                f"{label}: gift does not fit below fixed navigation: {v}")
+            assert v["kicker"]["top"]>=v["header"]["bottom"]+8, (
+                f"{label}: upper caption hidden by navigation: {v}")
+            for key in ("title","sub","footer","button","signoff"):
+                assert v[key]["bottom"]<=height-8, (
+                    f"{label}: {key} is outside the visible screen: {v}")
         else:
             assert v["section"]["height"]>=visible_height+90, (
                 f"{label}: small-screen composition did not grow: {v}")
         assert v["sectionScrollHeight"]<=v["sectionClientHeight"]+2, (
             f"{label}: gift content is clipped or internally scrolling: {v}")
-        # Section deliberately exceeds one viewport now. The CTA may be
-        # below the initial viewport, but must remain fully inside the video
-        # with the same approved bottom hairline inset.
         assert v["button"]["bottom"]<=v["section"]["bottom"]-18, (
             f"{label}: CTA clipped by the section boundary: {v}")
         # Key regression from 12 Nov: FAQ must be followed by a real,
