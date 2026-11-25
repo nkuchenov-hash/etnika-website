@@ -128,6 +128,9 @@ jobs:
       - name: Check site navigation and shared editorial type
         run: python3 scripts/validate_site_header.py --render
 
+      - name: Check menu text contrast and hover feedback
+        run: python3 scripts/validate_menu_hover.py
+
       - name: Check WHY ETNIKA photo, caption, and six-item viewport geometry
         run: python3 scripts/validate_why_section.py
 
