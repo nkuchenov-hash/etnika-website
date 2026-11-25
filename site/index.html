@@ -12945,29 +12945,52 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
     padding-bottom:calc(var(--etnika-section-outer,36px) - 9px)!important;
   }
 }
-/* etnika-gift-airiness-20261113 */
-/* Owner 13 Nov 12:59: add breathing room INSIDE the existing preserved
-   overline-to-edge geometry. DO NOT touch eg-shell padding values above.
-   The video grows, not its sacred top/bottom caption insets. */
+/* 2026-11-25: desktop certificate fits the usable viewport below the fixed
+   navigation. Preserve the approved outer padding and shared H2/body styles.
+   Natural height is allowed only when an unusually short viewport cannot
+   accommodate readable content; never clip or create an internal scrollbar. */
 @media(min-width:1101px){
   #etnika-review-flow > section#etnika-gift,
   #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
-    min-height:calc(100svh - var(--etnika-nav-height,60px) + clamp(160px,19svh,220px))!important;
+    min-height:calc(100svh - var(--etnika-nav-height,60px))!important;
   }
   #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
-    row-gap:clamp(34px,4.4svh,48px)!important;
+    row-gap:clamp(14px,2.3svh,26px)!important;
   }
   #etnika-review-flow > section#etnika-gift .eg-title{
-    margin-bottom:clamp(23px,3.1svh,35px)!important;
+    margin-bottom:clamp(14px,1.9svh,22px)!important;
   }
   #etnika-review-flow > section#etnika-gift .eg-sub{
-    margin-bottom:clamp(22px,2.9svh,34px)!important;
+    margin-bottom:clamp(13px,1.7svh,20px)!important;
   }
   #etnika-review-flow > section#etnika-gift .eg-fact{
-    min-height:clamp(52px,6.8svh,68px)!important;
+    min-height:clamp(43px,5.6svh,55px)!important;
   }
   #etnika-review-flow > section#etnika-gift .eg-note{
-    margin-bottom:clamp(16px,2.1svh,22px)!important;
+    margin-bottom:clamp(9px,1.3svh,14px)!important;
+  }
+}
+@media(min-width:1600px){
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    /* Three lines at the shared display scale, rather than four at 1920px. */
+    --gift-column:min(940px,56vw);
+  }
+}
+@media(min-width:1101px) and (max-height:760px){
+  #etnika-review-flow > section#etnika-gift .eg-shell.eg-shell{
+    row-gap:10px!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-title{
+    margin-bottom:10px!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-sub{
+    margin-bottom:9px!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-fact{
+    min-height:40px!important;
+  }
+  #etnika-review-flow > section#etnika-gift .eg-note{
+    margin-bottom:8px!important;
   }
 }
 @media(max-width:1100px){
