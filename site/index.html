@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261125-about-accordion-alignment-v24">
+<meta name="etnika-build" content="20261125-about-gentle-accordion-v25">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14058,6 +14058,46 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  line-height:.80!important;letter-spacing:-.04em!important;text-transform:uppercase!important;transform:none!important;
 }
 #etnika-review-flow #etnika-block-02-final #etnika-studio-features #etnika-why-title{margin:0 0 32px!important;overflow-wrap:normal;white-space:normal}
+
+/* B02 accordion: animate native details, including exclusive auto-collapse. */
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{
+ transition:color 200ms ease;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus{
+ position:relative;display:block;justify-self:end;width:14px;height:14px;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::before,
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::after{
+ content:"";position:absolute;background:currentColor;top:50%;left:50%;
+ width:12px;height:1.5px;border-radius:1px;transform:translate(-50%,-50%);
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::after{
+ transform:translate(-50%,-50%) rotate(90deg) scaleX(1);
+ transition:transform 320ms cubic-bezier(.22,.65,.35,1),opacity 220ms ease;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details[open] .etnika-benefit-plus::after{
+ transform:translate(-50%,-50%) rotate(90deg) scaleX(0);opacity:0;
+}
+@supports selector(details::details-content) {
+ @supports (interpolate-size:allow-keywords) {
+  #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details::details-content{
+   interpolate-size:allow-keywords;block-size:0;opacity:0;overflow:clip;
+   transition:block-size 380ms cubic-bezier(.25,.65,.35,1),opacity 240ms ease,content-visibility 380ms allow-discrete;
+  }
+  #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details[open]::details-content{
+   block-size:auto;opacity:1;
+  }
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary,
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::after{
+  transition:none!important;
+ }
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details::details-content{
+  transition:none!important;
+ }
+}
 </style>
 </head>
 <body>

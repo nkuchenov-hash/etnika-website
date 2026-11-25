@@ -67,6 +67,21 @@ with sync_playwright() as pw:
             assert facts["sameTypography"], facts
             if w>1100: assert abs(facts["linePhotoDelta"])<=1, facts
             rows=about.locator(".etnika-editorial-benefits details")
+            # In current Chromium, verify actual intermediate heights in both directions.
+            motion=rows.first.evaluate("""async d => {
+                if(!CSS.supports('selector(details::details-content)') || !CSS.supports('interpolate-size:allow-keywords')) return {supported:false};
+                const pause=ms=>new Promise(r=>setTimeout(r,ms));
+                const h=()=>d.getBoundingClientRect().height;
+                const closed=h();d.querySelector('summary').click();
+                await pause(100);const opening=h();await pause(420);const opened=h();
+                d.querySelector('summary').click();await pause(100);const closing=h();await pause(420);
+                return {supported:true,closed,opening,opened,closing,final:h()};
+            }""")
+            print("Accordion motion:",motion,flush=True)
+            if motion["supported"]:
+                assert motion["closed"]+1 < motion["opening"] < motion["opened"]-1, motion
+                assert motion["closed"]+1 < motion["closing"] < motion["opened"]-1, motion
+                assert abs(motion["closed"]-motion["final"])<=1, motion
             for i in range(6):
                 rows.nth(i).locator("summary").click()
                 assert rows.nth(i).get_attribute("open") is not None
