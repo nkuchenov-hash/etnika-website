@@ -13881,10 +13881,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
  box-shadow:none!important;
 }
-#etnika-site-header{--esh-ink:#fff;--esh-muted:rgba(255,255,255,.70);--esh-nav-text:rgba(255,255,255,.94);--esh-nav-hover:#ffc3c7;color:var(--esh-ink)!important}
+#etnika-site-header{--esh-ink:#fff;--esh-muted:rgba(255,255,255,.70);--esh-nav-text:#fff;--esh-nav-hover:#ffb5bb;color:var(--esh-ink)!important}
 #etnika-site-header[data-tone="light"]:not(.is-open){
  --esh-ink:#171514;--esh-muted:rgba(23,21,20,.72);
- --esh-nav-text:rgba(23,21,20,.94);--esh-nav-hover:#a9151d;
+ --esh-nav-text:#171514;--esh-nav-hover:#a9151d;
 }
 #etnika-site-header :is(.esh__descriptor,.esh__logo,.esh__nav a,.esh__phone,.esh__social-link){
  color:var(--esh-ink)!important;
@@ -13894,7 +13894,10 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-site-header .esh__nav a,
 #etnika-site-header .esh__mobile > a:not(.esh__mobile-book){
  color:var(--esh-nav-text)!important;
- transition:color .2s ease;
+ opacity:1!important;
+ font-weight:300!important;
+ -webkit-text-stroke:0 transparent;
+ transition:color .18s ease,-webkit-text-stroke-width .18s ease;
 }
 #etnika-site-header .esh__social-link{opacity:.52!important}
 #etnika-site-header .esh__social-link img{filter:brightness(0) invert(1)!important}
@@ -13902,7 +13905,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-site-header .esh__toggle{border-color:var(--esh-muted)!important}
 #etnika-site-header .esh__toggle span{background:var(--esh-ink)!important}
 #etnika-site-header .esh__booking{color:#fff!important}
-#etnika-site-header.is-open{--esh-ink:#fff;--esh-muted:rgba(255,255,255,.70);--esh-nav-text:rgba(255,255,255,.94);--esh-nav-hover:#ffc3c7}
+#etnika-site-header.is-open{--esh-ink:#fff;--esh-muted:rgba(255,255,255,.70);--esh-nav-text:#fff;--esh-nav-hover:#ffb5bb}
 /* Retain the red booking CTA and an opaque mobile dropdown only while opened. */
 
 /* Preserve interactive states when the header ink switches with its background. */
@@ -13913,6 +13916,7 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
 #etnika-site-header .esh__nav a:is(:hover,:focus-visible),
 #etnika-site-header .esh__mobile > a:not(.esh__mobile-book):is(:hover,:focus-visible){
  color:var(--esh-nav-hover)!important;
+ -webkit-text-stroke:.65px currentColor;
 }
 #etnika-site-header .esh__social-link:is(:hover,:focus-visible),
 #etnika-site-header .esh__mobile-socials a:is(:hover,:focus-visible){opacity:1!important}
@@ -13927,9 +13931,13 @@ section[id]{scroll-margin-top:var(--etnika-nav-height);}
  background:#fff!important;box-shadow:0 1px 0 rgba(23,21,20,.10)!important;
  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
  --esh-ink:#171514;--esh-muted:rgba(23,21,20,.72);
- --esh-nav-text:rgba(23,21,20,.94);--esh-nav-hover:#a9151d;
+ --esh-nav-text:#171514;--esh-nav-hover:#a9151d;
 }
 #etnika-site-header[data-hero="false"]:not(.is-open) .esh__social-link img{filter:brightness(0)!important}
+@media(prefers-reduced-motion:reduce){
+ #etnika-site-header .esh__nav a,
+ #etnika-site-header .esh__mobile > a:not(.esh__mobile-book){transition:none!important}
+}
 </style>
 <style id="etnika-header-identity-20261124">
 /* Both identity states use the same display typeface and weight. Reserve
