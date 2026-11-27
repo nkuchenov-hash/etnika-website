@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v15"><title>ЭТНИКА — цены и тарифы</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v16"><title>ЭТНИКА — цены и тарифы</title>
 <style>
 @font-face{font-family:Forum;src:url('assets/fonts/Forum-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Geologica;src:url('assets/fonts/Geologica-VF.ttf') format('truetype');font-weight:100 900;font-display:swap}
@@ -371,6 +371,39 @@ main{padding-top:clamp(28px,4svh,64px);padding-bottom:clamp(28px,4svh,64px)}
  #set-panel .set-preview .note{margin-top:clamp(20px,2.5svh,36px)}
  #set-panel .set-preview .order{padding-top:clamp(24px,3svh,42px)}
 }
+
+/* Photo choices: the portrait itself is the button. No detached radio dots
+   and no stretched underline below a blank caption area. */
+#base-panel .scene{align-self:start}
+#base-panel .backdrops{flex:none;align-items:start}
+#base-panel .backdrop{align-self:start;border-bottom:2px solid transparent;transition:border-color .2s,color .2s}
+#base-panel .backdrop .caption{justify-content:center;padding:13px 0 11px;text-align:center}
+#base-panel .backdrop[aria-pressed=true]{border-bottom-color:var(--red)}
+#base-panel .backdrop[aria-pressed=true] .name{color:var(--red)}
+#base-panel .backdrop:hover .name{color:var(--red)}
+#base-panel .backdrop:focus-visible{outline:none}
+#base-panel .backdrop:focus-visible .image{outline:2px solid var(--red);outline-offset:3px}
+#base-panel .backdrop .name{font-size:clamp(23px,1.85vw,33px)}
+#base-panel .image{width:100%}
+.format-tab:focus-visible{outline:none}
+.format-tab:focus-visible .format-name{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+@media(min-width:1251px){
+ #base-panel.unified{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);column-gap:clamp(130px,12.5vw,240px);align-items:start}
+ #base-panel .backdrops{gap:clamp(15px,1.2vw,24px)}
+ #base-panel .booking{align-self:start}
+ #base-panel .booking .order{margin-top:0;padding-top:clamp(28px,4svh,58px)}
+}
+@media(min-width:1900px){
+ #base-panel.unified{column-gap:clamp(180px,10.5vw,340px)}
+}
+@media(min-width:1001px) and (max-width:1250px){
+ #base-panel.unified{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);column-gap:clamp(80px,9vw,125px);align-items:start}
+ #base-panel .backdrops{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+ #base-panel .image{aspect-ratio:4/5}
+ #base-panel .booking .order{margin-top:0;padding-top:32px}
+}
+@media(max-width:1000px){#base-panel.unified{row-gap:44px}}
+@media(max-width:700px){#base-panel .backdrop .name{font-size:28px}}
 </style></head>
 <body>
 <main id="etnika-prices-anna"><div class="overline"><span>ЭТНИКА</span><span class="rule"></span><span class="accent">Цены и тарифы</span><span class="vertical"></span><span class="context">Студия автопортрета</span><span class="rule tail"></span></div>
@@ -380,10 +413,10 @@ main{padding-top:clamp(28px,4svh,64px);padding-bottom:clamp(28px,4svh,64px)}
 <button class="format-tab" data-format="base" aria-pressed="false" aria-controls="base-panel"><span class="format-name">Съёмка на фоне</span><span class="format-desc">Выберите фон и время</span></button></div><div class="modes" role="group" aria-label="День недели"><button class="mode" data-day="weekday" aria-pressed="true">Будни</button><button class="mode" data-day="weekend" aria-pressed="false">Выходные</button></div></div>
 <div class="stage unified" id="base-panel" hidden>
 <section class="scene" aria-label="Цвет фона"><h2>Фон</h2><div class="backdrops" role="group" aria-label="Цвет фона">
-<button class="backdrop" data-bg="Белый" aria-pressed="false"><span class="image"><img src="assets/extra/bg-model-white.webp" alt="Пример съёмки на белом фоне"></span><span class="caption"><span class="name">Белый</span><span class="indicator" aria-hidden="true"></span></span></button>
-<button class="backdrop" data-bg="Красный" aria-pressed="true"><span class="image"><img src="assets/extra/bg-model-red.webp" alt="Пример съёмки на красном фоне"></span><span class="caption"><span class="name">Красный</span><span class="indicator" aria-hidden="true"></span></span></button>
-<button class="backdrop" data-bg="Чёрный" aria-pressed="false"><span class="image"><img src="assets/extra/bg-model-black.webp" alt="Пример съёмки на чёрном фоне"></span><span class="caption"><span class="name">Чёрный</span><span class="indicator" aria-hidden="true"></span></span></button>
-<button class="backdrop" data-bg="Бежевый" aria-pressed="false"><span class="image"><img src="assets/etnika-portrait-beige.jpg" alt="Пример съёмки на бежевом фоне"></span><span class="caption"><span class="name">Бежевый</span><span class="indicator" aria-hidden="true"></span></span></button>
+<button class="backdrop" data-bg="Белый" aria-pressed="false"><span class="image"><img src="assets/extra/bg-model-white.webp" alt="Пример съёмки на белом фоне"></span><span class="caption"><span class="name">Белый</span></span></button>
+<button class="backdrop" data-bg="Красный" aria-pressed="true"><span class="image"><img src="assets/extra/bg-model-red.webp" alt="Пример съёмки на красном фоне"></span><span class="caption"><span class="name">Красный</span></span></button>
+<button class="backdrop" data-bg="Чёрный" aria-pressed="false"><span class="image"><img src="assets/extra/bg-model-black.webp" alt="Пример съёмки на чёрном фоне"></span><span class="caption"><span class="name">Чёрный</span></span></button>
+<button class="backdrop" data-bg="Бежевый" aria-pressed="false"><span class="image"><img src="assets/etnika-portrait-beige.jpg" alt="Пример съёмки на бежевом фоне"></span><span class="caption"><span class="name">Бежевый</span></span></button>
 </div></section>
 <section class="booking" aria-label="Продолжительность съёмки"><h2 class="panel-heading">Время съёмки</h2><div role="group" aria-label="Время съёмки">
 <button class="duration" data-min="45" aria-pressed="true"><span class="indicator" aria-hidden="true"></span><span class="label">45 минут</span><span class="price">6 000 ₽</span><span class="capacity">До 4 человек</span></button>
