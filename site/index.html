@@ -6431,7 +6431,7 @@ body.etnika-gallery-lock{
   padding:var(--et-u-top,clamp(48px,6vh,88px))
           var(--etnika-reviews-edge)
           var(--et-u-bottom,clamp(48px,6vh,88px));
-  background:#f5f3f2;
+  background:#f3f0eb;
   color:#0a0a0a;
   font-family:var(--etnika-font-ui,'Geologica',Arial,sans-serif);
 }
@@ -6459,6 +6459,8 @@ body.etnika-gallery-lock{
 #etnika-reviews .urw-title,
 #etnika-reviews .urw-kicker{display:none!important}
 #etnika-reviews .urw-head{align-items:center}
+/* Inherit the section paper, never introduce a separate widget background. */
+#etnika-reviews .urw{background:transparent}
 /* The carousel and bottom rule must fill the SAME editorial grid as
    the upper overline and H2. The widget default maxWidth=1440px is narrower
    than ETNIKA's responsive --et-u-edge content field on larger viewports. */
