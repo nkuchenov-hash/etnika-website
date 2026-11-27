@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v1"><title>ЭТНИКА — новые тарифы · макет для обсуждения</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v2"><title>ЭТНИКА — цены и тарифы</title>
 <style>
 @font-face{font-family:Forum;src:url('assets/fonts/Forum-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Geologica;src:url('assets/fonts/Geologica-VF.ttf') format('truetype');font-weight:100 900;font-display:swap}
@@ -17,23 +17,50 @@ dialog{max-width:500px;width:calc(100% - 32px);border:1px solid var(--line);padd
 @media(min-width:1450px){.image{aspect-ratio:1.5}}@media(max-width:850px){.heading{align-items:start;flex-direction:column;gap:12px}.heading p{max-width:none}.booking{grid-template-columns:1fr;gap:24px}.order{border:0}.overline{grid-template-columns:auto 1fr auto}.overline .vertical,.overline .context,.overline .tail{display:none}.features{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){main{padding-top:30px}.draft{align-items:start;font-size:10px}.heading{margin:24px 0 22px}h1{font-size:clamp(48px,12.5vw,66px)}.heading p{font-size:12px}.backdrops{gap:9px}.image{aspect-ratio:3/4}.caption{padding:10px 0;gap:4px}.num{display:none}.name{font-size:clamp(19px,5.7vw,27px)}.indicator{width:14px;height:14px}.backdrop[aria-pressed=true] .indicator:after,.duration[aria-pressed=true] .indicator:after{inset:3px}.booking{margin-top:27px}.booking-head{flex-wrap:wrap}.modes{gap:17px}.duration .label{font-size:17px}.duration .price{font-size:30px}.features{grid-template-columns:1fr}.order-total{align-items:center}.order-summary{font-size:13px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Clear, consistent choices without extra labels or decorative frames. */
+.heading{margin:30px 0 24px}
+.step-title,.duration-title{font:400 29px/1.1 var(--serif);margin:0 0 12px}
+.backdrop{border-bottom:2px solid var(--line)}
+.caption{justify-content:space-between;padding:12px 0}
+.image{aspect-ratio:1.55}
+.image img,.backdrop:nth-child(3) img{object-position:center top}
+.backdrop:hover img{transform:none}
+.booking{margin-top:27px;align-items:end}
+.booking-head{align-items:center;margin-bottom:19px}
+.booking h2{font-size:clamp(25px,2.3vw,34px)}
+.booking .duration-title{margin:0 0 9px}
+.modes{gap:0;font-size:15px;flex-shrink:0}
+.mode{padding:10px 17px;border-bottom:1px solid var(--line)}
+.mode[aria-pressed=true]{border-bottom:2px solid var(--red);font-weight:400}
+.duration{padding:11px 0}
+.duration .label{font-size:19px}
+.order-label{font-size:14px;letter-spacing:0;text-transform:none;color:var(--ink)}
+.order-summary{font-size:16px}
+.order button{font-weight:400}
+button:focus:not(:focus-visible){outline:none}
+.included{margin-top:26px}
+summary{font-size:17px}
+@media(min-width:1450px){.image{aspect-ratio:1.55}}
+@media(max-width:850px){.booking-head{flex-wrap:wrap}.image{aspect-ratio:1.1}}
+@media(max-width:540px){.step-title{font-size:25px}.image{aspect-ratio:3/4}.mode{font-size:14px;padding:8px 12px}.booking h2{font-size:26px}.duration .label{font-size:17px}.order-summary{font-size:14px}}
 </style></head>
-<body><header class="draft"><span>ПРОЕКТ ДЛЯ СОГЛАСОВАНИЯ · Цены и условия предварительные</span><a href="./">Основной MVP ↗</a></header>
+<body>
 <main id="etnika-prices-anna"><div class="overline"><span>ЭТНИКА</span><span class="rule"></span><span class="accent">Цены и тарифы</span><span class="vertical"></span><span class="context">Студия автопортрета</span><span class="rule tail"></span></div>
-<div class="heading"><h1>Выберите <span>свой формат</span></h1><p>Выберите цвет фона и продолжительность съёмки.</p></div>
-<div class="backdrops" role="group" aria-label="Цвет фона">
-<button class="backdrop" data-bg="Красный" aria-pressed="true"><span class="image"><img src="assets/extra/bg-model-red.webp" alt="Пример съёмки на красном фоне"></span><span class="caption"><span class="num">01</span><span class="name">Красный</span><span class="indicator" aria-hidden="true"></span></span></button>
-<button class="backdrop" data-bg="Чёрный" aria-pressed="false"><span class="image"><img src="assets/extra/bg-model-black.webp" alt="Пример съёмки на чёрном фоне"></span><span class="caption"><span class="num">02</span><span class="name">Чёрный</span><span class="indicator" aria-hidden="true"></span></span></button>
-<button class="backdrop" data-bg="Бежевый" aria-pressed="false"><span class="image"><img src="assets/etnika-portrait-beige.jpg" alt="Пример съёмки на бежевом фоне"></span><span class="caption"><span class="num">03</span><span class="name">Бежевый</span><span class="indicator" aria-hidden="true"></span></span></button>
+<div class="heading"><h1>Выберите <span>свой формат</span></h1></div>
+<h2 class="step-title">Цвет фона</h2><div class="backdrops" role="group" aria-label="Цвет фона">
+<button class="backdrop" data-bg="Красный" aria-pressed="true"><span class="image"><img src="assets/extra/bg-model-red.webp" alt="Пример съёмки на красном фоне"></span><span class="caption"><span class="name">Красный</span><span class="indicator" aria-hidden="true"></span></span></button>
+<button class="backdrop" data-bg="Чёрный" aria-pressed="false"><span class="image"><img src="assets/extra/bg-model-black.webp" alt="Пример съёмки на чёрном фоне"></span><span class="caption"><span class="name">Чёрный</span><span class="indicator" aria-hidden="true"></span></span></button>
+<button class="backdrop" data-bg="Бежевый" aria-pressed="false"><span class="image"><img src="assets/etnika-portrait-beige.jpg" alt="Пример съёмки на бежевом фоне"></span><span class="caption"><span class="name">Бежевый</span><span class="indicator" aria-hidden="true"></span></span></button>
 </div>
-<div class="booking"><section aria-label="Продолжительность съёмки"><div class="booking-head"><h2>Продолжительность</h2><div class="modes" role="group" aria-label="День недели"><button class="mode" data-day="weekday" aria-pressed="true">Будни</button><button class="mode" data-day="weekend" aria-pressed="false">Выходные</button></div></div><div role="group" aria-label="Время съёмки">
+<div class="booking"><section aria-label="Продолжительность съёмки"><div class="booking-head"><h2>День съёмки</h2><div class="modes" role="group" aria-label="День недели"><button class="mode" data-day="weekday" aria-pressed="true">Будни</button><button class="mode" data-day="weekend" aria-pressed="false">Выходные</button></div></div><h2 class="duration-title">Продолжительность</h2><div role="group" aria-label="Время съёмки">
 <button class="duration" data-min="45" aria-pressed="true"><span class="label"><span class="indicator" aria-hidden="true"></span>45 минут</span><span class="price">6 000 ₽</span></button>
 <button class="duration" data-min="90" aria-pressed="false"><span class="label"><span class="indicator" aria-hidden="true"></span>90 минут</span><span class="price">11 000 ₽</span></button></div></section>
-<section class="order" aria-label="Выбранный формат"><div class="order-label">Ваш выбор</div><div class="order-total" aria-live="polite"><div class="order-summary" id="selection">Красный фон<br>45 минут · будни</div><div class="order-price" id="total">6 000 ₽</div></div><button id="book" type="button">Выбрать время <span aria-hidden="true">↗</span></button></section></div>
-<details class="included"><summary>Что входит в каждый тариф</summary><ul class="features"><li>Неограниченное число кадров</li><li>Цветные или чёрно-белые фотографии</li><li>Портретная съёмка и съёмка в полный рост</li><li>Готовые фото в течение 24 часов</li><li>Гримёрная зона</li><li>Реквизит</li><li>Отпариватель</li><li>Wi-Fi и музыка</li></ul></details>
-<p class="note">Доплата за каждого человека сверх лимита — 1 000 ₽. Лимит уточняется.</p>
-<aside class="questions"><strong>Для согласования с Анной</strong><ul><li>Можно ли менять цвет фона в течение съёмки? Доступен ли белый?</li><li>Верно ли, что два столбца цен — будни и выходные?</li><li>Какой лимит гостей для 45 и 90 минут?</li><li>Точный состав каждого тарифа и правила обработки фотографий нужно сверить с исходной таблицей.</li></ul>Фотографии — из текущего MVP, для примера. Бронирование в этом макете не выполняется.</aside></main>
-<dialog id="dialog"><h2>Выбранная съёмка</h2><p id="dialog-selection"></p><p>Это предварительный макет. Реальное бронирование не производится.</p><form method="dialog"><button>Вернуться к тарифам</button></form></dialog>
+<section class="order" aria-label="Выбранный формат"><div class="order-label">Стоимость съёмки</div><div class="order-total" aria-live="polite"><div class="order-summary" id="selection">Красный фон<br>45 минут · будни</div><div class="order-price" id="total">6 000 ₽</div></div><button id="book" type="button">Забронировать <span aria-hidden="true">↗</span></button></section></div>
+<details class="included"><summary>Что входит в стоимость</summary><ul class="features"><li>Неограниченное число кадров</li><li>Цветные или чёрно-белые фотографии</li><li>Портретная съёмка и съёмка в полный рост</li><li>Готовые фото в течение 24 часов</li><li>Гримёрная зона</li><li>Реквизит</li><li>Отпариватель</li><li>Wi-Fi и музыка</li></ul></details>
+<p class="note">Доплата за каждого человека сверх лимита тарифа — 1 000 ₽.</p>
+</main>
+<dialog id="dialog"><h2>Ваша съёмка</h2><p id="dialog-selection"></p><p>Онлайн-бронирование в этой версии не подключено.</p><form method="dialog"><button>Вернуться к тарифам</button></form></dialog>
 <script>
 (()=>{let bg='Красный',mins='45',day='weekday';const prices={weekday:{45:6000,90:11000},weekend:{45:7000,90:12000}};const money=x=>new Intl.NumberFormat('ru-RU').format(x)+' ₽';const buttons=(s)=>Array.from(document.querySelectorAll(s));const summary=()=>bg+' фон · '+mins+' минут · '+(day==='weekday'?'будни':'выходные');function render(){buttons('[data-bg]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.bg===bg)));buttons('[data-day]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.day===day)));buttons('[data-min]').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.min===mins));b.querySelector('.price').textContent=money(prices[day][b.dataset.min])});document.getElementById('selection').replaceChildren(document.createTextNode(bg+' фон'),document.createElement('br'),document.createTextNode(mins+' минут · '+(day==='weekday'?'будни':'выходные')));document.getElementById('total').textContent=money(prices[day][mins])}
 buttons('[data-bg]').forEach(b=>b.addEventListener('click',()=>{bg=b.dataset.bg;render()}));buttons('[data-day]').forEach(b=>b.addEventListener('click',()=>{day=b.dataset.day;render()}));buttons('[data-min]').forEach(b=>b.addEventListener('click',()=>{mins=b.dataset.min;render()}));document.getElementById('book').addEventListener('click',()=>{document.getElementById('dialog-selection').textContent=summary()+' — '+money(prices[day][mins]);document.getElementById('dialog').showModal()});render()})();
