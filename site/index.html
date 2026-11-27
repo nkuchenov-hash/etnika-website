@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-process-full-grid-v31">
+<meta name="etnika-build" content="20261127-process-spacing-v32">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14143,9 +14143,9 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 }
 </style>
 <style id="etnika-process-photo-strip-v27">
-#etnika-review-flow > section#etnika-process-interactive{padding:var(--etnika-section-y,64px) 0!important;background:#fff!important;height:auto!important;min-height:0!important;overflow:visible!important}
+#etnika-review-flow > section#etnika-process-interactive{padding:var(--etnika-section-outer) 0!important;background:#fff!important;height:auto!important;min-height:0!important;overflow:visible!important}
 #etnika-review-flow #etnika-process-interactive .p27-shell{margin:0 var(--et-u-edge);min-width:0}
-#etnika-process-interactive .p27-kicker{display:flex;align-items:center;gap:16px;margin:0 0 24px;font:200 var(--etnika-overline-size,11px)/1.4 Geologica,Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase}
+#etnika-process-interactive .p27-kicker{display:flex;align-items:center;gap:16px;margin:0 0 var(--etnika-editorial-heading-gap)!important;font:200 var(--etnika-overline-size,11px)/1.4 Geologica,Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase}
 #etnika-process-interactive .p27-kicker i{height:1px;flex:1;background:#c9c4bf}
 #etnika-process-interactive .p27-kicker span:last-child{color:#a9151d}
 #etnika-process-interactive .p27-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0 clamp(10px,1vw,18px)}
@@ -14194,7 +14194,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  #etnika-process-interactive .p27-copy{grid-column:2;grid-row:var(--step);border:0;padding:0;grid-template-columns:minmax(0,1fr);gap:6px}
 }
 
-/* V31: heading, photos and captions share the global page guides. */
+/* V32: shared page guides, outer section insets and editorial heading gap. */
 #etnika-review-flow #etnika-process-interactive .p27-heading{
  grid-column:1/-1;grid-row:1;display:block;padding:0 0 clamp(20px,3svh,32px);width:100%;
 }
@@ -14212,7 +14212,6 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 #etnika-review-flow #etnika-process-interactive .p27-copy h3{margin:0;align-self:baseline}
 #etnika-review-flow #etnika-process-interactive .p27-copy{align-self:start;align-items:baseline}
 @media(min-width:1101px){
- #etnika-review-flow > section#etnika-process-interactive{padding:clamp(28px,4svh,56px) 0!important}
  #etnika-review-flow #etnika-process-interactive .p27-heading h2 br{display:none}
  #etnika-review-flow #etnika-process-interactive .p27-grid{
   width:100%;max-width:none;margin-inline:0;
