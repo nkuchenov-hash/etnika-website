@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v21"><title>ЭТНИКА — цены и тарифы</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v22"><title>ЭТНИКА — цены и тарифы</title>
 <style>
 @font-face{font-family:Forum;src:url('assets/fonts/Forum-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Geologica;src:url('assets/fonts/Geologica-VF.ttf') format('truetype');font-weight:100 900;font-display:swap}
@@ -490,6 +490,19 @@ html{overflow-y:scroll;scrollbar-gutter:stable}
 #set-panel .set-preview .set-full summary{padding:8px 0;font:400 18px/1.5 var(--etnika-font-ui)}
 #base-panel .booking .set-full ul,
 #set-panel .set-preview .set-full ul{font:100 18px/1.55 var(--etnika-font-ui);padding-left:18px;margin:0 0 18px}
+
+/* Align the first set row with the selected set title and give groups more breathing room. */
+@media(min-width:1001px){
+ #set-panel .set-selector{padding-top:clamp(10px,1.7svh,24px)}
+ #set-panel .set-group+.set-group{margin-top:clamp(20px,2.5svh,38px);padding-top:clamp(16px,2svh,30px)}
+}
+@media(min-width:1001px) and (max-height:850px){
+ #set-panel .set-selector{padding-top:10px}
+ #set-panel .set-group+.set-group{margin-top:17px;padding-top:14px}
+}
+@media(max-width:1000px){
+ #set-panel .set-group+.set-group{margin-top:22px;padding-top:18px}
+}
 </style></head>
 <body>
 <main id="etnika-prices-anna"><div class="overline"><span>ЭТНИКА</span><span class="rule"></span><span class="accent">Цены и тарифы</span><span class="vertical"></span><span class="context">Студия автопортрета</span><span class="rule tail"></span></div>
