@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v10"><title>ЭТНИКА — цены и тарифы</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v11"><title>ЭТНИКА — цены и тарифы</title>
 <style>
 @font-face{font-family:Forum;src:url('assets/fonts/Forum-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Geologica;src:url('assets/fonts/Geologica-VF.ttf') format('truetype');font-weight:100 900;font-display:swap}
@@ -185,6 +185,43 @@ body{font-size:var(--etnika-body-size);font-weight:var(--etnika-body-weight);lin
 @media(min-width:701px) and (max-width:1000px){
  #set-panel.unified{row-gap:44px}
 }
+
+/* Compact editorial list; the selected product is a self-contained detail panel. */
+#set-panel.unified{align-items:start}
+.set-selector h2{margin-bottom:20px;font-size:clamp(29px,2.4vw,40px)}
+.set-group{margin:0}
+.set-group+.set-group{margin-top:16px;padding-top:16px}
+.set-group h3{margin:0 0 5px;padding:0;line-height:1.35;color:#625e5b}
+.set-option,.set-option:last-child{padding:7px 0;gap:12px;min-height:62px}
+.set-ident{gap:3px}
+.set-name,.set-cost{font-size:clamp(26px,1.9vw,34px);line-height:1.08}
+.set-caption{line-height:1.35}
+.set-option:focus-visible{outline:none}
+.set-option:focus-visible .indicator{outline:2px solid var(--red);outline-offset:3px}
+.set-option:hover .set-name{color:var(--red)}
+.set-preview .selected-set-title{font-size:clamp(36px,3.4vw,56px);margin-bottom:12px}
+.selected-set-caption{margin:0 0 5px}
+.selected-set-meta{margin:0;color:#292625}
+.highlights{margin:24px 0 8px;display:grid;gap:8px}
+.highlights li,.highlights li:last-child{padding:0 0 0 19px;position:relative;line-height:1.5}
+.highlights li::before{content:'—';position:absolute;left:0;color:var(--red)}
+.set-preview .note{margin:18px 0 0}
+#set-panel .set-preview .order{margin-top:0;padding-top:24px;gap:12px}
+#set-panel .order-total{align-items:baseline}
+.set-preview .set-full{margin-top:16px}
+.set-preview .set-full summary{padding:8px 0}
+@media(min-width:1450px){
+ .set-group{display:grid;grid-template-columns:clamp(118px,9vw,160px) minmax(0,1fr);column-gap:24px;align-items:start}
+ .set-group h3{grid-column:1;grid-row:1 / span 3;padding-top:8px;margin:0}
+ .set-group .set-option{grid-column:2}
+ .set-group+.set-group{margin-top:14px;padding-top:14px}
+}
+@media(max-width:700px){
+ .set-option,.set-option:last-child{padding:9px 0;gap:10px;min-height:65px}
+ .set-name,.set-cost{font-size:27px}
+ .set-caption{font-size:18px}
+ .set-preview .selected-set-title{font-size:42px}
+}
 </style></head>
 <body>
 <main id="etnika-prices-anna"><div class="overline"><span>ЭТНИКА</span><span class="rule"></span><span class="accent">Цены и тарифы</span><span class="vertical"></span><span class="context">Студия автопортрета</span><span class="rule tail"></span></div>
@@ -206,12 +243,12 @@ body{font-size:var(--etnika-body-size);font-weight:var(--etnika-body-weight);lin
 <div class="order"><div class="order-total" aria-live="polite"><div class="order-summary" id="selection">Красный фон<br>45 минут · до 4 человек</div><div class="order-price" id="total">6 000 ₽</div></div><button id="book" type="button">Забронировать <span aria-hidden="true">↗</span></button></div></section>
 <div class="panel-included"><details class="included"><summary>Что входит в стоимость</summary><ul class="features"><li>Безлимитное число кадров</li><li>Цветные или ч/б фото на выбор</li><li>Портретные и в полный рост фото</li><li>Цветокоррекция base</li><li>Cхема света на выбор</li><li>Ретушь семи фотографий ИИ</li><li>Гайд c фотопозированием</li><li>Готовые фото течение 24 часов после съёмки</li><li>Дизайнерские стулья</li><li>Реквизит</li><li>Гримерная зона</li><li>Отпариватель</li><li>Wi-Fi, колонка Алиса с Яндекс Плюсом.</li></ul></details><p class="note">Дополнительный человек — 1 000 ₽ сверх лимита тарифа.</p></div></div>
 <div class="stage unified" id="set-panel">
-<section class="set-selector" aria-label="Выбор сета"><h2>Для чего снимаетесь?</h2><div class="set-group"><h3>Портрет</h3><button class="set-option" data-set-choice="0" aria-pressed="true"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Portfolio</span><span class="set-caption">Модельное и актёрское портфолио</span></span><span class="set-cost" data-set-price="0">3 500 ₽</span></button><button class="set-option" data-set-choice="1" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Business Portrait</span><span class="set-caption">Деловой портрет</span></span><span class="set-cost" data-set-price="1">3 800 ₽</span></button></div><div class="set-group"><h3>Творчество и контент</h3><button class="set-option" data-set-choice="2" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Editorial №1</span><span class="set-caption">Два образа и два фона</span></span><span class="set-cost" data-set-price="2">6 500 ₽</span></button><button class="set-option" data-set-choice="3" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Privilege</span><span class="set-caption">Расширенная творческая съёмка</span></span><span class="set-cost" data-set-price="3">11 000 ₽</span></button><button class="set-option" data-set-choice="4" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Content Day</span><span class="set-caption">Контент для соцсетей</span></span><span class="set-cost" data-set-price="4">15 000 ₽</span></button></div><div class="set-group"><h3>Особые задачи</h3><button class="set-option" data-set-choice="5" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Party Day</span><span class="set-caption">Съёмка и праздник</span></span><span class="set-cost" data-set-price="5">18 000 ₽</span></button><button class="set-option" data-set-choice="6" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Marketplace Snap</span><span class="set-caption">Съёмка для маркетплейсов</span></span><span class="set-cost" data-set-price="6">15 000 ₽</span></button></div></section>
+<section class="set-selector" aria-label="Выбор сета"><h2>Выберите сет</h2><div class="set-group"><h3>Портрет</h3><button class="set-option" data-set-choice="0" aria-pressed="true"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Portfolio</span><span class="set-caption">Модельное и актёрское портфолио</span></span><span class="set-cost" data-set-price="0">3 500 ₽</span></button><button class="set-option" data-set-choice="1" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Business Portrait</span><span class="set-caption">Деловой портрет</span></span><span class="set-cost" data-set-price="1">3 800 ₽</span></button></div><div class="set-group"><h3>Творчество и контент</h3><button class="set-option" data-set-choice="2" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Editorial №1</span><span class="set-caption">Два образа и два фона</span></span><span class="set-cost" data-set-price="2">6 500 ₽</span></button><button class="set-option" data-set-choice="3" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Privilege</span><span class="set-caption">Расширенная творческая съёмка</span></span><span class="set-cost" data-set-price="3">11 000 ₽</span></button><button class="set-option" data-set-choice="4" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Content Day</span><span class="set-caption">Контент для соцсетей</span></span><span class="set-cost" data-set-price="4">15 000 ₽</span></button></div><div class="set-group"><h3>Особые задачи</h3><button class="set-option" data-set-choice="5" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Party Day</span><span class="set-caption">Съёмка и праздник</span></span><span class="set-cost" data-set-price="5">18 000 ₽</span></button><button class="set-option" data-set-choice="6" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="set-ident"><span class="set-name">Marketplace Snap</span><span class="set-caption">Съёмка для маркетплейсов</span></span><span class="set-cost" data-set-price="6">15 000 ₽</span></button></div></section>
 <section class="booking set-preview" aria-label="Выбранный сет">
 <h2 class="selected-set-title" id="set-title">Portfolio</h2><p class="selected-set-caption" id="set-caption">Модельное и актёрское портфолио</p><p class="selected-set-meta" id="set-meta">30 минут · до 1 человека</p>
-<ul class="highlights" id="set-highlights"></ul><details class="included set-full"><summary>Что входит в стоимость</summary><ul id="set-features"></ul></details>
+<ul class="highlights" id="set-highlights"></ul>
 <p class="note">Дополнительный человек — 2 000 ₽ сверх лимита сета.</p>
-<div class="order"><div class="order-total" aria-live="polite"><div class="order-summary">Стоимость съёмки</div><div class="order-price" id="set-total">3 500 ₽</div></div><button id="set-book" type="button">Забронировать <span aria-hidden="true">↗</span></button></div></section>
+<div class="order"><div class="order-total" aria-live="polite"><div class="order-summary">Стоимость съёмки</div><div class="order-price" id="set-total">3 500 ₽</div></div><button id="set-book" type="button">Забронировать <span aria-hidden="true">↗</span></button></div><details class="included set-full"><summary>Что входит в стоимость</summary><ul id="set-features"></ul></details></section>
 </div></main>
 <dialog id="dialog"><h2>Ваша съёмка</h2><p id="dialog-selection"></p><p>Онлайн-бронирование в этой версии не подключено.</p><form method="dialog"><button>Вернуться к тарифам</button></form></dialog>
 <script>
