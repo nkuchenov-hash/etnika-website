@@ -17,6 +17,10 @@ with sync_playwright() as pw:
         page.wait_for_function("() => document.querySelector('#etnika-review-flow > section#etnika-stories') !== null",timeout=15000)
         page.evaluate("() => document.fonts.ready")
         page.evaluate("() => document.querySelector('#etnika-stories').scrollIntoView({block:'start',behavior:'instant'})")
+        page.evaluate("""async () => {
+          const cards = [...document.querySelectorAll('#etnika-stories .story-card img')];
+          await Promise.all(cards.map(img => { img.loading='eager'; return img.decode(); }));
+        }""")
         page.wait_for_timeout(300)
         v=page.evaluate("""() => {
             const el=q=>document.querySelector(q);
@@ -45,12 +49,27 @@ with sync_playwright() as pw:
         path=REPORTS/f'etnika-stories-cta-{w}x{h}.png'
         page.screenshot(path=str(path),full_page=False)
         print(f"STORIES {w}x{h}: {v}",flush=True)
-        assert v['cards']==8,f"{w}x{h}: missing photo cards: {v}"
+        assert v['cards']==14,f"{w}x{h}: missing photo cards: {v}"
         assert v['grid']['bottom']<=v['cta']['top']-8,f"{w}x{h}: CTA overlaps photo grid: {v}"
         assert v['cta']['bottom']+v['padding']<=v['section']['bottom']+3,f"{w}x{h}: CTA overflows the section: {v}"
         assert v['next']['top']>=v['section']['bottom']-3,f"{w}x{h}: next block overlaps gallery: {v}"
         assert v['delta']>=65,f"{w}x{h}: adding CTA does not increase gallery section height enough: {v}"
         assert 'n1268189.yclients.com' in v['link'],f"{w}x{h}: booking link changed: {v}"
+        cards=page.locator('#etnika-stories .story-card')
+        expected_cols=7 if w>1100 else 4 if w>650 else 2
+        cols=page.locator('#etnika-stories .stories-grid').evaluate("(e) => getComputedStyle(e).gridTemplateColumns.split(' ').length")
+        assert cols==expected_cols, f"{w}x{h}: unexpected number of columns {cols}"
+        assert cards.count()==14
+        for card in cards.all():
+            image=card.locator('img')
+            src=image.get_attribute('src')
+            assert image.evaluate("(e) => e.complete && e.naturalWidth > 0"), f"Missing photo {src}"
+            card.evaluate("(e) => e.click()")
+            modal=page.locator('#etnika-stories-gallery')
+            assert modal.get_attribute('aria-hidden')=='false', f"Viewer did not open: {src}"
+            assert modal.locator('.gallery-main').get_attribute('src')==src, f"Wrong image: {src}"
+            page.keyboard.press('Escape')
+            assert modal.get_attribute('aria-hidden')=='true'
         page.close()
     browser.close()
 print('ETNIKA guest-story CTA layout: PASS',flush=True)
