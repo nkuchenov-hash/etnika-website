@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-process-caption-v33">
+<meta name="etnika-build" content="20261127-process-mono-v34">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14153,6 +14153,8 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 #etnika-process-interactive .p27-photo{grid-column:var(--step);grid-row:1;position:relative;display:block;isolation:isolate;width:100%;aspect-ratio:3/4.6;padding:0;border:0;border-radius:0;background:#b1b1b1;overflow:hidden;cursor:pointer}
 #etnika-process-interactive .p27-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%;border-radius:0;transform:none;filter:none}
 #etnika-process-interactive .p27-photo .p27-mono{z-index:1;opacity:1;transition:opacity 420ms cubic-bezier(.22,.65,.35,1)}
+/* Monochrome-only display correction: lift midtones and restore separation of dark clothing. */
+#etnika-review-flow #etnika-process-interactive .p27-photo .p27-mono{filter:contrast(1.14) brightness(1.06)!important}
 @media(hover:hover){#etnika-process-interactive .p27-step:hover .p27-mono,#etnika-process-interactive .p27-photo:hover .p27-mono{opacity:0}}
 #etnika-process-interactive .p27-photo:focus-visible .p27-mono,#etnika-process-interactive .p27-photo[aria-pressed=true] .p27-mono{opacity:0}
 #etnika-process-interactive .p27-photo:focus-visible,#etnika-process-interactive .p27-title:focus-visible{outline:2px solid #a9151d;outline-offset:3px}
