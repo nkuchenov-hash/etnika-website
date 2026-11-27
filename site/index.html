@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-benefits-faq-v38">
+<meta name="etnika-build" content="20261127-process-selection-v39">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14156,8 +14156,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 #etnika-process-interactive .p27-photo .p27-mono{z-index:1;opacity:1;transition:opacity 420ms cubic-bezier(.22,.65,.35,1)}
 /* Whole-frame RGB-to-monochrome tone mapping; no masks, keyed reds or retouched facial regions. */
 #etnika-review-flow #etnika-process-interactive .p27-photo .p27-mono{filter:url(#etnika-process-monochrome)!important}
-@media(hover:hover){#etnika-process-interactive .p27-step:hover .p27-mono,#etnika-process-interactive .p27-photo:hover .p27-mono{opacity:0}}
-#etnika-process-interactive .p27-photo:focus-visible .p27-mono,#etnika-process-interactive .p27-photo[aria-pressed=true] .p27-mono{opacity:0}
+#etnika-process-interactive .p27-photo.is-active .p27-mono{opacity:0}
 #etnika-process-interactive .p27-photo:focus-visible,#etnika-process-interactive .p27-title:focus-visible{outline:2px solid #a9151d;outline-offset:3px}
 #etnika-process-interactive .p27-heading{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:minmax(0,3.2fr) minmax(0,1fr);align-items:end;gap:clamp(20px,3vw,44px);padding:32px 0 30px}
 #etnika-review-flow #etnika-process-interactive .p27-heading h2{font:400 var(--etnika-section-title)/.8 Forum,Georgia,serif!important;letter-spacing:-.04em!important;text-transform:uppercase!important;color:#191717!important;margin:0!important;white-space:normal!important;text-align:left!important}
@@ -14240,11 +14239,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  #etnika-process-interactive .p27-photo img{transform:scale(var(--p27-zoom,1));transform-origin:50% 50%;transition:transform 420ms cubic-bezier(.22,.65,.35,1)}
  #etnika-process-interactive .p27-photo .p27-mono{opacity:var(--p27-mono-opacity,1);transition:opacity 420ms cubic-bezier(.22,.65,.35,1),transform 420ms cubic-bezier(.22,.65,.35,1)}
  #etnika-process-interactive .p27-desc{opacity:var(--p27-desc-opacity,0);transform:translateY(var(--p27-desc-offset,8px));transition:opacity 280ms ease,transform 320ms cubic-bezier(.22,.65,.35,1)}
- #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="1"]:is(:hover,:focus-visible),.p27-step[data-step="1"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="1"],.p27-step[data-step="1"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
- #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="2"]:is(:hover,:focus-visible),.p27-step[data-step="2"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="2"],.p27-step[data-step="2"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
- #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="3"]:is(:hover,:focus-visible),.p27-step[data-step="3"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="3"],.p27-step[data-step="3"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
- #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="4"]:is(:hover,:focus-visible),.p27-step[data-step="4"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="4"],.p27-step[data-step="4"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
- #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="5"]:is(:hover,:focus-visible),.p27-step[data-step="5"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="5"],.p27-step[data-step="5"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
+ #etnika-process-interactive :is(.p27-photo,.p27-step).is-active{--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
 }
 @media(prefers-reduced-motion:reduce){
  #etnika-process-interactive .p27-photo img,#etnika-process-interactive .p27-photo .p27-mono,#etnika-process-interactive .p27-desc{transition:none!important;transform:none!important}
@@ -14695,13 +14690,44 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
     .replace(/(\d)\x20+(?=час(?:а|ов)?\b|час(?:а|ов)?[.,!?;:]|час(?:а|ов)?$|px\b|мин(?:ут[аы]?)?(?=[\s.,!?;:]|$)|%)/giu,'$1\u00a0')
     .replace(/(\d)\x20+(?=час(?:а|ов)?(?:[\s.,!?;:]|$))/giu,'$1\u00a0')
     .replace(/чёрно-бел/giu,m=>m.replace('-','\u2011'));
+  // A single selection owns both the image and its caption. Hover previews
+  // are temporary; a click pins the pair until a different step is entered.
+  let activeId=null,pinned=false,activeSource=null;
+  const hoverMedia=window.matchMedia('(hover:hover) and (pointer:fine)');
+  function renderSelection(){
+    grid.querySelectorAll('.p27-photo,.p27-step').forEach(el=>{
+      const active=el.dataset.step===activeId;
+      el.classList.toggle('is-active',active);
+      if(el.classList.contains('p27-photo'))el.setAttribute('aria-pressed',String(active));
+    });
+  }
+  function preview(id,source){
+    if(activeId!==id)pinned=false;
+    activeId=id;activeSource=source;renderSelection();
+  }
+  function leave(id,source,next){
+    if(activeId!==id||pinned||activeSource!==source)return;
+    const target=next&&next.closest?next.closest('.p27-photo,.p27-step'):null;
+    if(target&&target.dataset.step===id)return;
+    activeId=null;activeSource=null;renderSelection();
+  }
+  function select(id){
+    activeId=id;pinned=true;activeSource='click';renderSelection();
+  }
   STEPS.forEach(step=>{
     const card=document.createElement('article');
     card.className='p27-step';card.style.setProperty('--step',step.id);
     const color=ASSETS['s'+step.id], mono=color;
-    card.innerHTML=`<button class="p27-photo" type="button" aria-label="${esc(step.title)}: показать цветную фотографию" aria-pressed="false"><img class="p27-color" src="${color}" alt="${esc(step.title)}" loading="lazy" decoding="async"><img class="p27-mono" src="${mono}" alt="" aria-hidden="true" loading="lazy" decoding="async"></button><div class="p27-copy"><span class="p27-num">${String(step.id).padStart(2,'0')}</span><div><h3><button class="p27-title" type="button" aria-label="Подробнее: ${esc(step.title)}">${esc(step.title)}</button></h3><p class="p27-desc">${esc(keepPrepositions(step.desc))}</p></div></div>`;
+    card.innerHTML=`<button class="p27-photo" type="button" aria-label="${esc(step.title)}: выбрать этап" aria-pressed="false"><img class="p27-color" src="${color}" alt="${esc(step.title)}" loading="lazy" decoding="async"><img class="p27-mono" src="${mono}" alt="" aria-hidden="true" loading="lazy" decoding="async"></button><div class="p27-copy"><span class="p27-num">${String(step.id).padStart(2,'0')}</span><div><h3><button class="p27-title" type="button" aria-label="Подробнее: ${esc(step.title)}">${esc(step.title)}</button></h3><p class="p27-desc">${esc(keepPrepositions(step.desc))}</p></div></div>`;
     const photo=card.querySelector('.p27-photo');
-    photo.addEventListener('click',()=>{const on=photo.getAttribute('aria-pressed')==='true';root.querySelectorAll('.p27-photo').forEach(x=>x.setAttribute('aria-pressed','false'));photo.setAttribute('aria-pressed',String(!on))});
+    const id=String(step.id),copy=card.querySelector('.p27-copy');
+    photo.addEventListener('click',()=>select(id));
+    [photo,copy].forEach(el=>{
+      el.addEventListener('pointerenter',e=>{if(hoverMedia.matches&&e.pointerType!=='touch')preview(id,'pointer')});
+      el.addEventListener('pointerleave',e=>{if(hoverMedia.matches&&e.pointerType!=='touch')leave(id,'pointer',e.relatedTarget)});
+      el.addEventListener('focusin',e=>{if(e.target.matches(':focus-visible'))preview(id,'focus')});
+      el.addEventListener('focusout',e=>leave(id,'focus',e.relatedTarget));
+    });
     const title=card.querySelector('.p27-title');title.addEventListener('click',()=>openStep(step,title));
     photo.style.setProperty('--step',step.id);photo.dataset.step=String(step.id);card.dataset.step=String(step.id);
     strip.appendChild(photo);
