@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-process-viewport-v28">
+<meta name="etnika-build" content="20261127-process-grid-v29">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14193,6 +14193,23 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  #etnika-process-interactive .p27-strip .p27-photo{grid-column:1;grid-row:calc(var(--step) + 1)}
  #etnika-process-interactive .p27-copy{grid-column:2;grid-row:calc(var(--step) + 1);border:0;padding:0;grid-template-columns:minmax(0,1fr);gap:6px}
 }
+
+/* V29: one editorial grid for the photographs, heading and five captions.
+   A readable minimum takes precedence over forcing short windows into one screen. */
+@media(min-width:1101px){
+ #etnika-review-flow > section#etnika-process-interactive{padding:clamp(28px,4svh,56px) 0!important}
+ #etnika-process-interactive .p27-grid{width:min(100%,clamp(1100px,128svh,1600px));margin-inline:auto}
+ #etnika-process-interactive .p27-strip{width:100%;justify-self:stretch}
+ #etnika-process-interactive .p27-copy{align-self:start;align-items:baseline;grid-template-rows:auto 1fr}
+ #etnika-process-interactive .p27-copy h3{align-self:baseline}
+ #etnika-process-interactive .p27-heading{padding:clamp(16px,2.1svh,28px) 0}
+ #etnika-process-interactive .p27-sub{max-width:330px}
+ #etnika-process-interactive .p27-kicker{width:min(100%,clamp(1100px,128svh,1600px));margin-inline:auto;margin-bottom:clamp(12px,1.8svh,24px)}
+}
+@media(min-width:1101px) and (max-height:900px){
+ #etnika-review-flow #etnika-process-interactive .p27-heading h2{font-size:clamp(48px,4.2vw,72px)!important;line-height:.95!important}
+ #etnika-process-interactive .p27-heading{gap:12px 24px}
+}
 </style>
 </head>
 <body>
@@ -14582,24 +14599,6 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
     strip.appendChild(photo);
     grid.appendChild(card);
   });
-
-  function fitProcessPhotos(){
-    if(innerWidth<=1100)return;
-    const shell=root.querySelector('.p27-shell'),kicker=root.querySelector('.p27-kicker'),heading=root.querySelector('.p27-heading');
-    const st=getComputedStyle(root),ks=getComputedStyle(kicker);
-    const header=document.getElementById('etnika-site-header');
-    const nav=header?header.getBoundingClientRect().height:60;
-    const occupied=parseFloat(st.paddingTop)+parseFloat(st.paddingBottom)+kicker.getBoundingClientRect().height+parseFloat(ks.marginBottom)+heading.getBoundingClientRect().height+Math.max(...Array.from(root.querySelectorAll('.p27-copy'),e=>e.getBoundingClientRect().height));
-    const gap=parseFloat(getComputedStyle(strip).columnGap)||14;
-    const maxHeight=Math.max(0,(shell.clientWidth-4*gap)/2.97);
-    const height=Math.round(Math.min(maxHeight,Math.max(170,window.innerHeight-nav-occupied-4)));
-    const value=height+'px';if(grid.style.getPropertyValue('--p27-photo-h')!==value)grid.style.setProperty('--p27-photo-h',value);
-  }
-  const scheduleFit=()=>requestAnimationFrame(fitProcessPhotos);
-  if('ResizeObserver' in window){const ro=new ResizeObserver(scheduleFit);[root.querySelector('.p27-shell'),root.querySelector('.p27-heading'),...root.querySelectorAll('.p27-copy')].forEach(e=>ro.observe(e))}
-  window.addEventListener('resize',scheduleFit,{passive:true});
-  if(document.fonts)document.fonts.ready.then(scheduleFit);
-  scheduleFit();
 
   function renderGallery(){
     mainImg.src=ASSETS[currentGallery[galleryIndex]];
