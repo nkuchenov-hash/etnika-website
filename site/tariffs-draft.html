@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v8"><title>ЭТНИКА — цены и тарифы</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v9"><title>ЭТНИКА — цены и тарифы</title>
 <style>
 @font-face{font-family:Forum;src:url('assets/fonts/Forum-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Geologica;src:url('assets/fonts/Geologica-VF.ttf') format('truetype');font-weight:100 900;font-display:swap}
@@ -176,6 +176,14 @@ body{font-size:var(--etnika-body-size);font-weight:var(--etnika-body-weight);lin
 @media(max-width:700px){
  .format-desc,.set-caption,.duration .capacity,.order-summary,.note,.features,.set-full ul{font-size:var(--etnika-body-size)}
  .choice-header .mode,.order button,.set-full summary{font-size:var(--etnika-ui-size)}
+}
+
+/* Give the package list and selected package independent editorial columns. */
+@media(min-width:1001px){
+ #set-panel.unified{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);column-gap:clamp(72px,7vw,144px)}
+}
+@media(min-width:701px) and (max-width:1000px){
+ #set-panel.unified{row-gap:44px}
 }
 </style></head>
 <body>
