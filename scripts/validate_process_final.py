@@ -8,7 +8,7 @@ BUILD=re.search(r'<meta name="etnika-build" content="([^"]+)"',(ROOT/'site/index
 URL='https://nkuchenov-hash.github.io/etnika-website/site/' if LIVE else (ROOT/'site/index.html').as_uri()
 with sync_playwright() as p:
     browser=p.chromium.launch()
-    for w,h in [(1920,1080),(1440,900),(1024,768),(390,844)]:
+    for w,h in [(1920,1080),(2048,736),(1662,896),(1440,900),(1366,768),(2560,1080),(1024,768),(390,844)]:
         page=browser.new_page(viewport={'width':w,'height':h})
         for i in range(12 if LIVE else 1):
             page.goto(URL+(f'?build={BUILD}&run={os.getenv("GITHUB_RUN_ID","local")}&attempt={i}' if LIVE else ''),wait_until='load')
@@ -24,7 +24,15 @@ with sync_playwright() as p:
         facts=root.evaluate("""r=>{let p=[...r.querySelectorAll('.p27-photo')];let d=[...r.querySelectorAll('.p27-desc')];return {photos:p.map(e=>({x:e.getBoundingClientRect().x,y:e.getBoundingClientRect().y,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})),fonts:d.map(e=>({size:parseFloat(getComputedStyle(e).fontSize),weight:getComputedStyle(e).fontWeight})),overflow:document.documentElement.scrollWidth>innerWidth+3}}""")
         assert not facts['overflow'],facts
         assert all(x['size']==(18 if w>=761 else 16) and x['weight']=='100' for x in facts['fonts']),facts
-        if w>820:assert len({round(x['y']) for x in facts['photos']})==1,facts
+        page.wait_for_timeout(200)
+        if w>1100:
+            assert len({round(x['y']) for x in facts['photos']})==1,facts
+            geometry=root.evaluate("""r=>{let b=r.getBoundingClientRect(),p=r.querySelector('.p27-photo').getBoundingClientRect(),n=document.getElementById('etnika-site-header').getBoundingClientRect(), copies=[...r.querySelectorAll('.p27-copy')].map(e=>e.getBoundingClientRect());return {section:b.height,available:innerHeight-n.height,photo:p.height,ratio:p.width/p.height,copyBottom:Math.max(...copies.map(x=>x.bottom))-b.top,heading:r.querySelector('.p27-heading').getBoundingClientRect().height}}""")
+            print('Geometry',w,h,geometry,flush=True)
+            assert abs(geometry['ratio']-430/724)<.015,geometry
+            assert geometry['copyBottom']<=geometry['section']+1,geometry
+            assert geometry['photo']<=h*.57,geometry
+            if h>=850:assert geometry['section']<=geometry['available']+8,geometry
         page.mouse.move(0,0)
         page.wait_for_timeout(450)
         assert root.locator('.p27-mono').evaluate_all("a=>a.every(e=>getComputedStyle(e).opacity==='1')")

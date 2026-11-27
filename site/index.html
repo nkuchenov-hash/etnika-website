@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-process-final-v27">
+<meta name="etnika-build" content="20261127-process-viewport-v28">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14168,6 +14168,31 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 @media(max-width:1300px){#etnika-process-interactive .p27-copy{grid-template-columns:minmax(0,1fr);gap:6px}}
 @media(max-width:820px){#etnika-process-interactive .p27-grid{display:flex;flex-direction:column;gap:24px}#etnika-process-interactive .p27-heading{order:-1;display:block;padding:0 0 8px}#etnika-process-interactive .p27-sub{margin-top:20px!important}#etnika-process-interactive .p27-step{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:18px;align-items:center}#etnika-process-interactive .p27-photo,#etnika-process-interactive .p27-copy{grid-column:auto;grid-row:auto}#etnika-process-interactive .p27-copy{border:0;padding:0}}
 @media(prefers-reduced-motion:reduce){#etnika-process-interactive .p27-photo .p27-mono{transition:none}}
+
+/* The height of the photo ribbon is governed by the real remaining viewport,
+   not by the width of the monitor. The portrait aspect ratio is preserved. */
+#etnika-process-interactive .p27-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--p27-gap);grid-column:1/-1;grid-row:1;width:min(100%,calc(var(--p27-photo-h,340px) * 2.97 + 4 * var(--p27-gap)));justify-self:center;align-self:start;min-width:0}
+#etnika-process-interactive .p27-grid{--p27-gap:clamp(10px,1vw,18px);column-gap:var(--p27-gap)}
+#etnika-process-interactive .p27-strip .p27-photo{grid-column:auto;grid-row:auto;aspect-ratio:430/724}
+#etnika-process-interactive .p27-photo img{object-fit:contain;object-position:center}
+#etnika-process-interactive .p27-heading{padding:clamp(16px,2.4svh,32px) 0 clamp(16px,2.2svh,30px)}
+#etnika-process-interactive .p27-copy{grid-template-columns:auto minmax(0,1fr);column-gap:10px;row-gap:8px;padding-top:12px}
+#etnika-process-interactive .p27-copy>div{display:contents}
+#etnika-process-interactive .p27-copy h3{margin:0;align-self:center;min-width:0}
+#etnika-process-interactive .p27-desc{grid-column:1/-1}
+@media(min-width:1101px) and (max-height:900px){
+ #etnika-process-interactive .p27-heading{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:8px 26px}
+ #etnika-process-interactive .p27-heading h2 br{display:none}
+ #etnika-process-interactive .p27-sub{max-width:350px}
+}
+@media(max-width:1100px){
+ #etnika-process-interactive .p27-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:24px 18px;align-items:center}
+ #etnika-process-interactive .p27-strip,#etnika-process-interactive .p27-step{display:contents}
+ #etnika-process-interactive .p27-heading{grid-column:1/-1;grid-row:1;display:block;padding:0 0 8px}
+ #etnika-process-interactive .p27-sub{margin-top:20px!important}
+ #etnika-process-interactive .p27-strip .p27-photo{grid-column:1;grid-row:calc(var(--step) + 1)}
+ #etnika-process-interactive .p27-copy{grid-column:2;grid-row:calc(var(--step) + 1);border:0;padding:0;grid-template-columns:minmax(0,1fr);gap:6px}
+}
 </style>
 </head>
 <body>
@@ -14489,7 +14514,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 
 
 <section id="etnika-process-interactive" aria-label="Как проходит весь процесс">
-  <div class="p27-shell"><div class="p27-kicker"><span>ЭТНИКА</span><i></i><span>Искусство быть собой</span></div><div class="p27-grid"><div class="p27-heading"><h2 class="etnika-section-heading">Как проходит<br><span>весь процесс</span></h2><p class="p27-sub">Пять шагов — от знакомства со студией до готовых фотографий.</p></div></div></div>
+  <div class="p27-shell"><div class="p27-kicker"><span>ЭТНИКА</span><i></i><span>Искусство быть собой</span></div><div class="p27-grid"><div class="p27-heading"><h2 class="etnika-section-heading">Как проходит<br> <span>весь процесс</span></h2><p class="p27-sub">Пять шагов — от знакомства со студией до готовых фотографий.</p></div></div></div>
 
   <div class="epi-modal" aria-hidden="true">
     <div class="epi-dialog" role="dialog" aria-modal="true" aria-label="Подробнее о процессе">
@@ -14528,6 +14553,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
   const ASSETS={"s1":"assets/process-20261127/01-znakomstvo-red.webp","original_s1":"https://static.tildacdn.com/tild6264-3664-4062-b261-326438376434/fa239ddc-2f27-4d8a-a.png","s2":"assets/process-20261127/02-pervyi-kadr-red.webp","original_s2":"https://static.tildacdn.com/tild3864-3765-4565-b063-636338613134/24ef8b6a-1b82-4dde-8.png","s3":"assets/process-20261127/03-vybor-red.webp","original_s3":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png","s4":"assets/process-20261127/04-semka-red.webp","original_s4":"https://static.tildacdn.com/tild6262-6239-4231-b361-643136363234/e7aff60e-c85b-4ddb-9.png","s5":"assets/process-20261127/05-rezultat-red.webp","original_s5":"https://static.tildacdn.com/tild3636-3761-4338-a635-323335633566/c85b790c-33af-48a9-9.png","studio":"assets/process-20261112/step-03-studio-red-matched.webp","original_studio":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png"};
   const STEPS=[{"id":1,"title":"Знакомство","desc":"Администратор встречает вас и знакомит со студией.","detailTitle":"Знакомство","accent":"Всё начинается с вашего визита","body":"Администратор встречает вас, показывает пространство, оборудование и объясняет, как всё работает.","sections":[["Перед съёмкой",["Можно подготовить несколько образов.","Гайд по позированию — в подарок."]]],"gallery":["s1","studio"]},{"id":2,"title":"Первый кадр","desc":"Перед вами зеркало, пульт и камера за зеркалом — нажмите на пульт и увидите получившийся снимок на экране.","detailTitle":"Первый кадр","accent":"Вы сами управляете камерой","body":"Перед вами зеркало, камера за зеркалом и пульт. Нажмите на кнопку и увидите снимок на мониторе.","sections":[["Как это работает",["Посмотрите в зеркало.","Нажмите на пульт.","Посмотрите результат на мониторе."]]],"gallery":["s2","s4"]},{"id":3,"title":"Выбор","desc":"Вы можете выбрать белый или цветной фон, пользоваться реквизитом, гардеробом или схемами света, цветные или чёрно-белые снимки.","detailTitle":"Выбор","accent":"Создайте своё настроение","body":"Выбирайте белый или цветной фон, световые схемы, реквизит и образы.","sections":[["В вашем распоряжении",["Зеркало, гримёрная зона и ширма.","Отпариватель для одежды.","Набор реквизита."]]],"gallery":["s3","studio"]},{"id":4,"title":"Съёмка","desc":"Меняйте позы, пробуйте ракурсы, экспериментируйте с образами — количество кадров не ограничено.","detailTitle":"Съёмка","accent":"Только вы, зеркало, камера и пульт","body":"Меняйте позы, пробуйте новые ракурсы и образы. Вы сами выбираете момент каждого кадра.","sections":[["Во время съёмки",["Количество кадров не ограничено.","Цветные и чёрно-белые фотографии за один сет."]]],"gallery":["s4","s2"]},{"id":5,"title":"Результат","desc":"Обработанные фотографии придут вам в течение 24 часов.","detailTitle":"Результат","accent":"Готовые кадры — онлайн в течение 24 часов","body":"Цветокоррекция входит в съёмку. Готовые фотографии передаются онлайн.","sections":[["Что вы получаете",["Неограниченное количество фотографий.","Цветокоррекция готовых кадров.","JPEG-файлы с разрешением от 3000 px.","Исходники по запросу."]]],"gallery":["s5","s4"]}];
   const grid=root.querySelector('.p27-grid');
+  const strip=document.createElement('div');strip.className='p27-strip';grid.prepend(strip);
   const modal=root.querySelector('.epi-modal');
   const mainImg=root.querySelector('.epi-main img');
   const thumbs=root.querySelector('.epi-thumbs');
@@ -14552,8 +14578,28 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
     const photo=card.querySelector('.p27-photo');
     photo.addEventListener('click',()=>{const on=photo.getAttribute('aria-pressed')==='true';root.querySelectorAll('.p27-photo').forEach(x=>x.setAttribute('aria-pressed','false'));photo.setAttribute('aria-pressed',String(!on))});
     const title=card.querySelector('.p27-title');title.addEventListener('click',()=>openStep(step,title));
+    photo.style.setProperty('--step',step.id);
+    strip.appendChild(photo);
     grid.appendChild(card);
   });
+
+  function fitProcessPhotos(){
+    if(innerWidth<=1100)return;
+    const shell=root.querySelector('.p27-shell'),kicker=root.querySelector('.p27-kicker'),heading=root.querySelector('.p27-heading');
+    const st=getComputedStyle(root),ks=getComputedStyle(kicker);
+    const header=document.getElementById('etnika-site-header');
+    const nav=header?header.getBoundingClientRect().height:60;
+    const occupied=parseFloat(st.paddingTop)+parseFloat(st.paddingBottom)+kicker.getBoundingClientRect().height+parseFloat(ks.marginBottom)+heading.getBoundingClientRect().height+Math.max(...Array.from(root.querySelectorAll('.p27-copy'),e=>e.getBoundingClientRect().height));
+    const gap=parseFloat(getComputedStyle(strip).columnGap)||14;
+    const maxHeight=Math.max(0,(shell.clientWidth-4*gap)/2.97);
+    const height=Math.round(Math.min(maxHeight,Math.max(170,window.innerHeight-nav-occupied-4)));
+    const value=height+'px';if(grid.style.getPropertyValue('--p27-photo-h')!==value)grid.style.setProperty('--p27-photo-h',value);
+  }
+  const scheduleFit=()=>requestAnimationFrame(fitProcessPhotos);
+  if('ResizeObserver' in window){const ro=new ResizeObserver(scheduleFit);[root.querySelector('.p27-shell'),root.querySelector('.p27-heading'),...root.querySelectorAll('.p27-copy')].forEach(e=>ro.observe(e))}
+  window.addEventListener('resize',scheduleFit,{passive:true});
+  if(document.fonts)document.fonts.ready.then(scheduleFit);
+  scheduleFit();
 
   function renderGallery(){
     mainImg.src=ASSETS[currentGallery[galleryIndex]];
