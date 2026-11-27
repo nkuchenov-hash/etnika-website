@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v14"><title>ЭТНИКА — цены и тарифы</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v15"><title>ЭТНИКА — цены и тарифы</title>
 <style>
 @font-face{font-family:Forum;src:url('assets/fonts/Forum-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Geologica;src:url('assets/fonts/Geologica-VF.ttf') format('truetype');font-weight:100 900;font-display:swap}
@@ -346,6 +346,31 @@ main{padding-top:clamp(28px,4svh,64px);padding-bottom:clamp(28px,4svh,64px)}
  #set-panel .set-option,#set-panel .set-option:last-child{padding:8px 0}
  #set-panel .set-preview{justify-content:flex-start}
 }
+
+/* Actual viewport fill. On ultrawide monitors follow the canonical site's
+   wider 2600px editorial grid, not the narrow 1760px desktop ceiling. */
+@media(min-width:1900px){
+ :root{--et-u-edge:max(80px,calc((100vw - 2600px)/2))}
+ #set-panel.unified{column-gap:clamp(180px,10.5vw,340px)}
+}
+@media(min-width:1001px){
+ main{min-height:100svh}
+ #set-panel.unified,#base-panel.unified{min-height:var(--tariff-available-height,0px);align-items:stretch}
+ #set-panel .set-selector{height:100%;display:flex;flex-direction:column}
+ #set-panel .set-group{flex:2 0 auto}
+ #set-panel .set-group:nth-of-type(2){flex:3 0 auto}
+ #set-panel .set-preview{height:100%;justify-content:space-between}
+ #set-panel .set-preview .order{margin-top:auto}
+ #set-panel .set-preview:has(.set-full[open]){height:auto;justify-content:flex-start}
+}
+@media(min-width:1001px) and (min-height:1050px){
+ #set-panel .set-option,#set-panel .set-option:last-child{padding:clamp(15px,1.8svh,32px) 0}
+ #set-panel .set-group+.set-group{margin-top:clamp(20px,2.1svh,34px);padding-top:clamp(20px,2.1svh,34px)}
+ #set-panel .highlights{margin-top:clamp(26px,3svh,44px);gap:clamp(10px,1.2svh,18px)}
+ #set-panel .selected-set-caption{margin-bottom:clamp(20px,2.7svh,40px)}
+ #set-panel .set-preview .note{margin-top:clamp(20px,2.5svh,36px)}
+ #set-panel .set-preview .order{padding-top:clamp(24px,3svh,42px)}
+}
 </style></head>
 <body>
 <main id="etnika-prices-anna"><div class="overline"><span>ЭТНИКА</span><span class="rule"></span><span class="accent">Цены и тарифы</span><span class="vertical"></span><span class="context">Студия автопортрета</span><span class="rule tail"></span></div>
@@ -380,4 +405,10 @@ main{padding-top:clamp(28px,4svh,64px);padding-bottom:clamp(28px,4svh,64px)}
 function render(){buttons('[data-format]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.format===format)));el('base-panel').hidden=format!=='base';el('set-panel').hidden=format!=='set';buttons('[data-bg]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.bg===bg)));buttons('[data-day]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.day===day)));buttons('[data-min]').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.min===mins));b.querySelector('.price').textContent=money(current()[b.dataset.min])});el('selection').replaceChildren(document.createTextNode(bg+' фон'),document.createElement('br'),document.createTextNode(mins+' минут · '+capacity()));el('total').textContent=money(current()[mins]);buttons('[data-set-price]').forEach(b=>b.textContent=money(sets[Number(b.dataset.setPrice)][day]));buttons('[data-set-choice]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.setChoice)===selectedSet)));const x=sets[selectedSet];el('set-title').textContent=x.short;el('set-caption').textContent=x.caption;el('set-mins').textContent=x.mins;el('set-people').textContent='до '+x.people.match(/\d+/)[0];el('set-people-unit').textContent=x.people.includes('человека')?'человека':'человек';el('set-total').textContent=money(x[day]);el('set-highlights').replaceChildren(...x.highlights.map(t=>{const li=document.createElement('li');li.textContent=t;return li}));el('set-features').innerHTML=x.features;}
 function show(message){el('dialog-selection').textContent=message;el('dialog').showModal()}
 buttons('[data-format]').forEach(b=>b.addEventListener('click',()=>{format=b.dataset.format;render()}));buttons('[data-bg]').forEach(b=>b.addEventListener('click',()=>{bg=b.dataset.bg;render()}));buttons('[data-day]').forEach(b=>b.addEventListener('click',()=>{day=b.dataset.day;render()}));buttons('[data-min]').forEach(b=>b.addEventListener('click',()=>{mins=b.dataset.min;render()}));buttons('[data-set-choice]').forEach(b=>b.addEventListener('click',()=>{selectedSet=Number(b.dataset.setChoice);document.querySelector('.set-full').open=false;render()}));el('book').addEventListener('click',()=>show(bg+' фон · '+mins+' минут · '+capacity()+' · '+dayLabel()+' — '+money(current()[mins])));el('set-book').addEventListener('click',()=>{const x=sets[selectedSet];show(x.name+' · '+x.mins+' минут · '+x.people+' · '+dayLabel()+' — '+money(x[day]))});render()})();
+</script><script>
+(()=>{const main=document.querySelector('main'),head=document.querySelector('.choice-header');if(!main||!head)return;
+let pending=false;function measure(){pending=false;const desktop=window.innerWidth>1000;const panel=document.querySelector('.stage.unified:not([hidden])');if(!desktop||!panel){main.style.removeProperty('--tariff-available-height');return;}const bottom=parseFloat(getComputedStyle(main).paddingBottom)||0;const y=panel.getBoundingClientRect().top+window.scrollY;const viewport=window.innerHeight;const available=Math.max(0,Math.floor(viewport-y-bottom));const value=available+'px';if(main.style.getPropertyValue('--tariff-available-height')!==value)main.style.setProperty('--tariff-available-height',value);}
+function schedule(){if(!pending){pending=true;requestAnimationFrame(measure)}}
+window.addEventListener('resize',schedule,{passive:true});document.querySelectorAll('[data-format]').forEach(x=>x.addEventListener('click',schedule));if(typeof ResizeObserver==='function'){const observer=new ResizeObserver(schedule);observer.observe(head);observer.observe(document.querySelector('.heading'));}if(document.fonts)document.fonts.ready.then(schedule);schedule();
+})();
 </script></body></html>
