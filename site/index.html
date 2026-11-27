@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261125-about-gentle-accordion-v25">
+<meta name="etnika-build" content="20261127-process-final-v27">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14142,6 +14142,33 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  }
 }
 </style>
+<style id="etnika-process-photo-strip-v27">
+#etnika-review-flow > section#etnika-process-interactive{padding:var(--etnika-section-y,64px) 0!important;background:#fff!important;height:auto!important;min-height:0!important;overflow:visible!important}
+#etnika-review-flow #etnika-process-interactive .p27-shell{margin:0 var(--et-u-edge);min-width:0}
+#etnika-process-interactive .p27-kicker{display:flex;align-items:center;gap:16px;margin:0 0 24px;font:200 var(--etnika-overline-size,11px)/1.4 Geologica,Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase}
+#etnika-process-interactive .p27-kicker i{height:1px;flex:1;background:#c9c4bf}
+#etnika-process-interactive .p27-kicker span:last-child{color:#a9151d}
+#etnika-process-interactive .p27-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0 clamp(10px,1vw,18px)}
+#etnika-process-interactive .p27-step{display:contents}
+#etnika-process-interactive .p27-photo{grid-column:var(--step);grid-row:1;position:relative;display:block;isolation:isolate;width:100%;aspect-ratio:3/4.6;padding:0;border:0;border-radius:0;background:#b1b1b1;overflow:hidden;cursor:pointer}
+#etnika-process-interactive .p27-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%;border-radius:0;transform:none;filter:none}
+#etnika-process-interactive .p27-photo .p27-mono{z-index:1;opacity:1;transition:opacity 420ms cubic-bezier(.22,.65,.35,1)}
+@media(hover:hover){#etnika-process-interactive .p27-step:hover .p27-mono,#etnika-process-interactive .p27-photo:hover .p27-mono{opacity:0}}
+#etnika-process-interactive .p27-photo:focus-visible .p27-mono,#etnika-process-interactive .p27-photo[aria-pressed=true] .p27-mono{opacity:0}
+#etnika-process-interactive .p27-photo:focus-visible,#etnika-process-interactive .p27-title:focus-visible{outline:2px solid #a9151d;outline-offset:3px}
+#etnika-process-interactive .p27-heading{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:minmax(0,3.2fr) minmax(0,1fr);align-items:end;gap:clamp(20px,3vw,44px);padding:32px 0 30px}
+#etnika-review-flow #etnika-process-interactive .p27-heading h2{font:400 var(--etnika-section-title)/.8 Forum,Georgia,serif!important;letter-spacing:-.04em!important;text-transform:uppercase!important;color:#191717!important;margin:0!important;white-space:normal!important;text-align:left!important}
+#etnika-process-interactive .p27-heading h2 span{color:#a9151d}
+#etnika-process-interactive .p27-sub,#etnika-process-interactive .p27-desc{font:100 var(--etnika-body-size,18px)/1.55 Geologica,Arial,sans-serif!important;letter-spacing:-.006em;margin:0!important;color:#292625}
+#etnika-process-interactive .p27-copy{grid-column:var(--step);grid-row:3;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;border-top:1px solid #d6d0cd;padding:16px 0 0;min-width:0}
+#etnika-process-interactive .p27-num{font:400 clamp(25px,2vw,34px)/1 Forum,Georgia,serif;color:#a9151d}
+#etnika-process-interactive .p27-copy h3{margin:0 0 8px;line-height:1.12}
+#etnika-process-interactive .p27-title{background:none;border:0;padding:0;color:#191717;font:400 clamp(23px,1.7vw,32px)/1.12 Forum,Georgia,serif;text-align:left;cursor:pointer}
+#etnika-process-interactive .p27-title:hover{color:#a9151d;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:1300px){#etnika-process-interactive .p27-copy{grid-template-columns:minmax(0,1fr);gap:6px}}
+@media(max-width:820px){#etnika-process-interactive .p27-grid{display:flex;flex-direction:column;gap:24px}#etnika-process-interactive .p27-heading{order:-1;display:block;padding:0 0 8px}#etnika-process-interactive .p27-sub{margin-top:20px!important}#etnika-process-interactive .p27-step{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:18px;align-items:center}#etnika-process-interactive .p27-photo,#etnika-process-interactive .p27-copy{grid-column:auto;grid-row:auto}#etnika-process-interactive .p27-copy{border:0;padding:0}}
+@media(prefers-reduced-motion:reduce){#etnika-process-interactive .p27-photo .p27-mono{transition:none}}
+</style>
 </head>
 <body>
 
@@ -14462,11 +14489,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 
 
 <section id="etnika-process-interactive" aria-label="Как проходит весь процесс">
-  <div class="epi-head">
-    <h2 class="etnika-section-heading">Как проходит <span>весь процесс</span></h2>
-    <p class="epi-sub">Пять шагов — от&nbsp;знакомства со студией до&nbsp;готовых фотографий.</p>
-  </div>
-  <div class="epi-grid"></div>
+  <div class="p27-shell"><div class="p27-kicker"><span>ЭТНИКА</span><i></i><span>Искусство быть собой</span></div><div class="p27-grid"><div class="p27-heading"><h2 class="etnika-section-heading">Как проходит<br><span>весь процесс</span></h2><p class="p27-sub">Пять шагов — от знакомства со студией до готовых фотографий.</p></div></div></div>
 
   <div class="epi-modal" aria-hidden="true">
     <div class="epi-dialog" role="dialog" aria-modal="true" aria-label="Подробнее о процессе">
@@ -14502,9 +14525,9 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 (()=>{
   const root=document.getElementById('etnika-process-interactive');
   if(!root) return;
-  const ASSETS={"s1":"assets/process-20261106/step-1-red-large.webp","original_s1":"https://static.tildacdn.com/tild6264-3664-4062-b261-326438376434/fa239ddc-2f27-4d8a-a.png","s2":"assets/process-20261106/step-2-red-large.webp","original_s2":"https://static.tildacdn.com/tild3864-3765-4565-b063-636338613134/24ef8b6a-1b82-4dde-8.png","s3":"assets/process-20261112/step-03-studio-red-matched.webp","original_s3":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png","s4":"assets/process-20261106/step-4-red-large.webp","original_s4":"https://static.tildacdn.com/tild6262-6239-4231-b361-643136363234/e7aff60e-c85b-4ddb-9.png","s5":"assets/process-20261112/step-05-laptop-red-matched.webp","original_s5":"https://static.tildacdn.com/tild3636-3761-4338-a635-323335633566/c85b790c-33af-48a9-9.png","studio":"assets/process-20261112/step-03-studio-red-matched.webp","original_studio":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png"};
-  const STEPS=[{"id":1,"title":"Знакомство","desc":"Администратор встречает вас, знакомит со студией и объясняет, как всё работает.","detailTitle":"Знакомство","accent":"Всё начинается с вашего визита","body":"Администратор встречает вас, показывает пространство, оборудование и объясняет, как всё работает.","sections":[["Перед съёмкой",["Можно подготовить несколько образов.","Гайд по позированию — в подарок."]]],"gallery":["s1","studio"]},{"id":2,"title":"Подготовка","desc":"Выбирайте фон, свет, образы и реквизит. Настройте пространство под себя.","detailTitle":"Подготовка","accent":"Создайте своё настроение","body":"Выбирайте белый или цветной фон, световые схемы, реквизит и образы.","sections":[["В вашем распоряжении",["Зеркало, гримёрная зона и ширма.","Отпариватель для одежды.","Набор реквизита."]]],"gallery":["s2","studio"]},{"id":3,"title":"Первый кадр","desc":"Посмотрите в зеркало, нажмите на пульт и увидите свой первый снимок на экране.","detailTitle":"Первый кадр","accent":"Вы сами управляете камерой","body":"Перед вами зеркало, камера за зеркалом и пульт. Нажмите на кнопку и увидите снимок на мониторе.","sections":[["Как это работает",["Посмотрите в зеркало.","Нажмите на пульт.","Посмотрите результат на мониторе."]]],"gallery":["s3","s4"]},{"id":4,"title":"Свобода творчества","desc":"Меняйте позы, экспериментируйте и будьте собой. Количество кадров не ограничено.","detailTitle":"Свобода творчества","accent":"Только вы, зеркало, камера и пульт","body":"Меняйте позы, пробуйте новые ракурсы и образы. Вы сами выбираете момент каждого кадра.","sections":[["Во время съёмки",["Количество кадров не ограничено.","Цветные и чёрно-белые фотографии за один сет."]]],"gallery":["s4","s3"]},{"id":5,"title":"Ваши фотографии","desc":"Получите обработанные фотографии в течение 24 часов.","detailTitle":"Ваши фотографии","accent":"Готовые кадры — онлайн в течение 24 часов","body":"Цветокоррекция входит в съёмку. Готовые фотографии передаются онлайн.","sections":[["Что вы получаете",["Неограниченное количество фотографий.","Цветокоррекция готовых кадров.","JPEG-файлы с разрешением от 3000 px.","Исходники по запросу."]]],"gallery":["s5","s4"]}];
-  const grid=root.querySelector('.epi-grid');
+  const ASSETS={"s1":"assets/process-20261127/01-znakomstvo-red.webp","original_s1":"https://static.tildacdn.com/tild6264-3664-4062-b261-326438376434/fa239ddc-2f27-4d8a-a.png","s2":"assets/process-20261127/02-pervyi-kadr-red.webp","original_s2":"https://static.tildacdn.com/tild3864-3765-4565-b063-636338613134/24ef8b6a-1b82-4dde-8.png","s3":"assets/process-20261127/03-vybor-red.webp","original_s3":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png","s4":"assets/process-20261127/04-semka-red.webp","original_s4":"https://static.tildacdn.com/tild6262-6239-4231-b361-643136363234/e7aff60e-c85b-4ddb-9.png","s5":"assets/process-20261127/05-rezultat-red.webp","original_s5":"https://static.tildacdn.com/tild3636-3761-4338-a635-323335633566/c85b790c-33af-48a9-9.png","studio":"assets/process-20261112/step-03-studio-red-matched.webp","original_studio":"https://static.tildacdn.com/tild3265-3062-4138-b738-316666313932/fb7da258-6f7c-4582-b.png"};
+  const STEPS=[{"id":1,"title":"Знакомство","desc":"Администратор встречает вас и знакомит со студией.","detailTitle":"Знакомство","accent":"Всё начинается с вашего визита","body":"Администратор встречает вас, показывает пространство, оборудование и объясняет, как всё работает.","sections":[["Перед съёмкой",["Можно подготовить несколько образов.","Гайд по позированию — в подарок."]]],"gallery":["s1","studio"]},{"id":2,"title":"Первый кадр","desc":"Перед вами зеркало, пульт и камера за зеркалом — нажмите на пульт и увидите получившийся снимок на экране.","detailTitle":"Первый кадр","accent":"Вы сами управляете камерой","body":"Перед вами зеркало, камера за зеркалом и пульт. Нажмите на кнопку и увидите снимок на мониторе.","sections":[["Как это работает",["Посмотрите в зеркало.","Нажмите на пульт.","Посмотрите результат на мониторе."]]],"gallery":["s2","s4"]},{"id":3,"title":"Выбор","desc":"Вы можете выбрать белый или цветной фон, пользоваться реквизитом, гардеробом или схемами света, цветные или чёрно-белые снимки.","detailTitle":"Выбор","accent":"Создайте своё настроение","body":"Выбирайте белый или цветной фон, световые схемы, реквизит и образы.","sections":[["В вашем распоряжении",["Зеркало, гримёрная зона и ширма.","Отпариватель для одежды.","Набор реквизита."]]],"gallery":["s3","studio"]},{"id":4,"title":"Съёмка","desc":"Меняйте позы, пробуйте ракурсы, экспериментируйте с образами — количество кадров не ограничено.","detailTitle":"Съёмка","accent":"Только вы, зеркало, камера и пульт","body":"Меняйте позы, пробуйте новые ракурсы и образы. Вы сами выбираете момент каждого кадра.","sections":[["Во время съёмки",["Количество кадров не ограничено.","Цветные и чёрно-белые фотографии за один сет."]]],"gallery":["s4","s2"]},{"id":5,"title":"Результат","desc":"Обработанные фотографии придут вам в течение 24 часов.","detailTitle":"Результат","accent":"Готовые кадры — онлайн в течение 24 часов","body":"Цветокоррекция входит в съёмку. Готовые фотографии передаются онлайн.","sections":[["Что вы получаете",["Неограниченное количество фотографий.","Цветокоррекция готовых кадров.","JPEG-файлы с разрешением от 3000 px.","Исходники по запросу."]]],"gallery":["s5","s4"]}];
+  const grid=root.querySelector('.p27-grid');
   const modal=root.querySelector('.epi-modal');
   const mainImg=root.querySelector('.epi-main img');
   const thumbs=root.querySelector('.epi-thumbs');
@@ -14523,17 +14546,12 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 
   STEPS.forEach(step=>{
     const card=document.createElement('article');
-    card.className='epi-card'; card.dataset.step=step.id;
-    card.innerHTML=`<img alt="${esc(step.title)}"><button class="epi-card-open" type="button" aria-label="Подробнее: ${esc(step.title)}"></button><div class="epi-base"><div class="epi-num">${String(step.id).padStart(2,'0')}</div><div class="epi-rule"></div><h3 class="epi-title">${esc(keepPrepositions(step.title))}</h3></div><div class="epi-reveal"><p class="epi-desc">${esc(keepPrepositions(step.desc))}</p><button class="epi-more" type="button">Подробнее <span>→</span></button></div>`;
-    card.querySelector('img').src=ASSETS['s'+step.id];
-    const cardOpen=card.querySelector('.epi-card-open');
-    cardOpen.addEventListener('click',e=>{e.stopPropagation();openStep(step,cardOpen)});
-    card.querySelector('.epi-more').addEventListener('click',e=>{e.stopPropagation();openStep(step,e.currentTarget)});
-    // Detail reveal occupies the lower card; clicks outside its CTA also open the step.
-    card.addEventListener('click',e=>{
-      if(e.target.closest('.epi-card-open,.epi-more'))return;
-      openStep(step,cardOpen);
-    });
+    card.className='p27-step';card.style.setProperty('--step',step.id);
+    const color=ASSETS['s'+step.id], mono=color.replace('-red.webp','-mono.webp');
+    card.innerHTML=`<button class="p27-photo" type="button" aria-label="${esc(step.title)}: показать цветную фотографию" aria-pressed="false"><img class="p27-color" src="${color}" alt="${esc(step.title)}" loading="lazy" decoding="async"><img class="p27-mono" src="${mono}" alt="" aria-hidden="true" loading="lazy" decoding="async"></button><div class="p27-copy"><span class="p27-num">${String(step.id).padStart(2,'0')}</span><div><h3><button class="p27-title" type="button" aria-label="Подробнее: ${esc(step.title)}">${esc(step.title)}</button></h3><p class="p27-desc">${esc(step.desc)}</p></div></div>`;
+    const photo=card.querySelector('.p27-photo');
+    photo.addEventListener('click',()=>{const on=photo.getAttribute('aria-pressed')==='true';root.querySelectorAll('.p27-photo').forEach(x=>x.setAttribute('aria-pressed','false'));photo.setAttribute('aria-pressed',String(!on))});
+    const title=card.querySelector('.p27-title');title.addEventListener('click',()=>openStep(step,title));
     grid.appendChild(card);
   });
 
@@ -14556,7 +14574,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
     sections.innerHTML='';
     step.sections.forEach(([title,items],idx)=>{
       const sec=document.createElement('div');sec.className='epi-section';
-      const tag=(step.id===3 && idx===0)?'ol':'ul';
+      const tag=(step.id===2 && idx===0)?'ol':'ul';
       sec.innerHTML=`<h4>${esc(keepPrepositions(title))}</h4><${tag}>${items.map(x=>`<li>${esc(keepPrepositions(x))}</li>`).join('')}</${tag}>`;
       sections.appendChild(sec);
     });
