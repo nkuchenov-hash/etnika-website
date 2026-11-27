@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v7"><title>ЭТНИКА — цены и тарифы</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v8"><title>ЭТНИКА — цены и тарифы</title>
 <style>
 @font-face{font-family:Forum;src:url('assets/fonts/Forum-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Geologica;src:url('assets/fonts/Geologica-VF.ttf') format('truetype');font-weight:100 900;font-display:swap}
@@ -159,6 +159,24 @@ body{font-weight:var(--etnika-body-weight)}
 .choice-header .mode[aria-pressed=true]{color:var(--red);border-bottom-color:var(--red);background:transparent}
 .choice-header .mode:not([aria-pressed=true]):hover{color:var(--red);border-bottom-color:#d9b9b8}
 @media(max-width:1000px){.choice-header .modes{margin:0;gap:28px}.choice-header .mode{min-height:49px;padding:12px 0;font-size:17px}}
+
+/* Approved typography: 18px / 100 for copy; 18px / 400 for UI.
+   Keep the editorial overline and Forum display hierarchy unchanged. */
+:root{--etnika-body-size:18px;--etnika-body-weight:100;--etnika-ui-size:18px;--etnika-ui-weight:400}
+body{font-size:var(--etnika-body-size);font-weight:var(--etnika-body-weight);line-height:1.55}
+.format-desc,.duration .capacity,.order-summary,.features,.note,
+.set-caption,.selected-set-caption,.selected-set-meta,.highlights,
+.set-full ul,.set-group h3,dialog p,.set-preview .note{
+ font-size:var(--etnika-body-size);font-weight:var(--etnika-body-weight);
+ line-height:1.55;letter-spacing:-.006em
+}
+.choice-header .mode,.order button,.set-full summary,dialog button{
+ font-size:var(--etnika-ui-size);font-weight:var(--etnika-ui-weight)
+}
+@media(max-width:700px){
+ .format-desc,.set-caption,.duration .capacity,.order-summary,.note,.features,.set-full ul{font-size:var(--etnika-body-size)}
+ .choice-header .mode,.order button,.set-full summary{font-size:var(--etnika-ui-size)}
+}
 </style></head>
 <body>
 <main id="etnika-prices-anna"><div class="overline"><span>ЭТНИКА</span><span class="rule"></span><span class="accent">Цены и тарифы</span><span class="vertical"></span><span class="context">Студия автопортрета</span><span class="rule tail"></span></div>
