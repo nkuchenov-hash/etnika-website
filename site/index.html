@@ -16132,6 +16132,12 @@ dialog{max-width:500px;width:calc(100% - 32px);border:1px solid var(--line);padd
 .tariffs-main{min-height:calc(100svh - var(--tariff-nav-height,0px));position:relative;background:white}
 .order a{text-decoration:none;box-sizing:border-box}
 #base-panel .booking .order a,#set-panel .booking .order a{font:400 18px/1.5 var(--etnika-font-ui)}
+
+/* Follow the canonical section spacing, including the preceding FAQ rule midpoint. */
+.tariffs-main{padding-top:calc(var(--etnika-section-outer,clamp(72px,9svh,112px)) + 14px)}
+@media(max-width:1000px){
+ .tariffs-main{padding-top:calc(var(--etnika-section-outer,clamp(36px,6svh,60px)) + 7px)}
+}
 </style><div class="tariffs-main" id="etnika-prices-anna"><div class="overline"><span>ЭТНИКА</span><span class="rule"></span><span class="accent">Цены и тарифы</span><span class="vertical"></span><span class="context">Студия автопортрета</span><span class="rule tail"></span></div>
 <div class="heading"><h2 class="tariff-title">ВЫБЕРИТЕ <span>СВОЙ ФОРМАТ</span></h2></div>
 <div class="choice-header"><div class="format-switch" role="group" aria-label="Формат съёмки">
