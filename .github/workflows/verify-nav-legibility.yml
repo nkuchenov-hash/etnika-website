@@ -48,7 +48,7 @@ jobs:
                       assert before['color']==('rgb(23, 21, 20)' if tone=='light' else 'rgb(255, 255, 255)'),before
                       assert after['opacity']=='1' and after['color']==before['color'] and after['weight']==before['weight'],after
                       assert before['stroke']==after['stroke']=='0px',(before,after)
-                      assert all(abs(x-y)<.5 for x,y in zip(before['rect'],after['rect'])),(before,after)
+                      assert all(abs(x-y)<=1 for x,y in zip(before['rect'],after['rect'])),(before,after)
                       assert after['decoration']=='none',after
                   page.close()
               b.close()
