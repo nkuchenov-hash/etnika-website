@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-process-hover-v36">
+<meta name="etnika-build" content="20261127-process-typography-v37">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14226,6 +14226,14 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  #etnika-review-flow #etnika-process-interactive .p27-heading{padding-bottom:0}
 }
 
+/* V37: consistent editorial typography for all process captions. */
+#etnika-review-flow #etnika-process-interactive .p27-copy h3,
+#etnika-review-flow #etnika-process-interactive .p27-num{line-height:1.12!important}
+#etnika-review-flow #etnika-process-interactive .p27-desc{text-wrap:pretty;overflow-wrap:normal;word-break:normal;hyphens:manual}
+@media(min-width:1101px){
+ #etnika-review-flow #etnika-process-interactive .p27-copy{column-gap:12px}
+ #etnika-review-flow #etnika-process-interactive .p27-title{white-space:nowrap}
+}
 /* V36: paired photo/caption interaction, stable editorial geometry. */
 @media(min-width:1101px) and (hover:hover) and (pointer:fine){
  #etnika-process-interactive .p27-photo img{transform:scale(var(--p27-zoom,1));transform-origin:50% 50%;transition:transform 420ms cubic-bezier(.22,.65,.35,1)}
@@ -14613,16 +14621,20 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
   let currentStep=null,currentGallery=[],galleryIndex=0,lastFocus=null;
 
   const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  // Nonbreaking spaces keep short Russian prepositions attached to the next word.
-  // This changes line wrapping only; source copy remains untouched.
-  const keepPrepositions=s=>String(s).replace(/(^|[\s«„(])((?:[авикосуя]|на|по|за|от|до|из|во|со|об|без|для|под|над|при))\s+/giu,
-    (_,leading,word)=>leading+word+'\u00a0');
-
+  // Apply Russian nonbreaking typography at render time; keep approved source copy unchanged.
+  const keepPrepositions=s=>String(s)
+    .replace(/(^|[\s«„(])([авикосуя]|не|ни|на|по|за|от|до|из|во|со|об|без|для|под|над|при|про|через|или|либо|но|да|что|как|чтобы|если)\x20+(?=\S)/giu,
+      (_,leading,word)=>leading+word+'\u00a0')
+    .replace(/(^|[\s«„(])(в\u00a0течение|во\u00a0время|в\u00a0том числе)\x20+(?=\S)/giu,'$1$2\u00a0')
+    .replace(/(\S)\x20+—\x20+/gu,'$1\u00a0— ')
+    .replace(/(\d)\x20+(?=час(?:а|ов)?\b|час(?:а|ов)?[.,!?;:]|час(?:а|ов)?$|px\b|мин(?:ут[аы]?)?(?=[\s.,!?;:]|$)|%)/giu,'$1\u00a0')
+    .replace(/(\d)\x20+(?=час(?:а|ов)?(?:[\s.,!?;:]|$))/giu,'$1\u00a0')
+    .replace(/чёрно-бел/giu,m=>m.replace('-','\u2011'));
   STEPS.forEach(step=>{
     const card=document.createElement('article');
     card.className='p27-step';card.style.setProperty('--step',step.id);
     const color=ASSETS['s'+step.id], mono=color;
-    card.innerHTML=`<button class="p27-photo" type="button" aria-label="${esc(step.title)}: показать цветную фотографию" aria-pressed="false"><img class="p27-color" src="${color}" alt="${esc(step.title)}" loading="lazy" decoding="async"><img class="p27-mono" src="${mono}" alt="" aria-hidden="true" loading="lazy" decoding="async"></button><div class="p27-copy"><span class="p27-num">${String(step.id).padStart(2,'0')}</span><div><h3><button class="p27-title" type="button" aria-label="Подробнее: ${esc(step.title)}">${esc(step.title)}</button></h3><p class="p27-desc">${esc(step.desc)}</p></div></div>`;
+    card.innerHTML=`<button class="p27-photo" type="button" aria-label="${esc(step.title)}: показать цветную фотографию" aria-pressed="false"><img class="p27-color" src="${color}" alt="${esc(step.title)}" loading="lazy" decoding="async"><img class="p27-mono" src="${mono}" alt="" aria-hidden="true" loading="lazy" decoding="async"></button><div class="p27-copy"><span class="p27-num">${String(step.id).padStart(2,'0')}</span><div><h3><button class="p27-title" type="button" aria-label="Подробнее: ${esc(step.title)}">${esc(step.title)}</button></h3><p class="p27-desc">${esc(keepPrepositions(step.desc))}</p></div></div>`;
     const photo=card.querySelector('.p27-photo');
     photo.addEventListener('click',()=>{const on=photo.getAttribute('aria-pressed')==='true';root.querySelectorAll('.p27-photo').forEach(x=>x.setAttribute('aria-pressed','false'));photo.setAttribute('aria-pressed',String(!on))});
     const title=card.querySelector('.p27-title');title.addEventListener('click',()=>openStep(step,title));

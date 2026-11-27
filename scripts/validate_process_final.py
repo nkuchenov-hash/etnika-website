@@ -23,6 +23,11 @@ with sync_playwright() as p:
         assert root.locator('.p27-photo img').count()==10
         assert root.locator('.p27-photo').evaluate_all("""cards=>cards.every(c=>{const a=c.querySelector('.p27-color'),b=c.querySelector('.p27-mono');return a.src===b.src&&getComputedStyle(b).filter.includes('etnika-process-monochrome')})"""),'Mono must use same source with full-frame filter'
         assert root.locator('.p27-sub').count()==0
+        descriptions=root.locator('.p27-desc').all_text_contents()
+        assert 'со\u00a0студией' in descriptions[0] and 'и\u00a0знакомит' in descriptions[0],descriptions
+        assert 'зеркалом\u00a0—' in descriptions[1] and 'на\u00a0экране' in descriptions[1],descriptions
+        assert 'чёрно\u2011белые' in descriptions[2],descriptions
+        assert '24\u00a0часов' in descriptions[4],descriptions
         facts=root.evaluate("""r=>{let p=[...r.querySelectorAll('.p27-photo')];let d=[...r.querySelectorAll('.p27-desc')];return {photos:p.map(e=>({x:e.getBoundingClientRect().x,y:e.getBoundingClientRect().y,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})),fonts:d.map(e=>({size:parseFloat(getComputedStyle(e).fontSize),weight:getComputedStyle(e).fontWeight})),overflow:document.documentElement.scrollWidth>innerWidth+3}}""")
         assert not facts['overflow'],facts
         assert all(x['size']==(18 if w>=761 else 16) and x['weight']=='100' for x in facts['fonts']),facts
