@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-process-typography-v37">
+<meta name="etnika-build" content="20261127-benefits-faq-v38">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14251,6 +14251,70 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  #etnika-process-interactive .p27-photo img,#etnika-process-interactive .p27-photo .p27-mono,#etnika-process-interactive .p27-desc{transition:none!important;transform:none!important}
 }
 </style>
+
+<style id="etnika-benefits-faq-style-v38">
+/* Same visual language as FAQ; native details keep keyboard and exclusive-open behavior.
+   The surrounding editorial spread remains white and unchanged. */
+#etnika-review-flow #etnika-block-02-final #etnika-studio-features .etnika-editorial-benefits{
+ --benefit-ink:#090909;--benefit-red:#A9151D;--benefit-line:rgba(9,9,9,.16);
+ color:var(--benefit-ink);min-width:0;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details{
+ border:0;border-bottom:1px solid var(--benefit-line);
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details:last-child{border-bottom:0}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{
+ display:grid;grid-template-columns:minmax(0,1fr) 38px;align-items:center;gap:24px;
+ width:100%;margin:0;padding:0;min-height:clamp(58px,6.7vh,76px)!important;
+ font-family:Forum,Georgia,serif!important;font-size:clamp(23px,1.65vw,32px)!important;
+ font-weight:400!important;line-height:1.04!important;letter-spacing:normal;
+ text-align:left;color:var(--benefit-ink);transition:color .28s ease;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary:hover,
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details[open] > summary{color:var(--benefit-red)}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus{
+ position:relative;display:block;width:30px;height:30px;justify-self:end;color:inherit;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::before,
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::after{
+ content:"";position:absolute;left:3px;right:3px;top:14px;width:auto;height:1px;
+ border-radius:0;background:currentColor;opacity:1;transform:none;
+ transition:transform .28s ease,background-color .28s ease;
+}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::after{transform:rotate(90deg)}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details[open] .etnika-benefit-plus::before{transform:rotate(45deg)}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details[open] .etnika-benefit-plus::after{transform:rotate(-45deg);opacity:1}
+#etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details p{
+ margin:0;padding:0 62px clamp(18px,2.3vh,28px) 0;max-width:850px;
+ color:rgba(9,9,9,.76);text-wrap:pretty;
+}
+@media(min-width:1920px){
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{font-size:clamp(28px,1.55vw,38px)!important}
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details p{max-width:980px}
+}
+@media(max-width:1440px){
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{min-height:58px!important;font-size:clamp(21px,1.5vw,27px)!important}
+}
+@media(max-height:820px) and (min-width:1101px){
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{min-height:51px!important;font-size:clamp(19px,1.42vw,25px)!important}
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details p{padding-bottom:14px}
+}
+@media(max-width:1100px){
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{min-height:72px!important;font-size:28px!important}
+}
+@media(max-width:700px){
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary{min-height:64px!important;grid-template-columns:minmax(0,1fr) 30px;gap:14px;font-size:23px!important}
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus{width:26px;height:26px}
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::before,
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::after{top:12px}
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits details p{padding:0 28px 18px 0}
+}
+@media(prefers-reduced-motion:reduce){
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits summary,
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::before,
+ #etnika-review-flow #etnika-block-02-final .etnika-editorial-benefits .etnika-benefit-plus::after{transition:none!important}
+}
+</style>
 </head>
 <body>
 
@@ -14426,12 +14490,12 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
   <h2 id="etnika-why-title" class="etnika-section-heading">Почему <span>ЭТНИКА</span></h2>
   <div class="etnika-editorial-metrics"><div><strong>3000+</strong><span>px разрешение фото</span></div><div><strong>2×600</strong><span>Дж импульсного света</span></div><div><strong>46 м²</strong><span>зал до 8 человек</span></div></div>
   <div class="etnika-editorial-benefits">
-    <details name="etnika-b02-benefits"><summary><span class="etnika-benefit-number">01</span><span>Качественные фотографии</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Цветные и чёрно-белые кадры за один сет, цветные фоны и световые схемы, портреты и фото в полный рост, бесплатная автоматическая цветокоррекция, неограниченное число фотографий, исходники по запросу и разрешение от 3000 px.</p></details>
-    <details name="etnika-b02-benefits"><summary><span class="etnika-benefit-number">02</span><span>Подстраиваем студию под вас</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Студию можно арендовать для собственной съёмки, устроить фотосвидание, день рождения или другое памятное событие. Автопортретный зал 46 м² вмещает до 8 человек.</p></details>
-    <details name="etnika-b02-benefits"><summary><span class="etnika-benefit-number">03</span><span>Комфортное пространство</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Лаунж-зона с диваном, чай, кофе, вода, конфеты и печенье, Crocs для гостей, гримёрная зона с зеркалом в полный рост, барным стулом и ширмой. Более 20 предметов реквизита и аксессуаров — бесплатно.</p></details>
-    <details name="etnika-b02-benefits"><summary><span class="etnika-benefit-number">04</span><span>Топовое оборудование</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Техника настроена профессиональным фотографом, снимающим для Vogue. В студии есть огромное зеркало 2×2 м, фотоаппарат ведущего мирового производителя, два источника импульсного света мощностью 600 Дж и большой монитор предпросмотра.</p></details>
-    <details name="etnika-b02-benefits"><summary><span class="etnika-benefit-number">05</span><span>Лёгкое бронирование</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Забронировать съёмку можно прямо на сайте, написать в Telegram / Max или позвонить по номеру +7 925 94 94 497. Гайд по позированию для подготовки к съёмке — в подарок.</p></details>
-    <details name="etnika-b02-benefits"><summary><span class="etnika-benefit-number">06</span><span>Забота о клиентах с детьми</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Комфортная обстановка для съёмки с грудничками и во время беременности. Дети до трёх лет — бесплатно. В студии есть детский стульчик, шары и игрушки.</p></details>
+    <details name="etnika-b02-benefits"><summary><span>Качественные фотографии</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Цветные и чёрно-белые кадры за один сет, цветные фоны и световые схемы, портреты и фото в полный рост, бесплатная автоматическая цветокоррекция, неограниченное число фотографий, исходники по запросу и разрешение от 3000 px.</p></details>
+    <details name="etnika-b02-benefits"><summary><span>Подстраиваем студию под вас</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Студию можно арендовать для собственной съёмки, устроить фотосвидание, день рождения или другое памятное событие. Автопортретный зал 46 м² вмещает до 8 человек.</p></details>
+    <details name="etnika-b02-benefits"><summary><span>Комфортное пространство</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Лаунж-зона с диваном, чай, кофе, вода, конфеты и печенье, Crocs для гостей, гримёрная зона с зеркалом в полный рост, барным стулом и ширмой. Более 20 предметов реквизита и аксессуаров — бесплатно.</p></details>
+    <details name="etnika-b02-benefits"><summary><span>Топовое оборудование</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Техника настроена профессиональным фотографом, снимающим для Vogue. В студии есть огромное зеркало 2×2 м, фотоаппарат ведущего мирового производителя, два источника импульсного света мощностью 600 Дж и большой монитор предпросмотра.</p></details>
+    <details name="etnika-b02-benefits"><summary><span>Лёгкое бронирование</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Забронировать съёмку можно прямо на сайте, написать в Telegram / Max или позвонить по номеру +7 925 94 94 497. Гайд по позированию для подготовки к съёмке — в подарок.</p></details>
+    <details name="etnika-b02-benefits"><summary><span>Забота о клиентах с детьми</span><span class="etnika-benefit-plus" aria-hidden="true"></span></summary><p>Комфортная обстановка для съёмки с грудничками и во время беременности. Дети до трёх лет — бесплатно. В студии есть детский стульчик, шары и игрушки.</p></details>
   </div>
 </section>
     </div>
