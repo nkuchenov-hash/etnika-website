@@ -21,6 +21,7 @@ with sync_playwright() as p:
         root.evaluate("""async r=>{let imgs=[...r.querySelectorAll('.p27-photo img')];imgs.forEach(i=>i.loading='eager');await Promise.all(imgs.map(i=>i.decode()))}""")
         assert root.locator('.p27-title').all_text_contents()==['Знакомство','Первый кадр','Выбор','Съёмка','Результат']
         assert root.locator('.p27-photo img').count()==10
+        assert root.locator('.p27-sub').count()==0
         facts=root.evaluate("""r=>{let p=[...r.querySelectorAll('.p27-photo')];let d=[...r.querySelectorAll('.p27-desc')];return {photos:p.map(e=>({x:e.getBoundingClientRect().x,y:e.getBoundingClientRect().y,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})),fonts:d.map(e=>({size:parseFloat(getComputedStyle(e).fontSize),weight:getComputedStyle(e).fontWeight})),overflow:document.documentElement.scrollWidth>innerWidth+3}}""")
         assert not facts['overflow'],facts
         assert all(x['size']==(18 if w>=761 else 16) and x['weight']=='100' for x in facts['fonts']),facts
@@ -34,6 +35,8 @@ with sync_playwright() as p:
         assert all('Forum' in f for f in layout['fonts']),layout
         if w>1100:
             assert layout['aligned'],layout
+            caption_gaps=root.evaluate("""r=>{const photos=[...r.querySelectorAll('.p27-photo')];const titles=[...r.querySelectorAll('.p27-title')];return photos.map((photo,i)=>titles[i].getBoundingClientRect().top-photo.getBoundingClientRect().bottom)}""")
+            assert all(g>=23 for g in caption_gaps),caption_gaps
             assert layout['guideLeft']<2 and layout['guideRight']<2,layout
             assert len({round(x['y']) for x in facts['photos']})==1,facts
             geometry=root.evaluate("""r=>{let b=r.getBoundingClientRect(),p=r.querySelector('.p27-photo').getBoundingClientRect(),n=document.getElementById('etnika-site-header').getBoundingClientRect(), copies=[...r.querySelectorAll('.p27-copy')].map(e=>e.getBoundingClientRect());return {section:b.height,available:innerHeight-n.height,photo:p.height,ratio:p.width/p.height,copyBottom:Math.max(...copies.map(x=>x.bottom))-b.top,heading:r.querySelector('.p27-heading').getBoundingClientRect().height}}""")
