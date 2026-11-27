@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v18"><title>ЭТНИКА — цены и тарифы</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v19"><title>ЭТНИКА — цены и тарифы</title>
 <style>
 @font-face{font-family:Forum;src:url('assets/fonts/Forum-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Geologica;src:url('assets/fonts/Geologica-VF.ttf') format('truetype');font-weight:100 900;font-display:swap}
@@ -448,6 +448,37 @@ main{padding-top:clamp(28px,4svh,64px);padding-bottom:clamp(28px,4svh,64px)}
  #base-panel .booking .order{padding-top:15px}
 }
 @media(max-width:700px){#base-panel .selected-bg{font-size:18px}}
+
+/* Stable horizontal guides in both formats, even if only one needs scrolling. */
+html{overflow-y:scroll;scrollbar-gutter:stable}
+@supports(scrollbar-gutter:stable){html{overflow-y:auto}}
+@media(min-width:1001px){
+ #set-panel.unified,#base-panel.unified{
+  grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+  column-gap:clamp(110px,12.5vw,240px)
+ }
+ #set-panel .set-selector{justify-content:flex-start}
+ #set-panel .set-group,#set-panel .set-group:nth-of-type(2){
+  flex:0 0 auto;grid-template-rows:none;grid-auto-rows:max-content;align-content:start
+ }
+ #set-panel .set-option,#set-panel .set-option:last-child{
+  padding:clamp(8px,1.15svh,16px) 0;min-height:44px
+ }
+ #set-panel .set-group+.set-group{margin-top:clamp(12px,1.8svh,26px);padding-top:clamp(12px,1.8svh,26px)}
+}
+@media(min-width:1450px){
+ #set-panel .set-group h3{padding-top:clamp(8px,1.15svh,16px)}
+}
+@media(min-width:1001px) and (max-width:1250px){
+ #set-panel.unified,#base-panel.unified{column-gap:clamp(80px,9vw,125px)}
+}
+@media(min-width:1900px){
+ #set-panel.unified,#base-panel.unified{column-gap:clamp(180px,10.5vw,340px)}
+}
+@media(max-width:1000px){
+ #set-panel.unified,#base-panel.unified{grid-template-columns:minmax(0,1fr)}
+ #set-panel .set-option,#set-panel .set-option:last-child{padding:8px 0;min-height:44px}
+}
 </style></head>
 <body>
 <main id="etnika-prices-anna"><div class="overline"><span>ЭТНИКА</span><span class="rule"></span><span class="accent">Цены и тарифы</span><span class="vertical"></span><span class="context">Студия автопортрета</span><span class="rule tail"></span></div>
