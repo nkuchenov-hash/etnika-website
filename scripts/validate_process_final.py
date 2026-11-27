@@ -50,11 +50,24 @@ with sync_playwright() as p:
         assert root.locator('.p27-mono').evaluate_all("a=>a.every(e=>getComputedStyle(e).opacity==='1')")
         root.screenshot(path=str(OUT/f'etnika-process-final-{w}.png'))
         photo=root.locator('.p27-photo').nth(2)
+        descriptions=root.locator('.p27-desc')
+        expected='0' if w>1100 else '1'
+        assert descriptions.evaluate_all("a=>a.map(e=>getComputedStyle(e).opacity)")==[expected]*5
+        height_before=root.evaluate("r=>r.getBoundingClientRect().height")
         photo.hover();page.wait_for_timeout(480)
+        if w>1100:
+            assert descriptions.evaluate_all("a=>a.map(e=>getComputedStyle(e).opacity)")==['0','0','1','0','0']
+            assert photo.locator('img').evaluate_all("a=>a.every(e=>new DOMMatrix(getComputedStyle(e).transform).a>1.035)")
+            assert abs(root.evaluate("r=>r.getBoundingClientRect().height")-height_before)<1
+        else:
+            assert descriptions.evaluate_all("a=>a.every(e=>getComputedStyle(e).opacity==='1')")
         assert photo.locator('.p27-mono').evaluate("e=>getComputedStyle(e).opacity")=='0'
         root.screenshot(path=str(OUT/f'etnika-process-final-hover-{w}.png'))
         page.mouse.move(0,0);page.wait_for_timeout(480)
         assert photo.locator('.p27-mono').evaluate("e=>getComputedStyle(e).opacity")=='1'
+        if w>1100:
+            assert descriptions.evaluate_all("a=>a.every(e=>getComputedStyle(e).opacity==='0')")
+            assert photo.locator('img').evaluate_all("a=>a.every(e=>Math.abs(new DOMMatrix(getComputedStyle(e).transform).a-1)<.001)")
         photo.click();page.mouse.move(0,0);page.wait_for_timeout(480)
         assert photo.get_attribute('aria-pressed')=='true'
         root.locator('.p27-title').first.click()

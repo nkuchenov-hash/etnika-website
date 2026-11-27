@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-process-natural-mono-v35">
+<meta name="etnika-build" content="20261127-process-hover-v36">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14225,6 +14225,21 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  #etnika-review-flow #etnika-process-interactive .p27-copy{grid-template-columns:auto minmax(0,1fr)}
  #etnika-review-flow #etnika-process-interactive .p27-heading{padding-bottom:0}
 }
+
+/* V36: paired photo/caption interaction, stable editorial geometry. */
+@media(min-width:1101px) and (hover:hover) and (pointer:fine){
+ #etnika-process-interactive .p27-photo img{transform:scale(var(--p27-zoom,1));transform-origin:50% 50%;transition:transform 420ms cubic-bezier(.22,.65,.35,1)}
+ #etnika-process-interactive .p27-photo .p27-mono{opacity:var(--p27-mono-opacity,1);transition:opacity 420ms cubic-bezier(.22,.65,.35,1),transform 420ms cubic-bezier(.22,.65,.35,1)}
+ #etnika-process-interactive .p27-desc{opacity:var(--p27-desc-opacity,0);transform:translateY(var(--p27-desc-offset,8px));transition:opacity 280ms ease,transform 320ms cubic-bezier(.22,.65,.35,1)}
+ #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="1"]:is(:hover,:focus-visible),.p27-step[data-step="1"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="1"],.p27-step[data-step="1"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
+ #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="2"]:is(:hover,:focus-visible),.p27-step[data-step="2"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="2"],.p27-step[data-step="2"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
+ #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="3"]:is(:hover,:focus-visible),.p27-step[data-step="3"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="3"],.p27-step[data-step="3"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
+ #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="4"]:is(:hover,:focus-visible),.p27-step[data-step="4"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="4"],.p27-step[data-step="4"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
+ #etnika-process-interactive .p27-grid:has(.p27-photo[data-step="5"]:is(:hover,:focus-visible),.p27-step[data-step="5"] .p27-copy:is(:hover,:focus-within)) :is(.p27-photo[data-step="5"],.p27-step[data-step="5"]){--p27-zoom:1.045;--p27-mono-opacity:0;--p27-desc-opacity:1;--p27-desc-offset:0px}
+}
+@media(prefers-reduced-motion:reduce){
+ #etnika-process-interactive .p27-photo img,#etnika-process-interactive .p27-photo .p27-mono,#etnika-process-interactive .p27-desc{transition:none!important;transform:none!important}
+}
 </style>
 </head>
 <body>
@@ -14611,7 +14626,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
     const photo=card.querySelector('.p27-photo');
     photo.addEventListener('click',()=>{const on=photo.getAttribute('aria-pressed')==='true';root.querySelectorAll('.p27-photo').forEach(x=>x.setAttribute('aria-pressed','false'));photo.setAttribute('aria-pressed',String(!on))});
     const title=card.querySelector('.p27-title');title.addEventListener('click',()=>openStep(step,title));
-    photo.style.setProperty('--step',step.id);
+    photo.style.setProperty('--step',step.id);photo.dataset.step=String(step.id);card.dataset.step=String(step.id);
     strip.appendChild(photo);
     grid.appendChild(card);
   });
