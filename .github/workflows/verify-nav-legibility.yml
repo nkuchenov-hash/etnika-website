@@ -44,9 +44,10 @@ jobs:
                       page.wait_for_timeout(220)
                       after=a.evaluate(measure)
                       print(width,tone,before,after,flush=True)
-                      assert before['opacity']=='1' and before['weight']=='300',before
+                      assert before['opacity']=='0.78' and before['weight']=='200',before
                       assert before['color']==('rgb(23, 21, 20)' if tone=='light' else 'rgb(255, 255, 255)'),before
-                      assert after['color']!=before['color'] and float(after['stroke'].removesuffix('px'))>=.6,after
+                      assert after['opacity']=='1' and after['color']==before['color'] and after['weight']==before['weight'],after
+                      assert before['stroke']==after['stroke']=='0px',(before,after)
                       assert all(abs(x-y)<.5 for x,y in zip(before['rect'],after['rect'])),(before,after)
                       assert after['decoration']=='none',after
                   page.close()
