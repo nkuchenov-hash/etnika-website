@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-process-mono-v34">
+<meta name="etnika-build" content="20261127-process-natural-mono-v35">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14153,8 +14153,8 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 #etnika-process-interactive .p27-photo{grid-column:var(--step);grid-row:1;position:relative;display:block;isolation:isolate;width:100%;aspect-ratio:3/4.6;padding:0;border:0;border-radius:0;background:#b1b1b1;overflow:hidden;cursor:pointer}
 #etnika-process-interactive .p27-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%;border-radius:0;transform:none;filter:none}
 #etnika-process-interactive .p27-photo .p27-mono{z-index:1;opacity:1;transition:opacity 420ms cubic-bezier(.22,.65,.35,1)}
-/* Monochrome-only display correction: lift midtones and restore separation of dark clothing. */
-#etnika-review-flow #etnika-process-interactive .p27-photo .p27-mono{filter:contrast(1.14) brightness(1.06)!important}
+/* Whole-frame RGB-to-monochrome tone mapping; no masks, keyed reds or retouched facial regions. */
+#etnika-review-flow #etnika-process-interactive .p27-photo .p27-mono{filter:url(#etnika-process-monochrome)!important}
 @media(hover:hover){#etnika-process-interactive .p27-step:hover .p27-mono,#etnika-process-interactive .p27-photo:hover .p27-mono{opacity:0}}
 #etnika-process-interactive .p27-photo:focus-visible .p27-mono,#etnika-process-interactive .p27-photo[aria-pressed=true] .p27-mono{opacity:0}
 #etnika-process-interactive .p27-photo:focus-visible,#etnika-process-interactive .p27-title:focus-visible{outline:2px solid #a9151d;outline-offset:3px}
@@ -14546,6 +14546,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
 
 
 <section id="etnika-process-interactive" aria-label="Как проходит весь процесс">
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;pointer-events:none"><defs><filter id="etnika-process-monochrome" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".55 .35 .10 0 0  .55 .35 .10 0 0  .55 .35 .10 0 0  0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues="0 .13 .43 .60 .71 .81 .89 .95 1"/><feFuncG type="table" tableValues="0 .13 .43 .60 .71 .81 .89 .95 1"/><feFuncB type="table" tableValues="0 .13 .43 .60 .71 .81 .89 .95 1"/></feComponentTransfer></filter></defs></svg>
   <div class="p27-shell"><div class="p27-kicker"><span>ЭТНИКА</span><i></i><span>Искусство быть собой</span></div><div class="p27-heading"><h2 class="etnika-section-heading">Как проходит<br> <span>весь процесс</span></h2></div><div class="p27-grid"></div></div>
 
   <div class="epi-modal" aria-hidden="true">
@@ -14605,7 +14606,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
   STEPS.forEach(step=>{
     const card=document.createElement('article');
     card.className='p27-step';card.style.setProperty('--step',step.id);
-    const color=ASSETS['s'+step.id], mono=color.replace('-red.webp','-mono.webp');
+    const color=ASSETS['s'+step.id], mono=color;
     card.innerHTML=`<button class="p27-photo" type="button" aria-label="${esc(step.title)}: показать цветную фотографию" aria-pressed="false"><img class="p27-color" src="${color}" alt="${esc(step.title)}" loading="lazy" decoding="async"><img class="p27-mono" src="${mono}" alt="" aria-hidden="true" loading="lazy" decoding="async"></button><div class="p27-copy"><span class="p27-num">${String(step.id).padStart(2,'0')}</span><div><h3><button class="p27-title" type="button" aria-label="Подробнее: ${esc(step.title)}">${esc(step.title)}</button></h3><p class="p27-desc">${esc(step.desc)}</p></div></div>`;
     const photo=card.querySelector('.p27-photo');
     photo.addEventListener('click',()=>{const on=photo.getAttribute('aria-pressed')==='true';root.querySelectorAll('.p27-photo').forEach(x=>x.setAttribute('aria-pressed','false'));photo.setAttribute('aria-pressed',String(!on))});

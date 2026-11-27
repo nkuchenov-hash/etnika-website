@@ -21,6 +21,7 @@ with sync_playwright() as p:
         root.evaluate("""async r=>{let imgs=[...r.querySelectorAll('.p27-photo img')];imgs.forEach(i=>i.loading='eager');await Promise.all(imgs.map(i=>i.decode()))}""")
         assert root.locator('.p27-title').all_text_contents()==['Знакомство','Первый кадр','Выбор','Съёмка','Результат']
         assert root.locator('.p27-photo img').count()==10
+        assert root.locator('.p27-photo').evaluate_all("""cards=>cards.every(c=>{const a=c.querySelector('.p27-color'),b=c.querySelector('.p27-mono');return a.src===b.src&&getComputedStyle(b).filter.includes('etnika-process-monochrome')})"""),'Mono must use same source with full-frame filter'
         assert root.locator('.p27-sub').count()==0
         facts=root.evaluate("""r=>{let p=[...r.querySelectorAll('.p27-photo')];let d=[...r.querySelectorAll('.p27-desc')];return {photos:p.map(e=>({x:e.getBoundingClientRect().x,y:e.getBoundingClientRect().y,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})),fonts:d.map(e=>({size:parseFloat(getComputedStyle(e).fontSize),weight:getComputedStyle(e).fontWeight})),overflow:document.documentElement.scrollWidth>innerWidth+3}}""")
         assert not facts['overflow'],facts
