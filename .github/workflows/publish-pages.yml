@@ -41,6 +41,7 @@ jobs:
           mkdir -p _site/site
           cp index.html _site/index.html
           cp site/index.html _site/site/index.html
+          cp site/tariffs-draft.html _site/site/tariffs-draft.html
           cp site/etnika-map.css site/etnika-map.js _site/site/
           cp site/prices-v3.css site/prices-v3.js _site/site/
           cp -R site/assets _site/site/
@@ -51,8 +52,10 @@ jobs:
           test -s _site/index.html
           test -s _site/site/index.html
           test -s _site/data/project.json
-          test "$(find _site/site -maxdepth 1 -name '*.html' | wc -l)" -eq 1
-          echo 'Prepared exactly one ETNIKA site: site/index.html'
+          test -s _site/site/tariffs-draft.html
+          grep -q 'noindex,nofollow' _site/site/tariffs-draft.html
+          test "$(find _site/site -maxdepth 1 -name '*.html' | wc -l)" -eq 2
+          echo 'Prepared canonical ETNIKA site and isolated tariff draft'
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -79,6 +82,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Verify published tariff draft matches source
+        run: |
+          set -eu
+          url='https://nkuchenov-hash.github.io/etnika-website/site/tariffs-draft.html'
+          for attempt in 1 2 3 4 5 6; do
+            if curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$url?build=${GITHUB_SHA}" -o /tmp/live-tariffs.html && cmp -s site/tariffs-draft.html /tmp/live-tariffs.html; then
+              echo 'Published tariff draft matches source'
+              exit 0
+            fi
+            sleep 10
+          done
+          echo 'Published tariff draft unavailable or stale' >&2
+          exit 1
+
       - name: Install Chromium for public-site verification
         run: |
           python3 -m pip install --disable-pip-version-check playwright==1.56.0
