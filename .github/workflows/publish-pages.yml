@@ -42,6 +42,7 @@ jobs:
           cp index.html _site/index.html
           cp site/index.html _site/site/index.html
           cp site/tariffs-draft.html _site/site/tariffs-draft.html
+          cp site/stories-variants.html _site/site/stories-variants.html
           cp site/etnika-map.css site/etnika-map.js _site/site/
           cp site/prices-v3.css site/prices-v3.js _site/site/
           cp -R site/assets _site/site/
@@ -54,7 +55,9 @@ jobs:
           test -s _site/data/project.json
           test -s _site/site/tariffs-draft.html
           grep -q 'noindex,nofollow' _site/site/tariffs-draft.html
-          test "$(find _site/site -maxdepth 1 -name '*.html' | wc -l)" -eq 2
+          test -s _site/site/stories-variants.html
+          grep -q 'noindex,nofollow' _site/site/stories-variants.html
+          test "$(find _site/site -maxdepth 1 -name '*.html' | wc -l)" -eq 3
           echo 'Prepared canonical ETNIKA site and isolated tariff draft'
 
       - name: Configure Pages
