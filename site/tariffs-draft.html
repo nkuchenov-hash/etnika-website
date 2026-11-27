@@ -1,63 +1,78 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v2"><title>ЭТНИКА — цены и тарифы</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="etnika-draft" content="anna-tariffs-20261127-v3"><title>ЭТНИКА — цены и тарифы</title>
 <style>
 @font-face{font-family:Forum;src:url('assets/fonts/Forum-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Geologica;src:url('assets/fonts/Geologica-VF.ttf') format('truetype');font-weight:100 900;font-display:swap}
-:root{--ink:#151313;--red:#a9151d;--line:rgba(21,19,19,.17);--muted:#6b6764;--edge:clamp(22px,5.5vw,110px);--serif:Forum,Georgia,serif;--sans:Geologica,Arial,sans-serif}
-*{box-sizing:border-box}body{margin:0;color:var(--ink);background:#fff;font-family:var(--sans);font-weight:300}button,a{font:inherit}button{color:inherit;cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--red);outline-offset:5px}button{border:0;background:none;text-align:left;padding:0}a{color:inherit;text-decoration:none}
-.draft{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px var(--edge);background:#f3f0eb;border-bottom:1px solid var(--line);font-size:11px;line-height:1.5}.draft a{white-space:nowrap;text-decoration:underline;text-underline-offset:3px}
-main{width:min(100%,1920px);padding:clamp(40px,6vh,76px) var(--edge) 52px;margin:auto}.overline{display:grid;grid-template-columns:auto 1fr auto 1px auto 1fr;gap:14px;align-items:center;font-size:10px;font-weight:300;text-transform:uppercase;letter-spacing:.13em;color:#666}.rule{height:1px;background:var(--line)}.vertical{width:1px;height:24px;background:var(--line)}.accent{color:var(--red)}
-.heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:36px 0 24px}h1{font-family:var(--serif);font-weight:400;font-size:clamp(54px,6.25vw,112px);line-height:.93;letter-spacing:-.025em;margin:0}h1 span{color:var(--red)}.heading p{max-width:275px;margin:0 0 4px;line-height:1.6;font-size:14px;color:var(--muted)}
-.backdrops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.8vw,30px)}.backdrop{display:block;position:relative;width:100%;border-bottom:1px solid var(--line);transition:border-color .2s}.backdrop[aria-pressed=true]{border-bottom:2px solid var(--red)}.image{display:block;position:relative;overflow:hidden;aspect-ratio:1.3;background:#e4e0dc}.image img{width:100%;height:100%;object-fit:cover;object-position:center 36%;display:block;transition:transform .35s ease}.backdrop:hover img{transform:scale(1.025)}.backdrop:nth-child(3) img{object-position:center 42%}
-.caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 0 15px}.name{font-family:var(--serif);font-size:clamp(26px,3vw,46px);line-height:1}.num{font-size:11px;color:var(--muted);letter-spacing:.08em}.indicator{width:17px;height:17px;border-radius:50%;border:1px solid #a6a29f;position:relative;flex-shrink:0}.backdrop[aria-pressed=true] .indicator{border-color:var(--red)}.backdrop[aria-pressed=true] .indicator:after{content:'';position:absolute;inset:4px;background:var(--red);border-radius:50%}
-.booking{margin-top:34px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,4vw,70px)}.booking h2{font-family:var(--serif);font-size:clamp(28px,3vw,42px);line-height:1;margin:0;font-weight:400}.booking-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.modes{display:flex;gap:18px;white-space:nowrap;font-size:12px;color:var(--muted)}.mode{padding:9px 0;border-bottom:1px solid transparent}.mode[aria-pressed=true]{color:var(--red);border-color:var(--red)}.duration{border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;width:100%;gap:15px;padding:14px 0}.duration:last-child{border-bottom:1px solid var(--line)}.duration .label{display:flex;align-items:center;gap:11px;font-size:19px}.duration .price{font-family:var(--serif);font-size:32px;line-height:1;white-space:nowrap}.duration[aria-pressed=true] .indicator{border-color:var(--red)}.duration[aria-pressed=true] .indicator:after{content:'';position:absolute;inset:4px;background:var(--red);border-radius:50%}.duration[aria-pressed=true] .price{color:var(--red)}
-.order{display:flex;flex-direction:column;justify-content:end;gap:13px}.order-label{font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}.order-summary{font-size:15px;line-height:1.6}.order-price{font-family:var(--serif);font-size:clamp(38px,4.4vw,66px);line-height:1}.order-total{display:flex;justify-content:space-between;align-items:end;gap:10px}.order button{background:var(--red);color:white;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:17px 20px;min-height:54px;font-size:15px;transition:background .2s}.order button:hover{background:#841018}
-.included{margin-top:32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-size:16px}summary::-webkit-details-marker{display:none}summary::after{content:'+';font-size:22px;color:var(--red);font-weight:200}details[open] summary::after{content:'−'}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 30px;padding:4px 0 22px;list-style:none;margin:0;font-size:13px;line-height:1.5}.features li{padding-left:12px;position:relative}.features li:before{content:'—';position:absolute;left:0;color:var(--red)}.note{font-size:12px;line-height:1.6;color:var(--muted);margin:17px 0 0}.questions{margin:30px 0 0;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.6}.questions strong{color:var(--ink);font-weight:400}.questions ul{margin:8px 0;padding-left:17px}
-dialog{max-width:500px;width:calc(100% - 32px);border:1px solid var(--line);padding:28px;color:var(--ink);background:white}dialog::backdrop{background:rgba(0,0,0,.4)}dialog h2{font-family:var(--serif);font-size:36px;margin:0 0 15px;font-weight:400}dialog p{line-height:1.6}dialog button{border-bottom:1px solid var(--red);color:var(--red);padding:10px 0}
-@media(min-width:1450px){.image{aspect-ratio:1.5}}@media(max-width:850px){.heading{align-items:start;flex-direction:column;gap:12px}.heading p{max-width:none}.booking{grid-template-columns:1fr;gap:24px}.order{border:0}.overline{grid-template-columns:auto 1fr auto}.overline .vertical,.overline .context,.overline .tail{display:none}.features{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:540px){main{padding-top:30px}.draft{align-items:start;font-size:10px}.heading{margin:24px 0 22px}h1{font-size:clamp(48px,12.5vw,66px)}.heading p{font-size:12px}.backdrops{gap:9px}.image{aspect-ratio:3/4}.caption{padding:10px 0;gap:4px}.num{display:none}.name{font-size:clamp(19px,5.7vw,27px)}.indicator{width:14px;height:14px}.backdrop[aria-pressed=true] .indicator:after,.duration[aria-pressed=true] .indicator:after{inset:3px}.booking{margin-top:27px}.booking-head{flex-wrap:wrap}.modes{gap:17px}.duration .label{font-size:17px}.duration .price{font-size:30px}.features{grid-template-columns:1fr}.order-total{align-items:center}.order-summary{font-size:13px}}
+:root{--ink:#151313;--red:#a9151d;--line:rgba(21,19,19,.17);--muted:#625e5b;--et-u-edge:max(80px,calc((100vw - 1760px)/2));--etnika-section-title:clamp(62px,6.25vw,118px);--etnika-font-display:Forum,Georgia,serif;--etnika-font-ui:Geologica,Arial,sans-serif;--etnika-text-size:16px;--etnika-body-size:18px;--etnika-overline-size:clamp(9px,.62vw,11px);--gap:clamp(16px,1.5vw,26px)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:white;font:300 var(--etnika-text-size)/1.5 var(--etnika-font-ui)}
+button,a{font:inherit;color:inherit}button{border:0;background:none;text-align:left;padding:0;cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--red);outline-offset:4px}button:focus:not(:focus-visible){outline:none}
+main{width:100%;margin:auto;padding:clamp(48px,7svh,84px) var(--et-u-edge)}
+.overline{display:grid;grid-template-columns:auto minmax(30px,1fr) auto 1px auto minmax(30px,1fr);gap:clamp(10px,1vw,18px);align-items:center;font-size:var(--etnika-overline-size);font-weight:300;text-transform:uppercase;letter-spacing:.13em;color:#666;margin-bottom:clamp(34px,4svh,52px)}
+.rule{height:1px;background:var(--line)}.vertical{height:28px;width:1px;background:var(--line)}.accent{color:var(--red)}
+.heading{margin:0 0 clamp(30px,4svh,52px)}
+h1{font-family:var(--etnika-font-display);font-size:var(--etnika-section-title);font-weight:400;line-height:.84;letter-spacing:-.04em;text-transform:uppercase;white-space:normal;text-wrap:balance;margin:0;text-align:left}
+h1 span{color:var(--red)}
+.stage{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(0,1fr);gap:clamp(28px,3.8vw,72px);align-items:stretch}
+h2{font:400 clamp(29px,2.4vw,40px)/1.08 var(--etnika-font-display);margin:0;color:var(--ink)}
+.scene{display:flex;flex-direction:column;min-width:0}
+.scene h2{margin-bottom:20px}
+.backdrops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);flex:1}
+.backdrop{display:flex;flex-direction:column;align-items:stretch;min-width:0;width:100%;border-bottom:2px solid var(--line);transition:border-color .2s}
+.backdrop[aria-pressed=true]{border-bottom-color:var(--red)}
+.image{display:block;position:relative;overflow:hidden;aspect-ratio:3/4;background:#e4e0dc}
+.image img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 0}
+.name{font-family:var(--etnika-font-display);font-size:clamp(25px,2.15vw,38px);line-height:1}
+.indicator{width:18px;height:18px;border-radius:50%;border:1px solid #a6a29f;position:relative;flex-shrink:0}
+[aria-pressed=true]>.indicator,[aria-pressed=true] .indicator{border-color:var(--red)}
+[aria-pressed=true] .indicator:after{content:'';position:absolute;inset:4px;background:var(--red);border-radius:50%}
+.booking{min-width:0;display:flex;flex-direction:column}
+.booking-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:18px}
+.modes{display:flex;gap:20px;white-space:nowrap;font-size:16px;color:var(--muted)}
+.mode{padding:9px 0;border-bottom:1px solid transparent}
+.mode[aria-pressed=true]{color:var(--red);border-bottom-color:var(--red);font-weight:400}
+.duration{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:13px;row-gap:7px;align-items:center;width:100%;border-top:1px solid var(--line);padding:17px 0}
+.duration:last-child{border-bottom:1px solid var(--line)}
+.duration .label{font:400 clamp(30px,2.5vw,42px)/1 var(--etnika-font-display)}
+.duration .price{font:400 clamp(30px,2.5vw,42px)/1 var(--etnika-font-display);white-space:nowrap}
+.duration .capacity{grid-column:2/-1;color:var(--muted);font-size:16px;line-height:1.45}
+.duration[aria-pressed=true] .label,.duration[aria-pressed=true] .price{color:var(--red)}
+.order{display:flex;flex-direction:column;gap:12px;padding-top:clamp(20px,3svh,32px);margin-top:auto}
+.order-total{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.order-summary{font-size:16px;line-height:1.45}
+.order-price{font:400 clamp(38px,3.8vw,60px)/1 var(--etnika-font-display);white-space:nowrap}
+.order button{background:var(--red);color:white;display:flex;align-items:center;justify-content:space-between;min-height:56px;padding:14px 20px;font-size:17px;font-weight:400;transition:background .2s}
+.order button:hover{background:#841018}
+.included{margin-top:clamp(30px,4svh,48px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:20px 0;font:400 clamp(26px,2.3vw,34px)/1.1 var(--etnika-font-display)}
+summary::-webkit-details-marker{display:none}summary::after{content:'+';font:300 24px/1 var(--etnika-font-ui);color:var(--red)}details[open] summary::after{content:'−'}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:13px 30px;padding:4px 0 24px;list-style:none;margin:0;font-size:16px;line-height:1.5}
+.features li{padding-left:17px;position:relative}.features li:before{content:'—';position:absolute;left:0;color:var(--red)}
+.note{font-size:16px;line-height:1.5;color:var(--muted);margin:18px 0 0}
+dialog{max-width:500px;width:calc(100% - 32px);border:1px solid var(--line);padding:28px;color:var(--ink);background:white}dialog::backdrop{background:rgba(0,0,0,.4)}dialog h2{font-size:36px;margin:0 0 15px}dialog p{line-height:1.6}dialog button{border-bottom:1px solid var(--red);color:var(--red);padding:10px 0}
+@media(min-width:1700px){.image{aspect-ratio:4/5}}
+@media(max-width:1300px){:root{--et-u-edge:max(40px,calc((100vw - 1320px)/2))}.stage{gap:30px}.backdrops{gap:12px}.modes{gap:14px}.booking-head{flex-wrap:wrap}}
+@media(max-width:1000px){:root{--et-u-edge:30px}.stage{grid-template-columns:1fr;gap:32px}.image{aspect-ratio:4/5}.backdrops{gap:20px}.booking-head{flex-wrap:nowrap}.booking{max-width:none}.features{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){:root{--et-u-edge:20px;--etnika-section-title:clamp(48px,14vw,72px)}main{padding-top:36px;padding-bottom:38px}.overline{grid-template-columns:auto 1fr auto;gap:10px;margin-bottom:32px}.overline .vertical,.overline .context,.overline .tail{display:none}.heading{margin-bottom:28px}.backdrops{gap:9px}.scene h2{margin-bottom:14px}.caption{padding:11px 0;gap:3px}.name{font-size:clamp(19px,5.5vw,27px)}.indicator{width:15px;height:15px}[aria-pressed=true] .indicator:after{inset:3px}.booking-head{flex-wrap:wrap;gap:8px}.modes{font-size:16px;gap:18px}.duration{padding:16px 0;column-gap:10px}.duration .label,.duration .price{font-size:32px}.duration .capacity,.order-summary,.note{font-size:16px}.features{grid-template-columns:1fr}.order-price{font-size:42px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
-
-/* Clear, consistent choices without extra labels or decorative frames. */
-.heading{margin:30px 0 24px}
-.step-title,.duration-title{font:400 29px/1.1 var(--serif);margin:0 0 12px}
-.backdrop{border-bottom:2px solid var(--line)}
-.caption{justify-content:space-between;padding:12px 0}
-.image{aspect-ratio:1.55}
-.image img,.backdrop:nth-child(3) img{object-position:center top}
-.backdrop:hover img{transform:none}
-.booking{margin-top:27px;align-items:end}
-.booking-head{align-items:center;margin-bottom:19px}
-.booking h2{font-size:clamp(25px,2.3vw,34px)}
-.booking .duration-title{margin:0 0 9px}
-.modes{gap:0;font-size:15px;flex-shrink:0}
-.mode{padding:10px 17px;border-bottom:1px solid var(--line)}
-.mode[aria-pressed=true]{border-bottom:2px solid var(--red);font-weight:400}
-.duration{padding:11px 0}
-.duration .label{font-size:19px}
-.order-label{font-size:14px;letter-spacing:0;text-transform:none;color:var(--ink)}
-.order-summary{font-size:16px}
-.order button{font-weight:400}
-button:focus:not(:focus-visible){outline:none}
-.included{margin-top:26px}
-summary{font-size:17px}
-@media(min-width:1450px){.image{aspect-ratio:1.55}}
-@media(max-width:850px){.booking-head{flex-wrap:wrap}.image{aspect-ratio:1.1}}
-@media(max-width:540px){.step-title{font-size:25px}.image{aspect-ratio:3/4}.mode{font-size:14px;padding:8px 12px}.booking h2{font-size:26px}.duration .label{font-size:17px}.order-summary{font-size:14px}}
 </style></head>
 <body>
 <main id="etnika-prices-anna"><div class="overline"><span>ЭТНИКА</span><span class="rule"></span><span class="accent">Цены и тарифы</span><span class="vertical"></span><span class="context">Студия автопортрета</span><span class="rule tail"></span></div>
-<div class="heading"><h1>Выберите <span>свой формат</span></h1></div>
-<h2 class="step-title">Цвет фона</h2><div class="backdrops" role="group" aria-label="Цвет фона">
+<div class="heading"><h1>ВЫБЕРИТЕ <span>СВОЙ ФОРМАТ</span></h1></div>
+<div class="stage">
+<section class="scene" aria-label="Цвет фона"><h2>Выберите фон</h2><div class="backdrops" role="group" aria-label="Цвет фона">
 <button class="backdrop" data-bg="Красный" aria-pressed="true"><span class="image"><img src="assets/extra/bg-model-red.webp" alt="Пример съёмки на красном фоне"></span><span class="caption"><span class="name">Красный</span><span class="indicator" aria-hidden="true"></span></span></button>
 <button class="backdrop" data-bg="Чёрный" aria-pressed="false"><span class="image"><img src="assets/extra/bg-model-black.webp" alt="Пример съёмки на чёрном фоне"></span><span class="caption"><span class="name">Чёрный</span><span class="indicator" aria-hidden="true"></span></span></button>
 <button class="backdrop" data-bg="Бежевый" aria-pressed="false"><span class="image"><img src="assets/etnika-portrait-beige.jpg" alt="Пример съёмки на бежевом фоне"></span><span class="caption"><span class="name">Бежевый</span><span class="indicator" aria-hidden="true"></span></span></button>
+</div></section>
+<section class="booking" aria-label="Продолжительность съёмки"><div class="booking-head"><h2>Выберите тариф</h2><div class="modes" role="group" aria-label="День недели"><button class="mode" data-day="weekday" aria-pressed="true">Будни</button><button class="mode" data-day="weekend" aria-pressed="false">Выходные</button></div></div><div role="group" aria-label="Время съёмки">
+<button class="duration" data-min="45" aria-pressed="true"><span class="indicator" aria-hidden="true"></span><span class="label">45 минут</span><span class="price">6 000 ₽</span><span class="capacity">Лимит гостей уточняется</span></button>
+<button class="duration" data-min="90" aria-pressed="false"><span class="indicator" aria-hidden="true"></span><span class="label">90 минут</span><span class="price">11 000 ₽</span><span class="capacity">Лимит гостей уточняется</span></button>
 </div>
-<div class="booking"><section aria-label="Продолжительность съёмки"><div class="booking-head"><h2>День съёмки</h2><div class="modes" role="group" aria-label="День недели"><button class="mode" data-day="weekday" aria-pressed="true">Будни</button><button class="mode" data-day="weekend" aria-pressed="false">Выходные</button></div></div><h2 class="duration-title">Продолжительность</h2><div role="group" aria-label="Время съёмки">
-<button class="duration" data-min="45" aria-pressed="true"><span class="label"><span class="indicator" aria-hidden="true"></span>45 минут</span><span class="price">6 000 ₽</span></button>
-<button class="duration" data-min="90" aria-pressed="false"><span class="label"><span class="indicator" aria-hidden="true"></span>90 минут</span><span class="price">11 000 ₽</span></button></div></section>
-<section class="order" aria-label="Выбранный формат"><div class="order-label">Стоимость съёмки</div><div class="order-total" aria-live="polite"><div class="order-summary" id="selection">Красный фон<br>45 минут · будни</div><div class="order-price" id="total">6 000 ₽</div></div><button id="book" type="button">Забронировать <span aria-hidden="true">↗</span></button></section></div>
-<details class="included"><summary>Что входит в стоимость</summary><ul class="features"><li>Неограниченное число кадров</li><li>Цветные или чёрно-белые фотографии</li><li>Портретная съёмка и съёмка в полный рост</li><li>Готовые фото в течение 24 часов</li><li>Гримёрная зона</li><li>Реквизит</li><li>Отпариватель</li><li>Wi-Fi и музыка</li></ul></details>
+<div class="order" aria-label="Выбранный формат"><div class="order-total" aria-live="polite"><div class="order-summary" id="selection">Красный фон<br>45 минут · будни</div><div class="order-price" id="total">6 000 ₽</div></div><button id="book" type="button">Забронировать <span aria-hidden="true">↗</span></button></div></section>
+</div>
+<details class="included" open><summary>Что входит в стоимость</summary><ul class="features"><li>Неограниченное число кадров</li><li>Цветные или чёрно-белые фотографии</li><li>Портреты и фотографии в полный рост</li><li>Схема света на выбор</li><li>Готовые фото в течение 24 часов</li><li>Гримёрная зона</li><li>Реквизит</li><li>Отпариватель</li><li>Wi-Fi и музыка</li></ul></details>
 <p class="note">Доплата за каждого человека сверх лимита тарифа — 1 000 ₽.</p>
 </main>
 <dialog id="dialog"><h2>Ваша съёмка</h2><p id="dialog-selection"></p><p>Онлайн-бронирование в этой версии не подключено.</p><form method="dialog"><button>Вернуться к тарифам</button></form></dialog>
