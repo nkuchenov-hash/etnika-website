@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="etnika-build" content="20261127-process-heading-v30">
+<meta name="etnika-build" content="20261127-process-full-grid-v31">
 <script id="etnika-first-screen-guard-20261111">
 /* Prevent browser scroll restoration from opening a plain homepage URL on a lower section.
    Explicit section deep links remain usable. */
@@ -14194,7 +14194,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  #etnika-process-interactive .p27-copy{grid-column:2;grid-row:var(--step);border:0;padding:0;grid-template-columns:minmax(0,1fr);gap:6px}
 }
 
-/* V30: shared site typography; heading above the five-step strip. */
+/* V31: heading, photos and captions share the global page guides. */
 #etnika-review-flow #etnika-process-interactive .p27-heading{
  grid-column:1/-1;grid-row:1;display:block;padding:0 0 clamp(20px,3svh,32px);width:100%;
 }
@@ -14215,7 +14215,7 @@ html[data-b02-variant="1"] #etnika-block-02-final .etnika-about-left > #etnika-s
  #etnika-review-flow > section#etnika-process-interactive{padding:clamp(28px,4svh,56px) 0!important}
  #etnika-review-flow #etnika-process-interactive .p27-heading h2 br{display:none}
  #etnika-review-flow #etnika-process-interactive .p27-grid{
-  width:min(100%,max(1100px,calc(125svh + 64px)));margin-inline:auto;
+  width:100%;max-width:none;margin-inline:0;
  }
  #etnika-process-interactive .p27-strip{grid-row:1;width:100%;justify-self:stretch}
  #etnika-process-interactive .p27-copy{grid-row:2;grid-template-rows:auto 1fr}

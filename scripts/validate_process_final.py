@@ -25,17 +25,17 @@ with sync_playwright() as p:
         assert not facts['overflow'],facts
         assert all(x['size']==(18 if w>=761 else 16) and x['weight']=='100' for x in facts['fonts']),facts
         page.wait_for_timeout(200)
-        layout=root.evaluate("""r=>{const box=e=>e.getBoundingClientRect();const heading=r.querySelector('.p27-heading');const photos=[...r.querySelectorAll('.p27-photo')];const copies=[...r.querySelectorAll('.p27-copy')];return {headingBottom:box(heading).bottom,firstPhoto:Math.min(...photos.map(e=>box(e).top)),fonts:[heading.querySelector('h2'),heading.querySelector('h2 span'),...r.querySelectorAll('.p27-num,.p27-title')].map(e=>getComputedStyle(e).fontFamily),aligned:photos.every((e,i)=>Math.abs(box(e).left-box(copies[i]).left)<2&&Math.abs(box(e).width-box(copies[i]).width)<2&&box(e).bottom<=box(copies[i]).top+1)}}""")
+        layout=root.evaluate("""r=>{const box=e=>e.getBoundingClientRect();const heading=r.querySelector('.p27-heading');const grid=r.querySelector('.p27-grid');const photos=[...r.querySelectorAll('.p27-photo')];const copies=[...r.querySelectorAll('.p27-copy')];return {headingBottom:box(heading).bottom,guideLeft:Math.abs(box(heading).left-box(grid).left),guideRight:Math.abs(box(heading).right-box(grid).right),firstPhoto:Math.min(...photos.map(e=>box(e).top)),fonts:[heading.querySelector('h2'),heading.querySelector('h2 span'),...r.querySelectorAll('.p27-num,.p27-title')].map(e=>getComputedStyle(e).fontFamily),aligned:photos.every((e,i)=>Math.abs(box(e).left-box(copies[i]).left)<2&&Math.abs(box(e).width-box(copies[i]).width)<2&&box(e).bottom<=box(copies[i]).top+1)}}""")
         assert layout['headingBottom']<=layout['firstPhoto']+1,layout
         assert all('Forum' in f for f in layout['fonts']),layout
         if w>1100:
             assert layout['aligned'],layout
+            assert layout['guideLeft']<2 and layout['guideRight']<2,layout
             assert len({round(x['y']) for x in facts['photos']})==1,facts
             geometry=root.evaluate("""r=>{let b=r.getBoundingClientRect(),p=r.querySelector('.p27-photo').getBoundingClientRect(),n=document.getElementById('etnika-site-header').getBoundingClientRect(), copies=[...r.querySelectorAll('.p27-copy')].map(e=>e.getBoundingClientRect());return {section:b.height,available:innerHeight-n.height,photo:p.height,ratio:p.width/p.height,copyBottom:Math.max(...copies.map(x=>x.bottom))-b.top,heading:r.querySelector('.p27-heading').getBoundingClientRect().height}}""")
             print('Geometry',w,h,geometry,flush=True)
             assert abs(geometry['ratio']-430/724)<.015,geometry
             assert geometry['copyBottom']<=geometry['section']+1,geometry
-            assert geometry['photo']<=h*.57,geometry
             assert geometry['photo']>=min(280,h*.35),geometry
         page.mouse.move(0,0)
         page.wait_for_timeout(450)
